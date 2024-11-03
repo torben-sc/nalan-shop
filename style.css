@@ -119,9 +119,58 @@ body {
     font-family: 'DS-Digital', sans-serif;
 }
 
+.product-price {
+    font-size: 30px; /* Standardgröße für den Preistext */
+}
+
+.price-amount {
+    font-size: 30px; /* Größere Schriftgröße nur für den Preisbetrag */
+    font-weight: bold;
+}
+
+.price-currency {
+    font-size: 24px; /* Kleinere Schriftgröße für das Euro-Symbol */
+}
+
+.product-price-shop {
+    font-size: 25px; /* Standardgröße für den Preistext */
+}
+
+.price-amount-shop {
+    font-size: 25px; /* Größere Schriftgröße nur für den Preisbetrag */
+    font-weight: bold;
+}
+
+.price-currency-shop {
+    font-size: 18px; /* Kleinere Schriftgröße für das Euro-Symbol */
+}
+
+.product-price-cart1 {
+    font-size: 18px; /* Standardgröße für den Preistext */
+}
+
+.price-amount-cart1 {
+    font-size: 18px; /* Größere Schriftgröße nur für den Preisbetrag */
+    font-weight: bold;
+}
+
+.price-currency-cart1 {
+    font-size: 15px; /* Kleinere Schriftgröße für das Euro-Symbol */
+}
+
+.price-amount-cart2 {
+    font-size: 28px; /* Anpassung der Zahlengröße */
+    font-weight: bold;
+}
+
+.price-currency-cart2 {
+    font-size:23px; /* Anpassung der Größe des Euro-Symbols */
+}
+
+
 /* Preis */
 .product-card p {
-    font-size: 20px;
+    font-size: 30px;
     font-family: 'DS-Digital', sans-serif;
     color: #ffd700; /* Goldene Farbe für den Preis */
     margin-top: 5px;
