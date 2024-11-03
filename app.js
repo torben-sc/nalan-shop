@@ -33,7 +33,9 @@ async function displayProductList(category = null) {
                 <img src="${firstImage}" alt="${product.name}">
                 <h2>${product.name}</h2>
             </a>
-            <p>${product.price} €</p>
+            <p class=".product-price-shop">
+            <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
+            </p>
         `;
 
         productContainer.appendChild(productCard);
@@ -114,7 +116,9 @@ async function displayProductDetails() {
         infoContainer.innerHTML = `
             <h1 class="product-title">${product.name}</h1>
             <p class="product-description">${product.description}</p>
-            <p class="product-price">${product.price} €</p>
+            <p class="product-price">
+            <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
+            </p>
             <button id="add-to-cart-button">
                 <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
             </button>
@@ -274,7 +278,9 @@ function displayCartItems() {
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
                 <h3><a href="product.html?id=${item.id}">${item.name}</a></h3>
-                <p>Price: ${price.toFixed(2)} €</p>
+                <p class=".product-price-cart1">
+            <span class="price-amount-cart1">Price: ${price.toFixed(2)}</span><span class="price-currency-cart1"> €</span>
+            </p>
                 <p>Quntity: ${item.quantity}</p>
             </div>
             <img src="images/shopping_cart_off_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" 
@@ -289,7 +295,7 @@ function displayCartItems() {
         cartItemsContainer.appendChild(cartItem);
     });
     
-    totalAmountElement.innerText = `Total: ${totalAmount.toFixed(2)} €`;
+    totalAmountElement.innerHTML = `<span class="price-amount-cart2">Total: ${totalAmount.toFixed(2)}</span><span class="price-currency-cart2"> €</span>`;
 }
 
 
@@ -364,7 +370,9 @@ document.querySelector('#bagsFilter').addEventListener('click', () => filterProd
 infoContainer.innerHTML = `
     <h1 class="product-title">${product.name}</h1>
     <p class="product-description">${product.description}</p>
-    <p class="product-price">${product.price} €</p>
+    <p class="product-price">
+            <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
+            </p>
     <p class="product-stock">Verfügbar: ${product.stock} Stück</p>
     <button id="add-to-cart-button">
         <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
