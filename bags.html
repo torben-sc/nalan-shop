@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bags</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="shop-header">
+        <div class="menu-toggle">
+            <span class="menu-bar"></span>
+            <span class="menu-bar"></span>
+            <span class="menu-bar"></span>
+        </div>
+        <a href="shop.html">
+            <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+        </a>
+        <div class="side-menu" id="sideMenu">
+            <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
+            <a href="shop.html" id="showAllFilter">Show All</a>
+            <a href="bags.html" id="bagsFilter">Bags</a>
+            <a href="balaclavas.html" id="balaclavasFilter">Balaclavas</a>
+            <a href="handwarmers.html" id="handWarmersFilter">Hand Warmers</a>
+            <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
+        </div>
+        <a href="cart.html" class="cart-icon">
+            <img src="images/shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Warenkorb">
+            <span id="cart-count" class="cart-count">0</span>
+        </a>
+    </header>
+
+    <main id="product-container" class="product-container">
+        <!-- Produkte werden hier von JavaScript mit Kategorie 'bags' eingefügt -->
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            displayProductList('bags'); // Lädt nur Produkte mit Kategorie 'bags'
+        });
+    </script>
+    
+</body>
+</html>

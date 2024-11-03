@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produktdetails</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fixierter Header -->
+    <header class="shop-header">
+    
+        <!-- Logo als Link zur Shop-Seite -->
+        <a href="shop.html">
+            <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+        </a>
+        <!-- Warenkorb-Icon mit Link zur Warenkorb-Seite -->
+        <a href="cart.html" class="cart-icon">
+            <img src="images/shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Warenkorb">
+            <span id="cart-count" class="cart-count">0</span>
+        </a>
+    </header>
+
+    <!-- Container für die Produktdetails -->
+    <div id="product-detail-container" class="product-detail-container">
+        <div class="product-detail-images">
+            <!-- Produktbilder werden hier dynamisch eingefügt -->
+        </div>
+        <div class="product-detail-info">
+            <!-- Produktname, Beschreibung und Preis werden hier dynamisch eingefügt -->
+            
+            <!-- Neuer Warenkorb-Button mit Icon -->
+            <button id="add-to-cart-button">
+                <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Add to cart">
+            </button>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <p id="modal-message">Added to shopping cart!</p>
+        </div>
+    </div>    
+
+
+    <script src="app.js"></script>
+</body>
+</html>

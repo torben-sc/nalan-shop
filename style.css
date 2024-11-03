@@ -1,0 +1,613 @@
+/* Grundeinstellungen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Einbindung der Schriftart DS-DIGII */
+@font-face {
+    font-family: 'DS-Digital';
+    src: url('fonts/DS-DIGIB.TTF') format('truetype');
+}
+
+/* Gemeinsame Einstellungen */
+body {
+    background-color: #24388e;
+    color: #ffffff;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+/* === STILE FÜR DIE LANDING PAGE === */
+
+
+/* Container für zentrierte Inhalte auf der Landing Page */
+#landing-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+/* Logo auf der Landing Page */
+#landing-logo {
+    max-width: 350px;
+    margin-bottom: 30px;
+}
+
+/* Shop-Button auf der Landing Page */
+#landing-shop-button {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 40px;
+    font-family: 'DS-Digital', sans-serif;
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
+    transition: text-shadow 0.3s ease;
+}
+
+#landing-shop-button:hover,
+#landing-shop-button:active {
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 1), 
+                 0px 0px 20px rgba(255, 255, 255, 0.8);
+}
+
+/* === STILE FÜR DIE SHOP-SEITE === */
+
+/* Fixierter Header für Shop-Seite */
+.shop-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #24388e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.shop-header .logo {
+    max-height: 60px;
+}
+
+/* Hauptbereich für Produkte */
+.product-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px; /* Platz für fixierten Header */
+    gap: 40px;
+    padding-bottom: 50px;
+}
+
+/* Produkt ohne Box */
+.product-card {
+    text-align: center;
+    color: #ffffff;
+}
+
+/* Link für Bild und Name, mit Hover-Effekten */
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.product-link:hover img,
+.product-link:hover h2 {
+    transform: scale(1.05);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Bild in der Produktkarte */
+.product-card img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+}
+
+/* Produktname */
+.product-card h2 {
+    font-size: 28px;
+    margin: 10px 0;
+    font-family: 'DS-Digital', sans-serif;
+}
+
+/* Preis */
+.product-card p {
+    font-size: 20px;
+    font-family: 'DS-Digital', sans-serif;
+    color: #ffd700; /* Goldene Farbe für den Preis */
+    margin-top: 5px;
+}
+
+/* Hauptcontainer für die Produktdetails */
+.product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px; /* Maximale Breite für größere Bildschirme */
+    margin: 0 auto; /* Zentriert den Container auf dem Bildschirm */
+    padding: 20px; /* Optionaler Innenabstand */
+}
+
+
+/* Zentrierung und Abstand für das Produktbild */
+.product-detail-image img {
+    max-width: 100%;
+    width: auto;
+    border-radius: 20px;
+    margin-top: 5px; /* Zusätzlicher Abstand zum Header */
+}
+
+/* Produktname */
+.product-detail-info h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-family: 'DS-Digital', sans-serif;
+}
+
+/* Produktbeschreibung und Preis */
+.product-detail-info p {
+    font-size: 1.5em;
+    font-family: 'DS-Digital', sans-serif;
+    margin-bottom: 10px;
+    color: #ffd700; /* Goldene Farbe für den Preis */
+}
+
+
+/* Container für die Produktbilder und Slider-Elemente */
+.product-detail-images {
+    display: flex;
+    flex-direction: column; /* Bild und Thumbnails untereinander */
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+/* Hauptbild im Slider */
+.product-image {
+    max-width: 100%;      /* Bild passt sich der Containerbreite an */
+    max-height: 400px;    /* Begrenzung der maximalen Höhe */
+    width: auto;          /* Verhindert Verzerrungen */
+    height: auto;         /* Verhindert Verzerrungen */
+    border-radius: 8px;   /* Optional: abgerundete Ecken für das Bild */
+    margin-top: 10px;     /* Abstand zum Header oder anderen Elementen */
+}
+
+
+/* Thumbnail-Container */
+.thumbnails-container {
+    display: flex;
+    gap: 12px; /* Abstand zwischen den Thumbnails */
+    margin-top: 10px;
+}
+
+/* Thumbnail-Bilder */
+.thumbnail {
+    width: 50px; /* Kleinere Größe der Thumbnails */
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s, transform 0.3s, border-color 0.3s;
+    border: 2px solid transparent; /* Initial transparent border */
+    margin-right: 8px; /* Leichter Abstand zwischen den Thumbnails */
+}
+
+.thumbnail.active {
+    opacity: 1;
+    transform: scale(1.1); /* Vergrößerung des aktiven Thumbnails */
+    border-color: #ffd700; /* Goldener Rand für das aktive Thumbnail */
+}
+
+#add-to-cart-button {
+    margin-top: 20px;
+    padding: 12px; /* Innenabstand für mehr Fläche um das Icon */
+    background-color: #E55013; /* Hellgrauer Hintergrund */
+    border: none;
+    cursor: pointer;
+    border-radius: 12px; /* Abgerundete Ecken */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+    width: 180px; /* Optionale feste Breite */
+    height: 60px; /* Optionale feste Höhe */
+    margin-left: auto;
+    margin-right: auto; /* Zentriert den Button */
+}
+
+#add-to-cart-button img {
+    width: 24px; /* Größe des Icons anpassen */
+    height: 24px;
+}
+
+#add-to-cart-button:hover {
+    background-color: #d0d0d0; /* Etwas dunklerer Grau-Ton bei Hover */
+}
+
+.product-detail-images .product-image {
+    max-width: 100%;
+    max-height: 400px; /* Begrenzung der maximalen Höhe */
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 80px;
+}
+
+/* Optional: Desktop-Stile für zentrierte Darstellung */
+@media (min-width: 768px) {
+    .product-image {
+        max-height: 300px; /* Kleinere Höhe für größere Bildschirme */
+    }
+}
+
+/* Container für die Warenkorbseite */
+.cart-container {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+}
+
+/* Warenkorb-Artikel-Stil */
+.cart-item {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    max-width: 600px;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    margin-bottom: 10px;
+}
+
+/* Bild des Warenkorb-Artikels */
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+/* Artikelinformationen im Warenkorb */
+.cart-item-info {
+    flex-grow: 1;
+    font-family: 'DS-Digital', sans-serif; /* Digitale Schriftart */
+}
+
+/* Produktname */
+.cart-item-info h3 {
+    font-size: 20px;
+    margin: 0;
+    color: #ffffff !important; /* Weißer Text mit Priorität */
+    font-family: 'DS-Digital', sans-serif;
+}
+
+/* Produktname im Warenkorb */
+.cart-item-info h3 a {
+    color: #ffffff; /* Weißer Text für den Produktnamen */
+    text-decoration: none; /* Entfernt die Unterstreichung */
+    transition: text-shadow 0.3s ease, transform 0.3s ease; /* Sanfter Übergang für den Effekt */
+}
+
+.cart-item-info h3 a:hover,
+.cart-item-info h3 a:active {
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8); /* Leuchteffekt bei Hover */
+    transform: scale(1.05); /* Leichte Vergrößerung bei Hover */
+}
+
+
+
+/* Zentrierung und Anpassung der Gesamtsumme */
+.cart-total {
+    text-align: center;
+    font-family: 'DS-Digital', sans-serif; /* Digitale Schriftart */
+    font-size: 24px; /* Optional: Größere Schriftgröße für die Gesamtsumme */
+    color: #E55013; /* Optional: Goldene Farbe für den Betrag */
+    margin-top: 20px;
+}
+
+/* Preis */
+.cart-item-info p {
+    font-size: 18px;
+    color: #ffd700; /* Goldene Farbe für den Preis */
+    margin-top: 5px;
+}
+
+
+#checkout-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #24388e;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Container für das Warenkorb-Icon */
+.cart-icon {
+    position: absolute;
+    top: 20px; 
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Stile für das Warenkorb-Icon-Bild */
+.cart-icon img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+/* Anpassung für den Header, um das Icon zu integrieren */
+.shop-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #24388e;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.shop-header .logo {
+    max-height: 60px;
+}
+
+/* Zähler-Badge für das Warenkorb-Icon */
+.cart-count {
+    position: absolute;
+    top: 15px; /* Leicht nach unten verschoben */
+    right: 3px; /* Leicht nach links verschoben */
+    background-color: #E55013; /* Hintergrundfarbe des Zählers */
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 6px; /* Kleinere Größe für den Zähler */
+    font-size: 10px; /* Kleinere Schriftgröße */
+    font-weight: bold;
+    min-width: 10px; /* Kleinere Mindestbreite */
+    text-align: center;
+    line-height: 1;
+}
+
+/* Stil für das Entfernen-Icon rechts neben dem Produkt */
+.remove-item-icon {
+    width: 24px; /* Größe des Icons */
+    height: 24px;
+    cursor: pointer;
+    margin-left: auto; /* Schiebt das Icon nach rechts */
+    transition: opacity 0.3s ease;
+    opacity: 0.7;
+}
+
+.remove-item-icon:hover {
+    opacity: 1; /* Stärkere Deckkraft bei Hover */
+}
+
+/* Modal-Stile */
+.modal {
+    display: none; /* Modal ist anfangs versteckt */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Halbdurchsichtiger Hintergrund */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    color: #333;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    position: absolute; 
+    top: 228px; 
+    right: 530px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+.shop-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #24388e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.side-menu {
+    position: fixed;
+    top: 80px; /* Beginnt direkt unterhalb des Headers */
+    left: 0;
+    width: 100%;
+    max-height: 0; /* Anfangs ausgeblendet */
+    overflow: hidden;
+    background-color: #24388e;
+    transition: max-height 0.3s ease; /* Übergang für das Ein- und Ausfahren */
+    color: white;
+    z-index: 999; /* Unterhalb des Headers */
+}
+
+/* Menü geöffnet */
+.side-menu.open {
+    max-height: 1000px; /* Höhe, die das Menü im offenen Zustand haben soll */
+}
+
+.side-menu a {
+    display: block;
+    padding: 10px;
+    font-size: 20px;
+    text-decoration: none;
+    color: #E55013; /* Orange Farbe für die Schrift */
+    transition: background-color 0.3s ease;
+    text-align: center;
+    white-space: nowrap; /* Verhindert Zeilenumbruch */
+    font-weight: bold; /* Fettgedruckt */
+    text-transform: uppercase; /* Großbuchstaben */
+}
+
+.side-menu a:hover {
+    background-color: #394bac; /* Hintergrundfarbe beim Hover */
+}
+
+
+/* Stil für das Burger-Icon */
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    position: absolute;
+    left: 20px;
+}
+
+.menu-bar {
+    width: 30px;
+    height: 3px;
+    background-color: #ffffff;
+    transition: transform 0.3s;
+}
+
+/* Versteckt das Seitenmenü standardmäßig */
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #24388e;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    padding-top: 60px;
+    color: white;
+    z-index: 1100;
+}
+
+.side-menu.open {
+    width: 250px; /* Breite des offenen Menüs */
+}
+
+.close-menu-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: #ffffff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.close-menu-btn:hover {
+    color: #d0d0d0; /* Hellere Farbe beim Hover */
+}
+
+.coming-soon-message {
+    font-size: 48px; /* Größe des Textes */
+    font-weight: bold; /* Fett gedruckt */
+    text-transform: uppercase; /* Großbuchstaben */
+    text-align: center; /* Zentrierter Text */
+    margin-top: 50px; /* Abstand zum Seitenanfang */
+    color: #ffd700; /* Orange Farbe passend zur Seite */
+}
+
+/* Stil für den Footer der rechtlichen Informationen */
+.custom-footer {
+    background-color: #24388e; /* Passt die Hintergrundfarbe an */
+    color: #fff; /* Weißer Text */
+    text-align: center;
+    padding: 20px 10px;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-branding {
+    font-size: 14px; /* Schriftgröße für den Schriftzug etwas erhöht */
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #E55013; /* Gelbe Farbe */
+}
+
+.social-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Abstand zwischen den Icons */
+    margin-bottom: 20px; /* Abstand unter den Social Icons */
+}
+
+/* Einheitliche Einstellungen für alle Social Icons */
+.social-icon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+/* Spezifische Größe nur für das TikTok-Logo */
+.tiktok-icon {
+    width: 17px; /* Passe die Größe nach Bedarf an */
+    height: 17px;
+    margin-top: 9px;
+}
+
+
+.social-icon:hover {
+    transform: scale(1.1); /* Vergrößerung beim Hover */
+}
+
+.legal-links {
+    display: flex;
+    flex-direction: column; /* Vertikale Anordnung der Links */
+    align-items: center;
+    gap: 8px; /* Abstand zwischen den Links */
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+.legal-links a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.legal-links a:hover {
+    text-decoration: underline;
+}
