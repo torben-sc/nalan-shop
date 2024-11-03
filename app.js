@@ -217,12 +217,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'hand-warmers.html'; // Navigiert zur Hand Warmers-Seite
+            window.location.href = 'handwarmers.html'; // Navigiert zur Hand Warmers-Seite
         });
 
         document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'other-accessories.html'; // Navigiert zur Other Accessories-Seite
+            window.location.href = 'otheraccessories.html'; // Navigiert zur Other Accessories-Seite
         });
     }
 
