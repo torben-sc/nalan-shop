@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
+    <style>
+        .thank-you-page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .thank-you-container {
+            margin-bottom: 30px;
+        }
+        .order-id {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .product-table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .product-table th, .product-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .product-table th {
+            background-color: #f4f4f4;
+        }
+        .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <header class="shop-header">
+        <a href="shop.html">
+            <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+        </a>
+    </header>
+
+    <div class="thank-you-page-container">
+        <div class="thank-you-container">
+            <p class="thank-you-message-1">THANK YOU FOR SHOPPING WITH NALAN!</p>
+            <p class="thank-you-message-2">WE WILL TAKE CARE OF YOUR ORDER ASAP</p>
+        </div>
+
+        <p class="order-id">ORDER ID: <span id="order-id">Loading...</span></p>
+
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="product-list">
+                <!-- Dynamically added products -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Read data from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const orderID = urlParams.get('orderID');
+                const products = JSON.parse(decodeURIComponent(urlParams.get('products')));
+
+                // Show order ID
+                document.getElementById('order-id').textContent = orderID || 'Unknown';
+
+                // Populate product table
+                const productList = document.getElementById('product-list');
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            ${product.name}
+                        </td>
+                        <td>${product.quantity}</td>
+                        <td>€${(product.unit_amount.value * product.quantity).toFixed(2)}</td>
+                    `;
+                    productList.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading order data:', error);
+                document.querySelector('.thank-you-page-container').innerHTML = `
+                    <p>Sorry, we couldn't load your order details.</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

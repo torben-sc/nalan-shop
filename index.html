@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
+    <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+        #landing-logo {
+            height: 400px;
+            width: 400px;
+            border-radius: 50%;
+            filter: url(#color-glow);
+            transition: transform 0.3s, filter 0.3s;
+            overflow: visible !important; /* Verhindert das Abschneiden des Glows */
+            animation: float 5s ease-in-out infinite;
+        }
+        #landing-logo:hover {
+            transform: scale(1.1);
+            filter: url(#color-glow-hover);
+            overflow: visible !important;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0); /* Ausgangspunkt */
+            }
+            50% {
+                transform: translateY(-25px); /* Bewegung nach oben */
+            }
+        }
+        @media (max-width: 768px) {
+            #landing-logo {
+                width: 300px; /* Kleinere Größe auf mobilen Geräten */
+                height: 300px;
+                border-radius: 50%;
+                filter: url(#color-glow);
+                transition: transform 0.3s, filter 0.3s;
+                overflow: visible !important; /* Verhindert das Abschneiden des Glows */
+                animation: float 5s ease-in-out infinite;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg width="0" height="0">
+        <defs>
+            <!-- Normaler Glow Filter -->
+            <filter id="color-glow" x="-150%" y="-150%" width="400%" height="400%">
+                <feFlood flood-color="#E55013" result="flood"></feFlood>
+                <feComposite in="flood" in2="SourceAlpha" operator="in" result="color"></feComposite>
+                <feGaussianBlur in="color" stdDeviation="10" result="blurred"></feGaussianBlur>
+                <feMerge>
+                    <feMergeNode in="blurred"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+            <!-- Stärkerer Glow Filter für Hover -->
+            <filter id="color-glow-hover" x="-100%" y="-100%" width="400%" height="400%">
+                <feFlood flood-color="#E55013" result="flood"></feFlood>
+                <feComposite in="flood" in2="SourceAlpha" operator="in" result="color"></feComposite>
+                <feGaussianBlur in="color" stdDeviation="15" result="blurred"></feGaussianBlur>
+                <feMerge>
+                    <feMergeNode in="blurred"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+        </defs>
+    </svg>
+    
+    <div id="landing-container">
+        <a href="shop/index.html">
+            <img src="images/logo-ohne-schrift-landing.png" alt="Shop Logo" id="landing-logo">
+        </a>
+    </div>
+</body>
+</html>
