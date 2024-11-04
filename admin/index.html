@@ -2,26 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Content Manager</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://unpkg.com/netlify-cms@2/dist/netlify-cms.min.js"></script>
 </head>
 <body>
+  <!-- Container für die CMS-App -->
+  <div id="nc-root"></div> <!-- Wichtig für die CMS-Oberfläche -->
   <script>
+    window.CMS_MANUAL_INIT = true;
     window.addEventListener("DOMContentLoaded", function() {
-      // Prüfen, ob Netlify CMS geladen ist
-      if (window.CMS_MANUAL_INIT) {
-        console.error("CMS_MANUAL_INIT ist aktiviert. Netlify CMS wird nicht automatisch initialisiert.");
-        return;
-      }
-
-      if (typeof NetlifyCms !== "undefined") {
-        NetlifyCms.init({
-          config: "config.yml"
-        });
-      } else {
-        console.error("Netlify CMS konnte nicht geladen werden. Überprüfe die Einbindung des Skripts und den Netzwerkstatus.");
-      }
+      NetlifyCms.init({
+        config: 'config.yml'
+      });
     });
   </script>
 </body>
