@@ -3,8 +3,8 @@ backend:
   repo: torben-sc/nalan-shop 
   branch: main
   auth:
-    client_id: Ov23liswnrBC64e679aq
-    client_secret: 1b7b45b5883f75d4a034f214f96817148300a812
+    client_id: "Ov23liswnrBC64e679aq"
+    client_secret: "1b7b45b5883f75d4a034f214f96817148300a812"
 
 
 media_folder: "static/images" # Ordner für hochgeladene Bilder
