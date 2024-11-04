@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Product Content Manager</title>
+  <title>Content Manager</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
 </head>
@@ -10,8 +10,10 @@
   <!-- Container für die CMS-App -->
   <script>
     window.CMS_MANUAL_INIT = true;
-    NetlifyCms.init({
-      config: '/admin/config.yml'
+    window.addEventListener("DOMContentLoaded", function() {
+      NetlifyCms.init({
+        config: '/admin/config.yml'
+      });
     });
   </script>
 </body>

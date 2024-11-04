@@ -16,7 +16,7 @@ collections:
   - name: "products" # Name der Collection
     label: "Products" # Label, das in der Admin-Oberfläche angezeigt wird
     file: "products.json" # Ordner für die Produkte
-    create: true
+    format: "list"
     slug: "{{slug}}" # URL-Slug des Produkts
     fields:
       - { label: "Title", name: "title", widget: "string" }
