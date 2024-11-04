@@ -12,13 +12,17 @@ public_folder: "images"
 
 collections:
   - name: "products" # Name der Collection
-    label: "Products" # Label, das in der Admin-Oberfläche angezeigt wird
-    file: "products.json" # Ordner für die Produkte
-    format: "list"
-    slug: "{{slug}}" # URL-Slug des Produkts
-    fields:
-      - { label: "Title", name: "title", widget: "string" }
+    label: "Products" # Label, das im Admin-Bereich angezeigt wird
+    file: "products.json" # JSON-Datei, in der alle Produkte gespeichert werden
+    name: "product"
+    identifier_field: "name" # Ein eindeutiges Feld, das als Identifier verwendet wird
+    format: "json" # Gibt an, dass das Format JSON ist
+    create: true # Ermöglicht das Erstellen neuer Einträge
+    fields: 
+      - { label: "ID", name: "id", widget: "string", required: true }
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Price", name: "price", widget: "number", required: true }
+      - { label: "Images", name: "images", widget: "list", allow_multiple: true, field: { label: "Image", name: "image", widget: "image" } }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Price", name: "price", widget: "number" }
-      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Stock", name: "stock", widget: "number" }
       - { label: "Category", name: "category", widget: "string" }
