@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: torben-sc/nalan-shop 
+  branch: main
+  auth:
+    client_id: Ov23liswnrBC64e679aq
+    client_secret: 1b7b45b5883f75d4a034f214f96817148300a812
+
+
+media_folder: "static/images" # Ordner für hochgeladene Bilder
+public_folder: "/images"
+
+collections:
+  - name: "products" # Name der Collection
+    label: "Products" # Label, das in der Admin-Oberfläche angezeigt wird
+    folder: "_data/products" # Ordner für die Produkte
+    create: true
+    slug: "{{slug}}" # URL-Slug des Produkts
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Price", name: "price", widget: "number" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Category", name: "category", widget: "string" }
