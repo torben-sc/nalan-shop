@@ -7,8 +7,8 @@ backend:
     client_secret: 1b7b45b5883f75d4a034f214f96817148300a812
 
 
-media_folder: "static/images" # Ordner für hochgeladene Bilder
-public_folder: "/images"
+media_folder: "images" # Ordner für hochgeladene Bilder
+public_folder: "images"
 
 collections:
   - name: "products" # Name der Collection
