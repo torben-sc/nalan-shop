@@ -4,7 +4,7 @@ backend:
   branch: main
   auth:
     client_id: Ov23liswnrBC64e679aq
-    client_secret: 1b7b45b5883f75d4a034f214f96817148300a812
+    client_secret: 2576923ebbed8d3fe6a7368858bedf270c49dd4a
 
 
 media_folder: "images" # Ordner für hochgeladene Bilder
