@@ -7,14 +7,13 @@ backend:
   auth_endpoint: /auth/oauth # Falls du eine eigene OAuth konfiguriert hast
 
 
-
 media_folder: "images" # Ordner für hochgeladene Bilder
 public_folder: "images"
 
 collections:
   - name: "products" # Name der Collection
     label: "Products" # Label, das in der Admin-Oberfläche angezeigt wird
-    folder: "_data/products" # Ordner für die Produkte
+    file: "products.json" # Ordner für die Produkte
     create: true
     slug: "{{slug}}" # URL-Slug des Produkts
     fields:
