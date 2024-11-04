@@ -2,8 +2,6 @@ backend:
   name: github
   repo: torben-sc/nalan-shop
   branch: main
-  base_url: https://github.com
-  site_url: https://torben-sc.github.io/nalan-shop
   auth:
     client_id: Ov23liswnrBC64e679aq
     client_secret: 1b7b45b5883f75d4a034f214f96817148300a812
