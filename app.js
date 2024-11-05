@@ -165,17 +165,16 @@ async function displayProductDetails() {
     }
 }
 
-
 // Funktion zum Aktualisieren des Warenkorb-Zählers
-async function updateCartCount(cart) {
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || []; // Hole den Warenkorb aus Local Storage
     const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiere die Mengen
     const cartCountElement = document.getElementById('cart-count');
-    
+
     if (cartCountElement) {
-        cartCountElement.innerText = cartCount;
+        cartCountElement.innerText = cartCount; // Setze die Anzahl der Artikel in den Zähler
     }
 }
-
 
 function showModal(message) {
     const modal = document.getElementById('modal');
@@ -191,100 +190,80 @@ function showModal(message) {
 }
 
 async function addToCart(product) {
-    const userId = 'example-user-id'; // Normalerweise sollte dies durch eine Authentifizierung generiert werden
-    try {
-        const response = await fetch('/.netlify/functions/manage-cart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userId,
-                action: 'add',
-                productId: product.id,
-                quantity: 1,
-            }),
-        });
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const existingProduct = cart.find(item => item.id === product.id);
 
-        if (!response.ok) {
-            throw new Error('Fehler beim Hinzufügen zum Warenkorb.');
-        }
-
-        const data = await response.json();
-        console.log('Aktualisierter Warenkorb:', data.cart);
-        showModal("Added to shopping cart!");
-        updateCartCount(data.cart); // Warenkorbzähler aktualisieren
-    } catch (error) {
-        console.error("Fehler beim Hinzufügen zum Warenkorb:", error);
+    if (existingProduct) {
+        existingProduct.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
     }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount(); // Warenkorb-Zähler aktualisieren
+    showModal("Added to shopping cart!");
 }
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
     // Update Warenkorb beim Laden
-    updateCartCount();
+    updateCartCount(); // Stelle sicher, dass der Zähler beim Laden der Seite aktualisiert wird
 
-    // Elemente für Menü-Toggle und Schließen des Menüs auswählen, wenn vorhanden
+    // Restlicher Code für Menü-Toggle und Navigation...
     const menuToggle = document.querySelector('.menu-toggle');
     const sideMenu = document.getElementById('sideMenu');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
 
-    // Menü-Toggle-Events nur hinzufügen, wenn sie vorhanden sind
     if (menuToggle && sideMenu && closeMenuBtn) {
         menuToggle.addEventListener('click', () => {
-            sideMenu.classList.toggle('open'); // Menü ein- und ausklappen
+            sideMenu.classList.toggle('open');
         });
 
         closeMenuBtn.addEventListener('click', () => {
-            sideMenu.classList.remove('open'); // Menü schließen
+            sideMenu.classList.remove('open');
         });
 
-        // URL-Navigation für die Filter-Links im Side-Menü
         document.getElementById('showAllFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html'; // Navigiert zur Shop-Seite für alle Produkte
+            window.location.href = 'shop.html';
         });
 
         document.getElementById('bagsFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'bags.html'; // Navigiert zur Bags-Seite
+            window.location.href = 'bags.html';
         });
 
         document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'balaclavas.html'; // Navigiert zur Balaclavas-Seite
+            window.location.href = 'balaclavas.html';
         });
 
         document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'handwarmers.html'; // Navigiert zur Hand Warmers-Seite
+            window.location.href = 'handwarmers.html';
         });
 
         document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'otheraccessories.html'; // Navigiert zur Other Accessories-Seite
+            window.location.href = 'otheraccessories.html';
         });
     }
 
-    // Logo-Event nur hinzufügen, wenn es existiert
     const logo = document.querySelector('.logo');
     if (logo) {
         logo.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html'; // Zurück zur Shop-Seite
+            window.location.href = 'shop.html';
         });
     }
 
-    // URL-Parameter beim Laden prüfen, um Filter bei einem Seiten-Refresh zu übernehmen
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category') || null;
 
-    // Nur auf der Shop-Seite die Produktliste anzeigen
     if (document.getElementById('product-container')) {
-        displayProductList(category); // Zeigt gefilterte oder alle Produkte an
+        displayProductList(category);
     }
-
-    
 });
 
 
