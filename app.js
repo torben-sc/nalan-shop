@@ -14,7 +14,9 @@ async function fetchProducts() {
 
 // Funktion zur Anzeige der Produktliste auf der Shop-Seite
 async function displayProductList(category = null) {
-    const products = await fetchProducts();
+    const products = await fetchProducts(); // Warten, bis die Produkte geladen sind
+    if (!products) return; // Abbruch, falls Produkte nicht geladen werden konnten
+
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = ''; // Leert den Container, um Produkte zu aktualisieren
 
@@ -41,6 +43,7 @@ async function displayProductList(category = null) {
         productContainer.appendChild(productCard);
     });
 }
+
 
 
 
