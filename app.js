@@ -1,16 +1,17 @@
-// Funktion zum Laden der Produkte über die Netlify Function
+// Funktion zum Laden der Produkte über die Netlify Function `get-products`
 async function fetchProducts() {
     try {
-        const response = await fetch('/.netlify/functions/calculate-cart-total'); // Hole die Produktdaten
+        const response = await fetch('/.netlify/functions/get-products'); // Hole die Produktdaten über die Netlify Function `get-products`
         if (!response.ok) {
             throw new Error(`Fehler beim Laden der Produkte: ${response.statusText}`);
         }
         const data = await response.json();
-        return data.products; // Da die Produktdaten in der calculate-cart-total-Funktion enthalten sind
+        return data.products; // Rückgabe der Produkte
     } catch (error) {
         console.error("Fehler beim Laden der Produkte:", error);
     }
 }
+
 
 // Funktion zur Anzeige der Produktliste auf der Shop-Seite
 async function displayProductList(category = null) {
@@ -43,8 +44,6 @@ async function displayProductList(category = null) {
         productContainer.appendChild(productCard);
     });
 }
-
-
 
 
 // Funktion zur Anzeige der Produktdetails auf der Produktseite
@@ -416,8 +415,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(footer);
     }
 });
-
-
 
 
 document.querySelector('#bagsFilter').addEventListener('click', () => filterProductsByCategory('bags'));
