@@ -1,16 +1,17 @@
-// Funktion zum Laden der Produkte aus der JSON-Datei
+// Funktion zum Laden der Produkte über die Netlify Function `get-products`
 async function fetchProducts() {
     try {
-        const response = await fetch('products.json');
+        const response = await fetch('/.netlify/functions/get-products'); // Hole die Produktdaten über die Netlify Function `get-products`
         if (!response.ok) {
             throw new Error(`Fehler beim Laden der Produkte: ${response.statusText}`);
         }
-        const products = await response.json();
-        return products;
+        const data = await response.json();
+        return data.products; // Rückgabe der Produkte
     } catch (error) {
         console.error("Fehler beim Laden der Produkte:", error);
     }
 }
+
 
 // Funktion zur Anzeige der Produktliste auf der Shop-Seite
 async function displayProductList(category = null) {
@@ -43,8 +44,6 @@ async function displayProductList(category = null) {
         productContainer.appendChild(productCard);
     });
 }
-
-
 
 
 // Funktion zur Anzeige der Produktdetails auf der Produktseite
@@ -166,15 +165,14 @@ async function displayProductDetails() {
     }
 }
 
-
 // Funktion zum Aktualisieren des Warenkorb-Zählers
 function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiert die Mengen
+    const cart = JSON.parse(localStorage.getItem('cart')) || []; // Hole den Warenkorb aus Local Storage
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiere die Mengen
     const cartCountElement = document.getElementById('cart-count');
-    
+
     if (cartCountElement) {
-        cartCountElement.innerText = cartCount;
+        cartCountElement.innerText = cartCount; // Setze die Anzahl der Artikel in den Zähler
     }
 }
 
@@ -191,95 +189,81 @@ function showModal(message) {
     };
 }
 
-function addToCart(product) {
+async function addToCart(product) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingProduct = cart.find(item => item.id === product.id);
 
     if (existingProduct) {
-        if (existingProduct.quantity < product.stock) {
-            existingProduct.quantity += 1;
-            showModal("Added to shopping cart!"); // Modal für Erfolg
-        } else {
-            showModal("Maximum quantity reached!"); // Modal für maximale Anzahl
-        }
+        existingProduct.quantity += 1;
     } else {
-        if (product.stock > 0) {
-            cart.push({ ...product, quantity: 1, price: parseFloat(product.price) });
-            showModal("Added to shopping cart!");
-        } else {
-            showModal("This product is not available anymore.");
-        }
+        cart.push({ ...product, quantity: 1 });
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
+    updateCartCount(); // Warenkorb-Zähler aktualisieren
+    showModal("Added to shopping cart!");
 }
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Update Warenkorb beim Laden
-    updateCartCount();
+    updateCartCount(); // Stelle sicher, dass der Zähler beim Laden der Seite aktualisiert wird
 
-    // Elemente für Menü-Toggle und Schließen des Menüs auswählen, wenn vorhanden
+    // Restlicher Code für Menü-Toggle und Navigation...
     const menuToggle = document.querySelector('.menu-toggle');
     const sideMenu = document.getElementById('sideMenu');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
 
-    // Menü-Toggle-Events nur hinzufügen, wenn sie vorhanden sind
     if (menuToggle && sideMenu && closeMenuBtn) {
         menuToggle.addEventListener('click', () => {
-            sideMenu.classList.toggle('open'); // Menü ein- und ausklappen
+            sideMenu.classList.toggle('open');
         });
 
         closeMenuBtn.addEventListener('click', () => {
-            sideMenu.classList.remove('open'); // Menü schließen
+            sideMenu.classList.remove('open');
         });
 
-        // URL-Navigation für die Filter-Links im Side-Menü
         document.getElementById('showAllFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html'; // Navigiert zur Shop-Seite für alle Produkte
+            window.location.href = 'shop.html';
         });
 
         document.getElementById('bagsFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'bags.html'; // Navigiert zur Bags-Seite
+            window.location.href = 'bags.html';
         });
 
         document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'balaclavas.html'; // Navigiert zur Balaclavas-Seite
+            window.location.href = 'balaclavas.html';
         });
 
         document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'handwarmers.html'; // Navigiert zur Hand Warmers-Seite
+            window.location.href = 'handwarmers.html';
         });
 
         document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'otheraccessories.html'; // Navigiert zur Other Accessories-Seite
+            window.location.href = 'otheraccessories.html';
         });
     }
 
-    // Logo-Event nur hinzufügen, wenn es existiert
     const logo = document.querySelector('.logo');
     if (logo) {
         logo.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html'; // Zurück zur Shop-Seite
+            window.location.href = 'shop.html';
         });
     }
 
-    // URL-Parameter beim Laden prüfen, um Filter bei einem Seiten-Refresh zu übernehmen
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category') || null;
 
-    // Nur auf der Shop-Seite die Produktliste anzeigen
     if (document.getElementById('product-container')) {
-        displayProductList(category); // Zeigt gefilterte oder alle Produkte an
+        displayProductList(category);
     }
-
-    
 });
 
 
@@ -294,18 +278,15 @@ function updateImage() {
     });
 }
 
-function displayCartItems() {
+async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
 
     cartItemsContainer.innerHTML = ''; // Leere den Container
 
-    let totalAmount = 0;
+    // Darstellung der einzelnen Artikel im Frontend
     cart.forEach(item => {
-        const price = parseFloat(item.price) || 0; // Fallback zu 0, falls `price` nicht vorhanden ist
-        totalAmount += price * item.quantity;
-
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
 
@@ -314,9 +295,9 @@ function displayCartItems() {
             <div class="cart-item-info">
                 <h3><a href="product.html?id=${item.id}">${item.name}</a></h3>
                 <p class=".product-price-cart1">
-            <span class="price-amount-cart1">Price: ${price.toFixed(2)}</span><span class="price-currency-cart1"> €</span>
-            </p>
-                <p>Quntity: ${item.quantity}</p>
+                <span class="price-amount-cart1">Price: ${item.price.toFixed(2)}</span><span class="price-currency-cart1"> €</span>
+                </p>
+                <p>Quantity: ${item.quantity}</p>
             </div>
             <img src="images/shopping_cart_off_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" 
                  alt="Entfernen" class="remove-item-icon" data-id="${item.id}">
@@ -329,8 +310,26 @@ function displayCartItems() {
 
         cartItemsContainer.appendChild(cartItem);
     });
-    
-    totalAmountElement.innerHTML = `<span class="price-amount-cart2">Total: ${totalAmount.toFixed(2)}</span><span class="price-currency-cart2"> €</span>`;
+
+    // Berechne den Warenkorb-Gesamtbetrag über das Backend
+    try {
+        const response = await fetch('/.netlify/functions/calculate-cart-total', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cartItems: cart }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            totalAmountElement.innerHTML = `<span class="price-amount-cart2">Total: ${data.total}</span><span class="price-currency-cart2"> €</span>`;
+        } else {
+            throw new Error('Fehler bei der Berechnung des Warenkorbbetrags.');
+        }
+    } catch (error) {
+        console.error("Fehler bei der Berechnung des Warenkorbbetrags:", error);
+    }
 }
 
 
@@ -395,8 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(footer);
     }
 });
-
-
 
 
 document.querySelector('#bagsFilter').addEventListener('click', () => filterProductsByCategory('bags'));
