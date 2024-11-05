@@ -680,14 +680,14 @@ body {
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Animation für Hover und Box-Shadow */
     
     /* Beleuchtungseffekt von hinten */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Weißer Glow für stärkeren Kontrast */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.25); /* Weißer Glow für stärkeren Kontrast */
 }
 
 .paypal-button:hover {
     background-color: #1e2f6f;   /* Etwas dunkleres Blau bei Hover */
     transform: scale(1.05);      /* Leichte Vergrößerung beim Hovern */
     box-shadow: 0 0 30px rgba(36, 56, 142, 0.9); /* Verstärktes Leuchten bei Hover */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Weißer Glow für stärkeren Kontrast */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); /* Weißer Glow für stärkeren Kontrast */
 }
 
 @font-face {
