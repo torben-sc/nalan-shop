@@ -117,12 +117,35 @@ async function displayProductDetails() {
             <h1 class="product-title">${product.name}</h1>
             <p class="product-description">${product.description}</p>
             <p class="product-price">
-            <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
+                <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
             </p>
             <button id="add-to-cart-button">
                 <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
             </button>
         `;
+
+        // PayPal Button hinzufügen
+        const paypalButton = document.createElement('button');
+        paypalButton.id = 'paypal-button';
+        paypalButton.textContent = 'Jetzt kaufen mit PayPal';
+        paypalButton.className = 'paypal-button';
+        infoContainer.insertBefore(paypalButton, document.getElementById('add-to-cart-button'));
+
+        // Lade den PayPal-Link und füge ihn dem Button hinzu
+        try {
+            const response = await fetch('/.netlify/functions/get-paypal-link');
+            if (!response.ok) {
+                throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
+            }
+            const data = await response.json();
+            paypalButton.addEventListener('click', () => {
+                window.open(data.link, '_blank');
+            });
+        } catch (error) {
+            console.error('Fehler beim Abrufen des PayPal-Links:', error);
+            paypalButton.disabled = true; // Deaktiviere den Button, wenn der Link nicht geladen werden kann
+            paypalButton.textContent = 'PayPal-Link nicht verfügbar';
+        }
 
         // Event-Listener für den Warenkorb-Button mit Icon
         const addToCartButton = document.getElementById('add-to-cart-button');
@@ -131,6 +154,7 @@ async function displayProductDetails() {
         productDetailContainer.innerHTML = `<p>Produkt nicht gefunden.</p>`;
     }
 }
+
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers
 function updateCartCount() {
@@ -373,7 +397,6 @@ infoContainer.innerHTML = `
     <p class="product-price">
             <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
             </p>
-    <p class="product-stock">Verfügbar: ${product.stock} Stück</p>
     <button id="add-to-cart-button">
         <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
     </button>

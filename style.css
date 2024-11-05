@@ -660,3 +660,27 @@ body {
 .legal-links a:hover {
     text-decoration: underline;
 }
+
+@font-face {
+    font-family: 'DotMatrix';
+    src: url('fonts/DOTMATRI.TTF') format('truetype');
+}
+
+.paypal-button {
+    background-color: #24388e;  /* Hintergrundfarbe dunkelblau */
+    color: #FFFFFF;              /* Schriftfarbe weiß */
+    padding: 20px 40px;          /* Größerer Button durch mehr Padding */
+    font-size: 24px;             /* Größere Schriftart */
+    font-family: 'DotMatrix', sans-serif; /* Schriftart DOTMATRI */
+    border: 2px solid #FFFFFF;   /* Eckiger, weißer Rand */
+    cursor: pointer;             /* Cursor zeigt Hand beim Überfahren */
+    border-radius: 0px;          /* Keine Abrundungen - eckiger Button */
+    text-transform: uppercase;   /* Text in Großbuchstaben */
+    transition: background-color 0.3s, transform 0.3s; /* Animation für Hover */
+    margin-top: 10px;            /* Abstand zum darüberliegenden Element */
+}
+
+.paypal-button:hover {
+    background-color: #1e2f6f;   /* Etwas dunkleres Blau bei Hover */
+    transform: scale(1.05);      /* Leichte Vergrößerung beim Hovern */
+}
