@@ -90,7 +90,7 @@ async function displayProductDetails() {
                 thumb.classList.toggle('active', index === currentIndex);
             });
         }
-
+        
         // Swipe-Gesten für mobile Geräte
         let startX = 0;
         let endX = 0;
@@ -111,7 +111,7 @@ async function displayProductDetails() {
             updateImage();
         }
 
-        // Produktinformationen hinzufügen und neuen Warenkorb-Button mit Icon hinzufügen
+        // Produktinformationen hinzufügen und Buttons für den Warenkorb und PayPal einfügen
         const infoContainer = document.querySelector('.product-detail-info');
         infoContainer.innerHTML = `
             <h1 class="product-title">${product.name}</h1>
@@ -119,17 +119,26 @@ async function displayProductDetails() {
             <p class="product-price">
                 <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
             </p>
-            <button id="add-to-cart-button">
-                <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
-            </button>
         `;
 
         // PayPal Button hinzufügen
         const paypalButton = document.createElement('button');
         paypalButton.id = 'paypal-button';
-        paypalButton.textContent = 'Jetzt kaufen mit PayPal';
+        paypalButton.textContent = 'Direct Checkout';
         paypalButton.className = 'paypal-button';
-        infoContainer.insertBefore(paypalButton, document.getElementById('add-to-cart-button'));
+        infoContainer.appendChild(paypalButton);
+
+        // "or"-Element hinzufügen
+        const orElement = document.createElement('span');
+        orElement.className = 'or-text';
+        orElement.textContent = 'OR';
+        infoContainer.appendChild(orElement);
+
+        // Add to Cart Button hinzufügen
+        const addToCartButton = document.createElement('button');
+        addToCartButton.id = 'add-to-cart-button';
+        addToCartButton.innerHTML = `<img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">`;
+        infoContainer.appendChild(addToCartButton);
 
         // Lade den PayPal-Link und füge ihn dem Button hinzu
         try {
@@ -144,11 +153,10 @@ async function displayProductDetails() {
         } catch (error) {
             console.error('Fehler beim Abrufen des PayPal-Links:', error);
             paypalButton.disabled = true; // Deaktiviere den Button, wenn der Link nicht geladen werden kann
-            paypalButton.textContent = 'PayPal-Link nicht verfügbar';
+            paypalButton.textContent = 'DIRECT CHECKOUT';
         }
 
-        // Event-Listener für den Warenkorb-Button mit Icon
-        const addToCartButton = document.getElementById('add-to-cart-button');
+        // Event-Listener für den Warenkorb-Button
         addToCartButton.addEventListener('click', () => addToCart(product));
     } else {
         productDetailContainer.innerHTML = `<p>Produkt nicht gefunden.</p>`;

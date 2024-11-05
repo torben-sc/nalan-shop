@@ -676,11 +676,29 @@ body {
     cursor: pointer;             /* Cursor zeigt Hand beim Überfahren */
     border-radius: 0px;          /* Keine Abrundungen - eckiger Button */
     text-transform: uppercase;   /* Text in Großbuchstaben */
-    transition: background-color 0.3s, transform 0.3s; /* Animation für Hover */
     margin-top: 10px;            /* Abstand zum darüberliegenden Element */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Animation für Hover und Box-Shadow */
+    
+    /* Beleuchtungseffekt von hinten */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); /* Weißer Glow für stärkeren Kontrast */
 }
 
 .paypal-button:hover {
     background-color: #1e2f6f;   /* Etwas dunkleres Blau bei Hover */
     transform: scale(1.05);      /* Leichte Vergrößerung beim Hovern */
+    box-shadow: 0 0 30px rgba(36, 56, 142, 0.9); /* Verstärktes Leuchten bei Hover */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Weißer Glow für stärkeren Kontrast */
+}
+
+@font-face {
+    font-family: 'DS-DigitalBold';
+    src: url('fonts/DS-DIGIB.TTF') format('truetype');
+}
+.or-text {
+    display: block;               /* Blockelement für Abstand */
+    font-family: 'DS-DigitalBold', sans-serif;  /* Schriftart DS-DIGIB */
+    font-size: 25px;              /* Schriftgröße für das "or" */
+    color: #FFFFFF;               /* Schriftfarbe weiß */
+    text-align: center;           /* Zentriere das "or" zwischen den Buttons */
+    margin: 10px 0;               /* Abstand nach oben und unten */
 }
