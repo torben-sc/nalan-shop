@@ -702,3 +702,12 @@ body {
     text-align: center;           /* Zentriere das "or" zwischen den Buttons */
     margin: 10px 0;               /* Abstand nach oben und unten */
 }
+
+.otherwise-message {
+    font-size: 15x; /* Größe des Textes */
+    font-weight: bold; /* Fett gedruckt */
+    text-transform: uppercase; /* Großbuchstaben */
+    text-align: center; /* Zentrierter Text */
+    margin-top: 50px; /* Abstand zum Seitenanfang */
+    color: #fff; /* Orange Farbe passend zur Seite */
+}
