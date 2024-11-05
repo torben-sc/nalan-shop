@@ -1,12 +1,12 @@
-// Funktion zum Laden der Produkte aus der JSON-Datei
+// Funktion zum Laden der Produkte über die Netlify Function
 async function fetchProducts() {
     try {
-        const response = await fetch('products.json');
+        const response = await fetch('/.netlify/functions/calculate-cart-total'); // Hole die Produktdaten
         if (!response.ok) {
             throw new Error(`Fehler beim Laden der Produkte: ${response.statusText}`);
         }
-        const products = await response.json();
-        return products;
+        const data = await response.json();
+        return data.products; // Da die Produktdaten in der calculate-cart-total-Funktion enthalten sind
     } catch (error) {
         console.error("Fehler beim Laden der Produkte:", error);
     }
@@ -168,15 +168,15 @@ async function displayProductDetails() {
 
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers
-function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiert die Mengen
+async function updateCartCount(cart) {
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiere die Mengen
     const cartCountElement = document.getElementById('cart-count');
     
     if (cartCountElement) {
         cartCountElement.innerText = cartCount;
     }
 }
+
 
 function showModal(message) {
     const modal = document.getElementById('modal');
@@ -191,29 +191,35 @@ function showModal(message) {
     };
 }
 
-function addToCart(product) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existingProduct = cart.find(item => item.id === product.id);
+async function addToCart(product) {
+    const userId = 'example-user-id'; // Normalerweise sollte dies durch eine Authentifizierung generiert werden
+    try {
+        const response = await fetch('/.netlify/functions/manage-cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId,
+                action: 'add',
+                productId: product.id,
+                quantity: 1,
+            }),
+        });
 
-    if (existingProduct) {
-        if (existingProduct.quantity < product.stock) {
-            existingProduct.quantity += 1;
-            showModal("Added to shopping cart!"); // Modal für Erfolg
-        } else {
-            showModal("Maximum quantity reached!"); // Modal für maximale Anzahl
+        if (!response.ok) {
+            throw new Error('Fehler beim Hinzufügen zum Warenkorb.');
         }
-    } else {
-        if (product.stock > 0) {
-            cart.push({ ...product, quantity: 1, price: parseFloat(product.price) });
-            showModal("Added to shopping cart!");
-        } else {
-            showModal("This product is not available anymore.");
-        }
+
+        const data = await response.json();
+        console.log('Aktualisierter Warenkorb:', data.cart);
+        showModal("Added to shopping cart!");
+        updateCartCount(data.cart); // Warenkorbzähler aktualisieren
+    } catch (error) {
+        console.error("Fehler beim Hinzufügen zum Warenkorb:", error);
     }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Update Warenkorb beim Laden
@@ -294,18 +300,15 @@ function updateImage() {
     });
 }
 
-function displayCartItems() {
+async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
 
     cartItemsContainer.innerHTML = ''; // Leere den Container
 
-    let totalAmount = 0;
+    // Darstellung der einzelnen Artikel im Frontend
     cart.forEach(item => {
-        const price = parseFloat(item.price) || 0; // Fallback zu 0, falls `price` nicht vorhanden ist
-        totalAmount += price * item.quantity;
-
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
 
@@ -314,9 +317,9 @@ function displayCartItems() {
             <div class="cart-item-info">
                 <h3><a href="product.html?id=${item.id}">${item.name}</a></h3>
                 <p class=".product-price-cart1">
-            <span class="price-amount-cart1">Price: ${price.toFixed(2)}</span><span class="price-currency-cart1"> €</span>
-            </p>
-                <p>Quntity: ${item.quantity}</p>
+                <span class="price-amount-cart1">Price: ${item.price.toFixed(2)}</span><span class="price-currency-cart1"> €</span>
+                </p>
+                <p>Quantity: ${item.quantity}</p>
             </div>
             <img src="images/shopping_cart_off_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" 
                  alt="Entfernen" class="remove-item-icon" data-id="${item.id}">
@@ -329,8 +332,26 @@ function displayCartItems() {
 
         cartItemsContainer.appendChild(cartItem);
     });
-    
-    totalAmountElement.innerHTML = `<span class="price-amount-cart2">Total: ${totalAmount.toFixed(2)}</span><span class="price-currency-cart2"> €</span>`;
+
+    // Berechne den Warenkorb-Gesamtbetrag über das Backend
+    try {
+        const response = await fetch('/.netlify/functions/calculate-cart-total', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cartItems: cart }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            totalAmountElement.innerHTML = `<span class="price-amount-cart2">Total: ${data.total}</span><span class="price-currency-cart2"> €</span>`;
+        } else {
+            throw new Error('Fehler bei der Berechnung des Warenkorbbetrags.');
+        }
+    } catch (error) {
+        console.error("Fehler bei der Berechnung des Warenkorbbetrags:", error);
+    }
 }
 
 
