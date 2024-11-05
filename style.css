@@ -708,6 +708,42 @@ body {
     font-weight: bold; /* Fett gedruckt */
     text-transform: uppercase; /* Großbuchstaben */
     text-align: center; /* Zentrierter Text */
-    margin-top: 24px; /* Abstand zum Seitenanfang */
+    margin-top: px; /* Abstand zum Seitenanfang */
     color: #fff; /* Orange Farbe passend zur Seite */
+}
+
+/* Container für die Nachrichten, um sie zu zentrieren */
+.thank-you-page-container {
+    height: 100vh; /* Nutzt die gesamte Höhe des Bildschirms */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container für die Nachrichten */
+.thank-you-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Erste Nachricht */
+.thank-you-message-1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #ffd700; /* Bekanntes Orange (ähnlich zum PayPal-Stil) */
+    text-transform: uppercase; /* Großbuchstaben für die Nachricht */
+    line-height: 1.5;
+    margin-bottom: 20px; /* Abstand zur nächsten Nachricht */
+}
+
+/* Zweite Nachricht */
+.thank-you-message-2 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #E55013; /* Ein anderer Orangeton */
+    text-transform: uppercase; /* Großbuchstaben für die Nachricht */
+    line-height: 1.5;
 }
