@@ -660,3 +660,16 @@ body {
 .legal-links a:hover {
     text-decoration: underline;
 }
+
+.paypal-button-wrapper {
+    display: flex;
+    justify-content: center; /* Zentriert den gesamten Wrapper */
+    align-items: center;
+    margin-top: 20px;
+    width: 100%; /* Breite des übergeordneten Containers auf 100% */
+}
+
+#paypal-button-container {
+    display: flex;
+    justify-content: center; /* Zentriert den Inhalt horizontal */
+}

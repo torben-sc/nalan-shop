@@ -259,7 +259,7 @@ function updateImage() {
     });
 }
 
-function displayCartItems() {
+async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
@@ -278,10 +278,8 @@ function displayCartItems() {
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
                 <h3><a href="product.html?id=${item.id}">${item.name}</a></h3>
-                <p class=".product-price-cart1">
-            <span class="price-amount-cart1">Price: ${price.toFixed(2)}</span><span class="price-currency-cart1"> €</span>
-            </p>
-                <p>Quntity: ${item.quantity}</p>
+                <p>Price: ${price.toFixed(2)} €</p>
+                <p>Quantity: ${item.quantity}</p>
             </div>
             <img src="images/shopping_cart_off_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" 
                  alt="Entfernen" class="remove-item-icon" data-id="${item.id}">
@@ -294,8 +292,38 @@ function displayCartItems() {
 
         cartItemsContainer.appendChild(cartItem);
     });
-    
+
     totalAmountElement.innerHTML = `<span class="price-amount-cart2">Total: ${totalAmount.toFixed(2)}</span><span class="price-currency-cart2"> €</span>`;
+
+    // PayPal Button Container anzeigen
+    renderPaypalButton(totalAmount);
+}
+
+function renderPaypalButton(totalAmount) {
+    // Entferne vorherigen Button, falls vorhanden
+    const paypalButtonContainer = document.getElementById('paypal-button-container');
+    paypalButtonContainer.innerHTML = '';
+
+    // Initialisiere den PayPal Button mit dem aktuellen Gesamtbetrag des Warenkorbs
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: totalAmount.toFixed(2) // Verwende den tatsächlichen Betrag aus dem Warenkorb
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                // Warenkorb nach erfolgreicher Transaktion leeren
+                localStorage.setItem('cart', JSON.stringify([]));
+                displayCartItems(); // Aktualisiere den Warenkorb
+            });
+        }
+    }).render('#paypal-button-container');
 }
 
 
@@ -390,3 +418,6 @@ cartItem.innerHTML = `
          alt="Entfernen" class="remove-item-icon" data-id="${item.id}">
 `;
 
+const totalAmountElement = document.getElementById('total-amount');
+const totalAmountText = totalAmountElement.innerText;
+const totalAmount = parseFloat(totalAmountText.replace('Gesamt: ', '').replace('€', '').trim());

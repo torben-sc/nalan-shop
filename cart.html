@@ -19,12 +19,21 @@
         <!-- Warenkorb-Elemente werden hier dynamisch eingefügt -->
     </div>
     <p id="total-amount" class="cart-total">Gesamt: 0,00 €</p>
-    <h1 class="coming-soon-message">
-        SHOPPING COMING SOON!!!
-    </h1>
-    <script src="app.js"></script>
-    <!-- Social Media Footer -->
-    
 
+
+    <!-- PayPal Button Container -->
+    <div class="paypal-button-wrapper">
+        <div id="paypal-button-container"></div>
+    </div>    
+
+    <p id="result-message"></p>
+
+    <!-- PayPal SDK -->
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AUGpqWymYrCygzY-9gpEhBlZzrNKKUT_zzOhi4g_jAAxayVO_dW8QutenFBo1AmIiOiR0YYpoVHxZuNU&currency=EUR">
+    </script>
+
+    <!-- JavaScript für die Logik (app.js) -->
+    <script src="app.js"></script>
 </body>
 </html>
