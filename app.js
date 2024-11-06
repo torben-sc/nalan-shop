@@ -240,25 +240,26 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'shop.html'; // Navigiert zur Shop-Seite für alle Produkte
         });
 
-        document.getElementById('bagsFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'bags.html'; // Navigiert zur Bags-Seite
-        });
+        // Beispiel für Event-Listener für die Filter-Links im Side-Menü
+document.getElementById('bagsFilter').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'bags.html?category=bags'; // Navigiert zur Bags-Seite mit Kategorie als Parameter
+});
 
-        document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'balaclavas.html'; // Navigiert zur Balaclavas-Seite
-        });
+document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'balaclavas.html?category=balaclavas'; // Navigiert zur Balaclavas-Seite mit Kategorie als Parameter
+});
 
-        document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'handwarmers.html'; // Navigiert zur Hand Warmers-Seite
-        });
+document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'handwarmers.html?category=hand warmers'; // Navigiert zur Hand Warmers-Seite mit Kategorie als Parameter
+});
 
-        document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'otheraccessories.html'; // Navigiert zur Other Accessories-Seite
-        });
+document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'otheraccessories.html?category=other accessories'; // Navigiert zur Other Accessories-Seite mit Kategorie als Parameter
+});
     }
 
     // Logo-Event nur hinzufügen, wenn es existiert
