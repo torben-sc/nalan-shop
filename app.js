@@ -219,19 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update Warenkorb beim Laden
     updateCartCount();
 
-    // Event-Listener für das Laden der jeweiligen Seite
-    document.addEventListener('DOMContentLoaded', () => {
-    // Überprüfe, ob wir uns auf der Shop-Seite befinden
-        if (document.getElementById('product-container')) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const category = urlParams.get('category') || null;
-
-        // Zeige gefilterte oder alle Produkte an
-        displayProductList(category);
-    }
-
-    // Menü-Toggle un
-
     // Elemente für Menü-Toggle und Schließen des Menüs auswählen, wenn vorhanden
     const menuToggle = document.querySelector('.menu-toggle');
     const sideMenu = document.getElementById('sideMenu');
