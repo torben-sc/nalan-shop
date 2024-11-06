@@ -170,7 +170,7 @@ async function displayProductDetails() {
 // Funktion zum Aktualisieren des Warenkorb-Zählers
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiere die Mengen
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0); // Summiert die Mengen
     const cartCountElement = document.getElementById('cart-count');
     
     if (cartCountElement) {
@@ -216,57 +216,49 @@ function addToCart(product) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Überprüfe, ob wir uns auf der Shop-Seite befinden
-    if (document.getElementById('product-container')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const category = urlParams.get('category') || null;
+    // Update Warenkorb beim Laden
+    updateCartCount();
 
-        // Zeige gefilterte oder alle Produkte an
-        displayProductList(category);
-    }
-
-    // Menü-Toggle und Filter-Event-Listener nur hinzufügen, wenn die Elemente vorhanden sind
+    // Elemente für Menü-Toggle und Schließen des Menüs auswählen, wenn vorhanden
     const menuToggle = document.querySelector('.menu-toggle');
     const sideMenu = document.getElementById('sideMenu');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
 
+    // Menü-Toggle-Events nur hinzufügen, wenn sie vorhanden sind
     if (menuToggle && sideMenu && closeMenuBtn) {
-        // Menü ein- und ausklappen
         menuToggle.addEventListener('click', () => {
-            sideMenu.classList.toggle('open');
+            sideMenu.classList.toggle('open'); // Menü ein- und ausklappen
         });
 
-        // Menü schließen
         closeMenuBtn.addEventListener('click', () => {
-            sideMenu.classList.remove('open');
+            sideMenu.classList.remove('open'); // Menü schließen
         });
 
-        // Filter-Buttons: Event-Listener für das Filtern nach Kategorien hinzufügen
+        // URL-Navigation für die Filter-Links im Side-Menü
         document.getElementById('showAllFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            displayProductList(); // Zeige alle Produkte an
+            window.location.href = 'shop.html'; // Navigiert zur Shop-Seite für alle Produkte
         });
 
         document.getElementById('bagsFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            displayProductList('bags'); // Zeige nur Bags an
+            window.location.href = 'bags.html'; // Navigiert zur Bags-Seite
         });
 
         document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            displayProductList('balaclavas'); // Zeige nur Balaclavas an
+            window.location.href = 'balaclavas.html'; // Navigiert zur Balaclavas-Seite
         });
 
         document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            displayProductList('hand warmers'); // Zeige nur Hand Warmers an
+            window.location.href = 'handwarmers.html'; // Navigiert zur Hand Warmers-Seite
         });
 
         document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            displayProductList('other accessories'); // Zeige nur Other Accessories an
+            window.location.href = 'otheraccessories.html'; // Navigiert zur Other Accessories-Seite
         });
-
     }
 
     // Logo-Event nur hinzufügen, wenn es existiert
@@ -355,15 +347,6 @@ function filterProductsByCategory(category) {
     const filteredProducts = products.filter(product => product.category === category);
     displayProductList(filteredProducts);
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    updateCartCount();
-
-    // Produktdetailseite laden, wenn auf der Produktseite
-    if (document.getElementById('product-detail-container')) {
-        displayProductDetails();
-    }
-});
 
 
 document.addEventListener('DOMContentLoaded', () => {
