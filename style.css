@@ -708,7 +708,7 @@ body {
     font-weight: bold; /* Fett gedruckt */
     text-transform: uppercase; /* Großbuchstaben */
     text-align: center; /* Zentrierter Text */
-    margin-top: px; /* Abstand zum Seitenanfang */
+    margin-top: 5px; /* Abstand zum Seitenanfang */
     color: #fff; /* Orange Farbe passend zur Seite */
 }
 
