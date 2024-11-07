@@ -298,22 +298,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('bagsFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html?category=bags'; // Navigiert zur Shop-Seite und setzt category auf 'bags'
+            window.location.href = 'bags.html?category=bags'; // Navigiert zur Bags-Seite mit Kategorie als Parameter
         });
 
         document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html?category=balaclavas'; // Navigiert zur Shop-Seite und setzt category auf 'balaclavas'
+            window.location.href = 'balaclavas.html?category=balaclavas'; // Navigiert zur Balaclavas-Seite mit Kategorie als Parameter
         });
 
         document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html?category=hand warmers'; // Navigiert zur Shop-Seite und setzt category auf 'hand warmers'
+            window.location.href = 'handwarmers.html?category=hand warmers'; // Navigiert zur Hand Warmers-Seite mit Kategorie als Parameter
         });
-
         document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html?category=other accessories'; // Navigiert zur Shop-Seite und setzt category auf 'other accessories'
+            window.location.href = 'otheraccessories.html?category=other accessories'; // Navigiert zur Other Accessories-Seite mit Kategorie als Parameter
         });
     }
 
