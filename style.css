@@ -170,17 +170,19 @@ main {
 
 /* Produktname */
 .product-card h2 {
-    font-size: 0.9em; /* Kleinere Schriftgröße */
-    margin: 5px 0; /* Weniger Abstand zwischen Bild und Text */
+    font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
+    margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
     color: #ffffff;
+    margin-left: 3px;
 }
 
 /* Produktpreis */
 .product-card p {
-    font-size: 0.8em; /* Kleinere Schriftgröße für den Preis */
+    font-size: 0.9em; /* Größere Schriftgröße für den Preis */
     color: #E55013;
     font-weight: bold;
-    margin: 5px 0; /* Weniger Abstand zum Preis */
+    margin: 0px 0 20px; /* Mehr Abstand zum unteren Rand (10px oben, 20px unten) */
+    margin-left: 3px;
 }
 
 /* Entferne Hover-Effekte für Produkte */
@@ -252,17 +254,140 @@ main {
 
 /* Mobile Specific Styles */
 @media (max-width: 768px) {
-    .top-menu-wrapper {
-        padding-left: 10px; /* Optionale Anpassung für bessere Sichtbarkeit am Handy */
+/* Produktseite Layout */
+    .product-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #24388e; 
     }
 
-    .product-container {
-        grid-template-columns: repeat(2, 1fr); /* Zwei Spalten für mobile Geräte */
+    /* Produktbild - Hauptbild */
+    .product-main-image-container {
+        text-align: center;
+        margin-bottom: 20px;
     }
 
-    .cart-icon {
-        right: 10px;
+    .product-main-image {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
     }
+
+    /* Thumbnails unter dem Hauptbild */
+    .product-thumbnail-container {
+        display: flex;
+        justify-content: flex-start; /* Ändert die Ausrichtung von zentriert auf links */
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .product-thumbnail {
+        width: 50px;
+        height: auto;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    .product-thumbnail:hover {
+        border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
+    }
+
+    /* Produktinformationen */
+    .product-info {
+        text-align: left;
+    }
+    .product-title-details {
+        font-size: 1.5em;
+        margin-top: 20px;
+        color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+        text-transform: uppercase;
+        font-weight: 500;
+        text-align: left; /* Linksbündige Überschrift */
+        margin-left: 0; /* Abstand zum linken Rand auf 0 setzen, damit es so weit wie möglich nach links geht */
+        margin-bottom: 20px;
+    }
+    
+    .back-link {
+        text-decoration: none; /* Normale Unterstreichung entfernen */
+        color: #ffffff;
+        font-weight: lighter;
+        margin-bottom: 20px;
+        display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
+        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
+    }
+    
+    
+    .product-price {
+        font-size: 1.5em;
+        color: #ffffff;
+        margin-bottom: 20px;
+        margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
+    }
+    
+    .product-description {
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: #ffffff;
+        font-weight: bolder;
+        margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
+    }
+    
+    
+    /* Button zum Direktkauf (Direct Checkout) */
+    .checkout-button {
+        background-color: #000; /* Grün für Direktkauf */
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .checkout-button:hover {
+        background-color: #444; /* Etwas dunkleres Grün beim Hover */
+    }
+    
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Zentriert die Buttons und den "OR" Text horizontal */
+        gap: 10px; /* Fügt gleichmäßigen Abstand zwischen den Buttons und dem "OR"-Text hinzu */
+        margin-top: 20px; /* Optional: Abstand zur oberen Beschreibung erhöhen */
+    }
+    
+    /* OR Text zwischen den Buttons */
+    .or-text {
+        font-weight: bold; /* Fett gedruckt */
+        color: #ffffff; /* Weißer Text für Kontrast */
+        margin: 0; /* Entfernt den Standardabstand */
+        text-align: center; /* Sorgt für zentrierten Text */
+        width: 100%; /* Sicherstellen, dass der Text im Zentrum des Containers bleibt */
+    }
+    
+    /* Button zum Hinzufügen in den Warenkorb */
+    .add-to-cart-button {
+        background-color: #28a745;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px; /* Abstand zum nächsten Element */
+    }
+    
+    .add-to-cart-button:hover {
+        background-color: #218838;
+    }
+
 }
 
 /* Desktop Specific Styles */
@@ -274,144 +399,165 @@ main {
     .product-card img {
         max-height: 100%; /* Bild soll den gesamten Container füllen */
     }
-}
 
-/* Produktseite Layout */
-.product-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #24388e; 
-}
+    /* Desktop spezifisches Layout für die Produktdetailseite */
+    .product-detail-wrapper {
+        display: flex;
+        flex-direction: row; /* Bilder und Informationen nebeneinander */
+        gap: 40px;
+        align-items: flex-start; /* Elemente oben ausrichten */
+    }
 
-/* Produktbild - Hauptbild */
-.product-main-image-container {
-    text-align: center;
-    margin-bottom: 20px;
-}
+    .product-main-image-container,
+    .product-thumbnail-container {
+        flex: 1; /* Gleiche Breite für Bilder */
+    }
 
-.product-main-image {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-}
+    .product-info {
+        flex: 1; /* Gleiche Breite für Text */
+    }
 
-/* Thumbnails unter dem Hauptbild */
-.product-thumbnail-container {
-    display: flex;
-    justify-content: last baseline;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.product-thumbnail {
-    width: 50px;
-    height: auto;
-    cursor: pointer;
-    border: 2px solid transparent;
-}
-
-.product-thumbnail:hover {
-    border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
-}
-
-/* Produktinformationen */
-.product-info {
-    text-align: left;
-}
-
-.product-title-details {
-    font-size: 1.5em;
-    margin-top: 0px;
-    color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
-    text-transform: uppercase;
-    font-weight: 500;
-    text-align: left; /* Linksbündige Überschrift */
-    margin-left: 5px; /* Abstand zum linken Rand */
-    margin-bottom: 20px;
-}
-
-
-.back-link {
-    text-decoration: underline;
-    color: #ffffff;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: block;
-}
-
-.product-price {
-    font-size: 1.5em;
-    color: #ffffff;
-    margin-bottom: 20px;
-}
-
-.product-description {
-    font-size: 1em;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color: #ffffff;
-    font-weight: bolder;
-}
-
-/* Produktgrößen */
-.product-sizes {
-    margin-bottom: 20px;
-}
-
-.product-sizes h3 {
-    font-size: 1em;
-    margin-bottom: 10px;
-}
-
-.size-button {
-    background-color: #24388e;
-    border: 1px solid #ffffff;
-    padding: 10px 15px;
-    font-size: 1em;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-.size-button.disabled {
-    color: #aaa;
-    border-color: #aaa;
-    cursor: not-allowed;
-}
-
-/* Button zum Hinzufügen in den Warenkorb */
-.add-to-cart-button {
-    background-color: #000;
-    color: #fff;
-    padding: 15px;
-    border: none;
-    font-size: 1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    width: 100%;
-    max-width: 300px;
-}
-
-.add-to-cart-button:hover {
-    background-color: #444;
-}
-
-/* Responsives Design */
-@media (max-width: 768px) {
     .product-main-image {
-        max-width: 100%;
+        max-width: 100%; /* Bild soll vollen Container füllen */
     }
 
+    .product-thumbnail-container {
+        justify-content: flex-start; /* Thumbnails linksbündig */
+    }
+    .product-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #24388e; 
+    }
+    
+    /* Produktbild - Hauptbild */
+    .product-main-image-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .product-main-image {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+    }
+    
+    /* Thumbnails unter dem Hauptbild */
+    .product-thumbnail-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
     .product-thumbnail {
-        width: 70px;
+        width: 50px;
+        height: auto;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+    
+    .product-thumbnail:hover {
+        border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
+    }
+    
+    /* Produktinformationen */
+    .product-info {
+        text-align: left;
+    }
+    
+    .product-title-details {
+        font-size: 1.5em;
+        margin-top: 0px;
+        color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+        text-transform: uppercase;
+        font-weight: 500;
+        text-align: left; /* Linksbündige Überschrift */
+        margin-left: 5px; /* Abstand zum linken Rand */
+        margin-bottom: 20px;
+    }
+    
+    .back-link {
+        text-decoration: underline;
+        color: #ffffff;
+        font-weight: bold;
+        margin-bottom: 20px;
+        display: block;
+    }
+    
+    .product-price {
+        font-size: 1.5em;
+        color: #ffffff;
+        margin-bottom: 20px;
+    }
+    
+    .product-description {
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: #ffffff;
+        font-weight: bolder;
     }
 
+     /* Button zum Direktkauf (Direct Checkout) */
+     .checkout-button {
+        background-color: #000; /* Grün für Direktkauf */
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 10px; /* Abstand zum nächsten Element */
+    }
+    
+    .checkout-button:hover {
+        background-color: #444; /* Etwas dunkleres Grün beim Hover */
+    }
+    
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Zentriert die Buttons und den "OR" Text horizontal */
+        gap: 20px; /* Fügt gleichmäßigen Abstand zwischen den Buttons und dem "OR"-Text hinzu */
+        margin-top: 20px; /* Optional: Abstand zur oberen Beschreibung erhöhen */
+    }
+    
+    /* OR Text zwischen den Buttons */
+    .or-text {
+        font-weight: bold; /* Fett gedruckt */
+        color: #ffffff; /* Weißer Text für Kontrast */
+        margin: 0; /* Entfernt den Standardabstand */
+        text-align: center; /* Sorgt für zentrierten Text */
+        width: 100%; /* Sicherstellen, dass der Text im Zentrum des Containers bleibt */
+    }
+    
+    /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
-        max-width: 100%;
+        background-color: #28a745;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px; /* Abstand zum nächsten Element */
     }
+    
+    .add-to-cart-button:hover {
+        background-color: #218838;
+    }
+    
 }
+/* Produktseite Layout */
 
-/* Modal Styles */
+
+/* Modal-Stile */
 .modal {
     display: none; /* Modal ist anfangs versteckt */
     position: fixed;
@@ -421,35 +567,31 @@ main {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Halbdurchsichtiger Hintergrund */
-    justify-content: center; /* Modal mittig horizontal ausrichten */
-    align-items: center; /* Modal mittig vertikal ausrichten */
 }
 
 .modal-content {
     background-color: #ffffff;
     color: #333;
-    margin: auto;
+    margin: 15% auto;
     padding: 20px;
     border-radius: 10px;
     width: 80%;
     max-width: 400px;
     text-align: center;
-    position: relative; /* Ermöglicht die Positionierung des Schließen-Symbols innerhalb des Modal-Inhalts */
+    position: relative;
 }
 
 .close {
     color: #aaa;
-    position: absolute;
-    top: 10px; 
-    right: 10px;
+    position: absolute; 
+    top: 228px; 
+    right: 530px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
+.close:hover, .close:focus {
     color: #000;
     text-decoration: none;
-    cursor: pointer;
 }
