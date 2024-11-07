@@ -143,19 +143,17 @@ function updateCartCount() {
 function showModal(message) {
     const modal = document.getElementById('modal');
     const modalMessage = document.getElementById('modal-message');
-
+    
     if (!modal || !modalMessage) {
-        console.error('Modal or Modal message element not found');
+        console.error('Modal oder Modal-Nachricht nicht gefunden');
         return;
     }
 
-    // Setzt den Modal-Text
+    // Setze den Modal-Text
     modalMessage.textContent = message;
 
-    console.log(`Modal message set to: ${message}`); // Debugging-Meldung zur Überprüfung des Texts
-
     // Zeigt das Modal an
-    modal.style.display = 'flex';
+    modal.style.display = 'block';
 
     // Schließt das Modal automatisch nach 3 Sekunden
     setTimeout(() => {
@@ -164,9 +162,11 @@ function showModal(message) {
 
     // Klick auf das Schließen-Symbol
     const closeModalBtn = document.getElementById('close-modal');
-    closeModalBtn.onclick = () => {
-        modal.style.display = 'none';
-    };
+    if (closeModalBtn) {
+        closeModalBtn.onclick = () => {
+            modal.style.display = 'none';
+        };
+    }
 
     // Klick außerhalb des Modals schließt es auch
     window.onclick = (event) => {
@@ -175,6 +175,7 @@ function showModal(message) {
         }
     };
 }
+
 
 
 function addToCart(product) {
