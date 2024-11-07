@@ -5,619 +5,210 @@
     box-sizing: border-box;
 }
 
-/* Einbindung der Schriftart DS-DIGII */
-@font-face {
-    font-family: 'DS-Digital';
-    src: url('fonts/DS-DIGIB.TTF') format('truetype');
-}
-
-/* Gemeinsame Einstellungen */
 body {
-    background-color: #24388e;
-    color: #ffffff;
-    font-family: sans-serif;
-    margin: 0;
+    background-color: #24388e; /* Setzt die gesamte Hintergrundfarbe der Seite auf Blau */
+    color: #ffffff; /* Weißer Text für bessere Lesbarkeit */
+    font-family: Arial, sans-serif;
 }
 
-/* === STILE FÜR DIE LANDING PAGE === */
-
-
-/* Container für zentrierte Inhalte auf der Landing Page */
-#landing-container {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-}
-
-/* Logo auf der Landing Page */
-#landing-logo {
-    max-width: 350px;
-    margin-bottom: 30px;
-}
-
-/* Shop-Button auf der Landing Page */
-#landing-shop-button {
-    display: inline-block;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 40px;
-    font-family: 'DS-Digital', sans-serif;
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6);
-    transition: text-shadow 0.3s ease;
-}
-
-#landing-shop-button:hover,
-#landing-shop-button:active {
-    text-shadow: 0px 0px 10px rgba(255, 255, 255, 1), 
-                 0px 0px 20px rgba(255, 255, 255, 0.8);
-}
-
-/* === STILE FÜR DIE SHOP-SEITE === */
-
-/* Fixierter Header für Shop-Seite */
+/* Fixierter Header mit zentriertem Logo und Hintergrundfarbe */
 .shop-header {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 60px; /* Die Höhe des Headers kann angepasst werden, falls nötig */
     background-color: #24388e;
     display: flex;
-    justify-content: center;
     align-items: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    justify-content: center; /* Zentriert das Logo */
+    padding: 0 20px;
     z-index: 1000;
+    border-bottom: none; /* Entfernt die Untergrenze des Headers */
 }
 
-.shop-header .logo {
-    max-height: 60px;
+.logo-link {
+    display: block;
+}
+
+.logo {
+    height: 30px; /* Hier kannst du die Höhe des Logos anpassen */
+    max-height: 30px; /* Alternativ kannst du die maximale Höhe auch erhöhen */
+}
+
+/* Warenkorb-Icon im Header, rechts positioniert */
+.cart-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+}
+
+.cart-icon img {
+    width: 100%;
+    height: auto;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #E55013;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.top-menu-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 20px;
+    box-sizing: border-box;
+
+    /* Versteckt den Scrollbalken */
+    -ms-overflow-style: none;  /* Für Internet Explorer und Edge */
+    scrollbar-width: none;     /* Für Firefox */
+}
+
+.top-menu-wrapper::-webkit-scrollbar {
+    display: none;  /* Für Webkit-basierte Browser (Chrome, Safari) */
+}
+
+
+/* Top-Menu: Filter-Links */
+.top-menu {
+    display: inline-flex; /* Elemente werden in einer Reihe angezeigt */
+    gap: 20px;
+    align-items: center;
+    margin: 0; /* Keine Margins */
+    justify-content: flex-start; /* Links ausrichten */
+    padding-left: 0; /* Entfernt eventuelles Padding auf der linken Seite */
+}
+
+.top-menu a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 400; /* Setzt die Schrift auf dünner */
+    font-size: 1.1em; /* Beibehaltung der Schriftgröße */
+    position: relative;
+    transition: color 0.3s ease;
+    padding-bottom: 5px; /* Platz für die Linie */
+    white-space: nowrap; /* Verhindert Zeilenumbruch für einzelne Links */
+    margin-left: 0; /* Vermeide zusätzlichen Abstand links */
+}
+
+
+/* Gepunktete Linie unter jedem Filter-Link */
+.top-menu a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 1px dotted #ffffff; /* Weiße gepunktete Linie */
+    margin-top: 0px; /* Abstand zur Linie */
+}
+
+.top-menu a:hover {
+    color: #E55013;
+}
+
+/* Überschrift (Produkt-Titel) */
+.product-title {
+    font-size: 3em;
+    margin-top: 0px;
+    color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: left; /* Linksbündige Überschrift */
+    margin-left: 5px; /* Abstand zum linken Rand */
 }
 
 /* Hauptbereich für Produkte */
+main {
+    padding-top: 20px;
+}
+
+/* Produkt Container */
 .product-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 100px; /* Platz für fixierten Header */
-    gap: 40px;
-    padding-bottom: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Bilder füllen die gesamte Breite des Displays aus */
+    gap: 0px; /* Keine Abstände zwischen den Produktkarten */
 }
 
-/* Produkt ohne Box */
+/* Produkt-Karten Design */
 .product-card {
-    text-align: center;
-    color: #ffffff;
+    text-align: left;
+    background-color: #24388e; /* Hintergrundfarbe passend zum Seitenhintergrund */
+    color: #ffffff; /* Weißer Text für Kontrast */
+    overflow: hidden; /* Verhindert Überlauf von Inhalten */
+    height: 100%; /* Füllt den gesamten Container aus */
+    border: none; /* Kein Rand um die Produktkarte */
+    position: relative; /* Positionierung für überlappende Texte */
 }
 
-/* Link für Bild und Name, mit Hover-Effekten */
-.product-link {
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.product-link:hover img,
-.product-link:hover h2 {
-    transform: scale(1.05);
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-}
-
-/* Bild in der Produktkarte */
+/* Bild des Produkts */
 .product-card img {
     width: 100%;
-    max-width: 300px;
-    border-radius: 8px;
+    height: auto;
+    object-fit: cover; /* Das Bild passt sich an und füllt den Container ohne Verzerrung */
+    border: none; /* Kein Rand um das Bild */
+    display: block;
+}
+
+.product-card a {
+    text-decoration: none; /* Keine Linie unter dem Link */
+    border-bottom: none; /* Entfernt eine mögliche Linie unter den Links */
+}
+
+/* Container für die Produktinformationen */
+.product-info {
+    padding: 10px; /* Abstand für den Text unterhalb des Bildes */
 }
 
 /* Produktname */
 .product-card h2 {
-    font-size: 28px;
-    margin: 10px 0;
-    font-family: 'DS-Digital', sans-serif;
+    font-size: 0.9em; /* Kleinere Schriftgröße */
+    margin: 5px 0; /* Weniger Abstand zwischen Bild und Text */
+    color: #ffffff;
 }
 
-.product-price {
-    font-size: 30px; /* Standardgröße für den Preistext */
-}
-
-.price-amount {
-    font-size: 30px; /* Größere Schriftgröße nur für den Preisbetrag */
-    font-weight: bold;
-}
-
-.price-currency {
-    font-size: 24px; /* Kleinere Schriftgröße für das Euro-Symbol */
-}
-
-.product-price-shop {
-    font-size: 25px; /* Standardgröße für den Preistext */
-}
-
-.price-amount-shop {
-    font-size: 25px; /* Größere Schriftgröße nur für den Preisbetrag */
-    font-weight: bold;
-}
-
-.price-currency-shop {
-    font-size: 21px; /* Kleinere Schriftgröße für das Euro-Symbol */
-}
-
-.product-price-cart1 {
-    font-size: 18px; /* Standardgröße für den Preistext */
-}
-
-.price-amount-cart1 {
-    font-size: 18px; /* Größere Schriftgröße nur für den Preisbetrag */
-    font-weight: bold;
-}
-
-.price-currency-cart1 {
-    font-size: 15px; /* Kleinere Schriftgröße für das Euro-Symbol */
-}
-
-.price-amount-cart2 {
-    font-size: 28px; /* Anpassung der Zahlengröße */
-    font-weight: bold;
-}
-
-.price-currency-cart2 {
-    font-size:23px; /* Anpassung der Größe des Euro-Symbols */
-}
-
-
-/* Preis */
+/* Produktpreis */
 .product-card p {
-    font-size: 30px;
-    font-family: 'DS-Digital', sans-serif;
-    color: #ffd700; /* Goldene Farbe für den Preis */
-    margin-top: 5px;
-}
-
-/* Hauptcontainer für die Produktdetails */
-.product-detail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 800px; /* Maximale Breite für größere Bildschirme */
-    margin: 0 auto; /* Zentriert den Container auf dem Bildschirm */
-    padding: 20px; /* Optionaler Innenabstand */
-}
-
-
-/* Zentrierung und Abstand für das Produktbild */
-.product-detail-image img {
-    max-width: 100%;
-    width: auto;
-    border-radius: 20px;
-    margin-top: 5px; /* Zusätzlicher Abstand zum Header */
-}
-
-/* Produktname */
-.product-detail-info h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    font-family: 'DS-Digital', sans-serif;
-}
-
-/* Produktbeschreibung und Preis */
-.product-detail-info p {
-    font-size: 1.5em;
-    font-family: 'DS-Digital', sans-serif;
-    margin-bottom: 10px;
-    color: #ffd700; /* Goldene Farbe für den Preis */
-}
-
-
-/* Container für die Produktbilder und Slider-Elemente */
-.product-detail-images {
-    display: flex;
-    flex-direction: column; /* Bild und Thumbnails untereinander */
-    align-items: center;
-    margin-top: 5px;
-    margin-bottom: 15px;
-}
-
-/* Hauptbild im Slider */
-.product-image {
-    max-width: 100%;      /* Bild passt sich der Containerbreite an */
-    max-height: 400px;    /* Begrenzung der maximalen Höhe */
-    width: auto;          /* Verhindert Verzerrungen */
-    height: auto;         /* Verhindert Verzerrungen */
-    border-radius: 8px;   /* Optional: abgerundete Ecken für das Bild */
-    margin-top: 10px;     /* Abstand zum Header oder anderen Elementen */
-}
-
-
-/* Thumbnail-Container */
-.thumbnails-container {
-    display: flex;
-    gap: 12px; /* Abstand zwischen den Thumbnails */
-    margin-top: 10px;
-}
-
-/* Thumbnail-Bilder */
-.thumbnail {
-    width: 50px; /* Kleinere Größe der Thumbnails */
-    height: 50px;
-    border-radius: 5px;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.3s, transform 0.3s, border-color 0.3s;
-    border: 2px solid transparent; /* Initial transparent border */
-    margin-right: 8px; /* Leichter Abstand zwischen den Thumbnails */
-}
-
-.thumbnail.active {
-    opacity: 1;
-    transform: scale(1.1); /* Vergrößerung des aktiven Thumbnails */
-    border-color: #ffd700; /* Goldener Rand für das aktive Thumbnail */
-}
-
-#add-to-cart-button {
-    margin-top: 20px;
-    padding: 12px; /* Innenabstand für mehr Fläche um das Icon */
-    background-color: #E55013; /* Hellgrauer Hintergrund */
-    border: none;
-    cursor: pointer;
-    border-radius: 12px; /* Abgerundete Ecken */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
-    width: 180px; /* Optionale feste Breite */
-    height: 60px; /* Optionale feste Höhe */
-    margin-left: auto;
-    margin-right: auto; /* Zentriert den Button */
-}
-
-#add-to-cart-button img {
-    width: 24px; /* Größe des Icons anpassen */
-    height: 24px;
-}
-
-#add-to-cart-button:hover {
-    background-color: #d0d0d0; /* Etwas dunklerer Grau-Ton bei Hover */
-}
-
-.product-detail-images .product-image {
-    max-width: 100%;
-    max-height: 400px; /* Begrenzung der maximalen Höhe */
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-    margin-top: 80px;
-}
-
-/* Optional: Desktop-Stile für zentrierte Darstellung */
-@media (min-width: 768px) {
-    .product-image {
-        max-height: 300px; /* Kleinere Höhe für größere Bildschirme */
-    }
-}
-
-/* Container für die Warenkorbseite */
-.cart-container {
-    padding-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: left;
-}
-
-/* Warenkorb-Artikel-Stil */
-.cart-item {
-    display: flex;
-    align-items: center;
-    width: 80%;
-    max-width: 600px;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-    margin-bottom: 10px;
-}
-
-/* Bild des Warenkorb-Artikels */
-.cart-item-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    margin-right: 15px;
-}
-
-/* Artikelinformationen im Warenkorb */
-.cart-item-info {
-    flex-grow: 1;
-    font-family: 'DS-Digital', sans-serif; /* Digitale Schriftart */
-}
-
-/* Produktname */
-.cart-item-info h3 {
-    font-size: 20px;
-    margin: 0;
-    color: #ffffff !important; /* Weißer Text mit Priorität */
-    font-family: 'DS-Digital', sans-serif;
-}
-
-/* Produktname im Warenkorb */
-.cart-item-info h3 a {
-    color: #ffffff; /* Weißer Text für den Produktnamen */
-    text-decoration: none; /* Entfernt die Unterstreichung */
-    transition: text-shadow 0.3s ease, transform 0.3s ease; /* Sanfter Übergang für den Effekt */
-}
-
-.cart-item-info h3 a:hover,
-.cart-item-info h3 a:active {
-    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8); /* Leuchteffekt bei Hover */
-    transform: scale(1.05); /* Leichte Vergrößerung bei Hover */
-}
-
-
-
-/* Zentrierung und Anpassung der Gesamtsumme */
-.cart-total {
-    text-align: center;
-    font-family: 'DS-Digital', sans-serif; /* Digitale Schriftart */
-    font-size: 24px; /* Optional: Größere Schriftgröße für die Gesamtsumme */
-    color: #E55013; /* Optional: Goldene Farbe für den Betrag */
-    margin-top: 20px;
-}
-
-/* Preis */
-.cart-item-info p {
-    font-size: 18px;
-    color: #ffd700; /* Goldene Farbe für den Preis */
-    margin-top: 5px;
-}
-
-
-#checkout-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #24388e;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-/* Container für das Warenkorb-Icon */
-.cart-icon {
-    position: absolute;
-    top: 20px; 
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Stile für das Warenkorb-Icon-Bild */
-.cart-icon img {
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
-}
-
-/* Anpassung für den Header, um das Icon zu integrieren */
-.shop-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background-color: #24388e;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-}
-
-.shop-header .logo {
-    max-height: 60px;
-}
-
-/* Zähler-Badge für das Warenkorb-Icon */
-.cart-count {
-    position: absolute;
-    top: 15px; /* Leicht nach unten verschoben */
-    right: 3px; /* Leicht nach links verschoben */
-    background-color: #E55013; /* Hintergrundfarbe des Zählers */
-    color: #ffffff;
-    border-radius: 50%;
-    padding: 2px 6px; /* Kleinere Größe für den Zähler */
-    font-size: 10px; /* Kleinere Schriftgröße */
+    font-size: 0.8em; /* Kleinere Schriftgröße für den Preis */
+    color: #E55013;
     font-weight: bold;
-    min-width: 10px; /* Kleinere Mindestbreite */
-    text-align: center;
-    line-height: 1;
+    margin: 5px 0; /* Weniger Abstand zum Preis */
 }
 
-/* Stil für das Entfernen-Icon rechts neben dem Produkt */
-.remove-item-icon {
-    width: 24px; /* Größe des Icons */
-    height: 24px;
-    cursor: pointer;
-    margin-left: auto; /* Schiebt das Icon nach rechts */
-    transition: opacity 0.3s ease;
-    opacity: 0.7;
+/* Entferne Hover-Effekte für Produkte */
+.product-card:hover {
+    transform: none; /* Entfernt jegliche Skalierung beim Hover */
 }
 
-.remove-item-icon:hover {
-    opacity: 1; /* Stärkere Deckkraft bei Hover */
-}
-
-/* Modal-Stile */
-.modal {
-    display: none; /* Modal ist anfangs versteckt */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Halbdurchsichtiger Hintergrund */
-}
-
-.modal-content {
-    background-color: #ffffff;
-    color: #333;
-    margin: 15% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.close {
-    color: #aaa;
-    position: absolute; 
-    top: 228px; 
-    right: 530px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover, .close:focus {
-    color: #000;
-    text-decoration: none;
-}
-
-.shop-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    background-color: #24388e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    z-index: 1000;
-}
-
-.side-menu {
-    position: fixed;
-    top: 80px; /* Beginnt direkt unterhalb des Headers */
-    left: 0;
-    width: 100%;
-    max-height: 0; /* Anfangs ausgeblendet */
-    overflow: hidden;
-    background-color: #24388e;
-    transition: max-height 0.3s ease; /* Übergang für das Ein- und Ausfahren */
-    color: white;
-    z-index: 999; /* Unterhalb des Headers */
-}
-
-/* Menü geöffnet */
-.side-menu.open {
-    max-height: 1000px; /* Höhe, die das Menü im offenen Zustand haben soll */
-}
-
-.side-menu a {
-    display: block;
-    padding: 10px;
-    font-size: 20px;
-    text-decoration: none;
-    color: #E55013; /* Orange Farbe für die Schrift */
-    transition: background-color 0.3s ease;
-    text-align: center;
-    white-space: nowrap; /* Verhindert Zeilenumbruch */
-    font-weight: bold; /* Fettgedruckt */
-    text-transform: uppercase; /* Großbuchstaben */
-}
-
-.side-menu a:hover {
-    background-color: #394bac; /* Hintergrundfarbe beim Hover */
-}
-
-
-/* Stil für das Burger-Icon */
-.menu-toggle {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 5px;
-    position: absolute;
-    left: 20px;
-}
-
-.menu-bar {
-    width: 30px;
-    height: 3px;
-    background-color: #ffffff;
-    transition: transform 0.3s;
-}
-
-/* Versteckt das Seitenmenü standardmäßig */
-.side-menu {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #24388e;
-    overflow-x: hidden;
-    transition: width 0.3s ease;
-    padding-top: 60px;
-    color: white;
-    z-index: 1100;
-}
-
-.side-menu.open {
-    width: 250px; /* Breite des offenen Menüs */
-}
-
-.close-menu-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
-    color: #ffffff;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-.close-menu-btn:hover {
-    color: #d0d0d0; /* Hellere Farbe beim Hover */
-}
-
-.coming-soon-message {
-    font-size: 30x; /* Größe des Textes */
-    font-weight: bold; /* Fett gedruckt */
-    text-transform: uppercase; /* Großbuchstaben */
-    text-align: center; /* Zentrierter Text */
-    margin-top: 50px; /* Abstand zum Seitenanfang */
-    color: #ffd700; /* Orange Farbe passend zur Seite */
-}
-
-/* Stil für den Footer der rechtlichen Informationen */
+/* Footer Styles */
 .custom-footer {
-    background-color: #24388e; /* Passt die Hintergrundfarbe an */
-    color: #fff; /* Weißer Text */
+    background-color: #24388e;
+    color: #ffffff;
     text-align: center;
-    padding: 20px 10px;
-    font-size: 12px;
-    font-family: Arial, sans-serif;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: 40px;
 }
 
 .footer-branding {
-    font-size: 14px; /* Schriftgröße für den Schriftzug etwas erhöht */
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #E55013; /* Gelbe Farbe */
+    font-size: 1em;
+    margin-bottom: 15px;
+    color: #E55013;
 }
 
 .social-icons-container {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Abstand zwischen den Icons */
-    margin-bottom: 20px; /* Abstand unter den Social Icons */
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 /* Einheitliche Einstellungen für alle Social Icons */
@@ -630,120 +221,235 @@ body {
 
 /* Spezifische Größe nur für das TikTok-Logo */
 .tiktok-icon {
-    width: 17px; /* Passe die Größe nach Bedarf an */
-    height: 17px;
-    margin-top: 9px;
+    width: 20px; /* Passe die Größe nach Bedarf an */
+    height: 20px;
+    margin-top: 8px;
 }
 
-
 .social-icon:hover {
-    transform: scale(1.1); /* Vergrößerung beim Hover */
+    transform: scale(1.1);
 }
 
 .legal-links {
     display: flex;
-    flex-direction: column; /* Vertikale Anordnung der Links */
-    align-items: center;
-    gap: 8px; /* Abstand zwischen den Links */
-    font-size: 10px;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
     margin-top: 10px;
 }
 
 .legal-links a {
-    color: #ffffff;
     text-decoration: none;
+    color: #ffffff;
     text-transform: uppercase;
+    font-size: 0.9em;
     font-weight: bold;
-    letter-spacing: 1px;
 }
 
 .legal-links a:hover {
     text-decoration: underline;
 }
 
-@font-face {
-    font-family: 'DotMatrix';
-    src: url('fonts/DOTMATRI.TTF') format('truetype');
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+    .top-menu-wrapper {
+        padding-left: 10px; /* Optionale Anpassung für bessere Sichtbarkeit am Handy */
+    }
+
+    .product-container {
+        grid-template-columns: repeat(2, 1fr); /* Zwei Spalten für mobile Geräte */
+    }
+
+    .cart-icon {
+        right: 10px;
+    }
 }
 
-.paypal-button {
-    background-color: #24388e;  /* Hintergrundfarbe dunkelblau */
-    color: #FFFFFF;              /* Schriftfarbe weiß */
-    padding: 20px 40px;          /* Größerer Button durch mehr Padding */
-    font-size: 24px;             /* Größere Schriftart */
-    font-family: 'DotMatrix', sans-serif; /* Schriftart DOTMATRI */
-    border: 2px solid #FFFFFF;   /* Eckiger, weißer Rand */
-    cursor: pointer;             /* Cursor zeigt Hand beim Überfahren */
-    border-radius: 0px;          /* Keine Abrundungen - eckiger Button */
-    text-transform: uppercase;   /* Text in Großbuchstaben */
-    margin-top: 10px;            /* Abstand zum darüberliegenden Element */
-    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Animation für Hover und Box-Shadow */
-    
-    /* Beleuchtungseffekt von hinten */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.25); /* Weißer Glow für stärkeren Kontrast */
+/* Desktop Specific Styles */
+@media (min-width: 769px) {
+    .product-container {
+        grid-template-columns: repeat(4, 1fr); /* Vier Spalten für größere Bildschirme */
+    }
+
+    .product-card img {
+        max-height: 100%; /* Bild soll den gesamten Container füllen */
+    }
 }
 
-.paypal-button:hover {
-    background-color: #1e2f6f;   /* Etwas dunkleres Blau bei Hover */
-    transform: scale(1.05);      /* Leichte Vergrößerung beim Hovern */
-    box-shadow: 0 0 30px rgba(36, 56, 142, 0.9); /* Verstärktes Leuchten bei Hover */
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); /* Weißer Glow für stärkeren Kontrast */
+/* Produktseite Layout */
+.product-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #24388e; 
 }
 
-@font-face {
-    font-family: 'DS-DigitalBold';
-    src: url('fonts/DS-DIGIB.TTF') format('truetype');
-}
-.or-text {
-    display: block;               /* Blockelement für Abstand */
-    font-family: 'DS-DigitalBold', sans-serif;  /* Schriftart DS-DIGIB */
-    font-size: 25px;              /* Schriftgröße für das "or" */
-    color: #FFFFFF;               /* Schriftfarbe weiß */
-    text-align: center;           /* Zentriere das "or" zwischen den Buttons */
-    margin: 10px 0;               /* Abstand nach oben und unten */
-}
-
-.otherwise-message {
-    font-size: 15x; /* Größe des Textes */
-    font-weight: bold; /* Fett gedruckt */
-    text-transform: uppercase; /* Großbuchstaben */
-    text-align: center; /* Zentrierter Text */
-    margin-top: 6px; /* Abstand zum Seitenanfang */
-    color: #fff; /* Orange Farbe passend zur Seite */
-}
-
-/* Container für die Nachrichten, um sie zu zentrieren */
-.thank-you-page-container {
-    height: 100vh; /* Nutzt die gesamte Höhe des Bildschirms */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Container für die Nachrichten */
-.thank-you-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+/* Produktbild - Hauptbild */
+.product-main-image-container {
     text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Erste Nachricht */
-.thank-you-message-1 {
-    font-size: 2.8rem;
-    font-weight: bold;
-    color: #ffd700; /* Bekanntes Orange (ähnlich zum PayPal-Stil) */
-    text-transform: uppercase; /* Großbuchstaben für die Nachricht */
-    line-height: 1.5;
-    margin-bottom: 20px; /* Abstand zur nächsten Nachricht */
+.product-main-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
 }
 
-/* Zweite Nachricht */
-.thank-you-message-2 {
-    font-size: 2.8rem;
+/* Thumbnails unter dem Hauptbild */
+.product-thumbnail-container {
+    display: flex;
+    justify-content: last baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.product-thumbnail {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.product-thumbnail:hover {
+    border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
+}
+
+/* Produktinformationen */
+.product-info {
+    text-align: left;
+}
+
+.product-title-details {
+    font-size: 1.5em;
+    margin-top: 0px;
+    color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: left; /* Linksbündige Überschrift */
+    margin-left: 5px; /* Abstand zum linken Rand */
+    margin-bottom: 20px;
+}
+
+
+.back-link {
+    text-decoration: underline;
+    color: #ffffff;
     font-weight: bold;
-    color: #E55013; /* Ein anderer Orangeton */
-    text-transform: uppercase; /* Großbuchstaben für die Nachricht */
+    margin-bottom: 20px;
+    display: block;
+}
+
+.product-price {
+    font-size: 1.5em;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.product-description {
+    font-size: 1em;
     line-height: 1.5;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-weight: bolder;
+}
+
+/* Produktgrößen */
+.product-sizes {
+    margin-bottom: 20px;
+}
+
+.product-sizes h3 {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.size-button {
+    background-color: #24388e;
+    border: 1px solid #ffffff;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.size-button.disabled {
+    color: #aaa;
+    border-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Button zum Hinzufügen in den Warenkorb */
+.add-to-cart-button {
+    background-color: #000;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    font-size: 1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #444;
+}
+
+/* Responsives Design */
+@media (max-width: 768px) {
+    .product-main-image {
+        max-width: 100%;
+    }
+
+    .product-thumbnail {
+        width: 70px;
+    }
+
+    .add-to-cart-button {
+        max-width: 100%;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Modal ist anfangs versteckt */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Halbdurchsichtiger Hintergrund */
+    justify-content: center; /* Modal mittig horizontal ausrichten */
+    align-items: center; /* Modal mittig vertikal ausrichten */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    color: #333;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    position: relative; /* Ermöglicht die Positionierung des Schließen-Symbols innerhalb des Modal-Inhalts */
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
