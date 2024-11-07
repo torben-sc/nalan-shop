@@ -8,38 +8,44 @@
 </head>
 <body>
     <header class="shop-header">
-        <div class="menu-toggle">
-            <span class="menu-bar"></span>
-            <span class="menu-bar"></span>
-            <span class="menu-bar"></span>
+        <div class="logo-container">
+            <a href="shop.html">
+                <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+            </a>
         </div>
-        <a href="shop.html">
-            <img src="images/logo.jpg" alt="Shop Logo" class="logo">
-        </a>
-        <div class="side-menu" id="sideMenu">
-            <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
+        <div class="cart-icon-container">
+            <a href="cart.html" class="cart-icon">
+                <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Warenkorb">
+                <span id="cart-count" class="cart-count">0</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="top-menu-wrapper">
+        <nav class="top-menu">
             <a href="shop.html" id="showAllFilter">Show All</a>
             <a href="bags.html" id="bagsFilter">Bags</a>
             <a href="balaclavas.html" id="balaclavasFilter">Balaclavas</a>
             <a href="handwarmers.html" id="handWarmersFilter">Hand Warmers</a>
             <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
-        </div>
-        <a href="cart.html" class="cart-icon">
-            <img src="images/shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Warenkorb">
-            <span id="cart-count" class="cart-count">0</span>
-        </a>
-    </header>
+        </nav>
+    </div>
 
-    <main id="product-container" class="product-container">
-        <!-- Produkte werden hier von JavaScript mit Kategorie 'bags' eingefügt -->
+    <main>
+        <h1 class="product-title" id="product-title">Bags Collection</h1>
+        <div id="product-container" class="product-container">
+            <!-- Produkte werden hier von JavaScript mit Kategorie 'bags' eingefügt -->
+        </div>
     </main>
 
     <script src="app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            displayProductList('bags'); // Lädt nur Produkte mit Kategorie 'bags'
+            // Lädt nur Produkte mit Kategorie 'bags' und berücksichtigt Größenfilter
+            const urlParams = new URLSearchParams(window.location.search);
+            const size = urlParams.get('size') || 'all';
+            displayProductList('bags', size);
         });
     </script>
-    
 </body>
 </html>

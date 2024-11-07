@@ -372,7 +372,7 @@ main {
     
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
-        background-color: #28a745;
+        background-color: #E55013;
         color: #fff;
         padding: 15px;
         border: none;
@@ -385,9 +385,8 @@ main {
     }
     
     .add-to-cart-button:hover {
-        background-color: #218838;
+        background-color: #8a300d;
     }
-
 }
 
 /* Desktop Specific Styles */
@@ -403,63 +402,52 @@ main {
     /* Desktop spezifisches Layout für die Produktdetailseite */
     .product-detail-wrapper {
         display: flex;
-        flex-direction: row; /* Bilder und Informationen nebeneinander */
-        gap: 40px;
-        align-items: flex-start; /* Elemente oben ausrichten */
+        flex-direction: column; /* Ändere die Richtung zu Spalte, damit Bilder untereinander erscheinen */
+        gap: 20px; /* Fügt Abstand zwischen dem Hauptbild und der Produktinfo hinzu */
+        align-items: center; /* Zentriert die Elemente horizontal */
     }
 
-    .product-main-image-container,
-    .product-thumbnail-container {
-        flex: 1; /* Gleiche Breite für Bilder */
-    }
-
-    .product-info {
-        flex: 1; /* Gleiche Breite für Text */
-    }
-
-    .product-main-image {
-        max-width: 100%; /* Bild soll vollen Container füllen */
-    }
-
-    .product-thumbnail-container {
-        justify-content: flex-start; /* Thumbnails linksbündig */
-    }
-    .product-page {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #24388e; 
-    }
-    
-    /* Produktbild - Hauptbild */
     .product-main-image-container {
+        width: 100%;
         text-align: center;
-        margin-bottom: 20px;
     }
-    
+
     .product-main-image {
         width: 100%;
         max-width: 600px;
         height: auto;
     }
-    
-    /* Thumbnails unter dem Hauptbild */
+
     .product-thumbnail-container {
         display: flex;
-        justify-content: center;
+        justify-content: center; /* Zentriert die Thumbnails unter dem Hauptbild */
         gap: 10px;
-        margin-bottom: 10px;
+        margin-top: 10px; /* Abstand zwischen Hauptbild und Thumbnails */
     }
-    
+
     .product-thumbnail {
-        width: 50px;
+        width: 70px; /* Thumbnail-Größe anpassen */
         height: auto;
         cursor: pointer;
         border: 2px solid transparent;
     }
-    
+
     .product-thumbnail:hover {
-        border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
+        border-color: #000; /* Rahmenfarbe der Thumbnails bei Hover */
+    }
+
+    /* Produktinformationen bleiben als Block */
+    .product-info {
+        width: 100%;
+        max-width: 600px;
+        text-align: left;
+    }
+
+    .product-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #24388e; 
     }
     
     /* Produktinformationen */
@@ -537,7 +525,7 @@ main {
     
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
-        background-color: #28a745;
+        background-color: #E55013;
         color: #fff;
         padding: 15px;
         border: none;
@@ -550,7 +538,7 @@ main {
     }
     
     .add-to-cart-button:hover {
-        background-color: #218838;
+        background-color: #8a300d;
     }
     
 }

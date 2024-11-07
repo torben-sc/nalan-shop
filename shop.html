@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bags</title>
+    <title>Shop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,6 +21,7 @@
         </div>
     </header>
 
+    <!-- Oberes Navigationsmenü für Hauptkategorien -->
     <div class="top-menu-wrapper">
         <nav class="top-menu">
             <a href="shop.html" id="showAllFilter">Show All</a>
@@ -32,19 +33,19 @@
     </div>
 
     <main>
-        <h1 class="product-title" id="product-title">Bags Collection</h1>
+        <h1 class="product-title" id="product-title">All Products</h1>
         <div id="product-container" class="product-container">
-            <!-- Produkte werden hier von JavaScript mit Kategorie 'bags' eingefügt -->
+            <!-- Produkte werden hier von JavaScript eingefügt -->
         </div>
     </main>
 
     <script src="app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lädt nur Produkte mit Kategorie 'bags' und berücksichtigt Größenfilter
+            // Lädt Produkte basierend auf der URL-Parameter Kategorie
             const urlParams = new URLSearchParams(window.location.search);
-            const size = urlParams.get('size') || 'all';
-            displayProductList('bags', size);
+            const category = urlParams.get('category') || 'all';
+            displayProductList(category);
         });
     </script>
 </body>

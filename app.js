@@ -255,12 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
 
     const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
-    const categoryNames = {
-        showAllFilter: 'all',
-        bagsFilter: 'bags',
-        balaclavasFilter: 'balaclavas',
-        handWarmersFilter: 'hand warmers',
-        otherAccessoriesFilter: 'other accessories',
+    const categoryUrls = {
+        showAllFilter: 'shop.html?category=all',
+        bagsFilter: 'bags.html?category=bags',
+        balaclavasFilter: 'balaclavas.html?category=balaclavas',
+        handWarmersFilter: 'handwarmers.html?category=hand warmers',
+        otherAccessoriesFilter: 'otheraccessories.html?category=other accessories',
     };
 
     // Hinzufügen von Event-Listenern für alle Filterlinks
@@ -269,8 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (filterElement) {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                const category = categoryNames[id];
-                window.location.href = `shop.html?category=${category}`;
+                window.location.href = categoryUrls[id];
             });
         }
     });
@@ -291,29 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // URL-Navigation für die Filter-Links im Side-Menü
-        document.getElementById('showAllFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'shop.html?category=all'; // Navigiert zur Shop-Seite und setzt category auf 'all'
-        });
-
-        document.getElementById('bagsFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'shop.html?category=bags'; // Navigiert zur Shop-Seite und setzt category auf 'bags'
-        });
-
-        document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'shop.html?category=balaclavas'; // Navigiert zur Shop-Seite und setzt category auf 'balaclavas'
-        });
-
-        document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'shop.html?category=hand warmers'; // Navigiert zur Shop-Seite und setzt category auf 'hand warmers'
-        });
-
-        document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.href = 'shop.html?category=other accessories'; // Navigiert zur Shop-Seite und setzt category auf 'other accessories'
+        Object.keys(categoryUrls).forEach(id => {
+            const sideFilterElement = document.getElementById(id);
+            if (sideFilterElement) {
+                sideFilterElement.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = categoryUrls[id];
+                });
+            }
         });
     }
 
