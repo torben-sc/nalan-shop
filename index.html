@@ -7,12 +7,54 @@
     <!-- Google Fonts für eine digitale Schriftart -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Stile für die Landing Page */
+        body, html {
+            height: 100%; /* Nimmt die gesamte Höhe des Bildschirms ein */
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif; /* Fallback-Schriftart für allgemeine Nutzung */
+        }
+
+        #landing-container {
+            display: flex;
+            flex-direction: column; /* Setzt die Elemente untereinander */
+            align-items: center; /* Zentriert die Elemente horizontal */
+            justify-content: center; /* Zentriert die Elemente vertikal */
+            text-align: center;
+        }
+
+        #landing-logo {
+            width: 150px; /* Verkleinert das Logo */
+            height: auto;
+            margin-bottom: 20px; /* Abstand zwischen Logo und Button */
+        }
+
+        #landing-shop-button {
+            font-weight: bold;
+            text-decoration: none; /* Entfernt die Unterstreichung des Links */
+            font-size: 2em; /* Setzt die Schriftgröße für den Button */
+            color: #ffff; /* Schwarze Schriftfarbe */
+            display: inline-block;
+            margin-top: 10px;
+            border: 2px solid #ffff; /* Schwarzer Rahmen um den Link */
+            padding: 10px 20px; /* Polsterung für den Link */
+            text-transform: uppercase; /* Blockschrift */
+            transition: all 0.3s ease; /* Übergangseffekt für Hover */
+        }
+
+        #landing-shop-button:hover {
+            background-color: #000; /* Hintergrundfarbe beim Hover */
+            color: #fff; /* Schriftfarbe beim Hover */
+        }
+    </style>
 </head>
 <body>
     <div id="landing-container">
-        <img src="images/logo.jpg" alt="Shop Logo" id="landing-logo">
+        <img src="images/logo-ohne-schrift.png" alt="Shop Logo" id="landing-logo">
         <a href="shop.html" id="landing-shop-button">Online Shop</a>
     </div>
-</footer>
 </body>
 </html>
