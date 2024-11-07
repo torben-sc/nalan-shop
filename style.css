@@ -346,7 +346,7 @@ main {
         text-transform: uppercase;
         cursor: pointer;
         width: 100%;
-        max-width: 300px;
+        max-width: 900px;
     }
     
     .checkout-button:hover {
@@ -380,7 +380,7 @@ main {
         text-transform: uppercase;
         cursor: pointer;
         width: 100%;
-        max-width: 300px;
+        max-width: 900px;
         margin-bottom: 20px; /* Abstand zum nächsten Element */
     }
     
@@ -498,8 +498,7 @@ main {
         text-transform: uppercase;
         cursor: pointer;
         width: 100%;
-        max-width: 300px;
-        margin-bottom: 10px; /* Abstand zum nächsten Element */
+        max-width: 900px;
     }
     
     .checkout-button:hover {
@@ -533,7 +532,7 @@ main {
         text-transform: uppercase;
         cursor: pointer;
         width: 100%;
-        max-width: 300px;
+        max-width: 900px;
         margin-bottom: 20px; /* Abstand zum nächsten Element */
     }
     
