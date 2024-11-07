@@ -1,4 +1,3 @@
-// Funktion zum Laden der Produkte aus der JSON-Datei
 async function fetchProducts() {
     try {
         const response = await fetch('products.json');
@@ -12,9 +11,14 @@ async function fetchProducts() {
     }
 }
 
-// Funktion zur Anzeige der Produktliste auf der Shop-Seite
-// Funktion zur Anzeige der Produktliste auf der Shop-Seite
+
 async function displayProductList(category = null) {
+    // Prüfe die URL auf einen category-Parameter, falls category nicht gesetzt ist
+    if (!category) {
+        const urlParams = new URLSearchParams(window.location.search);
+        category = urlParams.get('category') || 'all';
+    }
+
     const products = await fetchProducts(); // Warten, bis die Produkte geladen sind
     if (!products) return; // Abbruch, falls Produkte nicht geladen werden konnten
 
@@ -24,10 +28,12 @@ async function displayProductList(category = null) {
     productContainer.innerHTML = ''; // Leert den Container, um Produkte zu aktualisieren
 
     // Filtere nach Kategorie, falls angegeben
-    const filteredProducts = category ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) : products;
+    const filteredProducts = (category && category !== 'all') 
+        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
+        : products;
 
     // Überschrift aktualisieren
-    if (category) {
+    if (category && category !== 'all') {
         productTitle.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection`;
     } else {
         productTitle.textContent = 'All Products';
@@ -55,7 +61,6 @@ async function displayProductList(category = null) {
 }
 
 
-
 // Funktion zur Anzeige der Produktdetails auf der Produktseite
 async function displayProductDetails() {
     const params = new URLSearchParams(window.location.search);
@@ -65,115 +70,63 @@ async function displayProductDetails() {
     if (!products) return;
 
     const product = products.find(p => p.id === productId);
-    const productDetailContainer = document.getElementById('product-detail-container');
-
-    if (product) {
-        let currentIndex = 0;
-
-        // Erstelle Slider-Elemente
-        const imageContainer = document.querySelector('.product-detail-images');
-        const imgElement = document.createElement('img');
-        imgElement.src = product.images[currentIndex];
-        imgElement.alt = product.name;
-        imgElement.className = 'product-image';
-        imageContainer.appendChild(imgElement);
-
-        // Thumbnail-Vorschaubilder unter dem Hauptbild hinzufügen
-        const thumbnailsContainer = document.createElement('div');
-        thumbnailsContainer.className = 'thumbnails-container';
-        product.images.forEach((imageUrl, index) => {
-            const thumbnail = document.createElement('img');
-            thumbnail.src = imageUrl;
-            thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
-            thumbnail.className = 'thumbnail';
-            if (index === currentIndex) thumbnail.classList.add('active');
-            thumbnail.addEventListener('click', () => {
-                currentIndex = index;
-                updateImage();
-            });
-            thumbnailsContainer.appendChild(thumbnail);
-        });
-        imageContainer.appendChild(thumbnailsContainer);
-
-        // Funktion zum Aktualisieren des Bildes und der aktiven Thumbnail-Klasse
-        function updateImage() {
-            imgElement.src = product.images[currentIndex];
-            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-                thumb.classList.toggle('active', index === currentIndex);
-            });
-        }
-        
-        // Swipe-Gesten für mobile Geräte
-        let startX = 0;
-        let endX = 0;
-        imgElement.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
-        imgElement.addEventListener('touchend', (e) => {
-            endX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (endX < startX) {
-                currentIndex = (currentIndex + 1) % product.images.length;
-            } else if (endX > startX) {
-                currentIndex = (currentIndex - 1 + product.images.length) % product.images.length;
-            }
-            updateImage();
-        }
-
-        // Produktinformationen hinzufügen und Buttons für den Warenkorb und PayPal einfügen
-        const infoContainer = document.querySelector('.product-detail-info');
-        infoContainer.innerHTML = `
-            <h1 class="product-title">${product.name}</h1>
-            <p class="product-description">${product.description}</p>
-            <p class="product-price">
-                <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
-            </p>
-        `;
-
-        // PayPal Button hinzufügen
-        const paypalButton = document.createElement('button');
-        paypalButton.id = 'paypal-button';
-        paypalButton.textContent = 'Direct Checkout';
-        paypalButton.className = 'paypal-button';
-        infoContainer.appendChild(paypalButton);
-
-        // "or"-Element hinzufügen
-        const orElement = document.createElement('span');
-        orElement.className = 'or-text';
-        orElement.textContent = 'OR';
-        infoContainer.appendChild(orElement);
-
-        // Add to Cart Button hinzufügen
-        const addToCartButton = document.createElement('button');
-        addToCartButton.id = 'add-to-cart-button';
-        addToCartButton.innerHTML = `<img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">`;
-        infoContainer.appendChild(addToCartButton);
-
-        // Lade den PayPal-Link und füge ihn dem Button hinzu
-        try {
-            const response = await fetch('/.netlify/functions/get-paypal-link');
-            if (!response.ok) {
-                throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
-            }
-            const data = await response.json();
-            paypalButton.addEventListener('click', () => {
-                window.open(data.link, '_blank');
-            });
-        } catch (error) {
-            console.error('Fehler beim Abrufen des PayPal-Links:', error);
-            paypalButton.disabled = true; // Deaktiviere den Button, wenn der Link nicht geladen werden kann
-            paypalButton.textContent = 'DIRECT CHECKOUT';
-        }
-
-        // Event-Listener für den Warenkorb-Button
-        addToCartButton.addEventListener('click', () => addToCart(product));
-    } else {
-        productDetailContainer.innerHTML = `<p>Produkt nicht gefunden.</p>`;
+    if (!product) {
+        document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
+        return;
     }
+
+    // Hauptbild und Thumbnails erstellen
+    const mainImageContainer = document.querySelector('.product-main-image-container');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+    let currentIndex = 0;
+
+    // Hauptbild des Produkts
+    const imgElement = document.createElement('img');
+    imgElement.src = product.images[currentIndex];
+    imgElement.alt = product.name;
+    imgElement.className = 'product-main-image';
+    mainImageContainer.appendChild(imgElement);
+
+    // Thumbnail-Vorschaubilder unter dem Hauptbild hinzufügen
+    product.images.forEach((imageUrl, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imageUrl;
+        thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
+        thumbnail.className = 'product-thumbnail';
+        if (index === currentIndex) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            currentIndex = index;
+            updateImage();
+        });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
+
+    // Funktion zum Aktualisieren des Hauptbildes und der aktiven Thumbnail-Klasse
+    function updateImage() {
+        imgElement.src = product.images[currentIndex];
+        document.querySelectorAll('.product-thumbnail').forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    // Produktinformationen hinzufügen
+    const infoContainer = document.querySelector('.product-info');
+    infoContainer.innerHTML = `
+        <a href="shop.html" class="back-link">Back to Collection</a>
+        <h1 class="product-title-details">${product.name}</h1>
+        <p class="product-price">€${product.price.toFixed(2)}</p>
+        <p class="product-description">${product.description}</p>
+
+        <button class="add-to-cart-button">Add to cart</button>
+    `;
+
+    // Event-Listener für Add-to-Cart
+    document.querySelector('.add-to-cart-button').addEventListener('click', () => {
+        addToCart(product);
+    });
 }
+
+
 
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers
@@ -190,15 +143,39 @@ function updateCartCount() {
 function showModal(message) {
     const modal = document.getElementById('modal');
     const modalMessage = document.getElementById('modal-message');
-    modalMessage.textContent = message;
-    modal.style.display = 'block';
 
-    // Schließen des Modals nach 3 Sekunden oder beim Klicken auf das Schließen-Icon
-    setTimeout(() => { modal.style.display = 'none'; }, 3000);
-    document.getElementById('close-modal').onclick = () => {
+    if (!modal || !modalMessage) {
+        console.error('Modal or Modal message element not found');
+        return;
+    }
+
+    // Setzt den Modal-Text
+    modalMessage.textContent = message;
+
+    console.log(`Modal message set to: ${message}`); // Debugging-Meldung zur Überprüfung des Texts
+
+    // Zeigt das Modal an
+    modal.style.display = 'flex';
+
+    // Schließt das Modal automatisch nach 3 Sekunden
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 3000);
+
+    // Klick auf das Schließen-Symbol
+    const closeModalBtn = document.getElementById('close-modal');
+    closeModalBtn.onclick = () => {
         modal.style.display = 'none';
     };
+
+    // Klick außerhalb des Modals schließt es auch
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 }
+
 
 function addToCart(product) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -213,7 +190,7 @@ function addToCart(product) {
         }
     } else {
         if (product.stock > 0) {
-            cart.push({ ...product, quantity: 1, price: parseFloat(product.price) });
+            cart.push({ ...product, quantity: 1 });
             showModal("Added to shopping cart!");
         } else {
             showModal("This product is not available anymore.");
@@ -227,6 +204,27 @@ function addToCart(product) {
 document.addEventListener('DOMContentLoaded', () => {
     // Update Warenkorb beim Laden
     updateCartCount();
+
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
+    const categoryNames = {
+        showAllFilter: 'all',
+        bagsFilter: 'bags',
+        balaclavasFilter: 'balaclavas',
+        handWarmersFilter: 'hand warmers',
+        otherAccessoriesFilter: 'other accessories',
+    };
+
+    // Hinzufügen von Event-Listenern für alle Filterlinks
+    categories.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = categoryNames[id];
+                window.location.href = `shop.html?category=${category}`;
+            });
+        }
+    });
 
     // Elemente für Menü-Toggle und Schließen des Menüs auswählen, wenn vorhanden
     const menuToggle = document.querySelector('.menu-toggle');
@@ -246,27 +244,27 @@ document.addEventListener('DOMContentLoaded', () => {
         // URL-Navigation für die Filter-Links im Side-Menü
         document.getElementById('showAllFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html'; // Navigiert zur Shop-Seite für alle Produkte
+            window.location.href = 'shop.html?category=all'; // Navigiert zur Shop-Seite und setzt category auf 'all'
         });
 
         document.getElementById('bagsFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'bags.html'; // Navigiert zur Bags-Seite
+            window.location.href = 'shop.html?category=bags'; // Navigiert zur Shop-Seite und setzt category auf 'bags'
         });
 
         document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'balaclavas.html'; // Navigiert zur Balaclavas-Seite
+            window.location.href = 'shop.html?category=balaclavas'; // Navigiert zur Shop-Seite und setzt category auf 'balaclavas'
         });
 
         document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'handwarmers.html'; // Navigiert zur Hand Warmers-Seite
+            window.location.href = 'shop.html?category=hand warmers'; // Navigiert zur Shop-Seite und setzt category auf 'hand warmers'
         });
 
         document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'otheraccessories.html'; // Navigiert zur Other Accessories-Seite
+            window.location.href = 'shop.html?category=other accessories'; // Navigiert zur Shop-Seite und setzt category auf 'other accessories'
         });
     }
 
@@ -287,8 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('product-container')) {
         displayProductList(category); // Zeigt gefilterte oder alle Produkte an
     }
-
-    
 });
 
 
@@ -418,7 +414,7 @@ infoContainer.innerHTML = `
             <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
             </p>
     <button id="add-to-cart-button">
-        <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
+        <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Zum Warenkorb hinzufügen">
     </button>
 `;
 
@@ -433,3 +429,21 @@ cartItem.innerHTML = `
          alt="Entfernen" class="remove-item-icon" data-id="${item.id}">
 `;
 
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+    displayProductDetails();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Setze Event-Listener für das Schließen des Modals
+    const closeModalBtn = document.getElementById('close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.onclick = () => {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        };
+    }
+
+    // Beispiel für das Anzeigen des Modals
+    showModal("Test message: Added to cart!");
+});

@@ -34,5 +34,14 @@
         "description": "A cute accessory keychain.",
         "stock": 20,
         "category": "other accessories"
+    },
+    {
+        "id": "2",
+        "name": "Knitted Balaclava",
+        "price": 50.00,
+        "images": ["images/test-bild.jpg", "images/logo.jpg"],
+        "description": "Warm and cozy knitted balaclava.",
+        "stock": 5,
+        "category": "balaclavas"
     }
 ]

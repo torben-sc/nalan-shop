@@ -17,7 +17,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px; /* Die Höhe des Headers kann angepasst werden, falls nötig */
+    height: 60px; /* Die Höhe des Headers kann angepasst werden, falls nötig */
     background-color: #24388e;
     display: flex;
     align-items: center;
@@ -32,8 +32,8 @@ body {
 }
 
 .logo {
-    height: 250px; /* Hier kannst du die Höhe des Logos anpassen */
-    max-height: 250px; /* Alternativ kannst du die maximale Höhe auch erhöhen */
+    height: 30px; /* Hier kannst du die Höhe des Logos anpassen */
+    max-height: 30px; /* Alternativ kannst du die maximale Höhe auch erhöhen */
 }
 
 /* Warenkorb-Icon im Header, rechts positioniert */
@@ -63,26 +63,52 @@ body {
     font-weight: bold;
 }
 
-/* Links und Überschrift auf der linken Seite */
-.left-side {
-    margin-top: 100px; /* Platz für den fixierten Header */
-    padding: 20px;
+.top-menu-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 20px;
+    box-sizing: border-box;
+
+    /* Versteckt den Scrollbalken */
+    -ms-overflow-style: none;  /* Für Internet Explorer und Edge */
+    scrollbar-width: none;     /* Für Firefox */
 }
 
+.top-menu-wrapper::-webkit-scrollbar {
+    display: none;  /* Für Webkit-basierte Browser (Chrome, Safari) */
+}
+
+
+/* Top-Menu: Filter-Links */
 .top-menu {
-    display: flex;
+    display: inline-flex; /* Elemente werden in einer Reihe angezeigt */
     gap: 20px;
-    flex-wrap: wrap;
-    margin-left: 20px; /* Sorgt dafür, dass die Links am linken Bildschirmrand beginnen */
+    align-items: center;
+    margin: 0; /* Keine Margins */
+    justify-content: flex-start; /* Links ausrichten */
+    padding-left: 0; /* Entfernt eventuelles Padding auf der linken Seite */
 }
 
 .top-menu a {
     text-decoration: none;
     color: #ffffff;
-    font-weight: bold;
-    font-size: 1.1em;
+    font-weight: 400; /* Setzt die Schrift auf dünner */
+    font-size: 1.1em; /* Beibehaltung der Schriftgröße */
     position: relative;
     transition: color 0.3s ease;
+    padding-bottom: 5px; /* Platz für die Linie */
+    white-space: nowrap; /* Verhindert Zeilenumbruch für einzelne Links */
+    margin-left: 0; /* Vermeide zusätzlichen Abstand links */
+}
+
+
+/* Gepunktete Linie unter jedem Filter-Link */
+.top-menu a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 1px dotted #ffffff; /* Weiße gepunktete Linie */
+    margin-top: 0px; /* Abstand zur Linie */
 }
 
 .top-menu a:hover {
@@ -91,13 +117,13 @@ body {
 
 /* Überschrift (Produkt-Titel) */
 .product-title {
-    font-size: 2em;
-    margin-top: 20px;
+    font-size: 3em;
+    margin-top: 0px;
     color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
     font-weight: bold;
     text-transform: uppercase;
     text-align: left; /* Linksbündige Überschrift */
-    margin-left: 20px; /* Abstand zum linken Rand */
+    margin-left: 5px; /* Abstand zum linken Rand */
 }
 
 /* Hauptbereich für Produkte */
@@ -108,48 +134,58 @@ main {
 /* Produkt Container */
 .product-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Bilder füllen die gesamte Breite des Displays aus */
-    gap: 0; /* Keine Abstände zwischen den Produktkarten */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Bilder füllen die gesamte Breite des Displays aus */
+    gap: 0px; /* Keine Abstände zwischen den Produktkarten */
 }
 
 /* Produkt-Karten Design */
 .product-card {
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
+    text-align: left;
     background-color: #24388e; /* Hintergrundfarbe passend zum Seitenhintergrund */
-    padding: 10px;
     color: #ffffff; /* Weißer Text für Kontrast */
     overflow: hidden; /* Verhindert Überlauf von Inhalten */
     height: 100%; /* Füllt den gesamten Container aus */
+    border: none; /* Kein Rand um die Produktkarte */
+    position: relative; /* Positionierung für überlappende Texte */
 }
 
+/* Bild des Produkts */
 .product-card img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover; /* Das Bild passt sich an und füllt den Container ohne Verzerrung */
-    transition: transform 0.3s ease;
+    border: none; /* Kein Rand um das Bild */
+    display: block;
 }
 
-/* Produktname und Preis */
+.product-card a {
+    text-decoration: none; /* Keine Linie unter dem Link */
+    border-bottom: none; /* Entfernt eine mögliche Linie unter den Links */
+}
+
+/* Container für die Produktinformationen */
+.product-info {
+    padding: 10px; /* Abstand für den Text unterhalb des Bildes */
+}
+
+/* Produktname */
 .product-card h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
+    font-size: 0.9em; /* Kleinere Schriftgröße */
+    margin: 5px 0; /* Weniger Abstand zwischen Bild und Text */
     color: #ffffff;
 }
 
+/* Produktpreis */
 .product-card p {
-    font-size: 1.2em;
+    font-size: 0.8em; /* Kleinere Schriftgröße für den Preis */
     color: #E55013;
     font-weight: bold;
+    margin: 5px 0; /* Weniger Abstand zum Preis */
 }
 
-/* Hover-Effekt für Produkte */
+/* Entferne Hover-Effekte für Produkte */
 .product-card:hover {
-    transform: scale(1.05);
-}
-
-.product-card:hover img {
-    transform: scale(1.1);
+    transform: none; /* Entfernt jegliche Skalierung beim Hover */
 }
 
 /* Footer Styles */
@@ -175,10 +211,19 @@ main {
     margin-bottom: 15px;
 }
 
+/* Einheitliche Einstellungen für alle Social Icons */
 .social-icon {
     width: 35px;
     height: 35px;
+    object-fit: contain;
     transition: transform 0.3s;
+}
+
+/* Spezifische Größe nur für das TikTok-Logo */
+.tiktok-icon {
+    width: 20px; /* Passe die Größe nach Bedarf an */
+    height: 20px;
+    margin-top: 8px;
 }
 
 .social-icon:hover {
@@ -207,11 +252,8 @@ main {
 
 /* Mobile Specific Styles */
 @media (max-width: 768px) {
-    .top-menu {
-        flex-direction: column;
-        gap: 10px;
-        text-align: left;
-        margin-left: 20px; /* Links bündig auf dem Handy */
+    .top-menu-wrapper {
+        padding-left: 10px; /* Optionale Anpassung für bessere Sichtbarkeit am Handy */
     }
 
     .product-container {
@@ -230,6 +272,179 @@ main {
     }
 
     .product-card img {
-        max-height: 400px;
+        max-height: 100%; /* Bild soll den gesamten Container füllen */
     }
+}
+
+/* Produktseite Layout */
+.product-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #24388e; 
+}
+
+/* Produktbild - Hauptbild */
+.product-main-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-main-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+/* Thumbnails unter dem Hauptbild */
+.product-thumbnail-container {
+    display: flex;
+    justify-content: last baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.product-thumbnail {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.product-thumbnail:hover {
+    border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
+}
+
+/* Produktinformationen */
+.product-info {
+    text-align: left;
+}
+
+.product-title-details {
+    font-size: 1.5em;
+    margin-top: 0px;
+    color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: left; /* Linksbündige Überschrift */
+    margin-left: 5px; /* Abstand zum linken Rand */
+    margin-bottom: 20px;
+}
+
+
+.back-link {
+    text-decoration: underline;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.product-price {
+    font-size: 1.5em;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.product-description {
+    font-size: 1em;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-weight: bolder;
+}
+
+/* Produktgrößen */
+.product-sizes {
+    margin-bottom: 20px;
+}
+
+.product-sizes h3 {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.size-button {
+    background-color: #24388e;
+    border: 1px solid #ffffff;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.size-button.disabled {
+    color: #aaa;
+    border-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* Button zum Hinzufügen in den Warenkorb */
+.add-to-cart-button {
+    background-color: #000;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    font-size: 1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #444;
+}
+
+/* Responsives Design */
+@media (max-width: 768px) {
+    .product-main-image {
+        max-width: 100%;
+    }
+
+    .product-thumbnail {
+        width: 70px;
+    }
+
+    .add-to-cart-button {
+        max-width: 100%;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Modal ist standardmäßig versteckt */
+    position: fixed; /* Fixiert auf dem Bildschirm */
+    z-index: 1000; /* Über allen anderen Elementen */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Halbtransparenter Hintergrund */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 300px;
+    margin: auto;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
