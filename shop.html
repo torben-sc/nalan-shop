@@ -8,30 +8,30 @@
 </head>
 <body>
     <header class="shop-header">
-        <div class="menu-toggle">
-            <span class="menu-bar"></span>
-            <span class="menu-bar"></span>
-            <span class="menu-bar"></span>
+        <div class="logo-container">
+            <a href="shop.html">
+                <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+            </a>
         </div>
-        <a href="shop.html">
-            <img src="images/logo.jpg" alt="Shop Logo" class="logo">
-        </a>
-        <div class="side-menu" id="sideMenu">
-            <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
-            <a href="shop.html" id="showAllFilter">Show All</a>
-            <a href="bags.html" id="bagsFilter">Bags</a>
-            <a href="balaclavas.html" id="balaclavasFilter">Balaclavas</a>
-            <a href="handwarmers.html" id="handWarmersFilter">Hand Warmers</a>
-            <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
+        <div class="cart-icon-container">
+            <a href="cart.html" class="cart-icon">
+                <img src="images/shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Warenkorb">
+                <span id="cart-count" class="cart-count">0</span>
+            </a>
         </div>
-        <a href="cart.html" class="cart-icon">
-            <img src="images/shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Warenkorb">
-            <span id="cart-count" class="cart-count">0</span>
-        </a>
     </header>
-
-    <main id="product-container" class="product-container">
-        <!-- Produkte werden hier von JavaScript eingefügt -->
+    <nav class="top-menu">
+        <a href="shop.html" id="showAllFilter">Show All</a>
+        <a href="bags.html" id="bagsFilter">Bags</a>
+        <a href="balaclavas.html" id="balaclavasFilter">Balaclavas</a>
+        <a href="handwarmers.html" id="handWarmersFilter">Hand Warmers</a>
+        <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
+    </nav>
+    <main>
+        <h1 class="product-title" id="product-title">All Products</h1>
+        <div id="product-container" class="product-container">
+            <!-- Produkte werden hier von JavaScript eingefügt -->
+        </div>
     </main>
 
     <script src="app.js"></script>

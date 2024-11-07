@@ -13,15 +13,25 @@ async function fetchProducts() {
 }
 
 // Funktion zur Anzeige der Produktliste auf der Shop-Seite
+// Funktion zur Anzeige der Produktliste auf der Shop-Seite
 async function displayProductList(category = null) {
     const products = await fetchProducts(); // Warten, bis die Produkte geladen sind
     if (!products) return; // Abbruch, falls Produkte nicht geladen werden konnten
 
     const productContainer = document.getElementById('product-container');
+    const productTitle = document.getElementById('product-title');
+
     productContainer.innerHTML = ''; // Leert den Container, um Produkte zu aktualisieren
 
     // Filtere nach Kategorie, falls angegeben
     const filteredProducts = category ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) : products;
+
+    // Überschrift aktualisieren
+    if (category) {
+        productTitle.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} Collection`;
+    } else {
+        productTitle.textContent = 'All Products';
+    }
 
     // Produkte anzeigen
     filteredProducts.forEach(product => {
@@ -35,15 +45,14 @@ async function displayProductList(category = null) {
                 <img src="${firstImage}" alt="${product.name}">
                 <h2>${product.name}</h2>
             </a>
-            <p class=".product-price-shop">
-            <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
+            <p class="product-price-shop">
+                <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
             </p>
         `;
 
         productContainer.appendChild(productCard);
     });
 }
-
 
 
 
