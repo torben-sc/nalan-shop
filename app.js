@@ -1,4 +1,3 @@
-// Funktion zum Laden der Produkte aus der JSON-Datei
 async function fetchProducts() {
     try {
         const response = await fetch('products.json');
@@ -12,16 +11,39 @@ async function fetchProducts() {
     }
 }
 
-// Funktion zur Anzeige der Produktliste auf der Shop-Seite
-async function displayProductList(category = null) {
-    const products = await fetchProducts(); // Warten, bis die Produkte geladen sind
-    if (!products) return; // Abbruch, falls Produkte nicht geladen werden konnten
+
+async function displayProductList(category = null, size = null) {
+    // Prüfe die URL auf einen category- und size-Parameter, falls nicht gesetzt
+    if (!category || !size) {
+        const urlParams = new URLSearchParams(window.location.search);
+        category = category || urlParams.get('category') || 'all';
+        size = size || urlParams.get('size') || 'all';
+    }
+
+    const products = await fetchProducts();
+    if (!products) return;
 
     const productContainer = document.getElementById('product-container');
-    productContainer.innerHTML = ''; // Leert den Container, um Produkte zu aktualisieren
+    const productTitle = document.getElementById('product-title');
+
+    productContainer.innerHTML = ''; // Container leeren, um Produkte zu aktualisieren
 
     // Filtere nach Kategorie, falls angegeben
-    const filteredProducts = category ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) : products;
+    let filteredProducts = (category && category !== 'all') 
+        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
+        : products;
+
+    // Filtere nach Größe, falls angegeben
+    if (size && size !== 'all') {
+        filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
+    }
+
+    // Überschrift aktualisieren
+    if (category && category !== 'all') {
+        productTitle.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)}`;
+    } else {
+        productTitle.textContent = 'All Products';
+    }
 
     // Produkte anzeigen
     filteredProducts.forEach(product => {
@@ -35,16 +57,14 @@ async function displayProductList(category = null) {
                 <img src="${firstImage}" alt="${product.name}">
                 <h2>${product.name}</h2>
             </a>
-            <p class=".product-price-shop">
-            <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
+            <p class="product-price-shop">
+                <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
             </p>
         `;
 
         productContainer.appendChild(productCard);
     });
 }
-
-
 
 
 // Funktion zur Anzeige der Produktdetails auf der Produktseite
@@ -56,115 +76,105 @@ async function displayProductDetails() {
     if (!products) return;
 
     const product = products.find(p => p.id === productId);
-    const productDetailContainer = document.getElementById('product-detail-container');
+    if (!product) {
+        document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
+        return;
+    }
 
-    if (product) {
-        let currentIndex = 0;
+    // Hauptbild und Thumbnails erstellen
+    const mainImageContainer = document.querySelector('.product-main-image-container');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+    let currentIndex = 0;
 
-        // Erstelle Slider-Elemente
-        const imageContainer = document.querySelector('.product-detail-images');
-        const imgElement = document.createElement('img');
-        imgElement.src = product.images[currentIndex];
-        imgElement.alt = product.name;
-        imgElement.className = 'product-image';
-        imageContainer.appendChild(imgElement);
+    // Hauptbild des Produkts
+    const imgElement = document.createElement('img');
+    imgElement.src = product.images[currentIndex];
+    imgElement.alt = product.name;
+    imgElement.className = 'product-main-image';
+    mainImageContainer.appendChild(imgElement);
 
-        // Thumbnail-Vorschaubilder unter dem Hauptbild hinzufügen
-        const thumbnailsContainer = document.createElement('div');
-        thumbnailsContainer.className = 'thumbnails-container';
-        product.images.forEach((imageUrl, index) => {
-            const thumbnail = document.createElement('img');
-            thumbnail.src = imageUrl;
-            thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
-            thumbnail.className = 'thumbnail';
-            if (index === currentIndex) thumbnail.classList.add('active');
-            thumbnail.addEventListener('click', () => {
-                currentIndex = index;
-                updateImage();
-            });
-            thumbnailsContainer.appendChild(thumbnail);
-        });
-        imageContainer.appendChild(thumbnailsContainer);
-
-        // Funktion zum Aktualisieren des Bildes und der aktiven Thumbnail-Klasse
-        function updateImage() {
-            imgElement.src = product.images[currentIndex];
-            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-                thumb.classList.toggle('active', index === currentIndex);
-            });
-        }
-        
-        // Swipe-Gesten für mobile Geräte
-        let startX = 0;
-        let endX = 0;
-        imgElement.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-        });
-        imgElement.addEventListener('touchend', (e) => {
-            endX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (endX < startX) {
-                currentIndex = (currentIndex + 1) % product.images.length;
-            } else if (endX > startX) {
-                currentIndex = (currentIndex - 1 + product.images.length) % product.images.length;
-            }
+    // Thumbnail-Vorschaubilder unter dem Hauptbild hinzufügen
+    product.images.forEach((imageUrl, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imageUrl;
+        thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
+        thumbnail.className = 'product-thumbnail';
+        if (index === currentIndex) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            currentIndex = index;
             updateImage();
-        }
+        });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
 
-        // Produktinformationen hinzufügen und Buttons für den Warenkorb und PayPal einfügen
-        const infoContainer = document.querySelector('.product-detail-info');
-        infoContainer.innerHTML = `
-            <h1 class="product-title">${product.name}</h1>
-            <p class="product-description">${product.description}</p>
-            <p class="product-price">
-                <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
-            </p>
-        `;
+    // Funktion zum Aktualisieren des Hauptbildes und der aktiven Thumbnail-Klasse
+    function updateImage() {
+        imgElement.src = product.images[currentIndex];
+        document.querySelectorAll('.product-thumbnail').forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === currentIndex);
+        });
+    }
 
-        // PayPal Button hinzufügen
-        const paypalButton = document.createElement('button');
-        paypalButton.id = 'paypal-button';
-        paypalButton.textContent = 'Direct Checkout';
-        paypalButton.className = 'paypal-button';
-        infoContainer.appendChild(paypalButton);
+    // Produktinformationen hinzufügen
+    const infoContainer = document.querySelector('.product-info');
+    infoContainer.innerHTML = `
+        <a href="shop.html" class="back-link">Back to Collection</a>
+        <h1 class="product-title-details">${product.name}</h1>
+        <p class="product-price">€${product.price.toFixed(2)}</p>
+        <p class="product-description">${product.description}</p>
+    `;
 
-        // "or"-Element hinzufügen
-        const orElement = document.createElement('span');
-        orElement.className = 'or-text';
-        orElement.textContent = 'OR';
-        infoContainer.appendChild(orElement);
+    // Container für die Buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'button-container';
 
-        // Add to Cart Button hinzufügen
-        const addToCartButton = document.createElement('button');
-        addToCartButton.id = 'add-to-cart-button';
-        addToCartButton.innerHTML = `<img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">`;
-        infoContainer.appendChild(addToCartButton);
+    // "Direct Checkout" Button hinzufügen
+    const directCheckoutButton = document.createElement('button');
+    directCheckoutButton.id = 'direct-checkout-button';
+    directCheckoutButton.className = 'checkout-button';
+    directCheckoutButton.textContent = 'Direct Checkout';
+    buttonContainer.appendChild(directCheckoutButton);
 
-        // Lade den PayPal-Link und füge ihn dem Button hinzu
+    // "OR" Text hinzufügen
+    const orElement = document.createElement('p');
+    orElement.className = 'or-text';
+    orElement.textContent = 'OR';
+    buttonContainer.appendChild(orElement);
+
+    // Add to Cart Button hinzufügen
+    const addToCartButton = document.createElement('button');
+    addToCartButton.className = 'add-to-cart-button';
+    addToCartButton.textContent = 'Add to cart';
+    buttonContainer.appendChild(addToCartButton);
+
+    // Füge die Button-Gruppe zum infoContainer hinzu
+    infoContainer.appendChild(buttonContainer);
+
+    // Event-Listener für den Direct Checkout Button hinzufügen
+    directCheckoutButton.addEventListener('click', async () => {
         try {
+            // PayPal Link von Netlify Function abrufen
             const response = await fetch('/.netlify/functions/get-paypal-link');
             if (!response.ok) {
                 throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
             }
             const data = await response.json();
-            paypalButton.addEventListener('click', () => {
-                window.open(data.link, '_blank');
-            });
+            window.open(data.link, '_blank');
         } catch (error) {
             console.error('Fehler beim Abrufen des PayPal-Links:', error);
-            paypalButton.disabled = true; // Deaktiviere den Button, wenn der Link nicht geladen werden kann
-            paypalButton.textContent = 'DIRECT CHECKOUT';
+            showModal("Unable to proceed to Direct Checkout. Please try again later.");
         }
+    });
 
-        // Event-Listener für den Warenkorb-Button
-        addToCartButton.addEventListener('click', () => addToCart(product));
-    } else {
-        productDetailContainer.innerHTML = `<p>Produkt nicht gefunden.</p>`;
-    }
+    // Event-Listener für Add-to-Cart
+    addToCartButton.addEventListener('click', () => {
+        addToCart(product);
+    });
 }
+
+
+
+
 
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers
@@ -181,15 +191,40 @@ function updateCartCount() {
 function showModal(message) {
     const modal = document.getElementById('modal');
     const modalMessage = document.getElementById('modal-message');
+    
+    if (!modal || !modalMessage) {
+        console.error('Modal oder Modal-Nachricht nicht gefunden');
+        return;
+    }
+
+    // Setze den Modal-Text
     modalMessage.textContent = message;
+
+    // Zeigt das Modal an
     modal.style.display = 'block';
 
-    // Schließen des Modals nach 3 Sekunden oder beim Klicken auf das Schließen-Icon
-    setTimeout(() => { modal.style.display = 'none'; }, 3000);
-    document.getElementById('close-modal').onclick = () => {
+    // Schließt das Modal automatisch nach 3 Sekunden
+    setTimeout(() => {
         modal.style.display = 'none';
+    }, 3000);
+
+    // Klick auf das Schließen-Symbol
+    const closeModalBtn = document.getElementById('close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.onclick = () => {
+            modal.style.display = 'none';
+        };
+    }
+
+    // Klick außerhalb des Modals schließt es auch
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     };
 }
+
+
 
 function addToCart(product) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -204,7 +239,7 @@ function addToCart(product) {
         }
     } else {
         if (product.stock > 0) {
-            cart.push({ ...product, quantity: 1, price: parseFloat(product.price) });
+            cart.push({ ...product, quantity: 1 });
             showModal("Added to shopping cart!");
         } else {
             showModal("This product is not available anymore.");
@@ -218,6 +253,27 @@ function addToCart(product) {
 document.addEventListener('DOMContentLoaded', () => {
     // Update Warenkorb beim Laden
     updateCartCount();
+
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
+    const categoryNames = {
+        showAllFilter: 'all',
+        bagsFilter: 'bags',
+        balaclavasFilter: 'balaclavas',
+        handWarmersFilter: 'hand warmers',
+        otherAccessoriesFilter: 'other accessories',
+    };
+
+    // Hinzufügen von Event-Listenern für alle Filterlinks
+    categories.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = categoryNames[id];
+                window.location.href = `shop.html?category=${category}`;
+            });
+        }
+    });
 
     // Elemente für Menü-Toggle und Schließen des Menüs auswählen, wenn vorhanden
     const menuToggle = document.querySelector('.menu-toggle');
@@ -237,29 +293,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // URL-Navigation für die Filter-Links im Side-Menü
         document.getElementById('showAllFilter').addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'shop.html'; // Navigiert zur Shop-Seite für alle Produkte
+            window.location.href = 'shop.html?category=all'; // Navigiert zur Shop-Seite und setzt category auf 'all'
         });
 
-        // Beispiel für Event-Listener für die Filter-Links im Side-Menü
-document.getElementById('bagsFilter').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.href = 'bags.html?category=bags'; // Navigiert zur Bags-Seite mit Kategorie als Parameter
-});
+        document.getElementById('bagsFilter').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'shop.html?category=bags'; // Navigiert zur Shop-Seite und setzt category auf 'bags'
+        });
 
-document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.href = 'balaclavas.html?category=balaclavas'; // Navigiert zur Balaclavas-Seite mit Kategorie als Parameter
-});
+        document.getElementById('balaclavasFilter').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'shop.html?category=balaclavas'; // Navigiert zur Shop-Seite und setzt category auf 'balaclavas'
+        });
 
-document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.href = 'handwarmers.html?category=hand warmers'; // Navigiert zur Hand Warmers-Seite mit Kategorie als Parameter
-});
+        document.getElementById('handWarmersFilter').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'shop.html?category=hand warmers'; // Navigiert zur Shop-Seite und setzt category auf 'hand warmers'
+        });
 
-document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
-    e.preventDefault();
-    window.location.href = 'otheraccessories.html?category=other accessories'; // Navigiert zur Other Accessories-Seite mit Kategorie als Parameter
-});
+        document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'shop.html?category=other accessories'; // Navigiert zur Shop-Seite und setzt category auf 'other accessories'
+        });
     }
 
     // Logo-Event nur hinzufügen, wenn es existiert
@@ -279,8 +334,6 @@ document.getElementById('otherAccessoriesFilter').addEventListener('click', (e) 
     if (document.getElementById('product-container')) {
         displayProductList(category); // Zeigt gefilterte oder alle Produkte an
     }
-
-    
 });
 
 
@@ -410,7 +463,7 @@ infoContainer.innerHTML = `
             <span class="price-amount">${product.price}</span><span class="price-currency"> €</span>
             </p>
     <button id="add-to-cart-button">
-        <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Zum Warenkorb hinzufügen">
+        <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Zum Warenkorb hinzufügen">
     </button>
 `;
 
@@ -425,3 +478,106 @@ cartItem.innerHTML = `
          alt="Entfernen" class="remove-item-icon" data-id="${item.id}">
 `;
 
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+    displayProductDetails();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Setze Event-Listener für das Schließen des Modals
+    const closeModalBtn = document.getElementById('close-modal');
+    if (closeModalBtn) {
+        closeModalBtn.onclick = () => {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        };
+    }
+
+    // Beispiel für das Anzeigen des Modals
+    showModal("Test message: Added to cart!");
+});
+
+function setupSizeFilters() {
+    const sizeFilters = ['allSizesFilter', 'smallSizeFilter', 'bigSizeFilter'];
+    const sizeNames = {
+        allSizesFilter: 'all',
+        smallSizeFilter: 'small',
+        bigSizeFilter: 'big'
+    };
+
+    sizeFilters.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                const size = sizeNames[id];
+                const category = 'bags'; // Hier gehen wir davon aus, dass wir auf der Bags-Seite sind
+                window.location.href = `bags.html?category=${category}&size=${size}`;
+            });
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Update Warenkorb beim Laden
+    updateCartCount();
+
+    // Kategorien-Event-Listener hinzufügen
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
+    const categoryNames = {
+        showAllFilter: 'all',
+        bagsFilter: 'bags',
+        balaclavasFilter: 'balaclavas',
+        handWarmersFilter: 'hand warmers',
+        otherAccessoriesFilter: 'other accessories',
+    };
+
+    categories.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = categoryNames[id];
+                window.location.href = `shop.html?category=${category}`;
+            });
+        }
+    });
+
+    // Setup für die Größenfilter
+    setupSizeFilters();
+
+    // Elemente für Menü-Toggle und Schließen des Menüs auswählen
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+
+    // Menü-Toggle-Events nur hinzufügen, wenn vorhanden
+    if (menuToggle && sideMenu && closeMenuBtn) {
+        menuToggle.addEventListener('click', () => {
+            sideMenu.classList.toggle('open'); // Menü ein- und ausklappen
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            sideMenu.classList.remove('open'); // Menü schließen
+        });
+    }
+
+    // Logo-Event nur hinzufügen, wenn es existiert
+    const logo = document.querySelector('.logo');
+    if (logo) {
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'shop.html'; // Zurück zur Shop-Seite
+        });
+    }
+
+    // URL-Parameter beim Laden prüfen
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category') || null;
+    const size = urlParams.get('size') || null;
+
+    // Produktliste anzeigen
+    if (document.getElementById('product-container')) {
+        displayProductList(category, size);
+    }
+});
