@@ -1,38 +1,78 @@
 [
     {
         "id": "1",
-        "name": "Handmade Bag",
-        "price": 100.00,
-        "images": ["images/test-bild.jpg", "images/logo.jpg"],
-        "description": "A beautifully crafted handmade bag.",
-        "stock": 10,
-        "category": "bags"
-    },
-    {
-        "id": "2",
-        "name": "Knitted Balaclava",
-        "price": 50.00,
-        "images": ["images/test-bild.jpg", "images/logo.jpg"],
-        "description": "Warm and cozy knitted balaclava.",
-        "stock": 5,
+        "name": "PIERCED BALACLAVA",
+        "price": 60.00,
+        "images": ["images/P1070979.JPEG", "images/P1070968.JPEG", "images/P1070963.JPEG"],
+        "description": "This unique balaclava is crafted from a soft, fuzzy knit, featuring metal ring piercings for an edgy look.\nDesigned with a unisex fit, it offers both style and warmth.\nMade from a durable blend of 60% polyamide and 40% acrylic.\nMade in Germany.",
+        "stock": 1,
         "category": "balaclavas"
     },
     {
+        "id": "2",
+        "name": "BAGZILLA IN BLUSH",
+        "price": 100.00,
+        "images": ["images/P1070959.JPEG", "images/P1070956.JPEG"],
+        "description": "This oversized blush bag is perfect for carrying all your essentials. Made from durable t-shirt yarn, it combines functionality with a standout design. Crafted from a blend of 92% polyester and 8% elastane. Made in Germany.",
+        "stock": 1,
+        "category": "bags",
+        "size": "big"
+    },
+    {
         "id": "3",
-        "name": "Woolen Hand Warmers",
-        "price": 45.00,
-        "images": ["images/test-bild.jpg", "images/logo.jpg"],
-        "description": "Handmade woolen hand warmers.",
-        "stock": 8,
-        "category": "hand warmers"
+        "name": "BALACLAVA IN ROYAL BLUE",
+        "price": 50.00,
+        "images": ["images/IMG_9175.JPEG", "images/IMG_9170.JPEG", "images/IMG_9170.JPEG"],
+        "description": "This stylish balaclava is crafted from a soft, fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look. Made from a durable blend of 60% polyamide and 40% acrylic. Made in Germany.",
+        "stock": 1,
+        "category": "balaclavas"
     },
     {
         "id": "4",
-        "name": "Knitted Tie",
-        "price": 50.00,
-        "images": ["images/test-bild.jpg", "images/logo.jpg"],
-        "description": "A cute accessory keychain.",
-        "stock": 20,
+        "name": "SNOW ANGEL SET",
+        "price": 45.00,
+        "images": ["images/P1070987.JPEG", "images/P1070990.JPEG", "images/P1070997.JPEG"],
+        "description": "This cozy set includes a soft, faux-fur scarf and matching hand warmers, designed to add a bold, glamorous touch to your look. The fuzzy texture mimics real fur. Made from durable Nylon faux-fur yarn  Made in Germany.",
+        "stock": 1,
         "category": "other accessories"
+    },
+    {
+        "id": "5",
+        "name": "BOWCLAVA IN BLACK WITH PINK BOWS",
+        "price": 70.00,
+        "images": ["images/IMG_8933.JPEG", "images/IMG_8921.JPEG", "images/IMG_8940.JPEG", "images/IMG_8889.JPEG"],
+        "description": "The Bowclava in black with pink bows is a standout piece, combining a sleek black design with bold pink accents. Crafted from soft, fuzzy knit, it offers both warmth and style with a cute edge. Designed with a unisex fit, it’s the perfect accessory to make a statement in colder weather. Made in Germany.",
+        "stock": 1,
+        "category": "balaclavas"
+    },
+    {
+        "id": "6",
+        "name": "BIGGRIP BAG",
+        "price": 100.00,
+        "images": ["images/IMG_9214.JPEG", "images/IMG_9201.JPEG", "images/IMG_9166.JPEG"],
+        "description": "This oversized black bag is designed to carry everything you need, offering both practicality and style. With its spacious design and sturdy wooden handle, it’s perfect for any occasion. Made from high-quality macramé cord, 100% polypropylene, ensuring durability and flexibility. Made in Germany.",
+        "stock": 1,
+        "category": "bags",
+        "size": "big+"
+    },
+    {
+        "id": "7",
+        "name": "SMALL ESSENTIALS BAG WITH INTERCHANGEABLE HANDLES IN GOLD",
+        "price": 55.00,
+        "images": ["images/IMG_9084.JPEG", "images/IMG_9045.JPEG", "images/IMG_9080.JPEG"],
+        "description": "This sleek, compact bag is perfect for your essentials, featuring a lighter case that holds a lighter, with a carabiner for easy attachment or removal. Versatile in design, it can be worn as a crossover or styled as a small handbag by swapping the handles. Ideal for carrying your phone or smoking supplies in a stylish, functional way. Made from high-quality macramé cord, 100% polypropylene. Made in Germany.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
+    },
+    {
+        "id": "8",
+        "name": "SMALL ESSENTIALS BAG WITH INTERCHANGEABLE HANDLES IN CLOUDS GREEN AND BROWN",
+        "price": 55.00,
+        "images": ["images/small-bag-brown-first.JPEG", "images/small-bag-brown.JPEG", "images/small-bag-brown-2.JPEG"],
+        "description": "This sleek, compact bag is perfect for your essentials, featuring a lighter case that holds a lighter, with a carabiner for easy attachment or removal. Versatile in design, it can be worn as a crossover or styled as a small handbag by swapping the handles. Ideal for carrying your phone or smoking supplies in a stylish, functional way. Made from high-quality macramé cord, 100% polypropylene. Made in Germany.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
     }
 ]
