@@ -3,62 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktdetails</title>
+    <title>Produktseite</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Fixierter Header -->
     <header class="shop-header">
         <div class="menu-toggle">
-            <!-- Burger-Icon für das Menü -->
             <span class="menu-bar"></span>
             <span class="menu-bar"></span>
             <span class="menu-bar"></span>
         </div>
-    
-        <!-- Logo als Link zur Shop-Seite -->
         <a href="shop.html">
             <img src="images/logo.jpg" alt="Shop Logo" class="logo">
         </a>
-        <div class="side-menu" id="sideMenu">
-            <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
-            <a href="shop.html" id="showAllFilter">Show All</a>
-            <a href="bags.html" id="bagsFilter">Bags</a>
-            <a href="balaclavas.html" id="balaclavasFilter">Balaclavas</a>
-            <a href="handwarmers.html" id="handWarmersFilter">Hand Warmers</a>
-            <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
-        </div>
-
-        <!-- Warenkorb-Icon mit Link zur Warenkorb-Seite -->
         <a href="cart.html" class="cart-icon">
-            <img src="images/shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Warenkorb">
+            <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Warenkorb">
             <span id="cart-count" class="cart-count">0</span>
         </a>
     </header>
 
-    <!-- Container für die Produktdetails -->
-    <div id="product-detail-container" class="product-detail-container">
-        <div class="product-detail-images">
-            <!-- Produktbilder werden hier dynamisch eingefügt -->
+    <main class="product-page">
+        <!-- Hauptbild und Thumbnails Container -->
+        <div id="product-detail-container" class="product-detail-container">
+            <div class="product-detail-wrapper">
+                <div class="product-main-image-container">
+                    <!-- Hauptbild wird dynamisch eingefügt -->
+                </div>
+                <div class="product-thumbnail-container">
+                    <!-- Thumbnails werden dynamisch eingefügt -->
+                </div>
+    
+                <!-- Produktinformationen -->
+                <section class="product-info">
+                    <!-- Produktinformationen wie Name, Preis, Beschreibung etc. werden dynamisch eingefügt -->
+                </section>
+            </div>
         </div>
-        <div class="product-detail-info">
-            <!-- Produktname, Beschreibung und Preis werden hier dynamisch eingefügt -->
-            
-            <!-- Neuer Warenkorb-Button mit Icon -->
-            <button id="add-to-cart-button">
-                <img src="images/add_shopping_cart_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Add to cart">
-            </button>
-        </div>
-    </div>
+    </main>
+    
 
+    <!-- Popup Modal für Benachrichtigungen -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span id="close-modal" class="close">&times;</span>
-            <p id="modal-message">Added to shopping cart!</p>
+            <p id="modal-message"></p> <!-- Der Text wird dynamisch von JavaScript gesetzt -->
         </div>
-    </div>    
-
-
+    </div>
+        
     <script src="app.js"></script>
 </body>
 </html>
