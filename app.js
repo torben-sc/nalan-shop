@@ -213,7 +213,7 @@ async function displayProductDetails() {
     } catch (error) {
         console.error('Fehler beim Abrufen des PayPal-Links:', error);
         directCheckoutButton.disabled = true; // Deaktiviere den Button bei Fehler
-        directCheckoutButton.textContent = 'PayPal-Link nicht verfügbar';
+        directCheckoutButton.textContent = 'PayPal-Link not available';
     }
 
     // Event-Listener für Add-to-Cart
