@@ -688,7 +688,7 @@ main {
 .cart-item-link {
     font-size: 0.75em;
     color: #fff;
-    margin-bottom: 5px;
+    margin-bottom: 9px;
     font-weight: 900;
     text-decoration: none; /* Entfernt die Unterstreichung des Links */
 }
