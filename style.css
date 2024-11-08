@@ -610,8 +610,7 @@ main {
     right: -100%;
     width: 100%;
     height: 100%;
-    background-color: #fff;
-    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
+    background-color: #24388e;
     transition: right 0.4s ease-in-out;
     z-index: 1000;
     overflow-y: auto;
@@ -632,9 +631,17 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #e0e0e0;
+    margin-left: -20px;
+    background-color: #24388e;  /* Ändert die Hintergrundfarbe auf ein dunkleres Blau */
+    border-bottom: 1px solid #ffffff;
+    max-width: 91%; 
+    margin: 0 auto; 
+}
+
+.cart-popup-header h2 {
+    font-size: 1.7em;
+    font-weight: bold;
+    color: #E55013;  /* Ändert die Schriftfarbe auf Weiß für besseren Kontrast */
 }
 
 .close-cart-button {
@@ -642,6 +649,7 @@ main {
     border: none;
     font-size: 24px;
     cursor: pointer;
+    color: #ffffff;
 }
 
 .cart-items-container {
@@ -658,8 +666,8 @@ main {
 }
 
 .cart-item-image {
-    width: 60px;
-    height: 60px;
+    width: 75px;
+    height: 100px;
     object-fit: cover;
     margin-right: 15px;
 }
@@ -669,15 +677,18 @@ main {
 }
 
 .cart-item-details h3 {
-    font-size: 1em;
-    color: #333;
+    font-size: 1.1em;
+    color: #fff;
     margin-bottom: 5px;
+    font-weight: 900;
 }
 
 .cart-item-details p {
-    font-size: 0.9em;
-    color: #555;
-    margin: 2px 0;
+    font-size: 1em;
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 /* Entfernen Button für Artikel */
@@ -685,37 +696,35 @@ main {
     background: none;
     border: none;
     font-size: 20px;
-    color: #d9534f;
+    color: #b80600;
     cursor: pointer;
     padding: 0 10px;
 }
 
 /* Gesamtbetrag */
 .cart-total {
-    padding: 20px;
-    border-top: 1px solid #e0e0e0;
-    text-align: right;
-    font-size: 1.2em;
-    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 90%;
+    margin: 0 auto 10px auto; /* Zentriert den Bereich und fügt Abstand zum nächsten Element hinzu */
+    text-align: left; /* Links ausrichten */
+    margin-top: -30px;
 }
 
-/* Checkout Button */
-.checkout-button {
-    width: calc(100% - 40px);
-    margin: 20px;
-    padding: 15px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+
+.cart-total-text {
+    font-weight: bold;
+    font-size: 1.2em; /* Vergrößert den Text für bessere Sichtbarkeit */
+    color: #ffffff; /* Farbe für den "Total Amount" Text */
     text-transform: uppercase;
 }
 
-.checkout-button:hover {
-    background-color: #444;
+.cart-total-value {
+    font-weight: bold;
+    font-size: 1.2em; /* Vergrößert den Betrag für bessere Sichtbarkeit */
+    color: #fff; /* Farbe für den Betrag */
 }
-
 
 /* Container für die gesamte Seite */
 .thank-you-page-container {
@@ -746,4 +755,23 @@ main {
     font-size: 1.4em;
     color: #E55013; 
     font-weight: bolder;
+}
+
+.cart-contact-info {
+    text-align: center;
+    font-weight: bold;
+    padding: 45px 20px;
+    color: #ffffff; /* Weiß für eine gute Sichtbarkeit */
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+.cart-contact-info a {
+    color: #E55013; /* Orange für den Link */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cart-contact-info a:hover {
+    text-decoration: underline; /* Unterstreiche den Link, wenn der Nutzer darüber hovert */
 }
