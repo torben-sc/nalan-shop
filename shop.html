@@ -8,19 +8,20 @@
 </head>
 <body>
     <header class="shop-header">
+        <div class="header-left">
+            <!-- Platzhalter, damit das Logo in der Mitte bleibt -->
+        </div>
         <div class="logo-container">
             <a href="shop.html">
                 <img src="images/logo.jpg" alt="Shop Logo" class="logo">
             </a>
         </div>
-        <div class="cart-icon-container">
-            <a href="cart.html" class="cart-icon">
-                <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Warenkorb">
-                <span id="cart-count" class="cart-count">0</span>
-            </a>
+        <div id="cart-icon" class="cart-icon-container">
+            <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Warenkorb" class="cart-icon">
+            <span id="cart-count" class="cart-count">0</span>
         </div>
     </header>
-
+    
     <!-- Oberes Navigationsmenü für Hauptkategorien -->
     <div class="top-menu-wrapper">
         <nav class="top-menu">
@@ -31,13 +32,29 @@
             <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
         </nav>
     </div>
-
+    
     <main>
         <h1 class="product-title" id="product-title">All Products</h1>
         <div id="product-container" class="product-container">
             <!-- Produkte werden hier von JavaScript eingefügt -->
         </div>
     </main>
+
+    <!-- Warenkorb-Popup -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-header">
+            <span>Cart</span>
+            <button id="close-cart" class="close-cart">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Warenkorb-Artikel werden hier eingefügt -->
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="total-amount">€0.00</span>
+        </div>
+        <button class="checkout-button">Proceed to Checkout</button>
+    </div>
 
     <script src="app.js"></script>
     <script>

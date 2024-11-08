@@ -12,38 +12,62 @@ body {
 }
 
 /* Fixierter Header mit zentriertem Logo und Hintergrundfarbe */
+/* Header-Stile */
 .shop-header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60px; /* Die Höhe des Headers kann angepasst werden, falls nötig */
-    background-color: #24388e;
     display: flex;
     align-items: center;
-    justify-content: center; /* Zentriert das Logo */
-    padding: 0 20px;
-    z-index: 1000;
-    border-bottom: none; /* Entfernt die Untergrenze des Headers */
+    justify-content: center;
+    position: fixed; /* Macht den Header fixiert */
+    top: 0; /* Setzt den Header an den oberen Rand des Bildschirms */
+    left: 0; /* Setzt den Header an den linken Rand */
+    width: 100%; /* Der Header nimmt die gesamte Seitenbreite ein */
+    padding: 10px 20px;
+    background-color: #24388e;
+    z-index: 1000; /* Sicherstellen, dass der Header über anderen Inhalten liegt */
 }
 
-.logo-link {
-    display: block;
+/* Platzhalter links im Header */
+.header-left {
+    flex: 1; /* Nimmt den gesamten Raum links ein, damit das Logo in der Mitte bleibt */
 }
 
 .logo {
-    height: 30px; /* Hier kannst du die Höhe des Logos anpassen */
-    max-height: 30px; /* Alternativ kannst du die maximale Höhe auch erhöhen */
+    height: 30px; /* Höhe des Logos einstellen */
+    max-height: 30px; /* Maximale Höhe des Logos */
 }
 
-/* Warenkorb-Icon im Header, rechts positioniert */
+/* Logo-Container */
+.logo-container {
+    flex: 1;
+    text-align: center;
+}
+
+/* Warenkorb-Icon */
+.cart-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    flex: 1; /* Sorgt dafür, dass das Icon rechts bleibt */
+}
+
 .cart-icon {
+    width: 24px; /* Größe des Icons */
+    height: 24px;
+}
+
+.cart-count {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 35px;
-    height: 35px;
+    top: -8px; /* Justiere die Position des Zählers */
+    right: -8px; /* Justiere die Position des Zählers */
+    background-color: #E55013; /* Farbe des Zählers */
+    color: white; /* Textfarbe */
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
 }
 
 .cart-icon img {
@@ -51,24 +75,12 @@ body {
     height: auto;
 }
 
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #E55013;
-    color: #ffffff;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 0.8em;
-    font-weight: bold;
-}
-
 .top-menu-wrapper {
     overflow-x: auto;
     white-space: nowrap;
     padding: 10px 20px;
     box-sizing: border-box;
-
+    margin-top: 70px; /* Abstand hinzufügen, der der Höhe des fixierten Headers entspricht */
     /* Versteckt den Scrollbalken */
     -ms-overflow-style: none;  /* Für Internet Explorer und Edge */
     scrollbar-width: none;     /* Für Firefox */
@@ -269,6 +281,7 @@ main {
     }
 
     .product-main-image {
+        margin-top: 45px;
         width: 100%;
         max-width: 600px;
         height: auto;
@@ -306,6 +319,20 @@ main {
         text-align: left; /* Linksbündige Überschrift */
         margin-left: 0; /* Abstand zum linken Rand auf 0 setzen, damit es so weit wie möglich nach links geht */
         margin-bottom: 20px;
+    }
+
+    .product-header {
+        justify-content: flex-start; /* Links ausrichten für mobile Geräte auf der Produktseite */
+    }
+
+    .product-header .logo-container {
+        margin-left: 0px; /* Platz links hinzufügen */
+        margin-right: 200px; /* Entfernt das automatische Zentrieren */
+    }
+
+    .product-header .cart-icon-container {
+        right: 60px;
+        margin-left: auto; /* Verschiebt das Warenkorb-Icon nach rechts */
     }
     
     .back-link {
@@ -413,6 +440,7 @@ main {
     }
 
     .product-main-image {
+        margin-top: 45px;
         width: 100%;
         max-width: 600px;
         height: auto;
@@ -568,17 +596,59 @@ main {
     position: relative;
 }
 
-.close {
-    color: #aaa;
-    position: absolute; 
-    top: 228px; 
-    right: 530px;
-    font-size: 28px;
-    font-weight: bold;
+
+/* Slide-in Cart Popup Styles */
+.cart-popup {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.cart-popup.open {
+    right: 0;
+}
+
+.cart-header {
+    padding: 20px;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-items {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100% - 150px); /* Adjust for cart header and total */
+}
+
+.cart-total {
+    padding: 20px;
+    font-size: 1.2em;
+    display: flex;
+    justify-content: space-between;
+    background: #f4f4f4;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    background: #000;
+    color: #fff;
+    border: none;
     cursor: pointer;
 }
 
-.close:hover, .close:focus {
-    color: #000;
-    text-decoration: none;
+.close-cart {
+    font-size: 1.5em;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
