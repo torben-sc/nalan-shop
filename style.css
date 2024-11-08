@@ -658,11 +658,12 @@ main {
 
 /* Einzelne Artikel im Warenkorb */
 .cart-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 10px;
+    position: relative; /* Macht den Container als Referenz für absolute Positionierung geeignet */
+    display: flex; /* Verwende Flexbox für eine einfache horizontale Anordnung */
+    align-items: center; /* Zentriert die Inhalte des Artikels vertikal */
+    margin-bottom: 15px; /* Fügt Platz zwischen den Artikeln hinzu */
+    border-bottom: 1px solid #e0e0e0; /* Unterstreicht jedes Element mit einer Trennlinie */
+    padding-bottom: 10px; /* Abstand unterhalb des Artikels */
 }
 
 .cart-item-image {
@@ -673,9 +674,8 @@ main {
 }
 
 .cart-item-details {
-    flex: 1;
+    flex: 1; 
 }
-
 
 .cart-item-details p {
     font-size: 1em;
@@ -697,7 +697,7 @@ main {
     position: absolute; /* Positioniere den Button absolut innerhalb der cart-item Box */
     right: 0; /* Platziere den Button fest an den rechten Rand */
     background: none;
-    margin-right: 12px;
+    margin-right: 11px;
     border: none;
     font-size: 20px;
     color: #b80600;
