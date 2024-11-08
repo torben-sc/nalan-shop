@@ -197,22 +197,24 @@ async function displayProductDetails() {
     infoContainer.appendChild(buttonContainer);
 
     // Event-Listener für den Direct Checkout Button hinzufügen
-    directCheckoutButton.addEventListener('click', async () => {
-        try {
-            // PayPal Link von Netlify Function abrufen
-            const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
-            if (!response.ok) {
-                throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
-            }
-            const data = await response.json();
-            paypalButton.addEventListener('click', () => {
-                window.open(data.link, '_blank');
-            });
-        } catch (error) {
-            console.error('Fehler beim Abrufen des PayPal-Links:', error);
-            alert("Unable to proceed to Direct Checkout. Please try again later.");
+    try {
+        // PayPal Link von Netlify Function abrufen
+        const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
+        if (!response.ok) {
+            throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
         }
-    });
+        const data = await response.json();
+        
+        // Setze Event-Listener, um PayPal Link zu öffnen
+        directCheckoutButton.addEventListener('click', () => {
+            // Verwende window.location.href, um Pop-up Blocker zu umgehen
+            window.location.href = data.link;
+        });
+    } catch (error) {
+        console.error('Fehler beim Abrufen des PayPal-Links:', error);
+        directCheckoutButton.disabled = true; // Deaktiviere den Button bei Fehler
+        directCheckoutButton.textContent = 'PayPal-Link nicht verfügbar';
+    }
 
     // Event-Listener für Add-to-Cart
     addToCartButton.addEventListener('click', () => {
