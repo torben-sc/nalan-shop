@@ -2,26 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialisieren der Warenkorb-Anzeige
     updateCartCount();
 
-    // Kategorien-Event-Listener hinzufügen
-    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
-    const categoryUrls = {
-        showAllFilter: 'shop.html?category=all',
-        bagsFilter: 'bags.html?category=bags',
-        balaclavasFilter: 'balaclavas.html?category=balaclavas',
-        handWarmersFilter: 'handwarmers.html?category=hand warmers',
-        otherAccessoriesFilter: 'otheraccessories.html?category=other accessories',
-    };
-
-    categories.forEach(id => {
-        const filterElement = document.getElementById(id);
-        if (filterElement) {
-            filterElement.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = categoryUrls[id];
-            });
-        }
-    });
-
     // Warenkorb-Popup Elemente und Event-Handler
     const cartIcon = document.getElementById('cart-icon');
     const cartPopup = document.getElementById('cart-popup');
@@ -42,6 +22,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Kategorien-Event-Listener hinzufügen
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
+    const categoryUrls = {
+        showAllFilter: 'shop.html?category=all',
+        bagsFilter: 'bags.html?category=bags',
+        balaclavasFilter: 'balaclavas.html?category=balaclavas',
+        handWarmersFilter: 'handwarmers.html?category=hand warmers',
+        otherAccessoriesFilter: 'otheraccessories.html?category=other accessories',
+    };
+
+    categories.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = categoryUrls[id];
+            });
+        }
+    });
+
+    // Warenkorb-Artikel anzeigen
+    displayCartItems(); 
+
     // Produktliste und Details initialisieren
     if (document.getElementById('product-container')) {
         const urlParams = new URLSearchParams(window.location.search);
@@ -56,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
         createFooter();
     }
 
+    // Direct Checkout Button Event-Listener
     const directCheckoutButton = document.getElementById('direct-checkout-button');
-    
     if (directCheckoutButton) {
         directCheckoutButton.addEventListener('click', async () => {
             try {
@@ -78,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
@@ -275,17 +279,43 @@ function addToCart(product) {
     displayCartItems(); // Update cart items in the popup
 }
 
-// Funktion zum Anzeigen der Warenkorb-Artikel
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialisieren der Warenkorb-Anzeige
+    updateCartCount();
+    displayCartItems(); // Warenkorb-Artikel beim Start anzeigen
+
+    // Warenkorb-Popup Elemente und Event-Handler
+    const cartIcon = document.getElementById('cart-icon');
+    const cartPopup = document.getElementById('cart-popup');
+    const closeCartButton = document.getElementById('close-cart');
+
+    // Event listener to open cart popup
+    if (cartIcon && cartPopup) {
+        cartIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartPopup.classList.add('open');
+        });
+    }
+
+    // Event listener to close cart popup
+    if (closeCartButton && cartPopup) {
+        closeCartButton.addEventListener('click', () => {
+            cartPopup.classList.remove('open');
+        });
+    }
+});
+
+// Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
 function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
 
-    cartItemsContainer.innerHTML = '';
+    cartItemsContainer.innerHTML = ''; // Container leeren
 
     let totalAmount = 0;
     cart.forEach(item => {
-        const price = parseFloat(item.price) || 0;
+        const price = parseFloat(item.price) || 0; // Preis als Zahl
         totalAmount += price * item.quantity;
 
         const cartItem = document.createElement('div');
@@ -293,15 +323,16 @@ function displayCartItems() {
 
         cartItem.innerHTML = `
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
-            <div class="cart-item-info">
+            <div class="cart-item-details">
                 <h3>${item.name}</h3>
-                <p>€${price.toFixed(2)}</p>
+                <p>Price: €${price.toFixed(2)}</p>
                 <p>Quantity: ${item.quantity}</p>
             </div>
-            <button class="remove-item-icon" data-id="${item.id}">&times;</button>
+            <button class="remove-item-button" data-id="${item.id}">&times;</button>
         `;
 
-        cartItem.querySelector('.remove-item-icon').addEventListener('click', () => {
+        // Event-Listener für den Entfernen-Button
+        cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
             removeFromCart(item.id);
         });
 
@@ -318,9 +349,21 @@ function removeFromCart(productId) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem('cart', JSON.stringify(cart));
-    displayCartItems();
-    updateCartCount();
+    displayCartItems(); // Warenkorb-Artikel aktualisieren
+    updateCartCount(); // Zähler im Icon aktualisieren
 }
+
+// Funktion zum Aktualisieren des Warenkorb-Zählers
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    const cartCountElement = document.getElementById('cart-count');
+
+    if (cartCountElement) {
+        cartCountElement.innerText = cartCount;
+    }
+}
+
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers
 function updateCartCount() {
