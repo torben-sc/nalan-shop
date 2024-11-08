@@ -80,7 +80,7 @@ body {
     white-space: nowrap;
     padding: 10px 20px;
     box-sizing: border-box;
-    margin-top: 70px; /* Abstand hinzufügen, der der Höhe des fixierten Headers entspricht */
+    margin-top: 50px; /* Abstand hinzufügen, der der Höhe des fixierten Headers entspricht */
     /* Versteckt den Scrollbalken */
     -ms-overflow-style: none;  /* Für Internet Explorer und Edge */
     scrollbar-width: none;     /* Für Firefox */
@@ -88,6 +88,13 @@ body {
 
 .top-menu-wrapper::-webkit-scrollbar {
     display: none;  /* Für Webkit-basierte Browser (Chrome, Safari) */
+}
+
+.top-menu-wrapper-2{
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0px 20px;
+    margin-bottom: 5px;
 }
 
 
@@ -130,12 +137,12 @@ body {
 /* Überschrift (Produkt-Titel) */
 .product-title {
     font-size: 3em;
-    margin-top: 0px;
     color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
     font-weight: bold;
+    margin-top: -28px;
     text-transform: uppercase;
     text-align: left; /* Linksbündige Überschrift */
-    margin-left: 5px; /* Abstand zum linken Rand */
+    margin-left: 18px; /* Abstand zum linken Rand */
 }
 
 /* Hauptbereich für Produkte */
