@@ -341,17 +341,6 @@ main {
         margin-left: auto; /* Verschiebt das Warenkorb-Icon nach rechts */
     }
     
-    .back-link {
-        text-decoration: none; /* Normale Unterstreichung entfernen */
-        color: #ffffff;
-        font-weight: lighter;
-        margin-bottom: 20px;
-        display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
-        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
-        padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
-    }
-    
-    
     .product-price {
         font-size: 1.5em;
         color: #ffffff;
@@ -366,6 +355,16 @@ main {
         color: #ffffff;
         font-weight: bolder;
         margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
+    }
+
+    .back-link {
+        text-decoration: none; /* Keine Standard-Unterstreichung */
+        color: #ffffff;
+        font-weight: lighter;
+        margin-bottom: 20px;
+        display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
+        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
     }
     
     
@@ -491,21 +490,22 @@ main {
     
     .product-title-details {
         font-size: 1.5em;
-        margin-top: 0px;
+        margin-top: 20px;
         color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
         text-transform: uppercase;
         font-weight: 500;
         text-align: left; /* Linksbündige Überschrift */
-        margin-left: 5px; /* Abstand zum linken Rand */
         margin-bottom: 20px;
     }
     
     .back-link {
-        text-decoration: underline;
+        text-decoration: none; /* Keine Standard-Unterstreichung */
         color: #ffffff;
-        font-weight: bold;
+        font-weight: lighter;
         margin-bottom: 20px;
-        display: block;
+        display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
+        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
     }
     
     .product-price {
