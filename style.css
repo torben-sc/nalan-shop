@@ -775,3 +775,11 @@ main {
 .cart-contact-info a:hover {
     text-decoration: underline; /* Unterstreiche den Link, wenn der Nutzer darüber hovert */
 }
+
+.checkout-note {
+    color: #000; /* Setzt die Farbe auf Schwarz */
+    font-weight: bold; /* Fettgedruckte Schrift */
+    text-transform: uppercase; /* Alle Buchstaben werden in Großbuchstaben umgewandelt */
+    margin-top: 20px; /* Optional: fügt etwas Abstand oberhalb hinzu */
+    text-align: center; /* Zentriert den Text */
+}
