@@ -306,8 +306,10 @@ function displayCartItems() {
 
         cartItem.innerHTML = `
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
-            <div class="cart-item-details">
-                <h3>${item.name}</h3>
+            <div class="cart-item-info">
+                <a href="product.html?id=${item.id}" class="cart-item-link">
+                    <h3>${item.name}</h3>
+                </a>
                 <p>Price: €${price.toFixed(2)}</p>
                 <p>Quantity: ${item.quantity}</p>
             </div>

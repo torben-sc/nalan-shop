@@ -676,12 +676,6 @@ main {
     flex: 1;
 }
 
-.cart-item-details h3 {
-    font-size: 1.1em;
-    color: #000;
-    margin-bottom: 5px;
-    font-weight: 900;
-}
 
 .cart-item-details p {
     font-size: 1em;
@@ -691,9 +685,19 @@ main {
     text-transform: uppercase;
 }
 
+.cart-item-link {
+    font-size: 0.75em;
+    color: #fff;
+    margin-bottom: 5px;
+    font-weight: 900;
+    text-decoration: none; /* Entfernt die Unterstreichung des Links */
+}
 /* Entfernen Button für Artikel */
 .remove-item-button {
+    position: absolute; /* Positioniere den Button absolut innerhalb der cart-item Box */
+    right: 0; /* Platziere den Button fest an den rechten Rand */
     background: none;
+    margin-right: 12px;
     border: none;
     font-size: 20px;
     color: #b80600;
