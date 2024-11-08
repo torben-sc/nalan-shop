@@ -55,6 +55,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!document.getElementById('landing-container')) {
         createFooter();
     }
+
+    const directCheckoutButton = document.getElementById('direct-checkout-button');
+    
+    if (directCheckoutButton) {
+        directCheckoutButton.addEventListener('click', async () => {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const productId = params.get('id');
+
+                // Abrufen des PayPal-Links mit der jeweiligen Produkt-ID
+                const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${productId}`);
+                if (!response.ok) {
+                    throw new Error('Fehler beim Abrufen des PayPal-Links');
+                }
+                const data = await response.json();
+                window.open(data.link, '_blank');
+            } catch (error) {
+                console.error('Fehler beim Abrufen des PayPal-Links:', error);
+                alert('Unable to proceed to Direct Checkout. Please try again later.');
+            }
+        });
+    }
 });
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
