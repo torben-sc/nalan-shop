@@ -124,6 +124,7 @@ async function displayProductDetails() {
         return;
     }
 
+    // Hauptbild und Thumbnails erstellen
     const mainImageContainer = document.querySelector('.product-main-image-container');
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
 
@@ -155,6 +156,7 @@ async function displayProductDetails() {
         });
     }
 
+    // Produktinformationen hinzufügen
     const infoContainer = document.querySelector('.product-info');
     infoContainer.innerHTML = `
         <a href="shop.html" class="back-link">Back to Collection</a>
@@ -163,31 +165,61 @@ async function displayProductDetails() {
         <p class="product-description">${product.description}</p>
     `;
 
+    // Container für die Buttons
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
+    // "Direct Checkout" Button hinzufügen
     const directCheckoutButton = document.createElement('button');
     directCheckoutButton.id = 'direct-checkout-button';
     directCheckoutButton.className = 'checkout-button';
     directCheckoutButton.textContent = 'Direct Checkout';
     buttonContainer.appendChild(directCheckoutButton);
 
+    // "OR" Text hinzufügen
     const orElement = document.createElement('p');
     orElement.className = 'or-text';
     orElement.textContent = 'OR';
     buttonContainer.appendChild(orElement);
 
+    // Add to Cart Button hinzufügen
     const addToCartButton = document.createElement('button');
     addToCartButton.className = 'add-to-cart-button';
     addToCartButton.textContent = 'Add to cart';
     buttonContainer.appendChild(addToCartButton);
 
+    // Füge die Button-Gruppe zum infoContainer hinzu
     infoContainer.appendChild(buttonContainer);
 
+    // Event-Listener für den Direct Checkout Button hinzufügen
+    directCheckoutButton.addEventListener('click', async () => {
+        try {
+            // PayPal Link von Netlify Function abrufen
+            const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
+            if (!response.ok) {
+                throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
+            }
+            const data = await response.json();
+            window.open(data.link, '_blank');
+        } catch (error) {
+            console.error('Fehler beim Abrufen des PayPal-Links:', error);
+            alert("Unable to proceed to Direct Checkout. Please try again later.");
+        }
+    });
+
+    // Event-Listener für Add-to-Cart
     addToCartButton.addEventListener('click', () => {
         addToCart(product);
+
+        // Warenkorb-Fenster automatisch öffnen, nachdem das Produkt hinzugefügt wurde
+        const cartPopup = document.getElementById('cart-popup');
+        if (cartPopup) {
+            cartPopup.classList.add('open');
+        }
+        displayCartItems(); // Warenkorb aktualisieren
     });
 }
+
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
@@ -258,7 +290,6 @@ function displayCartItems() {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
 }
-
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
 function removeFromCart(productId) {

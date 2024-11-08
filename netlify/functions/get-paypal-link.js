@@ -1,18 +1,29 @@
 // netlify/functions/get-paypal-link.js
+
 exports.handler = async (event, context) => {
-    // Hole die PayPal-Link Umgebungsvariable
-    const paypalLink = process.env.PAYPAL_LINK;
-  
-    if (!paypalLink) { //hier eventuell weitere Sicherheitsmaßnahmen hinzufügen, bspw.: JSON Web Token oder URL Filter
+  // Hole die Produkt-ID aus den URL-Parametern
+  const productId = event.queryStringParameters.productId;
+
+  if (!productId) {
       return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'PayPal-Link nicht gefunden. Bitte überprüfen Sie die Umgebungsvariablen.' }),
+          statusCode: 400,
+          body: JSON.stringify({ error: 'Produkt-ID fehlt.' }),
       };
-    }
-    
-    return {
+  }
+
+  // Hole die PayPal-Link-Umgebungsvariable basierend auf der Produkt-ID
+  const paypalLinkKey = `PAYPAL_LINK_${productId.toUpperCase()}`;
+  const paypalLink = process.env[paypalLinkKey];
+
+  if (!paypalLink) {
+      return {
+          statusCode: 404,
+          body: JSON.stringify({ error: 'PayPal-Link für dieses Produkt nicht gefunden.' }),
+      };
+  }
+
+  return {
       statusCode: 200,
       body: JSON.stringify({ link: paypalLink }),
-    };
   };
-  
+};
