@@ -12,7 +12,7 @@ exports.handler = async (event, context) => {
   }
 
   // Hole die PayPal-Link-Umgebungsvariable basierend auf der Produkt-ID
-  const paypalLinkKey = `PAYPAL_LINK_${productId.toUpperCase()}`;
+  const paypalLinkKey = `PAYPAL_LINK_PRODUCT${productId.toUpperCase()}`;
   const paypalLink = process.env[paypalLinkKey];
 
   if (!paypalLink) {
