@@ -24,6 +24,9 @@ exports.handler = async (event, context) => {
 
   return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Erlaubt alle Domains, Zugriff auf die Antwort zu erhalten
+      },
       body: JSON.stringify({ link: paypalLink }),
   };
 };
