@@ -205,7 +205,9 @@ async function displayProductDetails() {
                 throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
             }
             const data = await response.json();
-            window.open(data.link, '_blank');
+            paypalButton.addEventListener('click', () => {
+                window.open(data.link, '_blank');
+            });
         } catch (error) {
             console.error('Fehler beim Abrufen des PayPal-Links:', error);
             alert("Unable to proceed to Direct Checkout. Please try again later.");
