@@ -658,3 +658,35 @@ main {
     border: none;
     cursor: pointer;
 }
+
+/* Container für die gesamte Seite */
+.thank-you-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px); /* Höhe des Containers minus die Headerhöhe */
+    padding: 0 20px;
+    text-align: center;
+}
+
+/* Container für den Text */
+.thank-you-container {
+    max-width: 600px;
+    background-color: #24388e; /* Heller Hintergrund für den Dankescontainer */
+    border-radius: 15px;
+    padding: 30px 20px;
+}
+
+/* Text der Dankeschön Nachricht */
+.thank-you-message-1 {
+    font-size: 2em;
+    color: #ffffff; /* Farbe für Kontrast und Hervorhebung */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.thank-you-message-2 {
+    font-size: 1.4em;
+    color: #E55013; /* Blau für weiteren Kontrast */
+    font-weight: bolder;
+}
