@@ -558,7 +558,7 @@ main {
     
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
-        background-color: #E55013;
+        background-color: #000;
         color: #fff;
         padding: 15px;
         border: none;
