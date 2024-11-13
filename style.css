@@ -370,7 +370,7 @@ main {
     
     /* Button zum Direktkauf (Direct Checkout) */
     .checkout-button {
-        background-color: #000; /* Grün für Direktkauf */
+        background-color: #E55013;
         color: #fff;
         padding: 15px;
         border: none;
