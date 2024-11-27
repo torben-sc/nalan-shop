@@ -293,7 +293,7 @@ function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
-
+    const cartContactInfo = document.querySelector('.cart-contact-info'); // Container für die Kontaktinfo
     cartItemsContainer.innerHTML = ''; // Container leeren
 
     let totalAmount = 0;
@@ -326,6 +326,43 @@ function displayCartItems() {
 
     if (totalAmountElement) {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
+    }
+
+    // Anpassen der Kontaktinfo oder des PayPal Buttons
+    if (cart.length === 1) {
+        // Wenn nur ein Artikel im Warenkorb ist, füge den PayPal-Button hinzu
+        const product = cart[0];
+        cartContactInfo.innerHTML = ''; // Container leeren
+
+        const paypalButton = document.createElement('button');
+        paypalButton.id = 'paypal-button';
+        paypalButton.className = 'checkout-button';
+        paypalButton.textContent = 'Direct Checkout';
+        
+        // PayPal-Link für das Produkt setzen
+        paypalButton.addEventListener('click', async () => {
+            try {
+                const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
+                if (!response.ok) {
+                    throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
+                }
+                const data = await response.json();
+                window.location.href = data.link; // Fenster wird umgeleitet (kein Popup)
+            } catch (error) {
+                console.error('Fehler beim Abrufen des PayPal-Links:', error);
+                alert("Unable to proceed to Direct Checkout. Please try again later.");
+            }
+        });
+
+        cartContactInfo.appendChild(paypalButton);
+    } else {
+        // Bei mehreren Artikeln im Warenkorb, zeige die Instagram-Kontaktinfo an
+        cartContactInfo.innerHTML = `
+            <p>For orders of multiple items, contact me on 
+                <a href="https://www.instagram.com/nalancreations" target="_blank">Instagram</a>
+            </p>
+            <p class="checkout-note">OTHERWISE USE DIRECT CHECKOUT</p>
+        `;
     }
 }
 

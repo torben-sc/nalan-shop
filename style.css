@@ -524,16 +524,22 @@ main {
 
      /* Button zum Direktkauf (Direct Checkout) */
      .checkout-button {
-        background-color: #E55013; 
-        color: #fff;
-        padding: 15px;
-        border: none;
-        font-size: 1em;
-        text-transform: uppercase;
-        cursor: pointer;
-        width: 100%;
-        max-width: 900px;
-    }
+    background-color: #000; /* Schwarz für Direktkauf */
+    color: #fff; /* Weißer Text */
+    padding: 15px;
+    border: none;
+    font-size: 0.9em; /* Schriftgröße kleiner machen */
+    font-weight: bold; /* Schrift dicker machen */
+    text-transform: uppercase; /* Alle Buchstaben groß */
+    cursor: pointer;
+    width: 100%;
+    max-width: 900px;
+    text-align: center; /* Text zentrieren */
+}
+
+.checkout-button:hover {
+    background-color: #444; /* Etwas dunkleres Schwarz beim Hover */
+}
     
     .checkout-button:hover {
         background-color: #444; /* Etwas dunkleres Grün beim Hover */
