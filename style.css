@@ -787,3 +787,59 @@ main {
     margin-top: 20px; /* Optional: fügt etwas Abstand oberhalb hinzu */
     text-align: center; /* Zentriert den Text */
 }
+
+.impressum-container {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.legal-title {
+    font-size: 2.5em; /* Schriftgröße für größere Bildschirme */
+    color: #000; /* Orange Schriftfarbe für die Überschrift */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Anpassung für mobile Geräte (maximale Bildschirmbreite von 768px) */
+@media (max-width: 768px) {
+    .legal-title {
+        font-size: 1.75em; /* Kleinere Schriftgröße für mobile Geräte */
+        margin-bottom: 15px; /* Geringerer Abstand unten */
+        font-weight: 1000; /* Dickerer Schriftstil für mobile Ansicht */
+    }
+}
+
+.legal-text {
+    font-size: 1.08em;
+    font-weight: bold;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+.legal-text span {
+    font-size: 1.1em; /* Größere Anfangsbuchstaben */
+    text-transform: uppercase;
+}
+
+.legal-subtitle {
+    font-size: 1.5em; /* Schriftgröße für die Unterüberschriften */
+    color: #E55013;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+
+.privacy-container {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
