@@ -849,3 +849,22 @@ main {
     justify-content: center;
     text-align: center;
 }
+
+.paypal-button {
+    height: 60px;
+    font-size: 0.75em; /* Kleinere Schriftgröße */
+    font-weight: 350; /* Dickere Schrift */
+    padding: 12px 20px; /* Padding für eine bessere Optik */
+    background-color: #000; /* Typische PayPal-Farbe */
+    color: #fff; /* Schwarze Schrift */
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase; /* Alle Buchstaben groß */
+    text-align: center;
+    width: 100%; /* Füllt die Breite aus */
+    max-width: 400px; /* Maximale Breite */
+}
+
+.paypal-button:hover {
+    background-color: #1e1e1e; /* Etwas dunkleres Gelb beim Hover */
+}
