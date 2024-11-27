@@ -337,7 +337,7 @@ function displayCartItems() {
         const paypalButton = document.createElement('button');
         paypalButton.id = 'paypal-button-cart';
         paypalButton.textContent = 'PROCEED TO CHECKOUT';
-        paypalButton.className = 'checkout-button paypal-button';
+        paypalButton.className = 'checkout-button cart-paypal-button';
         
         // PayPal-Link für das Produkt setzen
         paypalButton.addEventListener('click', async () => {

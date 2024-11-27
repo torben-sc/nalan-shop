@@ -382,7 +382,7 @@ main {
     }
     
     .checkout-button:hover {
-        background-color: #444; /* Etwas dunkleres Grün beim Hover */
+        background-color: #252525; /* Etwas dunkleres Grün beim Hover */
     }
     
     .button-container {
@@ -417,7 +417,7 @@ main {
     }
     
     .add-to-cart-button:hover {
-        background-color: #8a300d;
+        background-color: #252525;
     }
 }
 
@@ -522,27 +522,27 @@ main {
         font-weight: bolder;
     }
 
-     /* Button zum Direktkauf (Direct Checkout) */
-     .checkout-button {
-    background-color: #000; /* Schwarz für Direktkauf */
-    color: #fff; /* Weißer Text */
-    padding: 15px;
-    border: none;
-    font-size: 0.9em; /* Schriftgröße kleiner machen */
-    font-weight: bold; /* Schrift dicker machen */
-    text-transform: uppercase; /* Alle Buchstaben groß */
-    cursor: pointer;
-    width: 100%;
-    max-width: 900px;
-    text-align: center; /* Text zentrieren */
-}
+    /* Button zum Direktkauf (Direct Checkout) */
+    .checkout-button {
+        background-color: #E55013; /* Schwarz für Direktkauf */
+        color: #fff; /* Weißer Text */
+        padding: 15px;
+        border: none;
+        font-size: 0.9em; /* Schriftgröße kleiner machen */
+        font-weight: bold; /* Schrift dicker machen */
+        text-transform: uppercase; /* Alle Buchstaben groß */
+        cursor: pointer;
+        width: 100%;
+        max-width: 900px;
+        text-align: center; /* Text zentrieren */
+    }
 
-.checkout-button:hover {
-    background-color: #444; /* Etwas dunkleres Schwarz beim Hover */
-}
+    .checkout-button:hover {
+        background-color: #252525; /* Etwas dunkleres Schwarz beim Hover */
+    }
     
     .checkout-button:hover {
-        background-color: #444; /* Etwas dunkleres Grün beim Hover */
+        background-color: #bd3f0d; /* Etwas dunkleres Grün beim Hover */
     }
     
     .button-container {
@@ -577,7 +577,7 @@ main {
     }
     
     .add-to-cart-button:hover {
-        background-color: #8a300d;
+        background-color: #252525;
     }
     
 }
@@ -850,7 +850,7 @@ main {
     text-align: center;
 }
 
-.paypal-button {
+.cart-paypal-button {
     height: 60px;
     font-size: 0.75em; /* Kleinere Schriftgröße */
     font-weight: 350; /* Dickere Schrift */
@@ -865,6 +865,6 @@ main {
     max-width: 400px; /* Maximale Breite */
 }
 
-.paypal-button:hover {
-    background-color: #1e1e1e; /* Etwas dunkleres Gelb beim Hover */
+.cart-paypal-button:hover {
+    background-color: #252525; /* Etwas dunkleres Gelb beim Hover */
 }
