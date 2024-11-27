@@ -382,7 +382,7 @@ main {
     }
     
     .checkout-button:hover {
-        background-color: #252525; /* Etwas dunkleres Grün beim Hover */
+        background-color: #bd3f0d; /* Etwas dunkleres Grün beim Hover */
     }
     
     .button-container {
