@@ -794,60 +794,106 @@ main {
     text-align: center; /* Zentriert den Text */
 }
 
-.impressum-container {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-
-.legal-title {
-    font-size: 2.5em; /* Schriftgröße für größere Bildschirme */
-    color: #000; /* Orange Schriftfarbe für die Überschrift */
-    font-weight: bold;
-    margin-bottom: 20px;
+@media (min-width: 768px){
+    .impressum-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .legal-title {
+        font-size: 2.5em; /* Schriftgröße für größere Bildschirme */
+        color: #000; /* Orange Schriftfarbe für die Überschrift */
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .legal-text {
+        font-size: 1.08em;
+        font-weight: bold;
+        line-height: 1.6;
+        max-width: 600px;
+    }
+    
+    .legal-text span {
+        font-size: 1.1em; /* Größere Anfangsbuchstaben */
+        text-transform: uppercase;
+    }
+    
+    .legal-subtitle {
+        font-size: 1.5em; /* Schriftgröße für die Unterüberschriften */
+        color: #E55013;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    
+    .privacy-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
 }
 
 /* Anpassung für mobile Geräte (maximale Bildschirmbreite von 768px) */
 @media (max-width: 768px) {
+    .privacy-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+        text-align: left;
+        padding: 0 15px; /* Fügt Polsterung links und rechts hinzu, um Text von den Rändern zu entfernen */
+    }
+    .impressum-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+        text-align: left;
+        padding: 0 15px; /* Fügt Polsterung links und rechts hinzu, um Text von den Rändern zu entfernen */
+    }
     .legal-title {
-        font-size: 1.75em; /* Kleinere Schriftgröße für mobile Geräte */
+        color: #000;
+        text-align: left;
+        font-size: 1.6em; /* Kleinere Schriftgröße für mobile Geräte, damit sie gut auf die Seite passt */
         margin-bottom: 15px; /* Geringerer Abstand unten */
         font-weight: 1000; /* Dickerer Schriftstil für mobile Ansicht */
+        text-decoration: underline; /* Fügt eine Unterstreichung hinzu */
+        word-wrap: break-word; /* Lässt Wörter umbrechen, um Überlauf zu verhindern */
     }
-}
 
-.legal-text {
-    font-size: 1.08em;
-    font-weight: bold;
-    line-height: 1.6;
-    max-width: 600px;
-}
+    .legal-text {
+        font-size: 0.85em;
+        font-weight: 550;
+        text-align: left; /* Links ausgerichtet für mobile Geräte */
+        margin: 0 2x; /* Fügt einen Rand hinzu, um Abstand zum Bildschirmrand zu schaffen */
+        max-width: 100%; /* Setzt die maximale Breite auf 100%, um die gesamte Breite des Containers zu nutzen */
+    }
 
-.legal-text span {
-    font-size: 1.1em; /* Größere Anfangsbuchstaben */
-    text-transform: uppercase;
-}
+    .legal-text span {
+        text-align: left;
+        font-size: 1.2em; /* Geringfügig größere Anfangsbuchstaben für bessere Lesbarkeit auf kleineren Bildschirmen */
+    }
 
-.legal-subtitle {
-    font-size: 1.5em; /* Schriftgröße für die Unterüberschriften */
-    color: #E55013;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-
-.privacy-container {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    .legal-subtitle {   
+        font-size: 1.3em; /* Schriftgröße für die Unterüberschriften */
+        color: #E55013;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        text-align: left;
+    }
 }
 
 .cart-paypal-button {
