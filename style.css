@@ -323,7 +323,7 @@ main {
         text-transform: uppercase;
         font-weight: 500;
         text-align: left; /* Linksbündige Überschrift */
-        margin-left: 0; /* Abstand zum linken Rand auf 0 setzen, damit es so weit wie möglich nach links geht */
+        margin-left: -5px; /* Abstand zum linken Rand auf 0 setzen, damit es so weit wie möglich nach links geht */
         margin-bottom: 20px;
     }
 
@@ -342,6 +342,7 @@ main {
     }
     
     .product-price {
+        margin-left: -5px;
         font-size: 1.5em;
         color: #ffffff;
         margin-bottom: 20px;
@@ -349,6 +350,7 @@ main {
     }
     
     .product-description {
+        margin-left: -5px;
         font-size: 1em;
         line-height: 1.5;
         margin-bottom: 20px;
@@ -358,6 +360,7 @@ main {
     }
 
     .back-link {
+        margin-left: -5px;
         text-decoration: none; /* Keine Standard-Unterstreichung */
         color: #ffffff;
         font-weight: lighter;
