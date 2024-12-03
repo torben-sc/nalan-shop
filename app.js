@@ -471,7 +471,7 @@ function createFooter() {
     </div>
     <div class="footer-branding">&copy; 2024 NALANCREATIONS. ALL RIGHTS RESERVED.</div>
     <div class="legal-links">
-        <a href="/impressum">Imprint</a>
+        <a href="/imprint">Imprint</a>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms & Conditions</a>
         <a href="/cancellation">Right of Withdrawal</a>
