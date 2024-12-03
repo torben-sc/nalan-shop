@@ -78,7 +78,7 @@ body {
 .top-menu-wrapper {
     overflow-x: auto;
     white-space: nowrap;
-    padding: 10px 20px;
+    padding: 10px 12px;
     box-sizing: border-box;
     margin-top: 50px; /* Abstand hinzufügen, der der Höhe des fixierten Headers entspricht */
     /* Versteckt den Scrollbalken */
@@ -93,7 +93,7 @@ body {
 .top-menu-wrapper-2{
     overflow-x: auto;
     white-space: nowrap;
-    padding: 0px 20px;
+    padding: 0px 12px;
     margin-bottom: 5px;
 }
 
@@ -105,7 +105,6 @@ body {
     align-items: center;
     margin: 0; /* Keine Margins */
     justify-content: flex-start; /* Links ausrichten */
-    padding-left: 0; /* Entfernt eventuelles Padding auf der linken Seite */
 }
 
 .top-menu a {
@@ -117,7 +116,6 @@ body {
     transition: color 0.3s ease;
     padding-bottom: 5px; /* Platz für die Linie */
     white-space: nowrap; /* Verhindert Zeilenumbruch für einzelne Links */
-    margin-left: 0; /* Vermeide zusätzlichen Abstand links */
 }
 
 
@@ -142,7 +140,7 @@ body {
     margin-top: -28px;
     text-transform: uppercase;
     text-align: left; /* Linksbündige Überschrift */
-    margin-left: 18px; /* Abstand zum linken Rand */
+    margin-left: 10px; /* Abstand zum linken Rand */
 }
 
 /* Hauptbereich für Produkte */
@@ -916,4 +914,16 @@ main {
 
 .cart-paypal-button:hover {
     background-color: #252525; /* Etwas dunkleres Gelb beim Hover */
+}
+
+@media (max-width: 768px) {
+    .mobile-line-break {
+        display: block; /* Macht einen Blockwechsel, was einem Zeilenumbruch entspricht */
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-line-break {
+        display: inline; /* Auf größeren Bildschirmen bleibt alles in einer Zeile */
+    }
 }

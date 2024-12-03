@@ -97,7 +97,10 @@ async function displayProductList(category = null, size = null) {
         filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
     }
 
-    productTitle.textContent = (category && category !== 'all') ? `${category.charAt(0).toUpperCase() + category.slice(1)}` : 'All Products';
+    productTitle.innerHTML = (category && category !== 'all') 
+    ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
+    : 'All<span class="mobile-line-break"> </span>Products';
+
 
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
@@ -178,7 +181,7 @@ async function displayProductDetails() {
     const directCheckoutButton = document.createElement('button');
     directCheckoutButton.id = 'direct-checkout-button';
     directCheckoutButton.className = 'checkout-button';
-    directCheckoutButton.textContent = 'Direct Checkout';
+    directCheckoutButton.textContentf = 'Direct Checkout';
     buttonContainer.appendChild(directCheckoutButton);
 
     // "OR" Text hinzufügen
