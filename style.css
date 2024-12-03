@@ -326,6 +326,7 @@ main {
     }
 
     .product-header {
+        margin-left: -3.5px;
         justify-content: flex-start; /* Links ausrichten für mobile Geräte auf der Produktseite */
     }
 
