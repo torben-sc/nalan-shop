@@ -25,11 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Kategorien-Event-Listener hinzufügen
     const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
     const categoryUrls = {
-        showAllFilter: 'shop.html?category=all',
-        bagsFilter: 'bags.html?category=bags',
-        balaclavasFilter: 'balaclavas.html?category=balaclavas',
-        handWarmersFilter: 'handwarmers.html?category=hand warmers',
-        otherAccessoriesFilter: 'otheraccessories.html?category=other accessories',
+        showAllFilter: '/shop',
+        bagsFilter: '/bags',
+        balaclavasFilter: '/balaclavas',
+        handWarmersFilter: '/handwarmers',
+        otherAccessoriesFilter: '/otheraccessories',
     };
 
     categories.forEach(id => {
@@ -37,35 +37,85 @@ document.addEventListener('DOMContentLoaded', () => {
         if (filterElement) {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.location.href = categoryUrls[id];
+                const newUrl = categoryUrls[id];
+                window.location.href = newUrl; // Navigation zur neuen URL ohne ".html" oder "?category"
             });
         }
     });
 
-    // Warenkorb-Artikel anzeigen
-    displayCartItems(); 
+    // URL-basierten Kategorie-Filter anwenden
+    const currentPath = window.location.pathname;
 
-    // Produktliste und Details initialisieren
+    let category;
+    switch (currentPath) {
+        case '/bags':
+            category = 'bags';
+            break;
+        case '/balaclavas':
+            category = 'balaclavas';
+            break;
+        case '/handwarmers':
+            category = 'hand warmers';
+            break;
+        case '/otheraccessories':
+            category = 'other accessories';
+            break;
+        default:
+            category = 'all';
+    }
+
+    // Initialisieren der Produktliste basierend auf der URL-Kategorie
     if (document.getElementById('product-container')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const category = urlParams.get('category') || 'all';
         displayProductList(category);
     } else if (document.getElementById('product-detail-container')) {
         displayProductDetails();
     }
 
+    // Warenkorb-Artikel anzeigen
+    displayCartItems();
+
     // Initialisierung des Footers
     if (!document.getElementById('landing-container')) {
         createFooter();
     }
-    
+
+    // Größenfilter-Event-Listener hinzufügen
+    const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
+    sizeFilterLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const size = e.target.getAttribute('data-size');
+            applySizeFilter(size);
+        });
+    });
+
+    // Größenfilter anwenden basierend auf der URL
+    if (currentPath.includes('/bags')) {
+        const pathParts = currentPath.split('/');
+        let size = 'all';
+        if (pathParts.length > 2) {
+            size = pathParts[2]; // Extrahiere die Größe aus der URL
+        }
+        displayProductList('bags', size);
+    }
 });
 
+// Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
+function applySizeFilter(size) {
+    displayProductList('bags', size);
+    updateSizeFilterURL(size);
+}
+
+// Funktion zur Aktualisierung der URL ohne Seite neu zu laden
+function updateSizeFilterURL(size) {
+    const newUrl = size === 'all' ? '/bags' : `/bags/${size}`;
+    window.history.pushState({}, '', newUrl);
+}
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
-        const response = await fetch('products.json');
+        const response = await fetch('/products.json'); // Geänderter Pfad für die JSON-Datei
         if (!response.ok) {
             throw new Error(`Fehler beim Laden der Produkte: ${response.statusText}`);
         }
@@ -77,10 +127,6 @@ async function fetchProducts() {
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null) {
-    const urlParams = new URLSearchParams(window.location.search);
-    category = category || urlParams.get('category') || 'all';
-    size = size || urlParams.get('size') || 'all';
-
     const products = await fetchProducts();
     if (!products) return;
 
@@ -105,22 +151,23 @@ async function displayProductList(category = null, size = null) {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
-            <a href="product.html?id=${product.id}" class="product-link">
+            <a href="/product/${product.id}" class="product-link">
                 <img src="${product.images[0]}" alt="${product.name}">
                 <h2>${product.name}</h2>
             </a>
             <p class="product-price-shop">
                 <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
             </p>
-        `;
+`;
+
         productContainer.appendChild(productCard);
     });
 }
 
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get('id');
+    const pathParts = window.location.pathname.split('/');
+    const productId = pathParts[pathParts.length - 1]; // Extrahiere die ID vom Ende des Pfads
 
     const products = await fetchProducts();
     if (!products) return;
@@ -131,15 +178,12 @@ async function displayProductDetails() {
         return;
     }
 
-    // Hauptbild und Thumbnails erstellen
+    // Rest des Codes zur Anzeige des Produkts
     createProductImages(product);
-
-    // Produktinformationen hinzufügen
     displayProductInfo(product);
-
-    // Buttons hinzufügen und Event-Listener verknüpfen
     addButtonsAndEventListeners(product);
 }
+
 
 // Hilfsfunktion zur Erstellung der Hauptbilder und Thumbnails
 function createProductImages(product) {
@@ -183,11 +227,12 @@ function updateImage(imgElement, currentIndex, images) {
 function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
     infoContainer.innerHTML = `
-        <a href="shop.html" class="back-link">Back to Collection</a>
+        <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${product.name}</h1>
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
     `;
+
 }
 
 // Hilfsfunktion zur Erstellung der Buttons und deren Event-Listener
@@ -327,14 +372,15 @@ function displayCartItems() {
         cartItem.innerHTML = `
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
-                <a href="product.html?id=${item.id}" class="cart-item-link">
-                    <h3>${item.name}</h3>
-                </a>
-                <p>Price: €${price.toFixed(2)}</p>
-                <p>Quantity: ${item.quantity}</p>
-            </div>
-            <button class="remove-item-button" data-id="${item.id}">&times;</button>
-        `;
+                <a href="/product?id=${item.id}" class="cart-item-link">
+                <h3>${item.name}</h3>
+            </a>
+            <p>Price: €${price.toFixed(2)}</p>
+            <p>Quantity: ${item.quantity}</p>
+        </div>
+        <button class="remove-item-button" data-id="${item.id}">&times;</button>
+    `;
+
 
         // Event-Listener für den Entfernen-Button
         cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
@@ -415,21 +461,22 @@ function createFooter() {
     const footer = document.createElement('footer');
     footer.className = 'custom-footer';
     footer.innerHTML = `
-        <div class="social-icons-container">
-            <a href="https://www.tiktok.com/@nalancreations?_t=8r3okcluwcL&_r=1" target="_blank" class="tiktok-link">
-                <img src="images/tiktok-logo.png" alt="TikTok Logo" class="social-icon tiktok-icon">
-            </a>
-            <a href="https://www.instagram.com/nalancreations" target="_blank">
-                <img src="images/insta-logo.png" alt="Instagram Logo" class="social-icon">
-            </a>
-        </div>
-        <div class="footer-branding">&copy; 2024 NALANCREATIONS. ALL RIGHTS RESERVED.</div>
-        <div class="legal-links">
-            <a href="imprint.html">Imprint</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms & Conditions</a>
-            <a href="cancellation.html">Right of Withdrawal</a>
-        </div>
-    `;
+    <div class="social-icons-container">
+        <a href="https://www.tiktok.com/@nalancreations?_t=8r3okcluwcL&_r=1" target="_blank" class="tiktok-link">
+            <img src="/images/tiktok-logo.png" alt="TikTok Logo" class="social-icon tiktok-icon">
+        </a>
+        <a href="https://www.instagram.com/nalancreations" target="_blank">
+            <img src="/images/insta-logo.png" alt="Instagram Logo" class="social-icon">
+        </a>
+    </div>
+    <div class="footer-branding">&copy; 2024 NALANCREATIONS. ALL RIGHTS RESERVED.</div>
+    <div class="legal-links">
+        <a href="/impressum">Imprint</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/cancellation">Right of Withdrawal</a>
+    </div>
+`;
+
     document.body.appendChild(footer);
 }
