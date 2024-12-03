@@ -229,24 +229,10 @@ function addButtonsAndEventListeners(product) {
 
 // Hilfsfunktion zur Einrichtung des Direct Checkout Buttons
 async function setupDirectCheckoutButton(directCheckoutButton, product) {
-    try {
-        // PayPal Link von Netlify Function abrufen
-        const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
-        if (!response.ok) {
-            throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
-        }
-        const data = await response.json();
-
-        // Setze Event-Listener, um PayPal Link zu öffnen
-        directCheckoutButton.addEventListener('click', () => {
-            // Verwende window.location.href, um Pop-up Blocker zu umgehen
-            window.location.href = data.link;
-        });
-    } catch (error) {
-        console.error('Fehler beim Abrufen des PayPal-Links:', error);
-        directCheckoutButton.disabled = true; // Deaktiviere den Button bei Fehler
-        directCheckoutButton.textContent = 'PayPal-Link not available';
-    }
+    directCheckoutButton.addEventListener('click', () => {
+        // Verwende window.location.href, um die Netlify Function aufzurufen, die den Redirect durchführt
+        window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
+    });
 }
 
 // Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
@@ -262,8 +248,6 @@ function setupAddToCartButton(addToCartButton, product) {
         displayCartItems(); // Warenkorb aktualisieren
     });
 }
-
-
 
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb

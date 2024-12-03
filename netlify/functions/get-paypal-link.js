@@ -16,9 +16,6 @@ exports.handler = async (event, context) => {
   if (!paypalLink) {
     return {
       statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*", // Optional für spätere API-Anfragen
-      },
       body: JSON.stringify({ error: 'PayPal-Link nicht gefunden.' }),
     };
   }
@@ -27,8 +24,7 @@ exports.handler = async (event, context) => {
   return {
     statusCode: 302,
     headers: {
-      "Location": paypalLink,
-      "Access-Control-Allow-Origin": "*", // Optional, nicht notwendig für Redirects
+      "Location": paypalLink, // Leitete direkt zum PayPal-Link weiter
     },
   };
 };
