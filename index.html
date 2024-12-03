@@ -21,11 +21,20 @@
             filter: url(#white-glow);
             transition: transform 0.3s, filter 0.3s;
             overflow: visible !important; /* Verhindert das Abschneiden des Glows */
+            animation: float 5s ease-in-out infinite;
         }
         #landing-logo:hover {
             transform: scale(1.1);
             filter: url(#white-glow-hover);
             overflow: visible !important;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0); /* Ausgangspunkt */
+            }
+            50% {
+                transform: translateY(-30px); /* Bewegung nach oben */
+            }
         }
         @media (max-width: 768px) {
             #landing-logo {
@@ -35,6 +44,7 @@
                 filter: url(#white-glow);
                 transition: transform 0.3s, filter 0.3s;
                 overflow: visible !important; /* Verhindert das Abschneiden des Glows */
+                animation: float 5s ease-in-out infinite;
             }
         }
     </style>
