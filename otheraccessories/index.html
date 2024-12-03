@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bags</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Other Accessories</title>
+    <link rel="stylesheet" href="/style.css"> <!-- Absoluter Pfad für das CSS -->
 </head>
 <body>
     <header class="shop-header">
@@ -12,12 +12,12 @@
             <!-- Platzhalter, damit das Logo in der Mitte bleibt -->
         </div>
         <div class="logo-container">
-            <a href="shop.html">
-                <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+            <a href="/shop">
+                <img src="/images/logo.jpg" alt="Shop Logo" class="logo"> <!-- Absoluter Pfad für das Logo -->
             </a>
         </div>
         <div id="cart-icon" class="cart-icon-container">
-            <img src="images/shopping-bag-thin-svgrepo-com.svg" alt="Warenkorb" class="cart-icon">
+            <img src="/images/shopping-bag-thin-svgrepo-com.svg" alt="Warenkorb" class="cart-icon"> <!-- Absoluter Pfad für das Warenkorb-Symbol -->
             <span id="cart-count" class="cart-count">0</span>
         </div>
     </header>
@@ -25,29 +25,22 @@
     <!-- Hauptkategorien-Menü -->
     <div class="top-menu-wrapper">
         <nav class="top-menu">
-            <a href="shop.html" id="showAllFilter">Show All</a>
-            <a href="bags.html" id="bagsFilter">Bags</a>
-            <a href="balaclavas.html" id="balaclavasFilter">Balaclavas</a>
-            <a href="handwarmers.html" id="handWarmersFilter">Hand Warmers</a>
-            <a href="otheraccessories.html" id="otherAccessoriesFilter">Other Accessories</a>
-        </nav>
-    </div>
-
-    <!-- Größe Filter Menü -->
-    <div class="top-menu-wrapper-2">
-        <nav class="top-menu">
-            <a href="bags.html?category=bags&size=all" id="allSizesFilter">All Sizes</a>
-            <a href="bags.html?category=bags&size=small" id="smallSizeFilter">Compact</a>
-            <a href="bags.html?category=bags&size=big" id="bigSizeFilter">Oversized</a>
+            <a href="/shop" id="showAllFilter">Show All</a>
+            <a href="/bags" id="bagsFilter">Bags</a>
+            <a href="/balaclavas" id="balaclavasFilter">Balaclavas</a>
+            <a href="/handwarmers" id="handWarmersFilter">Hand Warmers</a>
+            <a href="/otheraccessories" id="otherAccessoriesFilter">Other Accessories</a>
         </nav>
     </div>
 
     <main>
-        <h1 class="product-title" id="product-title">Bags Collection</h1>
+        <h1 class="product-title" id="product-title">Other Accessories Collection</h1>
         <div id="product-container" class="product-container">
-            <!-- Produkte werden hier von JavaScript mit Kategorie 'bags' eingefügt -->
+            <!-- Produkte werden hier von JavaScript mit Kategorie 'other accessories' eingefügt -->
         </div>
     </main>
+
+    <!-- Warenkorb Slide-in Menü -->
     <div id="cart-popup" class="cart-popup">
         <div class="cart-popup-header">
             <h2>Cart</h2>
@@ -68,14 +61,11 @@
         </div>
     </div>
 
-
-    <script src="app.js"></script>
+    <script src="/app.js"></script> <!-- Absoluter Pfad für die JavaScript-Datei -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lädt nur Produkte mit Kategorie 'bags' und berücksichtigt Größenfilter
-            const urlParams = new URLSearchParams(window.location.search);
-            const size = urlParams.get('size') || 'all';
-            displayProductList('bags', size);
+            // Lädt nur Produkte mit Kategorie 'other accessories'
+            displayProductList('other accessories');
         });
     </script>
 </body>
