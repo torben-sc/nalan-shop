@@ -16,20 +16,20 @@ exports.handler = async (event, context) => {
   const paypalLink = process.env[paypalLinkKey];
 
   if (!paypalLink) {
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*", // Diese Zeile ermöglicht Cross-Origin-Anfragen
-      },
-      body: JSON.stringify({ error: 'PayPal-Link nicht gefunden. Bitte überprüfen Sie die Umgebungsvariablen.' }),
-    };
+      return {
+          statusCode: 500,
+          headers: {
+              "Access-Control-Allow-Origin": "*", // Diese Zeile ermöglicht Cross-Origin-Anfragen
+          },
+          body: JSON.stringify({ error: 'PayPal-Link nicht gefunden. Bitte überprüfen Sie die Umgebungsvariablen.' }),
+      };
   }
-  
+
   return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*", // Diese Zeile ermöglicht Cross-Origin-Anfragen
-    },
-    body: JSON.stringify({ link: paypalLink }),
+      statusCode: 302, // Status-Code für Weiterleitung
+      headers: {
+          "Location": paypalLink, // Weiterleitungsziel
+          "Access-Control-Allow-Origin": "*", // Cross-Origin-Anfragen ermöglichen
+      },
   };
 };

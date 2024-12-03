@@ -101,7 +101,6 @@ async function displayProductList(category = null, size = null) {
     ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
     : 'All<span class="mobile-line-break"> </span>Products';
 
-
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
@@ -133,8 +132,22 @@ async function displayProductDetails() {
     }
 
     // Hauptbild und Thumbnails erstellen
+    createProductImages(product);
+
+    // Produktinformationen hinzufügen
+    displayProductInfo(product);
+
+    // Buttons hinzufügen und Event-Listener verknüpfen
+    addButtonsAndEventListeners(product);
+}
+
+// Hilfsfunktion zur Erstellung der Hauptbilder und Thumbnails
+function createProductImages(product) {
     const mainImageContainer = document.querySelector('.product-main-image-container');
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+
+    mainImageContainer.innerHTML = ''; // Vorherige Bilder entfernen
+    thumbnailsContainer.innerHTML = ''; // Vorherige Thumbnails entfernen
 
     let currentIndex = 0;
 
@@ -152,19 +165,22 @@ async function displayProductDetails() {
         if (index === currentIndex) thumbnail.classList.add('active');
         thumbnail.addEventListener('click', () => {
             currentIndex = index;
-            updateImage();
+            updateImage(imgElement, currentIndex, product.images);
         });
         thumbnailsContainer.appendChild(thumbnail);
     });
+}
 
-    function updateImage() {
-        imgElement.src = product.images[currentIndex];
-        document.querySelectorAll('.product-thumbnail').forEach((thumb, index) => {
-            thumb.classList.toggle('active', index === currentIndex);
-        });
-    }
+// Hilfsfunktion zur Aktualisierung des Hauptbilds
+function updateImage(imgElement, currentIndex, images) {
+    imgElement.src = images[currentIndex];
+    document.querySelectorAll('.product-thumbnail').forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentIndex);
+    });
+}
 
-    // Produktinformationen hinzufügen
+// Hilfsfunktion zur Anzeige der Produktinformationen
+function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
     infoContainer.innerHTML = `
         <a href="shop.html" class="back-link">Back to Collection</a>
@@ -172,6 +188,11 @@ async function displayProductDetails() {
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
     `;
+}
+
+// Hilfsfunktion zur Erstellung der Buttons und deren Event-Listener
+function addButtonsAndEventListeners(product) {
+    const infoContainer = document.querySelector('.product-info');
 
     // Container für die Buttons
     const buttonContainer = document.createElement('div');
@@ -181,7 +202,7 @@ async function displayProductDetails() {
     const directCheckoutButton = document.createElement('button');
     directCheckoutButton.id = 'direct-checkout-button';
     directCheckoutButton.className = 'checkout-button';
-    directCheckoutButton.textContentf = 'Direct Checkout';
+    directCheckoutButton.textContent = 'Direct Checkout';
     buttonContainer.appendChild(directCheckoutButton);
 
     // "OR" Text hinzufügen
@@ -200,6 +221,14 @@ async function displayProductDetails() {
     infoContainer.appendChild(buttonContainer);
 
     // Event-Listener für den Direct Checkout Button hinzufügen
+    setupDirectCheckoutButton(directCheckoutButton, product);
+
+    // Event-Listener für Add-to-Cart Button
+    setupAddToCartButton(addToCartButton, product);
+}
+
+// Hilfsfunktion zur Einrichtung des Direct Checkout Buttons
+async function setupDirectCheckoutButton(directCheckoutButton, product) {
     try {
         // PayPal Link von Netlify Function abrufen
         const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
@@ -207,7 +236,7 @@ async function displayProductDetails() {
             throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
         }
         const data = await response.json();
-        
+
         // Setze Event-Listener, um PayPal Link zu öffnen
         directCheckoutButton.addEventListener('click', () => {
             // Verwende window.location.href, um Pop-up Blocker zu umgehen
@@ -218,8 +247,10 @@ async function displayProductDetails() {
         directCheckoutButton.disabled = true; // Deaktiviere den Button bei Fehler
         directCheckoutButton.textContent = 'PayPal-Link not available';
     }
+}
 
-    // Event-Listener für Add-to-Cart
+// Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
+function setupAddToCartButton(addToCartButton, product) {
     addToCartButton.addEventListener('click', () => {
         addToCart(product);
 
@@ -231,6 +262,8 @@ async function displayProductDetails() {
         displayCartItems(); // Warenkorb aktualisieren
     });
 }
+
+
 
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
