@@ -917,7 +917,7 @@ main {
     background-color: #252525; /* Etwas dunkleres Gelb beim Hover */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px){
     .mobile-line-break {
         display: block; /* Macht einen Blockwechsel, was einem Zeilenumbruch entspricht */
     }

@@ -3,58 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Shop Landing Page</title>
-    <!-- Google Fonts für eine digitale Schriftart -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <title>Landing Page</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Stile für die Landing Page */
         body, html {
-            height: 100%; /* Nimmt die gesamte Höhe des Bildschirms ein */
+            height: 100%;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif; /* Fallback-Schriftart für allgemeine Nutzung */
+            font-family: Arial, sans-serif;
         }
-
-        #landing-container {
-            display: flex;
-            flex-direction: column; /* Setzt die Elemente untereinander */
-            align-items: center; /* Zentriert die Elemente horizontal */
-            justify-content: center; /* Zentriert die Elemente vertikal */
-            text-align: center;
-        }
-
         #landing-logo {
-            width: 150px; /* Verkleinert das Logo */
-            height: auto;
-            margin-bottom: 20px; /* Abstand zwischen Logo und Button */
+            height: 400px;
+            width: 400px;
+            border-radius: 50%;
+            filter: url(#white-glow);
+            transition: transform 0.3s, filter 0.3s;
+            overflow: visible !important; /* Verhindert das Abschneiden des Glows */
         }
-
-        #landing-shop-button {
-            font-weight: bold;
-            text-decoration: none; /* Entfernt die Unterstreichung des Links */
-            font-size: 2em; /* Setzt die Schriftgröße für den Button */
-            color: #ffff; /* Schwarze Schriftfarbe */
-            display: inline-block;
-            margin-top: 10px;
-            border: 2px solid #ffff; /* Schwarzer Rahmen um den Link */
-            padding: 10px 20px; /* Polsterung für den Link */
-            text-transform: uppercase; /* Blockschrift */
-            transition: all 0.3s ease; /* Übergangseffekt für Hover */
+        #landing-logo:hover {
+            transform: scale(1.1);
+            filter: url(#white-glow-hover);
+            overflow: visible !important;
         }
-
-        #landing-shop-button:hover {
-            background-color: #000; /* Hintergrundfarbe beim Hover */
-            color: #fff; /* Schriftfarbe beim Hover */
+        @media (max-width: 768px) {
+            #landing-logo {
+                width: 300px; /* Kleinere Größe auf mobilen Geräten */
+                height: 300px;
+                border-radius: 50%;
+                filter: url(#white-glow);
+                transition: transform 0.3s, filter 0.3s;
+                overflow: visible !important; /* Verhindert das Abschneiden des Glows */
+            }
         }
     </style>
 </head>
 <body>
+    <svg width="0" height="0">
+        <defs>
+            <!-- Normaler Glow Filter -->
+            <filter id="white-glow" x="-100%" y="-100%" width="400%" height="400%">
+                <feFlood result="flood" flood-color="white" flood-opacity="1"></feFlood>
+                <feComposite in="flood" in2="SourceAlpha" operator="in" result="mask"></feComposite>
+                <feGaussianBlur in="mask" stdDeviation="10" result="blurred"></feGaussianBlur>
+                <feMerge>
+                    <feMergeNode in="blurred"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+            <!-- Stärkerer Glow Filter für Hover -->
+            <filter id="white-glow-hover" x="-100%" y="-100%" width="400%" height="400%">
+                <feFlood result="flood" flood-color="white" flood-opacity="1"></feFlood>
+                <feComposite in="flood" in2="SourceAlpha" operator="in" result="mask"></feComposite>
+                <feGaussianBlur in="mask" stdDeviation="12" result="blurred"></feGaussianBlur>
+                <feMerge>
+                    <feMergeNode in="blurred"></feMergeNode>
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+        </defs>
+    </svg> 
     <div id="landing-container">
-        <img src="images/logo-ohne-schrift.png" alt="Shop Logo" id="landing-logo">
-        <a href="shop/index.html" id="landing-shop-button">Online Shop</a>
+        <a href="shop/index.html">
+            <img src="images/logo-ohne-schrift-landing.png" alt="Shop Logo" id="landing-logo">
+        </a>
     </div>
 </body>
 </html>
