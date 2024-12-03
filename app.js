@@ -360,18 +360,9 @@ function displayCartItems() {
         paypalButton.className = 'checkout-button cart-paypal-button';
         
         // PayPal-Link für das Produkt setzen
-        paypalButton.addEventListener('click', async () => {
-            try {
-                const response = await fetch(`/.netlify/functions/get-paypal-link?productId=${product.id}`);
-                if (!response.ok) {
-                    throw new Error(`Fehler beim Laden des PayPal-Links: ${response.statusText}`);
-                }
-                const data = await response.json();
-                window.location.href = data.link; // Fenster wird umgeleitet (kein Popup)
-            } catch (error) {
-                console.error('Fehler beim Abrufen des PayPal-Links:', error);
-                alert("Unable to proceed to Direct Checkout. Please try again later.");
-            }
+        paypalButton.addEventListener('click', () => {
+            // Verwende window.location.href, um die Netlify Function aufzurufen, die den Redirect durchführt
+            window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
         });
 
         cartContactInfo.appendChild(paypalButton);
@@ -385,6 +376,7 @@ function displayCartItems() {
         `;
     }
 }
+
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
 function removeFromCart(productId) {
