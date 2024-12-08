@@ -370,7 +370,6 @@ function addToCart(product) {
 
     // Warenkorb-Anzeige aktualisieren
     updateCartCount();
-    displayCartItems();
 
     // Warenkorb-Popup öffnen, falls vorhanden
     const cartPopup = document.getElementById('cart-popup');
