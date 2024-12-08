@@ -297,10 +297,18 @@ function setupAddToCartButton(addToCartButton, product) {
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
+    // Validierung des Produktobjekts
+    if (!product || !product.id || typeof product.stock !== 'number') {
+        console.error('Invalid product data:', product);
+        return;
+    }
+
+    // Warenkorb aus dem Local Storage laden
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingProduct = cart.find(item => item.id === product.id);
 
     if (existingProduct) {
+        // Prüfen, ob die maximale Menge erreicht wurde
         if (existingProduct.quantity < product.stock) {
             existingProduct.quantity += 1;
         } else {
@@ -308,23 +316,30 @@ function addToCart(product) {
             return;
         }
     } else {
+        // Neues Produkt hinzufügen, falls genügend Bestand verfügbar ist
         if (product.stock > 0) {
-            cart.push({ ...product, quantity: 1 });
+            cart.push({ id: product.id, name: product.name, images: product.images, quantity: 1 });
         } else {
             alert("This product is not available anymore.");
             return;
         }
     }
 
+    // Warenkorb im Local Storage aktualisieren
     localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
 
-    // Open cart after adding an item
+    // Warenkorb-Anzeige aktualisieren
+    updateCartCount();
+    displayCartItems();
+
+    // Warenkorb-Popup öffnen, falls vorhanden
     const cartPopup = document.getElementById('cart-popup');
     if (cartPopup) {
         cartPopup.classList.add('open');
+
+        // Optional: Automatisch nach 5 Sekunden schließen
+        setTimeout(() => cartPopup.classList.remove('open'), 5000);
     }
-    displayCartItems(); // Update cart items in the popup
 }
 
 document.addEventListener('DOMContentLoaded', () => {
