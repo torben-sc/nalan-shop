@@ -71,9 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayProductDetails();
     }
 
-    // Warenkorb-Artikel anzeigen
-    displayCartItems();
-
     // Initialisierung des Footers
     if (!document.getElementById('landing-container')) {
         createFooter();
@@ -387,6 +384,7 @@ async function displayCartItems() {
         console.log('Cart Item:', item); // Zeigt alle Daten für das Produkt
         console.log('Price:', item.price); // Zeigt den Preis an
     });
+    console.log("changes live 1");
     // Übergabe des Warenkorbs ans Backend
     let totalAmount = 0;
     try {
