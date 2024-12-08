@@ -411,7 +411,10 @@ async function displayCartItems() {
     const totalAmountElement = document.getElementById('total-amount');
     const cartContactInfo = document.querySelector('.cart-contact-info');
     cartItemsContainer.innerHTML = ''; // Container leeren
-
+    cart.forEach(item => {
+        console.log('Cart Item:', item); // Zeigt alle Daten für das Produkt
+        console.log('Price:', item.price); // Zeigt den Preis an
+    });
     // Übergabe des Warenkorbs ans Backend
     let totalAmount = 0;
     try {
