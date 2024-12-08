@@ -1,3 +1,4 @@
+console.log('Function started');
 exports.handler = async (event, context) => {
     try {
         const { cartItems } = JSON.parse(event.body);
