@@ -355,71 +355,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
 async function displayCartItems() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem('cart')) || []; // Laden des Warenkorbs aus dem Local Storage
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
     const cartContactInfo = document.querySelector('.cart-contact-info'); // Container für die Kontaktinfo
     cartItemsContainer.innerHTML = ''; // Container leeren
 
+    // Anfrage an das Backend zur Berechnung des Gesamtpreises
+    let totalAmount = 0;
     try {
-        // Berechnung im Backend anfragen
+        const cartData = cart.map(item => ({ id: item.id, quantity: item.quantity })); // Nur ID und Menge senden
         const response = await fetch('/.netlify/functions/calculate-cart-total', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cart),
+            body: JSON.stringify(cartData), // Das vereinfachte cart-Objekt an das Backend senden
         });
 
-        const result = await response.json();
-
         if (!response.ok) {
-            console.error('Error calculating cart total:', result.error);
-            return;
+            throw new Error('Error fetching total amount from backend');
         }
 
-        const { totalAmount, invalidItems } = result;
+        const result = await response.json();
+        totalAmount = result.totalAmount || 0;
+    } catch (error) {
+        console.error('Error calculating total amount:', error);
+    }
 
-        let totalAmountValue = parseFloat(totalAmount);
+    // Warenkorb iterieren und anzeigen
+    cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
 
-        cart.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.className = 'cart-item';
-
-            cartItem.innerHTML = `
-                <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
-                <div class="cart-item-info">
-                    <a href="/product?id=${item.id}" class="cart-item-link">
+        cartItem.innerHTML = `
+            <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-info">
+                <a href="/product?id=${item.id}" class="cart-item-link">
                     <h3>${item.name}</h3>
                 </a>
-                <p>Price: €${item.price.toFixed(2)}</p>
                 <p>Quantity: ${item.quantity}</p>
             </div>
             <button class="remove-item-button" data-id="${item.id}">&times;</button>
         `;
 
-            // Event-Listener für den Entfernen-Button
-            cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
-                removeFromCart(item.id);
-            });
-
-            cartItemsContainer.appendChild(cartItem);
+        // Event-Listener für den Entfernen-Button
+        cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
+            removeFromCart(item.id);
         });
 
-        if (totalAmountElement) {
-            totalAmountElement.textContent = `€${totalAmountValue.toFixed(2)}`;
-        }
+        cartItemsContainer.appendChild(cartItem);
+    });
 
-        // Ungültige Artikel anzeigen (falls vorhanden)
-        if (invalidItems.length > 0) {
-            console.warn('Invalid items:', invalidItems);
-        }
+    // Gesamtbetrag anzeigen
+    if (totalAmountElement) {
+        totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
+    }
 
-        // Kontaktinfo oder PayPal-Button anpassen
-        updateCartCheckoutInfo(cart, cartContactInfo);
-    } catch (error) {
-        console.error('Error fetching cart total:', error);
+    // Kontaktinfo oder PayPal-Button anzeigen
+    if (cart.length === 1) {
+        // Wenn nur ein Artikel im Warenkorb ist, zeige den PayPal-Button
+        const product = cart[0];
+        cartContactInfo.innerHTML = ''; // Container leeren
+
+        const paypalButton = document.createElement('button');
+        paypalButton.id = 'paypal-button-cart';
+        paypalButton.textContent = 'PROCEED TO CHECKOUT';
+        paypalButton.className = 'checkout-button cart-paypal-button';
+
+        // PayPal-Link für das Produkt setzen
+        paypalButton.addEventListener('click', () => {
+            // Nutze eine Netlify-Funktion, um den Redirect zu erzeugen
+            window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
+        });
+
+        cartContactInfo.appendChild(paypalButton);
+    } else {
+        // Bei mehreren Artikeln im Warenkorb zeige die Instagram-Kontaktinfo
+        cartContactInfo.innerHTML = `
+            <p>For orders of multiple items, contact me on 
+                <a href="https://www.instagram.com/nalancreations" target="_blank">Instagram</a>
+            </p>
+            <p class="checkout-note">OTHERWISE USE DIRECT CHECKOUT</p>
+        `;
     }
 }
-
 
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
