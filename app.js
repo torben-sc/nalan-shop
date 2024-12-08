@@ -334,7 +334,7 @@ function setupAddToCartButton(addToCartButton, product) {
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
     // Validierung des Produktobjekts
-    if (!product || !product.id || typeof product.stock !== 'number') {
+    if (!product || !product.id || typeof product.stock !== 'number' || typeof product.price !== 'number') {
         console.error('Invalid product data:', product);
         return;
     }
@@ -354,7 +354,14 @@ function addToCart(product) {
     } else {
         // Neues Produkt hinzufügen, falls genügend Bestand verfügbar ist
         if (product.stock > 0) {
-            cart.push({ id: product.id, name: product.name, images: product.images, quantity: 1 });
+            cart.push({
+                id: product.id,
+                name: product.name,
+                images: product.images,
+                price: product.price, // Preis hinzufügen
+                stock: product.stock, // Optional: Bestand speichern
+                quantity: 1,
+            });
         } else {
             alert("This product is not available anymore.");
             return;
@@ -377,6 +384,7 @@ function addToCart(product) {
         setTimeout(() => cartPopup.classList.remove('open'), 5000);
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialisieren der Warenkorb-Anzeige
