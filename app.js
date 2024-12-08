@@ -115,13 +115,13 @@ function updateSizeFilterURL(size) {
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
-        const response = await fetch('/products.json'); // Geänderter Pfad für die JSON-Datei
+        const response = await fetch('/.netlify/functions/get-products'); // Pfad zur Netlify Function
         if (!response.ok) {
-            throw new Error(`Fehler beim Laden der Produkte: ${response.statusText}`);
+            throw new Error(`Error loading products: ${response.statusText}`);
         }
         return await response.json();
     } catch (error) {
-        console.error("Fehler beim Laden der Produkte:", error);
+        console.error('Error loading products:', error);
     }
 }
 
