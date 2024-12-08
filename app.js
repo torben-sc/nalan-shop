@@ -415,22 +415,22 @@ async function displayCartItems() {
     // Übergabe des Warenkorbs ans Backend
     let totalAmount = 0;
     try {
-        const cartData = cart.map(item => ({ id: item.id, quantity: item.quantity }));
+        const cartData = { cartItems: cart.map(item => ({ id: item.id, quantity: item.quantity })) }; 
         console.log('Cart Data Sent to Backend:', cartData); // Debugging
-
+    
         const response = await fetch('/.netlify/functions/calculate-cart-total', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cartData),
+            body: JSON.stringify(cartData), // Send as an object with `cartItems` key
         });
-
+    
         if (!response.ok) {
-            throw new Error('Error fetching total amount from backend');
+            throw new Error(`Error fetching total amount from backend: ${response.statusText}`);
         }
-
+    
         const result = await response.json();
         console.log('Backend Response:', result); // Debugging
-        totalAmount = result.totalAmount || 0;
+        totalAmount = parseFloat(result.total) || 0; // Use `result.total` as returned by the Lambda function
     } catch (error) {
         console.error('Error calculating total amount:', error);
     }
