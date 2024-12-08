@@ -339,9 +339,6 @@ function addToCart(product) {
     const cartPopup = document.getElementById('cart-popup');
     if (cartPopup) {
         cartPopup.classList.add('open');
-
-        // Optional: Automatisch nach 5 Sekunden schließen
-        setTimeout(() => cartPopup.classList.remove('open'), 5000);
     }
 }
 
