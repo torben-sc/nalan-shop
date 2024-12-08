@@ -1,6 +1,7 @@
 exports.handler = async (event, context) => {
     try {
         const { cartItems } = JSON.parse(event.body);
+        console.log('Received body:', event.body);
         if (!cartItems || !Array.isArray(cartItems)) {
             return {
                 statusCode: 400,
