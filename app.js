@@ -355,20 +355,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
 async function displayCartItems() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || []; // Laden des Warenkorbs aus dem Local Storage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
-    const cartContactInfo = document.querySelector('.cart-contact-info'); // Container für die Kontaktinfo
+    const cartContactInfo = document.querySelector('.cart-contact-info');
     cartItemsContainer.innerHTML = ''; // Container leeren
 
-    // Anfrage an das Backend zur Berechnung des Gesamtpreises
+    // Übergabe des Warenkorbs ans Backend
     let totalAmount = 0;
     try {
-        const cartData = cart.map(item => ({ id: item.id, quantity: item.quantity })); // Nur ID und Menge senden
+        const cartData = cart.map(item => ({ id: item.id, quantity: item.quantity }));
+        console.log('Cart Data Sent to Backend:', cartData); // Debugging
+
         const response = await fetch('/.netlify/functions/calculate-cart-total', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cartData), // Das vereinfachte cart-Objekt an das Backend senden
+            body: JSON.stringify(cartData),
         });
 
         if (!response.ok) {
@@ -376,12 +378,13 @@ async function displayCartItems() {
         }
 
         const result = await response.json();
+        console.log('Backend Response:', result); // Debugging
         totalAmount = result.totalAmount || 0;
     } catch (error) {
         console.error('Error calculating total amount:', error);
     }
 
-    // Warenkorb iterieren und anzeigen
+    // Warenkorb-Items anzeigen
     cart.forEach(item => {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
@@ -397,7 +400,6 @@ async function displayCartItems() {
             <button class="remove-item-button" data-id="${item.id}">&times;</button>
         `;
 
-        // Event-Listener für den Entfernen-Button
         cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
             removeFromCart(item.id);
         });
@@ -410,26 +412,21 @@ async function displayCartItems() {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
 
-    // Kontaktinfo oder PayPal-Button anzeigen
+    // Kontaktinfo anzeigen
     if (cart.length === 1) {
-        // Wenn nur ein Artikel im Warenkorb ist, zeige den PayPal-Button
         const product = cart[0];
-        cartContactInfo.innerHTML = ''; // Container leeren
-
+        cartContactInfo.innerHTML = '';
         const paypalButton = document.createElement('button');
         paypalButton.id = 'paypal-button-cart';
         paypalButton.textContent = 'PROCEED TO CHECKOUT';
         paypalButton.className = 'checkout-button cart-paypal-button';
 
-        // PayPal-Link für das Produkt setzen
         paypalButton.addEventListener('click', () => {
-            // Nutze eine Netlify-Funktion, um den Redirect zu erzeugen
             window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
         });
 
         cartContactInfo.appendChild(paypalButton);
     } else {
-        // Bei mehreren Artikeln im Warenkorb zeige die Instagram-Kontaktinfo
         cartContactInfo.innerHTML = `
             <p>For orders of multiple items, contact me on 
                 <a href="https://www.instagram.com/nalancreations" target="_blank">Instagram</a>
