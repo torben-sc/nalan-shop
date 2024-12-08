@@ -1,37 +1,27 @@
-console.log('Function started');
-exports.handler = async (event, context) => {
+const products = require('./products.json'); // Lade die Produkte aus der products.json
+
+exports.handler = async function(event) {
     try {
-        const { cartItems } = JSON.parse(event.body);
-        console.log('Received body:', event.body);
+        const cartData = JSON.parse(event.body); // Erwarte [{ id: "1", quantity: 2 }, ...]
 
-        if (!cartItems || !Array.isArray(cartItems)) {
-            console.error('Invalid cart items:', cartItems);
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ error: 'Invalid cart items.' }),
-            };
-        }
-
-        console.log('Products:', products); // Ensure products is loaded
-        let total = 0;
-        cartItems.forEach(item => {
+        // Berechnung des Gesamtpreises
+        let totalAmount = 0;
+        cartData.forEach(item => {
             const product = products.find(p => p.id === item.id);
             if (product) {
-                total += product.price * item.quantity;
-            } else {
-                console.error('Product not found for ID:', item.id);
+                totalAmount += product.price * item.quantity; // Multipliziere den Preis mit der Menge
             }
         });
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ total: total.toFixed(2) }),
+            body: JSON.stringify({ totalAmount }),
         };
     } catch (error) {
-        console.error('Error in calculate-cart-total:', error);
+        console.error('Error calculating total amount:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'An error occurred while calculating the cart total.' }),
+            body: JSON.stringify({ error: 'Internal Server Error' }),
         };
     }
 };
