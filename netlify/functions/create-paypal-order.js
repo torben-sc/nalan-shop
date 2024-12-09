@@ -1,91 +1,108 @@
-import { Client, Environment, OrdersController } from "@paypal/paypal-server-sdk";
-import fs from "fs";
-import path from "path";
+import fetch from 'node-fetch';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-// PayPal-Client initialisieren
-const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
-const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
-
-const client = new Client({
-    clientCredentialsAuthCredentials: {
-        oAuthClientId: PAYPAL_CLIENT_ID,
-        oAuthClientSecret: PAYPAL_CLIENT_SECRET,
-    },
-    environment: Environment.Sandbox, // Produktionsumgebung: Environment.Live
-});
-
-const ordersController = new OrdersController(client);
-
+// Ermitteln des aktuellen Verzeichnisses
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
+
+const getAccessToken = async () => {
+    const response = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64')}`,
+        },
+        body: 'grant_type=client_credentials',
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(`Failed to get PayPal access token: ${error.error_description}`);
+    }
+
+    const data = await response.json();
+    return data.access_token;
+};
+
 const getProducts = () => {
     const productsFilePath = `${__dirname}/products.json`;
-    const productsData = readFileSync(productsFilePath, 'utf-8');
+    const productsData = fs.readFileSync(productsFilePath, 'utf-8');
     return JSON.parse(productsData);
 };
 
-const calculateTotal = (cartItems, products) => {
-    let total = 0;
-
-    const items = cartItems.map(cartItem => {
-        const product = products.find(p => p.id === cartItem.id);
-
-        if (!product) {
-            throw new Error(`Product with ID ${cartItem.id} not found.`);
-        }
-        if (cartItem.quantity > product.stock) {
-            throw new Error(`Insufficient stock for product ${product.name}`);
-        }
-
-        const itemTotal = product.price * cartItem.quantity;
-        total += itemTotal;
-
-        return {
-            name: product.name,
-            unit_amount: { currency_code: "EUR", value: product.price.toFixed(2) },
-            quantity: cartItem.quantity,
-        };
-    });
-
-    return { total: total.toFixed(2), items };
-};
-
 export async function handler(event) {
+    if (event.httpMethod !== 'POST') {
+        return { statusCode: 405, body: 'Method Not Allowed' };
+    }
+
     try {
-        if (event.httpMethod !== "POST") {
-            return { statusCode: 405, body: "Method Not Allowed" };
+        const { cartItems } = JSON.parse(event.body);
+
+        if (!cartItems || !Array.isArray(cartItems)) {
+            return { statusCode: 400, body: 'Invalid cart items' };
         }
 
-        const { cartItems } = JSON.parse(event.body);
         const products = getProducts();
 
-        const { total, items } = calculateTotal(cartItems, products);
+        const purchaseUnits = cartItems.map(item => {
+            const product = products.find(p => p.id === item.id);
+            if (!product) throw new Error(`Product with ID ${item.id} not found`);
+            if (item.quantity > product.stock) throw new Error(`Not enough stock for product ${product.name}`);
 
-        const orderRequest = {
-            intent: "CAPTURE",
-            purchase_units: [
-                {
-                    amount: {
-                        currency_code: "EUR",
-                        value: total,
-                        breakdown: { item_total: { currency_code: "EUR", value: total } },
-                    },
-                    items,
-                },
-            ],
-        };
-
-        const { body: order } = await ordersController.ordersCreate({
-            body: orderRequest,
+            return {
+                name: product.name,
+                unit_amount: { currency_code: 'EUR', value: product.price.toFixed(2) },
+                quantity: item.quantity.toString(),
+            };
         });
+
+        const totalAmount = purchaseUnits.reduce((sum, item) => {
+            return sum + parseFloat(item.unit_amount.value) * parseInt(item.quantity, 10);
+        }, 0).toFixed(2);
+
+        const accessToken = await getAccessToken();
+
+        const orderResponse = await fetch('https://api-m.sandbox.paypal.com/v2/checkout/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+                intent: 'CAPTURE',
+                purchase_units: [
+                    {
+                        amount: {
+                            currency_code: 'EUR',
+                            value: totalAmount,
+                            breakdown: {
+                                item_total: { currency_code: 'EUR', value: totalAmount },
+                            },
+                        },
+                        items: purchaseUnits,
+                    },
+                ],
+            }),
+        });
+
+        if (!orderResponse.ok) {
+            const error = await orderResponse.json();
+            throw new Error(`Failed to create PayPal order: ${error.message}`);
+        }
+
+        const orderData = await orderResponse.json();
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ orderID: order.id }),
+            body: JSON.stringify({ orderID: orderData.id }),
         };
     } catch (error) {
-        console.error("Error creating PayPal order:", error);
+        console.error('Error creating PayPal order:', error);
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.message }),

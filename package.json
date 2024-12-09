@@ -8,8 +8,7 @@
       "build": "echo 'No build step needed'"
     },
     "dependencies": {
-      "node-fetch": "^3.3.0",
-      "@paypal/paypal-rest-sdk": "^1.8.1"
+      "node-fetch": "^3.3.0"
     },
     "devDependencies": {},
     "engines": {
