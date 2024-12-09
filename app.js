@@ -376,10 +376,12 @@ async function displayCartItems() {
     const totalAmountElement = document.getElementById('total-amount');
     const cartContactInfo = document.querySelector('.cart-contact-info');
     cartItemsContainer.innerHTML = ''; // Container leeren
+
+    // Debugging: Alle Cart-Daten anzeigen
     cart.forEach(item => {
         console.log('Cart Item:', item); // Zeigt alle Daten für das Produkt
-        console.log('Price:', item.price); // Zeigt den Preis an
     });
+
     // Übergabe des Warenkorbs ans Backend
     let totalAmount = 0;
     try {
@@ -400,9 +402,8 @@ async function displayCartItems() {
         console.error('Error calculating total amount:', error);
     }
 
+    // Warenkorb-Items darstellen
     cart.forEach(item => {
-        const price = parseFloat(item.price) || 0; // Preis als Zahl
-
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
 
@@ -410,14 +411,12 @@ async function displayCartItems() {
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
                 <a href="/product?id=${item.id}" class="cart-item-link">
-                <h3>${item.name}</h3>
-            </a>
-            <p>Price: €${price.toFixed(2)}</p>
-            <p>Quantity: ${item.quantity}</p>
-        </div>
-        <button class="remove-item-button" data-id="${item.id}">&times;</button>
-    `;
-
+                    <h3>${item.name}</h3>
+                </a>
+                <p>Quantity: ${item.quantity}</p>
+            </div>
+            <button class="remove-item-button" data-id="${item.id}">&times;</button>
+        `;
 
         // Event-Listener für den Entfernen-Button
         cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
@@ -427,43 +426,42 @@ async function displayCartItems() {
         cartItemsContainer.appendChild(cartItem);
     });
 
-    if (totalAmountElement) {
-        totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
-    }
-
     // Gesamtbetrag anzeigen
     if (totalAmountElement) {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
 
-    // Kontaktinfo anzeigen
-    if (cart.length === 1) {
-        // Wenn nur ein Artikel im Warenkorb ist, füge den PayPal-Button hinzu
-        const product = cart[0];
-        cartContactInfo.innerHTML = ''; // Container leeren
+    // Checkout-Button hinzufügen
+    cartContactInfo.innerHTML = ''; // Container leeren
+    const checkoutButton = document.createElement('button');
+    checkoutButton.id = 'checkout-button';
+    checkoutButton.textContent = 'PROCEED TO PAYPAL CHECKOUT';
+    checkoutButton.className = 'checkout-button cart-paypal-button';
+    
+    // Event-Listener für den Checkout-Button
+    checkoutButton.addEventListener('click', async () => {
+        try {
+            const response = await fetch('/.netlify/functions/create-paypal-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cartItems: cart.map(item => ({ id: item.id, quantity: item.quantity })) }),
+            });
 
-        const paypalButton = document.createElement('button');
-        paypalButton.id = 'paypal-button-cart';
-        paypalButton.textContent = 'PROCEED TO CHECKOUT';
-        paypalButton.className = 'checkout-button cart-paypal-button';
-        
-        // PayPal-Link für das Produkt setzen
-        paypalButton.addEventListener('click', () => {
-            // Verwende window.location.href, um die Netlify Function aufzurufen, die den Redirect durchführt
-            window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
-        });
+            if (!response.ok) {
+                throw new Error('Failed to create PayPal order');
+            }
 
-        cartContactInfo.appendChild(paypalButton);
-    } else {
-        // Bei mehreren Artikeln im Warenkorb, zeige die Instagram-Kontaktinfo an
-        cartContactInfo.innerHTML = `
-            <p>For orders of multiple items, contact me on 
-                <a href="https://www.instagram.com/nalancreations" target="_blank">Instagram</a>
-            </p>
-            <p class="checkout-note">OTHERWISE USE DIRECT CHECKOUT</p>
-        `;
-    }
+            const data = await response.json();
+            window.location.href = data.url; // Weiterleitung zu PayPal
+        } catch (error) {
+            console.error('Error initiating checkout:', error);
+            alert('An error occurred during checkout. Please try again.');
+        }
+    });
+
+    cartContactInfo.appendChild(checkoutButton);
 }
+
 
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
