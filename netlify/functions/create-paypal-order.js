@@ -1,81 +1,90 @@
-const fs = require('fs');
-const path = require('path');
+import { Client, Environment, OrdersController } from "@paypal/paypal-server-sdk";
+import fs from "fs";
+import path from "path";
 
-exports.handler = async (event, context) => {
-    try {
-        // Überprüfen, ob der Request POST ist
-        if (event.httpMethod !== 'POST') {
-            return {
-                statusCode: 405,
-                body: JSON.stringify({ error: 'Method not allowed' }),
-            };
+// PayPal-Client initialisieren
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
+
+const client = new Client({
+    clientCredentialsAuthCredentials: {
+        oAuthClientId: PAYPAL_CLIENT_ID,
+        oAuthClientSecret: PAYPAL_CLIENT_SECRET,
+    },
+    environment: Environment.Sandbox, // Produktionsumgebung: Environment.Live
+});
+
+const ordersController = new OrdersController(client);
+
+const getProducts = () => {
+    const productsFilePath = path.resolve(__dirname, "products.json");
+    return JSON.parse(fs.readFileSync(productsFilePath, "utf-8"));
+};
+
+const calculateTotal = (cartItems, products) => {
+    let total = 0;
+
+    const items = cartItems.map(cartItem => {
+        const product = products.find(p => p.id === cartItem.id);
+
+        if (!product) {
+            throw new Error(`Product with ID ${cartItem.id} not found.`);
+        }
+        if (cartItem.quantity > product.stock) {
+            throw new Error(`Insufficient stock for product ${product.name}`);
         }
 
-        // Den Request-Body parsen
-        const { cartItems } = JSON.parse(event.body);
+        const itemTotal = product.price * cartItem.quantity;
+        total += itemTotal;
 
-        if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ error: 'Invalid cartItems data' }),
-            };
-        }
-
-        // Laden der products.json
-        const productsFilePath = path.resolve(__dirname, 'products.json');
-        const productsData = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
-
-        // Bestellung erstellen
-        const orderItems = [];
-        let totalPrice = 0;
-
-        for (const cartItem of cartItems) {
-            const product = productsData.find(p => p.id === cartItem.id);
-
-            if (!product) {
-                return {
-                    statusCode: 404,
-                    body: JSON.stringify({ error: `Product with ID ${cartItem.id} not found` }),
-                };
-            }
-
-            if (cartItem.quantity > product.stock) {
-                return {
-                    statusCode: 400,
-                    body: JSON.stringify({
-                        error: `Insufficient stock for product ${product.name}`,
-                    }),
-                };
-            }
-
-            // Artikel zur Bestellung hinzufügen
-            const itemTotalPrice = product.price * cartItem.quantity;
-            orderItems.push({
-                id: product.id,
-                name: product.name,
-                quantity: cartItem.quantity,
-                price: product.price,
-                total: itemTotalPrice,
-            });
-
-            totalPrice += itemTotalPrice;
-        }
-
-        // Rückgabe der Bestellung
-        const order = {
-            items: orderItems,
-            totalAmount: totalPrice.toFixed(2),
+        return {
+            name: product.name,
+            unit_amount: { currency_code: "EUR", value: product.price.toFixed(2) },
+            quantity: cartItem.quantity,
         };
+    });
+
+    return { total: total.toFixed(2), items };
+};
+
+export async function handler(event) {
+    try {
+        if (event.httpMethod !== "POST") {
+            return { statusCode: 405, body: "Method Not Allowed" };
+        }
+
+        const { cartItems } = JSON.parse(event.body);
+        const products = getProducts();
+
+        const { total, items } = calculateTotal(cartItems, products);
+
+        const orderRequest = {
+            intent: "CAPTURE",
+            purchase_units: [
+                {
+                    amount: {
+                        currency_code: "EUR",
+                        value: total,
+                        breakdown: { item_total: { currency_code: "EUR", value: total } },
+                    },
+                    items,
+                },
+            ],
+        };
+
+        const { body: order } = await ordersController.ordersCreate({
+            body: orderRequest,
+        });
 
         return {
             statusCode: 200,
-            body: JSON.stringify(order),
+            body: JSON.stringify({ orderID: order.id }),
         };
     } catch (error) {
-        console.error('Error creating order:', error);
+        console.error("Error creating PayPal order:", error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal server error' }),
+            body: JSON.stringify({ error: error.message }),
         };
     }
-};
+}
