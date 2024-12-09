@@ -4,16 +4,16 @@
     "description": "A Netlify project with PayPal integration",
     "main": "index.js",
     "scripts": {
-      "start": "netlify dev",
-      "build": "echo 'No build step needed'"
+        "start": "netlify dev",
+        "build": "echo 'No build step needed'"
     },
     "dependencies": {
-      "node-fetch": "^3.3.0"
+        "fetch-blob": "^3.2.0",
+        "formdata-polyfill": "^4.0.10",
+        "node-fetch": "^3.3.0"
     },
-    "devDependencies": {},
     "engines": {
-      "node": ">=16"
+        "node": ">=16"
     },
     "license": "MIT"
-  }
-  
+}
