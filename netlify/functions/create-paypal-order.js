@@ -24,9 +24,15 @@ const getAccessToken = async () => {
 };
 
 const getProducts = () => {
-    const productsFilePath = new URL('./products.json', import.meta.url);
-    const productsData = fs.readFileSync(productsFilePath, 'utf-8');
-    return JSON.parse(productsData);
+    try {
+        // Absoluter Pfad zu products.json basierend auf import.meta.url
+        const productsFilePath = new URL('./products.json', import.meta.url);
+        const productsData = fs.readFileSync(productsFilePath, 'utf-8');
+        return JSON.parse(productsData);
+    } catch (error) {
+        console.error('Error reading products.json:', error);
+        throw new Error('Failed to load products data.');
+    }
 };
 
 export async function handler(event) {
