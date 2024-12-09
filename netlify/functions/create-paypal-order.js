@@ -1,11 +1,5 @@
 import fetch from 'node-fetch';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-// Ermitteln des aktuellen Verzeichnisses
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
@@ -30,7 +24,7 @@ const getAccessToken = async () => {
 };
 
 const getProducts = () => {
-    const productsFilePath = `${__dirname}/products.json`;
+    const productsFilePath = new URL('./products.json', import.meta.url);
     const productsData = fs.readFileSync(productsFilePath, 'utf-8');
     return JSON.parse(productsData);
 };
