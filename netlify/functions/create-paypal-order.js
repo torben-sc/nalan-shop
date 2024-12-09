@@ -16,9 +16,13 @@ const client = new Client({
 
 const ordersController = new OrdersController(client);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const getProducts = () => {
-    const productsFilePath = path.resolve(__dirname, "products.json");
-    return JSON.parse(fs.readFileSync(productsFilePath, "utf-8"));
+    const productsFilePath = `${__dirname}/products.json`;
+    const productsData = readFileSync(productsFilePath, 'utf-8');
+    return JSON.parse(productsData);
 };
 
 const calculateTotal = (cartItems, products) => {
