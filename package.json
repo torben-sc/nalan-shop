@@ -8,9 +8,9 @@
         "build": "echo 'No build step needed'"
     },
     "dependencies": {
-        "fetch-blob": "^3.2.0",
+        "fetch-blob": "^2.1.2",
         "formdata-polyfill": "^4.0.10",
-        "node-fetch": "^3.3.0"
+        "node-fetch": "^2.7.0"
     },
     "engines": {
         "node": ">=16"
