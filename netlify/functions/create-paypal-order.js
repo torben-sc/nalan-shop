@@ -3,6 +3,8 @@ import fs from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Ermitteln des absoluten Pfads
 const __filename = fileURLToPath(import.meta.url);

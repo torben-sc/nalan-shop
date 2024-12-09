@@ -1,23 +1,16 @@
 {
-    "name": "nalan-shop",
-    "version": "1.0.0",
-    "description": "A Netlify project with PayPal integration",
-    "main": "index.js",
-    "scripts": {
-        "start": "netlify dev",
-        "build": "echo 'No build step needed'"
-    },
-    "dependencies": {
-        "@paypal/paypal-server-sdk": "^0.6.1",
-        "body-parser": "^1.20.3",
-        "dotenv": "^16.4.7",
-        "express": "^4.21.2",
-        "fetch-blob": "^2.1.2",
-        "formdata-polyfill": "^4.0.10",
-        "node-fetch": "^2.7.0"
-    },
-    "engines": {
-        "node": ">=16"
-    },
-    "license": "MIT"
+  "name": "nalan-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@paypal/paypal-server-sdk": "^0.6.1",
+    "dotenv": "^16.4.7"
+  }
 }
