@@ -1,5 +1,8 @@
 import fetch from 'node-fetch';
 import fs from 'fs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
@@ -23,10 +26,14 @@ const getAccessToken = async () => {
     return data.access_token;
 };
 
+// Ermitteln des absoluten Pfads
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const getProducts = () => {
     try {
-        // Direkt den relativen Pfad nutzen
-        const productsData = fs.readFileSync('./products.json', 'utf-8');
+        const productsFilePath = path.join(__dirname, 'products.json');
+        const productsData = fs.readFileSync(productsFilePath, 'utf-8');
         return JSON.parse(productsData);
     } catch (error) {
         console.error('Error reading products.json:', error);
