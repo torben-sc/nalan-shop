@@ -1,35 +1,29 @@
-import fetch from 'node-fetch';
+import { OrdersController, Client, Environment } from '@paypal/paypal-server-sdk';
 import fs from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
-const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
-
-const getAccessToken = async () => {
-    const response = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Authorization: `Basic ${Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`).toString('base64')}`,
-        },
-        body: 'grant_type=client_credentials',
-    });
-
-    if (!response.ok) {
-        const error = await response.json();
-        throw new Error(`Failed to get PayPal access token: ${error.error_description}`);
-    }
-
-    const data = await response.json();
-    return data.access_token;
-};
-
 // Ermitteln des absoluten Pfads
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// PayPal-Client initialisieren
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
+const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET;
+
+const client = new Client({
+    clientCredentialsAuthCredentials: {
+        oAuthClientId: PAYPAL_CLIENT_ID,
+        oAuthClientSecret: PAYPAL_CLIENT_SECRET,
+    },
+    environment: Environment.Sandbox,
+});
+
+// Instanz des Orders Controllers erstellen
+const ordersController = new OrdersController(client);
+
+// Produkte laden
 const getProducts = () => {
     try {
         const productsFilePath = path.join(__dirname, 'products.json');
@@ -41,6 +35,57 @@ const getProducts = () => {
     }
 };
 
+// Bestellung erstellen
+const createOrder = async (cartItems) => {
+    const products = getProducts();
+
+    // Purchase Units erstellen
+    const purchaseUnits = cartItems.map(item => {
+        const product = products.find(p => p.id === item.id);
+        if (!product) throw new Error(`Product with ID ${item.id} not found`);
+        if (item.quantity > product.stock) throw new Error(`Not enough stock for product ${product.name}`);
+
+        return {
+            name: product.name,
+            unit_amount: { currency_code: 'EUR', value: product.price.toFixed(2) },
+            quantity: item.quantity.toString(),
+        };
+    });
+
+    const totalAmount = purchaseUnits.reduce((sum, item) => {
+        return sum + parseFloat(item.unit_amount.value) * parseInt(item.quantity, 10);
+    }, 0).toFixed(2);
+
+    // Bestellung erstellen
+    const orderRequest = {
+        body: {
+            intent: 'CAPTURE',
+            purchase_units: [
+                {
+                    amount: {
+                        currency_code: 'EUR',
+                        value: totalAmount,
+                        breakdown: {
+                            item_total: { currency_code: 'EUR', value: totalAmount },
+                        },
+                    },
+                    items: purchaseUnits,
+                },
+            ],
+        },
+        prefer: 'return=minimal',
+    };
+
+    try {
+        const { body } = await ordersController.ordersCreate(orderRequest);
+        return JSON.parse(body);
+    } catch (error) {
+        console.error('Error creating PayPal order:', error);
+        throw new Error(error.message);
+    }
+};
+
+// Lambda-Handler
 export async function handler(event) {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
@@ -53,59 +98,11 @@ export async function handler(event) {
             return { statusCode: 400, body: 'Invalid cart items' };
         }
 
-        const products = getProducts();
-
-        const purchaseUnits = cartItems.map(item => {
-            const product = products.find(p => p.id === item.id);
-            if (!product) throw new Error(`Product with ID ${item.id} not found`);
-            if (item.quantity > product.stock) throw new Error(`Not enough stock for product ${product.name}`);
-
-            return {
-                name: product.name,
-                unit_amount: { currency_code: 'EUR', value: product.price.toFixed(2) },
-                quantity: item.quantity.toString(),
-            };
-        });
-
-        const totalAmount = purchaseUnits.reduce((sum, item) => {
-            return sum + parseFloat(item.unit_amount.value) * parseInt(item.quantity, 10);
-        }, 0).toFixed(2);
-
-        const accessToken = await getAccessToken();
-
-        const orderResponse = await fetch('https://api-m.sandbox.paypal.com/v2/checkout/orders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({
-                intent: 'CAPTURE',
-                purchase_units: [
-                    {
-                        amount: {
-                            currency_code: 'EUR',
-                            value: totalAmount,
-                            breakdown: {
-                                item_total: { currency_code: 'EUR', value: totalAmount },
-                            },
-                        },
-                        items: purchaseUnits,
-                    },
-                ],
-            }),
-        });
-
-        if (!orderResponse.ok) {
-            const error = await orderResponse.json();
-            throw new Error(`Failed to create PayPal order: ${error.message}`);
-        }
-
-        const orderData = await orderResponse.json();
+        const order = await createOrder(cartItems);
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ orderID: orderData.id }),
+            body: JSON.stringify({ orderID: order.id }),
         };
     } catch (error) {
         console.error('Error creating PayPal order:', error);
