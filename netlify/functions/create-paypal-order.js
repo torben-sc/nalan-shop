@@ -25,9 +25,8 @@ const getAccessToken = async () => {
 
 const getProducts = () => {
     try {
-        // Absoluter Pfad zu products.json basierend auf import.meta.url
-        const productsFilePath = new URL('./products.json', import.meta.url);
-        const productsData = fs.readFileSync(productsFilePath, 'utf-8');
+        // Direkt den relativen Pfad nutzen
+        const productsData = fs.readFileSync('./products.json', 'utf-8');
         return JSON.parse(productsData);
     } catch (error) {
         console.error('Error reading products.json:', error);
