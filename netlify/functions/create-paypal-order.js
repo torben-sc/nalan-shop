@@ -1,89 +1,81 @@
-const fetch = require('node-fetch');
-const products = require('./products.json');
+const fs = require('fs');
+const path = require('path');
 
-const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
-const PAYPAL_SECRET = process.env.PAYPAL_SECRET;
-const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; // Für Sandbox-Umgebung
-
-exports.handler = async function(event) {
+exports.handler = async (event, context) => {
     try {
-        const { cartItems } = JSON.parse(event.body);
-
-        if (!cartItems || !Array.isArray(cartItems)) {
+        // Überprüfen, ob der Request POST ist
+        if (event.httpMethod !== 'POST') {
             return {
-                statusCode: 400,
-                body: JSON.stringify({ error: 'Invalid cart items.' }),
+                statusCode: 405,
+                body: JSON.stringify({ error: 'Method not allowed' }),
             };
         }
 
-        // Berechne den Gesamtbetrag und erstelle die Artikel-Liste
-        let total = 0;
-        const items = cartItems.map(item => {
-            const product = products.find(p => p.id === item.id);
-            if (product) {
-                total += product.price * item.quantity;
+        // Den Request-Body parsen
+        const { cartItems } = JSON.parse(event.body);
+
+        if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ error: 'Invalid cartItems data' }),
+            };
+        }
+
+        // Laden der products.json
+        const productsFilePath = path.resolve(__dirname, 'products.json');
+        const productsData = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+        // Bestellung erstellen
+        const orderItems = [];
+        let totalPrice = 0;
+
+        for (const cartItem of cartItems) {
+            const product = productsData.find(p => p.id === cartItem.id);
+
+            if (!product) {
                 return {
-                    name: product.name,
-                    unit_amount: {
-                        currency_code: 'EUR',
-                        value: product.price.toFixed(2),
-                    },
-                    quantity: item.quantity.toString(),
+                    statusCode: 404,
+                    body: JSON.stringify({ error: `Product with ID ${cartItem.id} not found` }),
                 };
             }
-        });
 
-        // Schritt 1: Access Token abrufen
-        const tokenResponse = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Basic ${Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`).toString('base64')}`,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'grant_type=client_credentials',
-        });
+            if (cartItem.quantity > product.stock) {
+                return {
+                    statusCode: 400,
+                    body: JSON.stringify({
+                        error: `Insufficient stock for product ${product.name}`,
+                    }),
+                };
+            }
 
-        const tokenData = await tokenResponse.json();
-        const accessToken = tokenData.access_token;
+            // Artikel zur Bestellung hinzufügen
+            const itemTotalPrice = product.price * cartItem.quantity;
+            orderItems.push({
+                id: product.id,
+                name: product.name,
+                quantity: cartItem.quantity,
+                price: product.price,
+                total: itemTotalPrice,
+            });
 
-        // Schritt 2: Bestellung erstellen
-        const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                intent: 'CAPTURE',
-                purchase_units: [
-                    {
-                        amount: {
-                            currency_code: 'EUR',
-                            value: total.toFixed(2),
-                            breakdown: {
-                                item_total: {
-                                    currency_code: 'EUR',
-                                    value: total.toFixed(2),
-                                },
-                            },
-                        },
-                        items: items.filter(Boolean), // Entferne ungültige Artikel
-                    },
-                ],
-            }),
-        });
+            totalPrice += itemTotalPrice;
+        }
 
-        const orderData = await orderResponse.json();
+        // Rückgabe der Bestellung
+        const order = {
+            items: orderItems,
+            totalAmount: totalPrice.toFixed(2),
+        };
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ id: orderData.id, url: orderData.links.find(link => link.rel === 'approve').href }),
+            body: JSON.stringify(order),
         };
     } catch (error) {
-        console.error('Error creating PayPal order:', error);
+        console.error('Error creating order:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: JSON.stringify({ error: 'Internal server error' }),
         };
     }
 };

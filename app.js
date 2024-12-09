@@ -410,7 +410,7 @@ async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
-    const cartContactInfo = document.querySelector('.cart-contact-info');
+    const paypalButtonContainer = document.getElementById('paypal-button-container');
     cartItemsContainer.innerHTML = ''; // Container leeren
 
     // Debugging: Alle Cart-Daten anzeigen
@@ -467,37 +467,50 @@ async function displayCartItems() {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
 
-    // Checkout-Button hinzufügen
-    cartContactInfo.innerHTML = ''; // Container leeren
-    const checkoutButton = document.createElement('button');
-    checkoutButton.id = 'checkout-button';
-    checkoutButton.textContent = 'PROCEED TO PAYPAL CHECKOUT';
-    checkoutButton.className = 'checkout-button cart-paypal-button';
-    
-    // Event-Listener für den Checkout-Button
-    checkoutButton.addEventListener('click', async () => {
-        try {
-            const response = await fetch('/.netlify/functions/create-paypal-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ cartItems: cart.map(item => ({ id: item.id, quantity: item.quantity })) }),
-            });
+    // PayPal-Button rendern
+    paypalButtonContainer.innerHTML = ''; // Vorherigen Button entfernen
+    paypal.Buttons({
+        style: {
+            layout: 'vertical',
+            color: 'blue',
+            shape: 'rect',
+            label: 'checkout',
+        },
+        createOrder: async (data, actions) => {
+            // Bestellung erstellen
+            try {
+                const response = await fetch('/.netlify/functions/create-paypal-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cartItems: cart.map(item => ({ id: item.id, quantity: item.quantity })) }),
+                });
 
-            if (!response.ok) {
-                throw new Error('Failed to create PayPal order');
+                if (!response.ok) {
+                    throw new Error('Failed to create PayPal order');
+                }
+
+                const data = await response.json();
+                return data.orderID; // PayPal-Bestell-ID zurückgeben
+            } catch (error) {
+                console.error('Error creating PayPal order:', error);
+                alert('An error occurred while creating the order. Please try again.');
             }
-
-            const data = await response.json();
-            window.location.href = data.url; // Weiterleitung zu PayPal
-        } catch (error) {
-            console.error('Error initiating checkout:', error);
-            alert('An error occurred during checkout. Please try again.');
+        },
+        onApprove: (data, actions) => {
+            // Zahlung erfolgreich
+            return actions.order.capture().then(details => {
+                alert(`Transaction completed by ${details.payer.name.given_name}`);
+                // Warenkorb leeren oder andere Aktionen nach erfolgreicher Zahlung durchführen
+                localStorage.removeItem('cart');
+                displayCartItems(); // Warenkorb aktualisieren
+            });
+        },
+        onError: (err) => {
+            console.error('PayPal Checkout Error:', err);
+            alert('An error occurred during the checkout process.');
         }
-    });
-
-    cartContactInfo.appendChild(checkoutButton);
+    }).render('#paypal-button-container');
 }
-
 
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
