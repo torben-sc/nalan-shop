@@ -46,29 +46,38 @@ const createOrder = async (cartItems) => {
         const product = products.find(p => p.id === item.id);
         if (!product) throw new Error(`Product with ID ${item.id} not found`);
         if (item.quantity > product.stock) throw new Error(`Not enough stock for product ${product.name}`);
-
+    
         return {
             name: product.name,
-            unit_amount: { currency_code: 'EUR', value: product.price.toFixed(2) },
+            unitAmount: { // Änderung von `unit_amount` zu `unitAmount`
+                currencyCode: 'EUR', // Änderung von `currency_code` zu `currencyCode`
+                value: product.price.toFixed(2),
+            },
             quantity: item.quantity.toString(),
+            category: 'PHYSICAL_GOODS', // Muss eine der erlaubten Kategorien sein
         };
     });
+    
 
     const totalAmount = purchaseUnits.reduce((sum, item) => {
-        return sum + parseFloat(item.unit_amount.value) * parseInt(item.quantity, 10);
-    }, 0).toFixed(2);
+        if (!item.unitAmount || !item.unitAmount.value) {
+            console.error('Invalid item in purchaseUnits:', item);
+            throw new Error('Invalid item structure in purchaseUnits');
+        }
+        return sum + parseFloat(item.unitAmount.value) * parseInt(item.quantity, 10);
+    }, 0).toFixed(2);    
 
     // Bestellung erstellen
     const orderRequest = {
         body: {
             intent: 'CAPTURE',
-            purchase_units: [
+            purchaseUnits: [
                 {
                     amount: {
-                        currency_code: 'EUR',
+                        currencyCode: 'EUR', // Änderung von `currency_code` zu `currencyCode`
                         value: totalAmount,
                         breakdown: {
-                            item_total: { currency_code: 'EUR', value: totalAmount },
+                            itemTotal: { currencyCode: 'EUR', value: totalAmount }, // Änderung von `item_total` zu `itemTotal`
                         },
                     },
                     items: purchaseUnits,
@@ -79,6 +88,7 @@ const createOrder = async (cartItems) => {
     };
 
     try {
+        console.log(JSON.stringify(orderRequest, null, 2));
         const { body } = await ordersController.ordersCreate(orderRequest);
         return JSON.parse(body);
     } catch (error) {
