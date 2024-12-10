@@ -1,6 +1,6 @@
 [build]
-  command = "npm run build"          # Der Build-Befehl für dein Projekt (Frontend)
-  publish = "build"                 # Der Ordner, der nach dem Build veröffentlicht wird
+  command = "npm run build"          # Der Build-Befehl für dein Frontend
+  publish = "build"                 # Der Ordner, der vom Frontend veröffentlicht wird
   functions = "netlify/functions"   # Der Ordner, der deine Netlify Functions enthält
 
 [build.environment]
@@ -13,6 +13,11 @@
 [[redirects]]
   from = "/api/*"                   # Leite alle API-Aufrufe an die Functions weiter
   to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"                       # Alle anderen Routen werden an das Frontend weitergeleitet
+  to = "/index.html"
   status = 200
 
 [[headers]]
