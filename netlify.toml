@@ -1,15 +1,22 @@
 [build]
-  command = "npm run build"       # Der Build-Befehl für deine Anwendung
-  publish = "build"              # Der Ordner, der nach dem Build veröffentlicht wird
-  functions = "netlify/functions" # Der Ordner, in dem sich die Serverless-Funktionen befinden
+  command = "npm run build"          # Der Build-Befehl für dein Projekt (Frontend)
+  publish = "build"                 # Der Ordner, der nach dem Build veröffentlicht wird
+  functions = "netlify/functions"   # Der Ordner, der deine Netlify Functions enthält
 
 [build.environment]
-  NODE_VERSION = "18"            # Die Node.js-Version, die während des Builds verwendet werden soll
+  NODE_VERSION = "18"               # Die Node.js-Version, die während des Builds verwendet wird
 
 [functions]
-  node_bundler = "esbuild"       # Verwendeter Bundler für die Functions
+  node_bundler = "esbuild"          # Verwende esbuild, um Functions schneller zu bündeln
+  external_node_modules = ["@paypal/paypal-server-sdk"] # Externe Module, die nicht gebündelt werden sollen
 
 [[redirects]]
-  from = "/api/*"                # Weiterleitung für API-Aufrufe
+  from = "/api/*"                   # Leite alle API-Aufrufe an die Functions weiter
   to = "/.netlify/functions/:splat"
   status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
