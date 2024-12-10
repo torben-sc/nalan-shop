@@ -1,14 +1,12 @@
 import { OrdersController, Client, Environment } from '@paypal/paypal-server-sdk';
 import fs from 'fs';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 
 // Ermitteln des absoluten Pfads
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import path from 'path';
+const __dirname = path.resolve();
 
 // PayPal-Client initialisieren
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
@@ -83,6 +81,10 @@ const createOrder = async (cartItems) => {
                     items: purchaseUnits,
                 },
             ],
+            applicationContext: {
+                returnUrl: 'https://nalancreations.com/thank-you', // Erfolgreiche Zahlung
+                cancelUrl: 'https://google.com'  // Abbruch der Zahlung
+            },
         },
         prefer: 'return=minimal',
     };
