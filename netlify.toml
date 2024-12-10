@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"       # Der Build-Befehl für deine Anwendung
+  publish = "build"              # Der Ordner, der nach dem Build veröffentlicht wird
+  functions = "netlify/functions" # Der Ordner, in dem sich die Serverless-Funktionen befinden
+
+[build.environment]
+  NODE_VERSION = "18"            # Die Node.js-Version, die während des Builds verwendet werden soll
+  PAYPAL_CLIENT_ID = "your-client-id" # Optional: Umgebungsvariablen für den Build
+  PAYPAL_CLIENT_SECRET = "your-secret-key"
+
+[functions]
+  node_bundler = "esbuild"       # Verwendeter Bundler für die Functions
+
+[[redirects]]
+  from = "/api/*"                # Weiterleitung für API-Aufrufe
+  to = "/.netlify/functions/:splat"
+  status = 200
