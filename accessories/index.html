@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hand Warmers</title>
+    <title>Other Accessories</title>
     <link rel="stylesheet" href="/style.css"> <!-- Absoluter Pfad für das CSS -->
 </head>
 <body>
@@ -26,17 +26,27 @@
     <div class="top-menu-wrapper">
         <nav class="top-menu">
             <a href="/shop" id="showAllFilter">Show All</a>
-            <a href="/bags" id="bagsFilter">Bags</a>
             <a href="/balaclavas" id="balaclavasFilter">Balaclavas</a>
-            <a href="/handwarmers" id="handWarmersFilter">Hand Warmers</a>
-            <a href="/otheraccessories" id="otherAccessoriesFilter">Other Accessories</a>
+            <a href="/bags" id="bagsFilter">Bags</a>
+            <a href="/scarves" id="scarvesFilter">Scarves</a>
+            <a href="/accessories" id="accessoriesFilter">Accessories</a>
         </nav>
     </div>
 
+    <div class="top-menu-wrapper-2">
+        <nav class="top-menu">
+            <a href="/accessories?accessorie_type=key" id="allAccessoriesFilter" data-accs="all">All</a>
+            <a href="/accessories?accessorie_type=lighter" id="lighterAccessoriesFilter" data-accs="lighter">Lighter Cases</a>
+            <a href="/accessories?accessorie_type=lipgloss" id="lipglossAccessoriesFilter" data-accs="lipgloss">Lip Gloss Cases</a>
+            <a href="/accessories?accessorie_type=keychain" id="keychainAccessoriesFilter" data-accs="keychain">Keychains</a>
+        </nav>
+    </div>
+
+
     <main>
-        <h1 class="product-title" id="product-title">Hand Warmers Collection</h1>
+        <h1 class="product-title" id="product-title">Accessories</h1>
         <div id="product-container" class="product-container">
-            <!-- Produkte werden hier von JavaScript mit Kategorie 'hand warmers' eingefügt -->
+            <!-- Produkte werden hier von JavaScript mit Kategorie 'other accessories' eingefügt -->
         </div>
     </main>
 
@@ -64,8 +74,8 @@
     <script src="/app.js"></script> <!-- Absoluter Pfad für die JavaScript-Datei -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lädt nur Produkte mit Kategorie 'hand warmers'
-            displayProductList('hand warmers');
+            // Lädt nur Produkte mit Kategorie 'other accessories'
+            displayProductList('accessories');
         });
     </script>
 </body>
