@@ -1,0 +1,930 @@
+/* Grundeinstellungen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #24388e; /* Setzt die gesamte Hintergrundfarbe der Seite auf Blau */
+    color: #ffffff; /* Weißer Text für bessere Lesbarkeit */
+    font-family: Arial, sans-serif;
+}
+
+/* Fixierter Header mit zentriertem Logo und Hintergrundfarbe */
+/* Header-Stile */
+.shop-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed; /* Macht den Header fixiert */
+    top: 0; /* Setzt den Header an den oberen Rand des Bildschirms */
+    left: 0; /* Setzt den Header an den linken Rand */
+    width: 100%; /* Der Header nimmt die gesamte Seitenbreite ein */
+    padding: 10px 20px;
+    background-color: #24388e;
+    z-index: 1000; /* Sicherstellen, dass der Header über anderen Inhalten liegt */
+}
+
+/* Platzhalter links im Header */
+.header-left {
+    flex: 1; /* Nimmt den gesamten Raum links ein, damit das Logo in der Mitte bleibt */
+}
+
+.logo {
+    height: 30px; /* Höhe des Logos einstellen */
+    max-height: 30px; /* Maximale Höhe des Logos */
+}
+
+/* Logo-Container */
+.logo-container {
+    flex: 1;
+    text-align: center;
+}
+
+/* Warenkorb-Icon */
+.cart-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    flex: 1; /* Sorgt dafür, dass das Icon rechts bleibt */
+}
+
+.cart-icon {
+    width: 24px; /* Größe des Icons */
+    height: 24px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px; /* Justiere die Position des Zählers */
+    right: -8px; /* Justiere die Position des Zählers */
+    background-color: #E55013; /* Farbe des Zählers */
+    color: white; /* Textfarbe */
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.cart-icon img {
+    width: 100%;
+    height: auto;
+}
+
+.top-menu-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    margin-top: 50px; /* Abstand hinzufügen, der der Höhe des fixierten Headers entspricht */
+    /* Versteckt den Scrollbalken */
+    -ms-overflow-style: none;  /* Für Internet Explorer und Edge */
+    scrollbar-width: none;     /* Für Firefox */
+}
+
+.top-menu-wrapper::-webkit-scrollbar {
+    display: none;  /* Für Webkit-basierte Browser (Chrome, Safari) */
+}
+
+.top-menu-wrapper-2{
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0px 12px;
+    margin-bottom: 5px;
+}
+
+
+/* Top-Menu: Filter-Links */
+.top-menu {
+    display: inline-flex; /* Elemente werden in einer Reihe angezeigt */
+    gap: 20px;
+    align-items: center;
+    margin: 0; /* Keine Margins */
+    justify-content: flex-start; /* Links ausrichten */
+}
+
+.top-menu a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 400; /* Setzt die Schrift auf dünner */
+    font-size: 1.1em; /* Beibehaltung der Schriftgröße */
+    position: relative;
+    transition: color 0.3s ease;
+    padding-bottom: 5px; /* Platz für die Linie */
+    white-space: nowrap; /* Verhindert Zeilenumbruch für einzelne Links */
+}
+
+
+/* Gepunktete Linie unter jedem Filter-Link */
+.top-menu a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 1px dotted #ffffff; /* Weiße gepunktete Linie */
+    margin-top: 0px; /* Abstand zur Linie */
+}
+
+.top-menu a:hover {
+    color: #E55013;
+}
+
+/* Überschrift (Produkt-Titel) */
+.product-title {
+    font-size: 3em;
+    color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+    font-weight: bold;
+    margin-top: -28px;
+    text-transform: uppercase;
+    text-align: left; /* Linksbündige Überschrift */
+    margin-left: 10px; /* Abstand zum linken Rand */
+}
+
+/* Hauptbereich für Produkte */
+main {
+    padding-top: 20px;
+}
+
+/* Produkt Container */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Bilder füllen die gesamte Breite des Displays aus */
+    gap: 0px; /* Keine Abstände zwischen den Produktkarten */
+}
+
+/* Produkt-Karten Design */
+.product-card {
+    text-align: left;
+    background-color: #24388e; /* Hintergrundfarbe passend zum Seitenhintergrund */
+    color: #ffffff; /* Weißer Text für Kontrast */
+    overflow: hidden; /* Verhindert Überlauf von Inhalten */
+    height: 100%; /* Füllt den gesamten Container aus */
+    border: none; /* Kein Rand um die Produktkarte */
+    position: relative; /* Positionierung für überlappende Texte */
+}
+
+/* Bild des Produkts */
+.product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Das Bild passt sich an und füllt den Container ohne Verzerrung */
+    border: none; /* Kein Rand um das Bild */
+    display: block;
+}
+
+.product-card a {
+    text-decoration: none; /* Keine Linie unter dem Link */
+    border-bottom: none; /* Entfernt eine mögliche Linie unter den Links */
+}
+
+/* Container für die Produktinformationen */
+.product-info {
+    padding: 10px; /* Abstand für den Text unterhalb des Bildes */
+}
+
+/* Produktname */
+.product-card h2 {
+    font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
+    margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
+    color: #ffffff;
+    margin-left: 3px;
+}
+
+/* Produktpreis */
+.product-card p {
+    font-size: 0.9em; /* Größere Schriftgröße für den Preis */
+    color: #E55013;
+    font-weight: bold;
+    margin: 0px 0 20px; /* Mehr Abstand zum unteren Rand (10px oben, 20px unten) */
+    margin-left: 3px;
+}
+
+/* Entferne Hover-Effekte für Produkte */
+.product-card:hover {
+    transform: none; /* Entfernt jegliche Skalierung beim Hover */
+}
+
+/* Footer Styles */
+.custom-footer {
+    background-color: #24388e;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+}
+
+.footer-branding {
+    font-size: 1em;
+    margin-bottom: 15px;
+    color: #E55013;
+}
+
+.social-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* Einheitliche Einstellungen für alle Social Icons */
+.social-icon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+/* Spezifische Größe nur für das TikTok-Logo */
+.tiktok-icon {
+    width: 20px; /* Passe die Größe nach Bedarf an */
+    height: 20px;
+    margin-top: 8px;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+.legal-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.legal-links a {
+    text-decoration: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.legal-links a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+/* Produktseite Layout */
+    .product-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px;
+        background-color: #24388e; 
+    }
+
+    /* Produktbild - Hauptbild */
+    .product-main-image-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .product-main-image {
+        margin-top: 45px;
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+    }
+
+    /* Thumbnails unter dem Hauptbild */
+    .product-thumbnail-container {
+        display: flex;
+        justify-content: flex-start; /* Ändert die Ausrichtung von zentriert auf links */
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .product-thumbnail {
+        width: 50px;
+        height: auto;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    .product-thumbnail:hover {
+        border-color: #000; /* Bei Hover wird ein schwarzer Rahmen angezeigt */
+    }
+
+    /* Produktinformationen */
+    .product-info {
+        text-align: left;
+    }
+    .product-title-details {
+        font-size: 1.5em;
+        margin-top: 20px;
+        color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+        text-transform: uppercase;
+        font-weight: 500;
+        text-align: left; /* Linksbündige Überschrift */
+        margin-left: -5px; /* Abstand zum linken Rand auf 0 setzen, damit es so weit wie möglich nach links geht */
+        margin-bottom: 20px;
+    }
+
+    .product-header {
+        margin-left: -3.5px;
+        justify-content: flex-start; /* Links ausrichten für mobile Geräte auf der Produktseite */
+    }
+
+    .product-header .logo-container {
+        margin-left: 0px; /* Platz links hinzufügen */
+        margin-right: 200px; /* Entfernt das automatische Zentrieren */
+    }
+
+    .product-header .cart-icon-container {
+        right: 60px;
+        margin-left: auto; /* Verschiebt das Warenkorb-Icon nach rechts */
+    }
+    
+    .product-price {
+        margin-left: -5px;
+        font-size: 1.5em;
+        color: #ffffff;
+        margin-bottom: 20px;
+        margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
+    }
+    
+    .product-description {
+        margin-left: -5px;
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: #ffffff;
+        font-weight: bolder;
+        margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
+    }
+
+    .back-link {
+        margin-left: -5px;
+        text-decoration: none; /* Keine Standard-Unterstreichung */
+        color: #ffffff;
+        font-weight: lighter;
+        margin-bottom: 20px;
+        display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
+        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
+    }
+    
+    
+    /* Button zum Direktkauf (Direct Checkout) */
+    .checkout-button {
+        background-color: #E55013;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 900px;
+    }
+    
+    .checkout-button:hover {
+        background-color: #bd3f0d; /* Etwas dunkleres Grün beim Hover */
+    }
+    
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Zentriert die Buttons und den "OR" Text horizontal */
+        gap: 10px; /* Fügt gleichmäßigen Abstand zwischen den Buttons und dem "OR"-Text hinzu */
+        margin-top: 20px; /* Optional: Abstand zur oberen Beschreibung erhöhen */
+    }
+    
+    /* OR Text zwischen den Buttons */
+    .or-text {
+        font-weight: bold; /* Fett gedruckt */
+        color: #ffffff; /* Weißer Text für Kontrast */
+        margin: 0; /* Entfernt den Standardabstand */
+        text-align: center; /* Sorgt für zentrierten Text */
+        width: 100%; /* Sicherstellen, dass der Text im Zentrum des Containers bleibt */
+    }
+    
+    /* Button zum Hinzufügen in den Warenkorb */
+    .add-to-cart-button {
+        background-color: #000;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 900px;
+        margin-bottom: 20px; /* Abstand zum nächsten Element */
+    }
+    
+    .add-to-cart-button:hover {
+        background-color: #252525;
+    }
+}
+
+/* Desktop Specific Styles */
+@media (min-width: 769px) {
+    .product-container {
+        grid-template-columns: repeat(4, 1fr); /* Vier Spalten für größere Bildschirme */
+    }
+
+    .product-card img {
+        max-height: 100%; /* Bild soll den gesamten Container füllen */
+    }
+
+    /* Desktop spezifisches Layout für die Produktdetailseite */
+    .product-detail-wrapper {
+        display: flex;
+        flex-direction: column; /* Ändere die Richtung zu Spalte, damit Bilder untereinander erscheinen */
+        gap: 20px; /* Fügt Abstand zwischen dem Hauptbild und der Produktinfo hinzu */
+        align-items: center; /* Zentriert die Elemente horizontal */
+    }
+
+    .product-main-image-container {
+        width: 100%;
+        text-align: center;
+    }
+
+    .product-main-image {
+        margin-top: 45px;
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+    }
+
+    .product-thumbnail-container {
+        display: flex;
+        justify-content: center; /* Zentriert die Thumbnails unter dem Hauptbild */
+        gap: 10px;
+        margin-top: 10px; /* Abstand zwischen Hauptbild und Thumbnails */
+    }
+
+    .product-thumbnail {
+        width: 70px; /* Thumbnail-Größe anpassen */
+        height: auto;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    .product-thumbnail:hover {
+        border-color: #000; /* Rahmenfarbe der Thumbnails bei Hover */
+    }
+
+    /* Produktinformationen bleiben als Block */
+    .product-info {
+        width: 100%;
+        max-width: 600px;
+        text-align: left;
+    }
+
+    .product-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #24388e; 
+    }
+    
+    /* Produktinformationen */
+    .product-info {
+        text-align: left;
+    }
+    
+    .product-title-details {
+        font-size: 1.5em;
+        margin-top: 20px;
+        color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+        text-transform: uppercase;
+        font-weight: 500;
+        text-align: left; /* Linksbündige Überschrift */
+        margin-bottom: 20px;
+    }
+    
+    .back-link {
+        text-decoration: none; /* Keine Standard-Unterstreichung */
+        color: #ffffff;
+        font-weight: lighter;
+        margin-bottom: 20px;
+        display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
+        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
+    }
+    
+    .product-price {
+        font-size: 1.5em;
+        color: #ffffff;
+        margin-bottom: 20px;
+    }
+    
+    .product-description {
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: #ffffff;
+        font-weight: bolder;
+    }
+
+    /* Button zum Direktkauf (Direct Checkout) */
+    .checkout-button {
+        background-color: #E55013; /* Schwarz für Direktkauf */
+        color: #fff; /* Weißer Text */
+        padding: 15px;
+        border: none;
+        font-size: 0.9em; /* Schriftgröße kleiner machen */
+        font-weight: bold; /* Schrift dicker machen */
+        text-transform: uppercase; /* Alle Buchstaben groß */
+        cursor: pointer;
+        width: 100%;
+        max-width: 900px;
+        text-align: center; /* Text zentrieren */
+    }
+
+    .checkout-button:hover {
+        background-color: #252525; /* Etwas dunkleres Schwarz beim Hover */
+    }
+    
+    .checkout-button:hover {
+        background-color: #bd3f0d; /* Etwas dunkleres Grün beim Hover */
+    }
+    
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Zentriert die Buttons und den "OR" Text horizontal */
+        gap: 20px; /* Fügt gleichmäßigen Abstand zwischen den Buttons und dem "OR"-Text hinzu */
+        margin-top: 20px; /* Optional: Abstand zur oberen Beschreibung erhöhen */
+    }
+    
+    /* OR Text zwischen den Buttons */
+    .or-text {
+        font-weight: bold; /* Fett gedruckt */
+        color: #ffffff; /* Weißer Text für Kontrast */
+        margin: 0; /* Entfernt den Standardabstand */
+        text-align: center; /* Sorgt für zentrierten Text */
+        width: 100%; /* Sicherstellen, dass der Text im Zentrum des Containers bleibt */
+    }
+    
+    /* Button zum Hinzufügen in den Warenkorb */
+    .add-to-cart-button {
+        background-color: #000;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        font-size: 1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        width: 100%;
+        max-width: 900px;
+        margin-bottom: 20px; /* Abstand zum nächsten Element */
+    }
+    
+    .add-to-cart-button:hover {
+        background-color: #252525;
+    }
+    
+}
+/* Produktseite Layout */
+
+
+/* Modal-Stile */
+.modal {
+    display: none; /* Modal ist anfangs versteckt */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Halbdurchsichtiger Hintergrund */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    color: #333;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+
+/* Styles für das Warenkorb Slide-in Menü */
+.cart-popup {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #24388e;
+    transition: right 0.4s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+    .cart-popup {
+        width: 400px; /* Nimmt auf dem Desktop nur einen Teil rechts ein */
+        height: 100%;
+    }
+}
+
+.cart-popup.open {
+    right: 0; /* Menü wird sichtbar, wenn die Klasse 'open' hinzugefügt wird */
+}
+
+.cart-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: -20px;
+    background-color: #24388e;  /* Ändert die Hintergrundfarbe auf ein dunkleres Blau */
+    border-bottom: 1px solid #ffffff;
+    max-width: 91%; 
+    margin: 0 auto; 
+}
+
+.cart-popup-header h2 {
+    font-size: 1.7em;
+    font-weight: bold;
+    color: #E55013;  /* Ändert die Schriftfarbe auf Weiß für besseren Kontrast */
+}
+
+.close-cart-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.cart-items-container {
+    padding: 20px;
+}
+
+/* Einzelne Artikel im Warenkorb */
+.cart-item {
+    position: relative; /* Macht den Container als Referenz für absolute Positionierung geeignet */
+    display: flex; /* Verwende Flexbox für eine einfache horizontale Anordnung */
+    align-items: center; /* Zentriert die Inhalte des Artikels vertikal */
+    margin-bottom: 15px; /* Fügt Platz zwischen den Artikeln hinzu */
+    border-bottom: 1px solid #e0e0e0; /* Unterstreicht jedes Element mit einer Trennlinie */
+    padding-bottom: 10px; /* Abstand unterhalb des Artikels */
+}
+
+.cart-item-image {
+    width: 75px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.cart-item-details {
+    flex: 1; 
+}
+
+.cart-item-details p {
+    font-size: 1em;
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.cart-item-link {
+    font-size: 0.75em;
+    color: #fff;
+    margin-bottom: 9px;
+    font-weight: 900;
+    text-decoration: none; /* Entfernt die Unterstreichung des Links */
+}
+/* Entfernen Button für Artikel */
+.remove-item-button {
+    position: absolute; /* Positioniere den Button absolut innerhalb der cart-item Box */
+    right: 0; /* Platziere den Button fest an den rechten Rand */
+    background: none;
+    margin-right: 11px;
+    border: none;
+    font-size: 20px;
+    color: #b80600;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+/* Gesamtbetrag */
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 90%;
+    margin: 0 auto 10px auto; /* Zentriert den Bereich und fügt Abstand zum nächsten Element hinzu */
+    text-align: left; /* Links ausrichten */
+    margin-top: -30px;
+}
+
+
+.cart-total-text {
+    font-weight: bold;
+    font-size: 1.2em; /* Vergrößert den Text für bessere Sichtbarkeit */
+    color: #ffffff; /* Farbe für den "Total Amount" Text */
+    text-transform: uppercase;
+}
+
+.cart-total-value {
+    font-weight: bold;
+    font-size: 1.2em; /* Vergrößert den Betrag für bessere Sichtbarkeit */
+    color: #fff; /* Farbe für den Betrag */
+}
+
+/* Container für die gesamte Seite */
+.thank-you-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px); /* Höhe des Containers minus die Headerhöhe */
+    padding: 0 20px;
+    text-align: center;
+}
+
+/* Container für den Text */
+.thank-you-container {
+    max-width: 600px;
+    background-color: #24388e; 
+    padding: 30px 20px;
+}
+
+/* Text der Dankeschön Nachricht */
+.thank-you-message-1 {
+    font-size: 2em;
+    color: #ffffff; 
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.thank-you-message-2 {
+    font-size: 1.4em;
+    color: #E55013; 
+    font-weight: bolder;
+}
+
+.cart-contact-info {
+    text-align: center;
+    font-weight: bold;
+    padding: 45px 20px;
+    color: #ffffff; /* Weiß für eine gute Sichtbarkeit */
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+.cart-contact-info a {
+    color: #E55013; /* Orange für den Link */
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cart-contact-info a:hover {
+    text-decoration: underline; /* Unterstreiche den Link, wenn der Nutzer darüber hovert */
+}
+
+.checkout-note {
+    color: #000; /* Setzt die Farbe auf Schwarz */
+    font-weight: bold; /* Fettgedruckte Schrift */
+    text-transform: uppercase; /* Alle Buchstaben werden in Großbuchstaben umgewandelt */
+    margin-top: 20px; /* Optional: fügt etwas Abstand oberhalb hinzu */
+    text-align: center; /* Zentriert den Text */
+}
+
+@media (min-width: 768px){
+    .impressum-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .legal-title {
+        font-size: 2.5em; /* Schriftgröße für größere Bildschirme */
+        color: #000; /* Orange Schriftfarbe für die Überschrift */
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    
+    .legal-text {
+        font-size: 1.08em;
+        font-weight: bold;
+        line-height: 1.6;
+        max-width: 600px;
+    }
+    
+    .legal-text span {
+        font-size: 1.1em; /* Größere Anfangsbuchstaben */
+        text-transform: uppercase;
+    }
+    
+    .legal-subtitle {
+        font-size: 1.5em; /* Schriftgröße für die Unterüberschriften */
+        color: #E55013;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    
+    .privacy-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* Anpassung für mobile Geräte (maximale Bildschirmbreite von 768px) */
+@media (max-width: 768px) {
+    .privacy-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+        text-align: left;
+        padding: 0 15px; /* Fügt Polsterung links und rechts hinzu, um Text von den Rändern zu entfernen */
+    }
+    .impressum-container {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: left;
+        text-align: left;
+        padding: 0 15px; /* Fügt Polsterung links und rechts hinzu, um Text von den Rändern zu entfernen */
+    }
+    .legal-title {
+        color: #000;
+        text-align: left;
+        font-size: 1.6em; /* Kleinere Schriftgröße für mobile Geräte, damit sie gut auf die Seite passt */
+        margin-bottom: 15px; /* Geringerer Abstand unten */
+        font-weight: 1000; /* Dickerer Schriftstil für mobile Ansicht */
+        text-decoration: underline; /* Fügt eine Unterstreichung hinzu */
+        word-wrap: break-word; /* Lässt Wörter umbrechen, um Überlauf zu verhindern */
+    }
+
+    .legal-text {
+        font-size: 0.85em;
+        font-weight: 550;
+        text-align: left; /* Links ausgerichtet für mobile Geräte */
+        margin: 0 2x; /* Fügt einen Rand hinzu, um Abstand zum Bildschirmrand zu schaffen */
+        max-width: 100%; /* Setzt die maximale Breite auf 100%, um die gesamte Breite des Containers zu nutzen */
+    }
+
+    .legal-text span {
+        text-align: left;
+        font-size: 1.2em; /* Geringfügig größere Anfangsbuchstaben für bessere Lesbarkeit auf kleineren Bildschirmen */
+    }
+
+    .legal-subtitle {   
+        font-size: 1.3em; /* Schriftgröße für die Unterüberschriften */
+        color: #E55013;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        text-align: left;
+    }
+}
+
+.cart-paypal-button {
+    height: 60px;
+    font-size: 0.75em; /* Kleinere Schriftgröße */
+    font-weight: 350; /* Dickere Schrift */
+    padding: 12px 20px; /* Padding für eine bessere Optik */
+    background-color: #000; /* Typische PayPal-Farbe */
+    color: #fff; /* Schwarze Schrift */
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase; /* Alle Buchstaben groß */
+    text-align: center;
+    width: 100%; /* Füllt die Breite aus */
+    max-width: 400px; /* Maximale Breite */
+}
+
+.cart-paypal-button:hover {
+    background-color: #252525; /* Etwas dunkleres Gelb beim Hover */
+}
+
+@media (max-width: 768px){
+    .mobile-line-break {
+        display: block; /* Macht einen Blockwechsel, was einem Zeilenumbruch entspricht */
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-line-break {
+        display: inline; /* Auf größeren Bildschirmen bleibt alles in einer Zeile */
+    }
+}
