@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
     <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
 </head>
-
 <body>
     <!-- Header -->
     <header class="shop-header product-header">
@@ -63,11 +61,11 @@
         </div>
     
         <div class="cart-contact-info">
-            <!-- Dynamisch per JavaScript entweder PayPal Button oder Instagram-Kontakt -->
+            <div id="paypal-button-container"></div> <!-- PayPal Button wird hier gerendert -->
+            <p class="empty-cart-message" id="empty-cart-message" style="display: none;">Your Cart is Empty</p>
         </div>
     </div>
 
     <script src="/app.js"></script>
 </body>
-
 </html>

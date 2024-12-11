@@ -74,9 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayProductDetails();
     }
 
-    // Warenkorb-Artikel anzeigen
-    displayCartItems();
-
     // Initialisierung des Footers
     if (!document.getElementById('landing-container')) {
         createFooter();
@@ -147,13 +144,13 @@ function updateAccessoriesFilterURL(accs) {
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
-        const response = await fetch('/products.json'); // Geänderter Pfad für die JSON-Datei
+        const response = await fetch('/.netlify/functions/get-products'); // Pfad zur Netlify Function
         if (!response.ok) {
-            throw new Error(`Fehler beim Laden der Produkte: ${response.statusText}`);
+            throw new Error(`Error loading products: ${response.statusText}`);
         }
         return await response.json();
     } catch (error) {
-        console.error("Fehler beim Laden der Produkte:", error);
+        console.error('Error loading products:', error);
     }
 }
 
@@ -333,6 +330,11 @@ function setupAddToCartButton(addToCartButton, product) {
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
+    if (!product || !product.id || typeof product.stock !== 'number' || typeof product.price !== 'number') {
+        console.error('Invalid product data:', product);
+        return;
+    }
+
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingProduct = cart.find(item => item.id === product.id);
 
@@ -345,7 +347,14 @@ function addToCart(product) {
         }
     } else {
         if (product.stock > 0) {
-            cart.push({ ...product, quantity: 1 });
+            cart.push({
+                id: product.id,
+                name: product.name,
+                images: product.images,
+                price: product.price,
+                stock: product.stock,
+                quantity: 1,
+            });
         } else {
             alert("This product is not available anymore.");
             return;
@@ -354,19 +363,15 @@ function addToCart(product) {
 
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-
-    // Open cart after adding an item
-    const cartPopup = document.getElementById('cart-popup');
-    if (cartPopup) {
-        cartPopup.classList.add('open');
-    }
-    displayCartItems(); // Update cart items in the popup
+    displayCartItems(); // Update items and PayPal button
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialisieren der Warenkorb-Anzeige
     updateCartCount();
-    displayCartItems(); // Warenkorb-Artikel beim Start anzeigen
+    loadPayPalSdk();
+    displayCartItems();
 
     // Warenkorb-Popup Elemente und Event-Handler
     const cartIcon = document.getElementById('cart-icon');
@@ -390,35 +395,38 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
-function displayCartItems() {
+async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
-    const cartContactInfo = document.querySelector('.cart-contact-info'); // Container für die Kontaktinfo
-    cartItemsContainer.innerHTML = ''; // Container leeren
+    const paypalButtonContainer = document.getElementById('paypal-button-container');
+    const emptyCartMessage = document.getElementById('empty-cart-message');
+
+    // Clear existing content
+    cartItemsContainer.innerHTML = '';
+    paypalButtonContainer.innerHTML = ''; // Wichtig: Verhindert doppelte Buttons
+    if (emptyCartMessage) emptyCartMessage.style.display = 'none';
 
     let totalAmount = 0;
     cart.forEach(item => {
-        const price = parseFloat(item.price) || 0; // Preis als Zahl
+        const price = parseFloat(item.price) || 0;
         totalAmount += price * item.quantity;
 
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
-
         cartItem.innerHTML = `
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
-                <a href="/product/${item.id}" class="cart-item-link">
+                <a href="/product?id=${item.id}" class="cart-item-link">
                     <h3>${item.name}</h3>
                 </a>
-            <p>Price: €${price.toFixed(2)}</p>
-            <p>Quantity: ${item.quantity}</p>
-        </div>
-        <button class="remove-item-button" data-id="${item.id}">&times;</button>
-    `;
+                <p>Price: €${price.toFixed(2)}</p>
+                <p>Quantity: ${item.quantity}</p>
+            </div>
+            <button class="remove-item-button" data-id="${item.id}">&times;</button>
+        `;
 
-
-        // Event-Listener für den Entfernen-Button
+        // Event listener for removing items
         cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
             removeFromCart(item.id);
         });
@@ -426,49 +434,132 @@ function displayCartItems() {
         cartItemsContainer.appendChild(cartItem);
     });
 
+    // Update total amount
     if (totalAmountElement) {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
 
-    // Anpassen der Kontaktinfo oder des PayPal Buttons
-    if (cart.length === 1) {
-        // Wenn nur ein Artikel im Warenkorb ist, füge den PayPal-Button hinzu
-        const product = cart[0];
-        cartContactInfo.innerHTML = ''; // Container leeren
-
-        const paypalButton = document.createElement('button');
-        paypalButton.id = 'paypal-button-cart';
-        paypalButton.textContent = 'PROCEED TO CHECKOUT';
-        paypalButton.className = 'checkout-button cart-paypal-button';
-        
-        // PayPal-Link für das Produkt setzen
-        paypalButton.addEventListener('click', () => {
-            // Verwende window.location.href, um die Netlify Function aufzurufen, die den Redirect durchführt
-            window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
-        });
-
-        cartContactInfo.appendChild(paypalButton);
+    if (cart.length === 0) {
+        // Show empty cart message
+        if (emptyCartMessage) emptyCartMessage.style.display = 'block';
     } else {
-        // Bei mehreren Artikeln im Warenkorb, zeige die Instagram-Kontaktinfo an
-        cartContactInfo.innerHTML = `
-            <p>For orders of multiple items, contact me on 
-                <a href="https://www.instagram.com/nalancreations" target="_blank">Instagram</a>
-                OR <a href="mailto:nalancreations@gmx.de" class="email-link">E-MAIL</a>
-            </p>
-            <p class="checkout-note">OTHERWISE USE DIRECT CHECKOUT</p>
+        // Load PayPal buttons only when SDK is loaded
+        loadPayPalSdk(() => {
+            // PayPal buttons will only render once
+            paypalButtonContainer.innerHTML = ''; // Remove existing buttons
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'checkout',
+                },
+                createOrder: async () => {
+                    const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+                    return orderID;
+                },
+                onApprove: async (data, actions) => {
+                    try {
+                        const captureResult = await capturePayPalOrder(data.orderID);
+                        const orderID = captureResult.id;
+                        const purchasedProducts = captureResult.purchase_units[0].items;
 
-        `;
+                        const productsParam = encodeURIComponent(JSON.stringify(purchasedProducts));
+                        window.location.href = `/thank-you.html`;
+                    } catch (error) {
+                        console.error('Error capturing PayPal order:', error);
+                        alert('An error occurred while finalizing your payment.');
+                    }
+                },
+                onError: (err) => {
+                    console.error('PayPal Checkout Error:', err);
+                    alert('An error occurred during the checkout process.');
+                }
+            }).render('#paypal-button-container');
+        });
     }
 }
 
+async function loadPayPalSdk(callback) {
+    try {
+        const response = await fetch('/.netlify/functions/get-paypal-client-id');
+        const { clientId } = await response.json();
+
+        if (!clientId) {
+            throw new Error('Client ID not found');
+        }
+
+        const existingScript = document.querySelector('script[src*="paypal.com/sdk/js"]');
+        if (!existingScript) {
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`;
+            script.onload = () => {
+                if (typeof callback === 'function') callback();
+            };
+            document.head.appendChild(script);
+        } else if (typeof callback === 'function') {
+            callback();
+        }
+    } catch (error) {
+        console.error('Failed to load PayPal SDK:', error);
+    }
+}
+
+// Lade PayPal SDK beim Laden der Seite
+document.addEventListener('DOMContentLoaded', loadPayPalSdk);
+
+
+// Bestellung erstellen
+async function createPayPalOrder(cartItems) {
+    try {
+        const response = await fetch('/.netlify/functions/create-paypal-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'create', cartItems }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to create PayPal order');
+        }
+
+        const data = await response.json();
+        return data.orderID; // PayPal-Bestell-ID zurückgeben
+    } catch (error) {
+        console.error('Error creating PayPal order:', error);
+        alert('An error occurred while creating the order. Please try again.');
+        throw error;
+    }
+}
+
+// Bestellung erfassen
+async function capturePayPalOrder(orderID) {
+    try {
+        const response = await fetch('/.netlify/functions/create-paypal-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'capture', orderID }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to capture PayPal order');
+        }
+
+        const data = await response.json();
+        return data; // Rückgabe der Bestätigungsdaten
+    } catch (error) {
+        console.error('Error capturing PayPal order:', error);
+        alert('An error occurred while capturing the order. Please try again.');
+        throw error;
+    }
+}
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
 function removeFromCart(productId) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem('cart', JSON.stringify(cart));
-    displayCartItems(); // Warenkorb-Artikel aktualisieren
     updateCartCount(); // Zähler im Icon aktualisieren
+    displayCartItems(); // Warenkorb-Artikel aktualisieren
 }
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers

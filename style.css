@@ -947,7 +947,7 @@ main {
 }
 
 .cart-paypal-button:hover {
-    background-color: #252525; /* Etwas dunkleres Gelb beim Hover */
+    background-color: #3a3a3a; /* Etwas dunkleres Gelb beim Hover */
 }
 
 @media (max-width: 768px){
@@ -970,4 +970,13 @@ main {
 .email-link:hover,
 .email-link:active {
     text-decoration: underline; /* Unterstreichung bei Hover und Aktiv */
+}
+
+
+.empty-cart-message {
+    text-align: center;
+    font-size: 1.3em;
+    color: #24388e; /* PayPal Blau */
+    text-transform: uppercase;
+    margin-top: 20px;
 }
