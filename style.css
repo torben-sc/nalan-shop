@@ -6,8 +6,8 @@
 }
 
 body {
-    background-color: #24388e; /* Setzt die gesamte Hintergrundfarbe der Seite auf Blau */
-    color: #ffffff; /* Weißer Text für bessere Lesbarkeit */
+    background-color: #fff; /* Setzt die gesamte Hintergrundfarbe der Seite auf Blau */
+    color: #000; /* Weißer Text für bessere Lesbarkeit */
     font-family: Arial, sans-serif;
 }
 
@@ -22,7 +22,7 @@ body {
     left: 0; /* Setzt den Header an den linken Rand */
     width: 100%; /* Der Header nimmt die gesamte Seitenbreite ein */
     padding: 10px 20px;
-    background-color: #24388e;
+    background-color: #fff;
     z-index: 1000; /* Sicherstellen, dass der Header über anderen Inhalten liegt */
 }
 
@@ -123,7 +123,7 @@ body {
 
 .top-menu a {
     text-decoration: none;
-    color: #ffffff;
+    color: #000;
     font-weight: 400; /* Setzt die Schrift auf dünner */
     font-size: 1.1em; /* Beibehaltung der Schriftgröße */
     position: relative;
@@ -138,7 +138,7 @@ body {
     content: "";
     display: block;
     width: 100%;
-    border-bottom: 1px dotted #ffffff; /* Weiße gepunktete Linie */
+    border-bottom: 1px dotted #000; /* Weiße gepunktete Linie */
     margin-top: 0px; /* Abstand zur Linie */
 }
 
@@ -149,7 +149,7 @@ body {
 /* Überschrift (Produkt-Titel) */
 .product-title {
     font-size: 3em;
-    color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+    color: #24388e; /* Weiß für Kontrast auf blauem Hintergrund */
     font-weight: bold;
     margin-top: -28px;
     text-transform: uppercase;
@@ -172,8 +172,8 @@ main {
 /* Produkt-Karten Design */
 .product-card {
     text-align: left;
-    background-color: #24388e; /* Hintergrundfarbe passend zum Seitenhintergrund */
-    color: #ffffff; /* Weißer Text für Kontrast */
+    background-color: #fff; /* Hintergrundfarbe passend zum Seitenhintergrund */
+    color: #000; /* Weißer Text für Kontrast */
     overflow: hidden; /* Verhindert Überlauf von Inhalten */
     height: 100%; /* Füllt den gesamten Container aus */
     border: none; /* Kein Rand um die Produktkarte */
@@ -203,7 +203,7 @@ main {
 .product-card h2 {
     font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
     margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
-    color: #ffffff;
+    color: #24388e;
     margin-left: 3px;
 }
 
@@ -223,8 +223,8 @@ main {
 
 /* Footer Styles */
 .custom-footer {
-    background-color: #24388e;
-    color: #ffffff;
+    background-color: #fff;
+    color: #000;
     text-align: center;
     padding: 20px;
     font-size: 14px;
@@ -245,17 +245,17 @@ main {
 
 /* Einheitliche Einstellungen für alle Social Icons */
 .social-icon {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
     transition: transform 0.3s;
 }
 
 /* Spezifische Größe nur für das TikTok-Logo */
 .tiktok-icon {
-    width: 20px; /* Passe die Größe nach Bedarf an */
-    height: 20px;
-    margin-top: 8px;
+    width: 24px; /* Passe die Größe nach Bedarf an */
+    height: 24px;
+    margin-top: 3px;
 }
 
 .social-icon:hover {
@@ -272,7 +272,7 @@ main {
 
 .legal-links a {
     text-decoration: none;
-    color: #ffffff;
+    color: #000;
     text-transform: uppercase;
     font-size: 0.9em;
     font-weight: bold;
@@ -289,7 +289,7 @@ main {
         max-width: 1200px;
         margin: 0 auto;
         padding: 15px;
-        background-color: #24388e; 
+        background-color: #fff; 
     }
 
     /* Produktbild - Hauptbild */
@@ -331,7 +331,7 @@ main {
     .product-title-details {
         font-size: 1.5em;
         margin-top: 20px;
-        color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+        color: #000; /* Weiß für Kontrast auf blauem Hintergrund */
         text-transform: uppercase;
         font-weight: 500;
         text-align: left; /* Linksbündige Überschrift */
@@ -375,7 +375,7 @@ main {
     .product-price {
         margin-left: -5px;
         font-size: 1.5em;
-        color: #ffffff;
+        color: #000;
         margin-bottom: 20px;
         margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
     }
@@ -385,7 +385,7 @@ main {
         font-size: 1em;
         line-height: 1.5;
         margin-bottom: 20px;
-        color: #ffffff;
+        color: #000;
         font-weight: bolder;
         margin-left: 0; /* Abstand zum linken Rand auf 0 setzen */
     }
@@ -393,11 +393,11 @@ main {
     .back-link {
         margin-left: -5px;
         text-decoration: none; /* Keine Standard-Unterstreichung */
-        color: #ffffff;
+        color: #000;
         font-weight: lighter;
         margin-bottom: 20px;
         display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
-        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        border-bottom: 1px dotted #000; /* Gepunktete Unterstreichung */
         padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
     }
     
@@ -405,7 +405,7 @@ main {
     /* Button zum Direktkauf (Direct Checkout) */
     .checkout-button {
         background-color: #E55013;
-        color: #fff;
+        color: #000;
         padding: 15px;
         border: none;
         font-size: 1em;
@@ -430,7 +430,7 @@ main {
     /* OR Text zwischen den Buttons */
     .or-text {
         font-weight: bold; /* Fett gedruckt */
-        color: #ffffff; /* Weißer Text für Kontrast */
+        color: #000; /* Weißer Text für Kontrast */
         margin: 0; /* Entfernt den Standardabstand */
         text-align: center; /* Sorgt für zentrierten Text */
         width: 100%; /* Sicherstellen, dass der Text im Zentrum des Containers bleibt */
@@ -439,7 +439,7 @@ main {
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
         background-color: #000;
-        color: #fff;
+        color: #000;
         padding: 15px;
         border: none;
         font-size: 1em;
@@ -514,7 +514,7 @@ main {
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
-        background-color: #24388e; 
+        background-color: #fff; 
     }
     
     /* Produktinformationen */
@@ -525,7 +525,7 @@ main {
     .product-title-details {
         font-size: 1.5em;
         margin-top: 20px;
-        color: #ffffff; /* Weiß für Kontrast auf blauem Hintergrund */
+        color: #000; /* Weiß für Kontrast auf blauem Hintergrund */
         text-transform: uppercase;
         font-weight: 500;
         text-align: left; /* Linksbündige Überschrift */
@@ -534,17 +534,17 @@ main {
     
     .back-link {
         text-decoration: none; /* Keine Standard-Unterstreichung */
-        color: #ffffff;
+        color: #000;
         font-weight: lighter;
         margin-bottom: 20px;
         display: inline; /* Display auf 'inline' setzen, um die Breite auf den Text zu beschränken */
-        border-bottom: 1px dotted #ffffff; /* Gepunktete Unterstreichung */
+        border-bottom: 1px dotted #000; /* Gepunktete Unterstreichung */
         padding-bottom: 1px; /* Leichter Abstand zwischen Text und Unterstreichung */
     }
     
     .product-price {
         font-size: 1.5em;
-        color: #ffffff;
+        color: #000;
         margin-bottom: 20px;
     }
     
@@ -552,14 +552,14 @@ main {
         font-size: 1em;
         line-height: 1.5;
         margin-bottom: 20px;
-        color: #ffffff;
+        color: #000;
         font-weight: bolder;
     }
 
     /* Button zum Direktkauf (Direct Checkout) */
     .checkout-button {
         background-color: #E55013; /* Schwarz für Direktkauf */
-        color: #fff; /* Weißer Text */
+        color: #000; /* Weißer Text */
         padding: 15px;
         border: none;
         font-size: 0.9em; /* Schriftgröße kleiner machen */
@@ -590,7 +590,7 @@ main {
     /* OR Text zwischen den Buttons */
     .or-text {
         font-weight: bold; /* Fett gedruckt */
-        color: #ffffff; /* Weißer Text für Kontrast */
+        color: #000; /* Weißer Text für Kontrast */
         margin: 0; /* Entfernt den Standardabstand */
         text-align: center; /* Sorgt für zentrierten Text */
         width: 100%; /* Sicherstellen, dass der Text im Zentrum des Containers bleibt */
@@ -599,7 +599,7 @@ main {
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
         background-color: #000;
-        color: #fff;
+        color: #000;
         padding: 15px;
         border: none;
         font-size: 1em;
@@ -631,7 +631,7 @@ main {
 }
 
 .modal-content {
-    background-color: #ffffff;
+    background-color: #000;
     color: #333;
     margin: 15% auto;
     padding: 20px;
@@ -650,7 +650,7 @@ main {
     right: -100%;
     width: 100%;
     height: 100%;
-    background-color: #24388e;
+    background-color: #fff;
     transition: right 0.4s ease-in-out;
     z-index: 1000;
     overflow-y: auto;
@@ -672,8 +672,8 @@ main {
     justify-content: space-between;
     align-items: center;
     margin-left: -20px;
-    background-color: #24388e;  /* Ändert die Hintergrundfarbe auf ein dunkleres Blau */
-    border-bottom: 1px solid #ffffff;
+    background-color: #fff;  /* Ändert die Hintergrundfarbe auf ein dunkleres Blau */
+    border-bottom: 1px solid #000;
     max-width: 91%; 
     margin: 0 auto; 
 }
@@ -689,7 +689,7 @@ main {
     border: none;
     font-size: 24px;
     cursor: pointer;
-    color: #ffffff;
+    color: #000;
 }
 
 .cart-items-container {
@@ -719,7 +719,7 @@ main {
 
 .cart-item-details p {
     font-size: 1em;
-    color: #ffffff;
+    color: #000;
     margin-bottom: 5px;
     font-weight: bold;
     text-transform: uppercase;
@@ -727,7 +727,7 @@ main {
 
 .cart-item-link {
     font-size: 0.75em;
-    color: #fff;
+    color: #000;
     margin-bottom: 9px;
     font-weight: 900;
     text-decoration: none; /* Entfernt die Unterstreichung des Links */
@@ -760,14 +760,14 @@ main {
 .cart-total-text {
     font-weight: bold;
     font-size: 1.2em; /* Vergrößert den Text für bessere Sichtbarkeit */
-    color: #ffffff; /* Farbe für den "Total Amount" Text */
+    color: #000; /* Farbe für den "Total Amount" Text */
     text-transform: uppercase;
 }
 
 .cart-total-value {
     font-weight: bold;
     font-size: 1.2em; /* Vergrößert den Betrag für bessere Sichtbarkeit */
-    color: #fff; /* Farbe für den Betrag */
+    color: #000; /* Farbe für den Betrag */
 }
 
 /* Container für die gesamte Seite */
@@ -783,14 +783,14 @@ main {
 /* Container für den Text */
 .thank-you-container {
     max-width: 600px;
-    background-color: #24388e; 
+    background-color: #fff; 
     padding: 30px 20px;
 }
 
 /* Text der Dankeschön Nachricht */
 .thank-you-message-1 {
     font-size: 2em;
-    color: #ffffff; 
+    color: #000; 
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -805,7 +805,7 @@ main {
     text-align: center;
     font-weight: bold;
     padding: 45px 20px;
-    color: #ffffff; /* Weiß für eine gute Sichtbarkeit */
+    color: #000; /* Weiß für eine gute Sichtbarkeit */
     font-size: 2em;
     text-transform: uppercase;
 }
@@ -821,7 +821,7 @@ main {
 }
 
 .checkout-note {
-    color: #000; /* Setzt die Farbe auf Schwarz */
+    color: #24388e; /* Setzt die Farbe auf Schwarz */
     font-weight: bold; /* Fettgedruckte Schrift */
     text-transform: uppercase; /* Alle Buchstaben werden in Großbuchstaben umgewandelt */
     margin-top: 20px; /* Optional: fügt etwas Abstand oberhalb hinzu */
@@ -936,7 +936,7 @@ main {
     font-weight: 350; /* Dickere Schrift */
     padding: 12px 20px; /* Padding für eine bessere Optik */
     background-color: #000; /* Typische PayPal-Farbe */
-    color: #fff; /* Schwarze Schrift */
+    color: #000; /* Schwarze Schrift */
     border: none;
     cursor: pointer;
     text-transform: uppercase; /* Alle Buchstaben groß */
