@@ -936,8 +936,8 @@ main {
     font-size: 0.75em; /* Kleinere Schriftgröße */
     font-weight: 350; /* Dickere Schrift */
     padding: 12px 20px; /* Padding für eine bessere Optik */
-    background-color: #000; /* Typische PayPal-Farbe */
-    color: #000; /* Schwarze Schrift */
+    background-color: #24388e; /* Typische PayPal-Farbe */
+    color: #fff; /* Schwarze Schrift */
     border: none;
     cursor: pointer;
     text-transform: uppercase; /* Alle Buchstaben groß */
