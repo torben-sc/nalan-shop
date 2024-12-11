@@ -151,7 +151,7 @@ main {
 /* Produkt Container */
 .product-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Bilder füllen die gesamte Breite des Displays aus */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Bilder füllen die gesamte Breite des Displays aus */
     gap: 0px; /* Keine Abstände zwischen den Produktkarten */
 }
 

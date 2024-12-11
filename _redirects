@@ -1,1 +1,4 @@
 /product/*  /product/index.html  200
+/accessories/lighter /accessories?accessorie_type=lighter 200
+/accessories/lipgloss /accessories?accessorie_type=lipgloss 200
+/accessories/keychain /accessories?accessorie_type=keychain 200

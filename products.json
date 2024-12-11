@@ -1,78 +1,361 @@
 [
     {
         "id": "1",
-        "name": "PIERCED BALACLAVA",
-        "price": 60.00,
-        "images": ["/images/P1070979.JPEG", "/images/P1070968.JPEG", "/images/P1070963.JPEG"],
-        "description": "This unique balaclava is crafted from a soft, fuzzy knit, featuring metal ring piercings for an edgy look.\nDesigned with a unisex fit, it offers both style and warmth.\nMade from a durable blend of 60% polyamide and 40% acrylic.\nMade in Germany.<br><br>Ships within a week.",
+        "name": "PINK BALACLAVA",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "balaclavas"
     },
     {
         "id": "2",
-        "name": "BAGZILLA IN BLUSH",
-        "price": 100.00,
-        "images": ["/images/P1070959.JPEG", "/images/P1070956.JPEG"],
-        "description": "This oversized blush bag is perfect for carrying all your essentials. Made from durable t-shirt yarn, it combines functionality with a standout design. Crafted from a blend of 92% polyester and 8% elastane. Made in Germany.<br><br>Ships within a week.",
-        "stock": 1,
-        "category": "bags",
-        "size": "big"
-    },
-    {
-        "id": "3",
-        "name": "BALACLAVA IN ROYAL BLUE",
-        "price": 50.00,
-        "images": ["/images/IMG_9175.JPEG", "/images/IMG_9170.JPEG", "/images/IMG_9182.JPEG"],
-        "description": "This stylish balaclava is crafted from a soft, fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look. Made from a durable blend of 60% polyamide and 40% acrylic. Made in Germany.<br><br>Ships within a week.",
+        "name": "Royal Blue Balaclava",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "balaclavas"
     },
     {
+        "id": "3",
+        "name": "Dark Blue Balaclava",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-4.jpeg"],
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
+        "category": "balaclavas"
+    },
+    {
         "id": "4",
-        "name": "SNOW ANGEL SET",
-        "price": 45.00,
-        "images": ["/images/P1070987.JPEG", "/images/P1070990.JPEG", "/images/P1070997.JPEG"],
-        "description": "This cozy set includes a soft, faux-fur scarf and matching hand warmers, designed to add a bold, glamorous touch to your look. The fuzzy texture mimics real fur. Made from durable Nylon faux-fur yarn. Made in Germany.<br><br>Ships within a week.",
+        "name": "Black Balaclava with Pink Bows",
+        "price": 80.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-4.jpeg"],
+        "description": "This unique Balaclava combines a soft, fuzzy knit with delicate pink bows for an elegant yet playful look. Perfect for adding a bold statement to your outfit while keeping warm and cozy. Its unisex design ensures a comfortable Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
-        "category": "other accessories"
+        "category": "balaclavas"
     },
     {
         "id": "5",
-        "name": "BOWCLAVA IN BLACK WITH PINK BOWS",
-        "price": 70.00,
-        "images": ["/images/IMG_8933.JPEG", "/images/IMG_8921.JPEG", "/images/IMG_8940.JPEG", "/images/IMG_8889.JPEG"],
-        "description": "The Bowclava in black with pink bows is a standout piece, combining a sleek black design with bold pink accents. Crafted from soft, fuzzy knit, it offers both warmth and style with a cute edge. Designed with a unisex fit, it’s the perfect accessory to make a statement in colder weather. Made in Germany.<br><br>Ships within a week.",
+        "name": "Pierced Black Balaclava",
+        "price": 80.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-4.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-5.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-6.jpeg"],
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with edgy piercings for a bold, statement look. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush (such as an edge brush) to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "balaclavas"
     },
     {
         "id": "6",
-        "name": "BIGGRIP BAG",
+        "name": "Orange Balaclava",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/video-BLC-OR-001-1.mov"],
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "balaclavas"
+    },
+    {
+        "id": "7",
+        "name": "Green Balaclava",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "balaclavas"
+    },
+    {
+        "id": "8",
+        "name": "Lilac Balaclava",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-2.jpeg", "/images/small-bag-brown-2.JPEG", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
+        "stock": 1,
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
+        "category": "balaclavas"
+    },
+    {
+        "id": "9",
+        "name": "The Shoulder Bag – Butter Yellow",
+        "price": 80.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS SMALL/BAG-SH-BY/image-BAG-SH-BY-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/BAG-SH-BY/image-BAG-SH-BY-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/BAG-SH-BY/image-BAG-SH-BY-001-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/BAG-SH-BY/image-BAG-SH-BY-001-4.jpeg"],
+        "description": "A simple, elegant shoulder bag to carry all your essentials in butter yellow.<br>Measurements:<br>• Width: 36 cm<br>• Height: 20 cm<br>• Total length (strap to bottom): 41 cm<br>For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
+    },
+    {
+        "id": "10",
+        "name": "I Am Just A Girl Bag – Butter Yellowow",
+        "price": 80.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS SMALL/AJGB-BY/image-AJGB-BY-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/AJGB-BY/image-AJGB-BY-001-1.jpeg"],
+        "description": "A small, chic shoulder bag in butter yellow, complete with a lighter case and lip gloss holder, so you never lose your essentials again. Features a cute bow detail and durable metal accents. The perfect companion for any girl on the go.<br>Measurements:<br>• Width: 31 cm<br>• Height: 16 cm<br>• Total length (strap to bottom): 44 cm<br>For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
+    },
+    {
+        "id": "11",
+        "name": "Golden Glow Bag – Orange Bronze",
+        "price": 80.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS SMALL/GGB-OB/image-GGB-OB-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/GGB-OB/image-GGB-OB-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/GGB-OB/image-GGB-OB-001-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/GGB-OB/image-GGB-OB-001-4.jpeg"],
+        "description": "A stylish shoulder bag in a stunning orange-bronze color, featuring golden crown accents and gold metal details on the strap. A perfect bag for adding a touch of elegance and flair to any outfit.<br>Measurements:<br>• Width: 30 cm<br>• Height: 14 cm<br>• Total length (strap to bottom): 43 cm<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
+    },
+    {
+        "id": "12",
+        "name": "The Mini Essentials Bag – Brown & Green",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-BG/image-MEB-BG-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-BG/image-MEB-BG-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-BG/image-MEB-BG-001-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-BG/image-MEB-BG-001-4.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-BG/image-MEB-BG-001-5.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-BG/image-MEB-BG-001-6.jpeg"],
+        "description": "A small and practical bag in brown, featuring silver metal accents. With detachable handles, you can carry it as a handheld bag or wear it crossbody. Includes a detachable lighter holder for extra functionality.<br>Measurements:<br>• Width: 16 cm<br>• Height: 14 cm<br>• Large strap length: 90 cm<br>Perfect for your phone, tobacco, or any essential items you need on the go. For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
+    },
+    {
+        "id": "13",
+        "name": "The Mini Essentials Bag – Gold Tones",
+        "price": 65.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-GT/image-MEB-GT-002-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-GT/image-MEB-GT-002-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-GT/image-MEB-GT-002-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-GT/image-MEB-GT-002-4.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-GT/image-MEB-GT-002-5.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS SMALL/MEB-GT/image-MEB-GT-002-6.jpeg"],
+        "description": "A small and elegant bag in various gold tones, featuring gold metal accents. With detachable handles, you can carry it as a handheld bag or wear it crossbody. Includes a detachable lighter holder for extra functionality.<br>Measurements:<br>•  Width: 16 cm<br>• Height: 14 cm<br>• Large strap length: 90 cm<br>Perfect for keeping your essentials close when you're out. For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "small"
+    },
+    {
+        "id": "14",
+        "name": "The Shoulder Bag – Olive Green",
         "price": 100.00,
-        "images": ["/images/IMG_9214.JPEG", "/images/IMG_9201.JPEG", "/images/IMG_9166.JPEG"],
-        "description": "This oversized black bag is designed to carry everything you need, offering both practicality and style. With its spacious design and sturdy wooden handle, it’s perfect for any occasion. Made from high-quality macramé cord, 100% polypropylene, ensuring durability and flexibility. Made in Germany.<br><br>Ships within a week.",
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/image-BAG-SH-OG-002-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/image-BAG-SH-OG-002-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/image-BAG-SH-OG-002-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/image-BAG-SH-OG-002-4.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/image-BAG-SH-OG-002-5.jpeg"],
+        "description": "Elegant shoulder bag in olive green, perfect for carrying your essentials every day.<br>Measurements:<br>•  Width: 45 cm<br>• Height: 26 cm<br>• Total length (strap to bottom): 52 cm<br>For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "medium"
+    },
+    {
+        "id": "15",
+        "name": "The Shoulder Bag – Striped",
+        "price": 130.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-3.jpeg"],
+        "description": "A large shoulder bag with a simple striped design, ideal for carrying everything you need.<br>Measurements:<br>•  Width: 46 cm<br>• Height: 27 cm<br>• Total length (strap to bottom): 52 cm<br>For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "bags",
         "size": "big"
     },
     {
-        "id": "7",
-        "name": "SMALL ESSENTIALS BAG WITH INTERCHANGEABLE HANDLES IN GOLD",
-        "price": 55.00,
-        "images": ["/images/IMG_9084.JPEG", "/images/IMG_9045.JPEG", "/images/IMG_9080.JPEG"],
-        "description": "This sleek, compact bag is perfect for your essentials, featuring a lighter case that holds a lighter, with a carabiner for easy attachment or removal. Versatile in design, it can be worn as a crossover or styled as a small handbag by swapping the handles. Ideal for carrying your phone or smoking supplies in a stylish, functional way. Made from high-quality macramé cord, 100% polypropylene. Made in Germany.<br><br>Ships within a week.",
+        "id": "16",
+        "name": "Bagzilla – Pink",
+        "price": 130.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-3.jpeg"],
+        "description": "The Bagzilla in pink is a bold and stylish large bag designed to make a statement. Crafted from recycled T-shirt yarn, it combines sustainability with a unique texture and durability. Its vibrant pink color adds a pop of personality, making it the perfect bag for everyday use.  Available in other colors upon request – contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "bags",
-        "size": "small"
+        "size": "big"
     },
     {
-        "id": "8",
-        "name": "SMALL ESSENTIALS BAG WITH INTERCHANGEABLE HANDLES IN CLOUDS GREEN AND BROWN",
-        "price": 55.00,
-        "images": ["/images/small-bag-brown-first.JPEG", "/images/small-bag-brown.JPEG", "/images/small-bag-brown-2.JPEG"],
-        "description": "This sleek, compact bag is perfect for your essentials, featuring a lighter case that holds a lighter, with a carabiner for easy attachment or removal. Versatile in design, it can be worn as a crossover or styled as a small handbag by swapping the handles. Ideal for carrying your phone or smoking supplies in a stylish, functional way. Made from high-quality macramé cord, 100% polypropylene. Made in Germany.<br><br>Ships within a week.",
+        "id": "17",
+        "name": "The Rough Cut Bag – Orange",
+        "price": 70.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-OR/image-RCB-OR-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-OR/image-RCB-OR-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-OR/image-RCB-OR-001-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-OR/image-RCB-OR-001-4.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-OR/image-RCB-OR-001-5.jpeg"],
+        "description": "A bold and unique statement piece, the Rough Cut Bag is designed with raw, visible stitching and a deconstructed finish. Made from orange faux leather with a textured surface, this bag showcases its handmade craftsmanship with exposed threads and crisscross stitching, offering an edgy, artistic vibe.<br>Measurements:<br>•  Width: 60 cm<br>• Height: 60 cm<br>Perfect for those who appreciate a unique, bold look that embraces imperfection. For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "bags",
-        "size": "small"
+        "size": "big"
+    },
+    {
+        "id": "18",
+        "name": "The Rough Cut Bag – Dark Grey",
+        "price": 70.00,
+        "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-DG/DSC06464.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-DG/image-RCB-DG-002-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-DG/image-RCB-DG-002-3.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/RCB-DG/image-RCB-DG-002-4.jpeg"],
+        "description": "This version of the Rough Cut Bag comes in smooth dark grey faux leather. It features intentional, visible stitching with exposed threads, giving it a raw, deconstructed look. With a sleek smooth finish and an inner lining, this bag combines boldness with practicality. Perfect for those who love statement pieces with a bit of edge.<br>Measurements:<br>•  Width: 60 cm<br>• Height: 60 cm<br>Stand out with this edgy, handcrafted bag that celebrates imperfection. For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "bags",
+        "size": "big"
+    },
+    {
+        "id": "19",
+        "name": "Handmade Scarf – Multicolored ",
+        "price": 100.00,
+        "images": ["/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-1.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-2.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-3.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-4.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-5.jpeg"],
+        "description": "Wrap yourself in 3.3 meters of cozy warmth with this handmade scarf, crafted from 100% pure sheep's wool. The multicolored design is as vibrant as it is unique, making it a perfect statement piece for chilly days. Sustainably made from natural materials. Perfect for layering and brightening up any cold-weather outfit.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "scarves"
+    },
+    {
+        "id": "20",
+        "name": "Faux Fur Scarf with Hand Warmers – White ",
+        "price": 40.00,
+        "images": ["/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-1.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-2.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-3.jpeg"],
+        "description": "Experience ultimate softness and elegance with this luxurious faux fur scarf, measuring 2 meters in length. Complete with two matching hand warmers. The scarf's realistic faux fur design adds a touch of glamour to any outfit. Available on request in brown or black. For custom colors, contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "scarves"
+    },
+    {
+        "id": "21",
+        "name": "Lighter Case with Carabiner – Green",
+        "price": 18.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-GRN-001-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "22",
+        "name": "Lighter Case with Carabiner – Dark Yellow",
+        "price": 18.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-DY-002-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "23",
+        "name": "Lighter Case with Carabiner – Pink",
+        "price": 18.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-PNK-003-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "24",
+        "name": "Lighter Case with Carabiner – Silver",
+        "price": 18.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-SLV-004-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "25",
+        "name": "Lighter Case with Carabiner – Gold",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-GLD-005-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "26",
+        "name": "Lighter Case with Carabiner – Butter Yellow",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-BY-006-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "27",
+        "name": "Lighter Case with Carabiner – Light Blue",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-LB-007-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "28",
+        "name": "Lighter Case with Carabiner – Black",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-BLK-008-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "29",
+        "name": "Lighter Case with Carabiner – Olive Green",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-OG-009-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "30",
+        "name": "Lighter Case with Carabiner – Royal Blue",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIGHTER CASE/image-LC-RB-010-1.jpeg", "/images/Nalan-DRP-1/LIGHTER CASE/image-LC-all-011-1.jpeg"],
+        "description": "This practical lighter case in green is made of durable nylon and protects your lighter from dirt and damage. The built-in carabiner allows you to easily attach the case to your keychain or bag. Always keep your lighter handy and safe.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lighter"
+    },
+    {
+        "id": "34",
+        "name": "Keychain with Lighter Case, Lipgloss Case & Bow – Butter Yellow",
+        "price": 30.00,
+        "images": ["/images/Nalan-DRP-1/KEYCHAINS/KC-BY/image-KC-BY-001-1.jpeg", "/images/Nalan-DRP-1/KEYCHAINS/KC-BY/image-KC-BY-001-2.jpeg"],
+        "description": "This elegant keychain features a large chrome carabiner with a black lighter case, a lipgloss case (diameter 1.5 cm), and a keychain with a cute angel wing charm. The carabiner hook may vary. Keep your essentials organized in style. More colors are available – if you'd like a different color or design, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "keychain"
+    },
+    {
+        "id": "31",
+        "name": "Keychain with Lighter Case, Lipgloss Case & Bow – Pink",
+        "price": 30.00,
+        "images": ["/images/Nalan-DRP-1/KEYCHAINS/KC-PNK/DSC05234.jpeg", "/images/Nalan-DRP-1/KEYCHAINS/KC-PNK/image-KC-PNK-001-1.jpeg"],
+        "description": "This stylish keychain features a large chrome carabiner, with a pink lighter case, a lipgloss case (diameter 2.5 cm), and a keychain with a bow, all attached. The carabiner hook may vary. A practical and fashionable way to carry your essentials. More colors are available – if you'd like a different color or design, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "keychain"
+    },
+    {
+        "id": "32",
+        "name": "Keychain with Lighter Case, Lipgloss Case & Bow – Royal Blue",
+        "price": 30.00,
+        "images": ["/images/Nalan-DRP-1/KEYCHAINS/KC-RB/image-KC-RB-002-1.jpeg", "/images/Nalan-DRP-1/KEYCHAINS/KC-RB/image-KC-RB-002-2.jpeg"],
+        "description": "This chic keychain features a large chrome carabiner, with a royal blue lighter case, a lipgloss case (diameter 2.5 cm), and a keychain with a pink bow, all attached. The carabiner hook may vary. Keep your essentials stylish and within reach. More colors are available – if you'd like a different color or design, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "keychain"
+    },
+    {
+        "id": "33",
+        "name": "Keychain with Lighter Case, Lipgloss Case & Angel Wing – Black",
+        "price": 30.00,
+        "images": ["/images/Nalan-DRP-1/KEYCHAINS/KC-BLK/image-KC-BLK-003-1.jpeg"],
+        "description": "This elegant keychain features a large chrome carabiner with a black lighter case, a lipgloss case (diameter 1.5 cm), and a keychain with a cute angel wing charm. The carabiner hook may vary. Keep your essentials organized in style. More colors are available – if you'd like a different color or design, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "keychain"
+    },
+    {
+        "id": "35",
+        "name": "Lipgloss Case with Clipper – Royal Blue",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIPGLOSS/image-LC-RB-01-1.jpeg"],
+        "description": "This practical lipgloss case is made of durable nylon and features a clip for easy attachment to your keychain or bag. Available for lipgloss with a diameter of 1.5 cm. Protect your lipgloss from dirt and damage while keeping it safe and handy. More colors are available – if you need a specific size or color, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lipgloss"
+    },
+    {
+        "id": "36",
+        "name": "Lipgloss Case with Clipper – Pink",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIPGLOSS/image-LC-PNK-02-1.jpeg"],
+        "description": "This practical lipgloss case is made of durable nylon and features a clip for easy attachment to your keychain or bag. Available for lipgloss with a diameter of 1.5 cm. Protect your lipgloss from dirt and damage while keeping it safe and handy. More colors are available – if you need a specific size or color, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lipgloss"
+    },
+    {
+        "id": "37",
+        "name": "Lipgloss Case with Clipper – Black",
+        "price": 20.00,
+        "images": ["/images/Nalan-DRP-1/LIPGLOSS/image-LC-BLK-03-1.jpeg"],
+        "description": "This practical lipgloss case is made of durable nylon and features a clip for easy attachment to your keychain or bag. Available for lipgloss with a diameter of 1.5 cm. Protect your lipgloss from dirt and damage while keeping it safe and handy. More colors are available – if you need a specific size or color, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "accessories",
+        "accs" : "lipgloss"
     }
 ]

@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Kategorien-Event-Listener hinzufügen
-    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'handWarmersFilter', 'otherAccessoriesFilter'];
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
     const categoryUrls = {
         showAllFilter: '/shop',
         bagsFilter: '/bags',
         balaclavasFilter: '/balaclavas',
-        handWarmersFilter: '/handwarmers',
-        otherAccessoriesFilter: '/otheraccessories',
+        scarvesFilter: '/scarves',
+        accessoriesFilter: '/accessories',
     };
 
     categories.forEach(id => {
@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
 
     let category;
+    let accs = null;
     switch (currentPath) {
         case '/bags':
             category = 'bags';
@@ -54,19 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
         case '/balaclavas':
             category = 'balaclavas';
             break;
-        case '/handwarmers':
-            category = 'hand warmers';
+        case '/scarves':
+            category = 'scarves';
             break;
-        case '/otheraccessories':
-            category = 'other accessories';
+        case '/accessories':
+            category = 'accessories';
+            accs = new URLSearchParams(window.location.search).get('accessorie_type') || 'all';
             break;
         default:
             category = 'all';
     }
+    
 
     // Initialisieren der Produktliste basierend auf der URL-Kategorie
     if (document.getElementById('product-container')) {
-        displayProductList(category);
+        displayProductList(category, null, accs);
     } else if (document.getElementById('product-detail-container')) {
         displayProductDetails();
     }
@@ -79,25 +82,42 @@ document.addEventListener('DOMContentLoaded', () => {
         createFooter();
     }
 
-    // Größenfilter-Event-Listener hinzufügen
-    const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-    sizeFilterLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const size = e.target.getAttribute('data-size');
-            applySizeFilter(size);
-        });
-    });
-
-    // Größenfilter anwenden basierend auf der URL
+    // Größenfilter-Event-Listener hinzufügen (nur für Bags-Seite)
     if (currentPath.includes('/bags')) {
-        const pathParts = currentPath.split('/');
-        let size = 'all';
-        if (pathParts.length > 2) {
-            size = pathParts[2]; // Extrahiere die Größe aus der URL
-        }
+        const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
+        sizeFilterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const size = e.target.getAttribute('data-size');
+                applySizeFilter(size);
+            });
+        });
+
+        // Größe aus der URL extrahieren und Produktliste aktualisieren
+        const urlParams = new URLSearchParams(window.location.search);
+        const size = urlParams.get('size') || 'all';
         displayProductList('bags', size);
     }
+
+    // Accessoires-Filter-Event-Listener hinzufügen (nur für Accessories-Seite)
+    if (currentPath.includes('/accessories')) {
+        const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
+        accessoriesLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const accs = e.target.getAttribute('data-accs');
+                applyAccessoriesFilter(accs);
+            });
+        });
+
+        // Accessoires-Filter aus der URL extrahieren und Produktliste aktualisieren
+        const urlParams = new URLSearchParams(window.location.search);
+        const accs = urlParams.get('accessorie_type') || 'all';
+        if (window.location.pathname.includes('/accessories')) {
+            displayProductList('accessories', null, accessoryType);
+        }
+    }
+
 });
 
 // Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
@@ -109,6 +129,18 @@ function applySizeFilter(size) {
 // Funktion zur Aktualisierung der URL ohne Seite neu zu laden
 function updateSizeFilterURL(size) {
     const newUrl = size === 'all' ? '/bags' : `/bags/${size}`;
+    window.history.pushState({}, '', newUrl);
+}
+
+// Funktion zur Anwendung des Accessoires-Filters
+function applyAccessoriesFilter(accs) {
+    displayProductList('accessories', null, accs);
+    updateAccessoriesFilterURL(accs);
+}
+
+// URL aktualisieren, ohne die Seite neu zu laden
+function updateAccessoriesFilterURL(accs) {
+    const newUrl = accs === 'all' ? '/accessories' : `/accessories?accessorie_type=${accs}`;
     window.history.pushState({}, '', newUrl);
 }
 
@@ -126,7 +158,7 @@ async function fetchProducts() {
 }
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
-async function displayProductList(category = null, size = null) {
+async function displayProductList(category = null, size = null, accs = null) {
     const products = await fetchProducts();
     if (!products) return;
 
@@ -143,9 +175,13 @@ async function displayProductList(category = null, size = null) {
         filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
     }
 
+    if (accs && accs !== 'all') {
+        filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
+    }
+
     productTitle.innerHTML = (category && category !== 'all') 
-    ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
-    : 'All<span class="mobile-line-break"> </span>Products';
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
+        : 'All<span class="mobile-line-break"> </span>Products';
 
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
@@ -158,7 +194,7 @@ async function displayProductList(category = null, size = null) {
             <p class="product-price-shop">
                 <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
             </p>
-`;
+        `;
 
         productContainer.appendChild(productCard);
     });
