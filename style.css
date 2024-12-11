@@ -960,3 +960,13 @@ main {
         display: inline; /* Auf größeren Bildschirmen bleibt alles in einer Zeile */
     }
 }
+
+.email-link {
+    color: #E55013; /* Farbe des Links */
+    text-decoration: none; /* Keine Unterstreichung standardmäßig */
+}
+
+.email-link:hover,
+.email-link:active {
+    text-decoration: underline; /* Unterstreichung bei Hover und Aktiv */
+}
