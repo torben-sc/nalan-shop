@@ -203,7 +203,7 @@ main {
 .product-card h2 {
     font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
     margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
-    color: #24388e;
+    color: #000;
     margin-left: 3px;
 }
 
