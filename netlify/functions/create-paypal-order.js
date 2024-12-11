@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
 const products = require('./products.json'); // Importiere die Produkte
 
-const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; // Sandbox-API von PayPal
-const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; // PayPal-Umgebungsvariablen
+const PAYPAL_API = 'https://api-m.paypal.com'; 
+const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; 
 
 async function getAccessToken() {
     const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`).toString('base64');
