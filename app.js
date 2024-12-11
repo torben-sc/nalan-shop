@@ -407,110 +407,88 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
+// Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
 async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
     const paypalButtonContainer = document.getElementById('paypal-button-container');
-    
-    // Leere den Warenkorb-Container
-    if (cartItemsContainer) cartItemsContainer.innerHTML = '';
+    const emptyCartMessage = document.getElementById('empty-cart-message');
 
-    // Debugging: Warenkorb-Daten anzeigen
-    console.log('Cart Items:', cart);
+    // Clear existing content
+    cartItemsContainer.innerHTML = '';
+    paypalButtonContainer.innerHTML = '';
+    if (emptyCartMessage) emptyCartMessage.style.display = 'none';
 
-    // Gesamtbetrag initialisieren
     let totalAmount = 0;
-
-    // Warenkorbdaten für das Backend vorbereiten
-    try {
-        const cartData = cart.map(item => ({ id: item.id, quantity: item.quantity }));
-        
-        const response = await fetch('/.netlify/functions/calculate-cart-total', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(cartData),
-        });
-
-        if (!response.ok) {
-            throw new Error('Error fetching total amount from backend');
-        }
-
-        const result = await response.json();
-        totalAmount = result.totalAmount || 0;
-    } catch (error) {
-        console.error('Error calculating total amount:', error);
-    }
-
-    // Warenkorb-Items anzeigen
     cart.forEach(item => {
+        const price = parseFloat(item.price) || 0;
+        totalAmount += price * item.quantity;
+
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
-
         cartItem.innerHTML = `
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
             <div class="cart-item-info">
                 <a href="/product?id=${item.id}" class="cart-item-link">
                     <h3>${item.name}</h3>
                 </a>
+                <p>Price: €${price.toFixed(2)}</p>
                 <p>Quantity: ${item.quantity}</p>
             </div>
             <button class="remove-item-button" data-id="${item.id}">&times;</button>
         `;
 
-        // Entfernen-Button Event-Listener
+        // Event listener for removing items
         cartItem.querySelector('.remove-item-button').addEventListener('click', () => {
             removeFromCart(item.id);
         });
 
-        if (cartItemsContainer) {
-            cartItemsContainer.appendChild(cartItem);
-        }
+        cartItemsContainer.appendChild(cartItem);
     });
 
-    // Gesamtbetrag anzeigen
+    // Update total amount
     if (totalAmountElement) {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
 
-    // PayPal-Buttons aktualisieren
-    if (paypalButtonContainer) {
-        paypalButtonContainer.innerHTML = ''; // Vorherigen Button entfernen
-
-        paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color: 'blue',
-                shape: 'rect',
-                label: 'checkout',
-            },
-            createOrder: async () => {
-                // Bestellung anlegen und Bestell-ID abrufen
-                const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
-                return orderID;
-            },
-            onApprove: async (data, actions) => {
-                try {
-                    // Bestellung erfassen
-                    const captureResult = await capturePayPalOrder(data.orderID);
-                    const orderID = captureResult.id;
-                    const purchasedProducts = captureResult.purchase_units[0].items;
-
-                    // Benutzer zur Thank-You-Seite weiterleiten
-                    const productsParam = encodeURIComponent(JSON.stringify(purchasedProducts));
-                    window.location.href = `/thank-you.html?orderID=${orderID}&products=${productsParam}`;
-                } catch (error) {
-                    console.error('Error capturing PayPal order:', error);
-                    alert('An error occurred while finalizing your payment.');
+    if (cart.length === 0) {
+        // Show empty cart message
+        if (emptyCartMessage) emptyCartMessage.style.display = 'block';
+    } else {
+        // Render PayPal button
+        if (paypalButtonContainer) {
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'checkout',
+                },
+                createOrder: async () => {
+                    const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+                    return orderID;
+                },
+                onApprove: async (data, actions) => {
+                    try {
+                        const captureResult = await capturePayPalOrder(data.orderID);
+                        alert(`Transaction completed! Thank you for your purchase.`);
+                        localStorage.removeItem('cart'); // Clear cart
+                        displayCartItems(); // Refresh cart display
+                    } catch (error) {
+                        console.error('Error capturing PayPal order:', error);
+                        alert('An error occurred while finalizing your payment.');
+                    }
+                },
+                onError: (err) => {
+                    console.error('PayPal Checkout Error:', err);
+                    alert('An error occurred during the checkout process.');
                 }
-            },
-            onError: (err) => {
-                console.error('PayPal Checkout Error:', err);
-                alert('An error occurred during the checkout process.');
-            }
-        }).render('#paypal-button-container');
+            }).render('#paypal-button-container');
+        }
     }
 }
+
 
 async function loadPayPalSdk() {
     try {
