@@ -465,7 +465,7 @@ async function displayCartItems() {
                         const purchasedProducts = captureResult.purchase_units[0].items;
 
                         const productsParam = encodeURIComponent(JSON.stringify(purchasedProducts));
-                        window.location.href = `/thank-you.html?orderID=${orderID}&products=${productsParam}`;
+                        window.location.href = `/thank-you-paypal-checkout.html?orderID=${orderID}&products=${productsParam}`;
                     } catch (error) {
                         console.error('Error capturing PayPal order:', error);
                         alert('An error occurred while finalizing your payment.');
