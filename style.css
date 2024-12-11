@@ -99,6 +99,9 @@ body {
     scrollbar-width: none;   
 }
 
+.top-menu-wrapper-2::-webkit-scrollbar {
+    display: none;  /* Für Webkit-basierte Browser (Chrome, Safari) */
+}
 
 /* Top-Menu: Filter-Links */
 .top-menu {
