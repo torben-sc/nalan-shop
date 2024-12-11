@@ -62,6 +62,7 @@
     
         <div class="cart-contact-info">
             <div id="paypal-button-container"></div> <!-- PayPal Button wird hier gerendert -->
+            <p class="empty-cart-message" id="empty-cart-message" style="display: none;">Your Cart is Empty</p>
         </div>
     </div>
 
@@ -88,6 +89,47 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loadPayPalSdk();
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const paypalButtonContainer = document.getElementById('paypal-button-container');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+
+            if (cart.length === 0) {
+                // Zeige die leere Warenkorb-Nachricht
+                emptyCartMessage.style.display = 'block';
+                paypalButtonContainer.style.display = 'none';
+            } else {
+                // Zeige den PayPal-Button und verstecke die leere Warenkorb-Nachricht
+                emptyCartMessage.style.display = 'none';
+
+                paypal.Buttons({
+                    style: {
+                        layout: 'vertical',
+                        color: 'blue',
+                        shape: 'rect',
+                        label: 'checkout',
+                    },
+                    createOrder: async () => {
+                        const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+                        return orderID;
+                    },
+                    onApprove: async (data, actions) => {
+                        try {
+                            const captureResult = await capturePayPalOrder(data.orderID);
+                            alert('Transaction completed! Thank you for your purchase.');
+                            localStorage.removeItem('cart');
+                            displayCartItems();
+                        } catch (error) {
+                            console.error('Error capturing PayPal order:', error);
+                            alert('An error occurred while finalizing your payment.');
+                        }
+                    },
+                    onError: (err) => {
+                        console.error('PayPal Checkout Error:', err);
+                        alert('An error occurred during the checkout process.');
+                    }
+                }).render('#paypal-button-container');
+            }
         });
     </script>
 
