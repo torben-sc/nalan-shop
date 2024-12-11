@@ -52,6 +52,15 @@ body {
     flex: 1; /* Sorgt dafür, dass das Icon rechts bleibt */
 }
 
+.cart-icon-container-prod {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    flex: 1; /* Sorgt dafür, dass das Icon rechts bleibt */
+}
+
 .cart-icon {
     width: 24px; /* Größe des Icons */
     height: 24px;
@@ -343,6 +352,24 @@ main {
     .product-header .cart-icon-container {
         right: 60px;
         margin-left: auto; /* Verschiebt das Warenkorb-Icon nach rechts */
+    }
+
+    .product-header .cart-icon-container {
+        position: absolute; /* Absolute Positionierung, um es relativ zum Elterncontainer zu verschieben */
+        right: 50px; /* Verschiebt das Icon näher an den rechten Rand */
+        margin-left: auto; /* Stellt sicher, dass das Icon automatisch vom linken Rand entfernt wird */
+        top: 50%; /* Zentriert das Icon vertikal innerhalb der Header-Höhe */
+        transform: translateY(-50%); /* Korrigiert die vertikale Zentrierung */
+    }    
+
+    .product-header .cart-icon-container-prod {
+        position: absolute; /* Absolute Positionierung innerhalb des Headers */
+        right: 12px; /* Abstand vom rechten Rand */
+        top: 50%; /* Zentriert vertikal */
+        transform: translateY(-50%); /* Korrektur der vertikalen Zentrierung */
+        display: flex; /* Zentriere Inhalte horizontal */
+        align-items: center; /* Zentriere Inhalte vertikal */
+        cursor: pointer;
     }
     
     .product-price {
