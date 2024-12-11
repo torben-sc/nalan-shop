@@ -438,7 +438,7 @@ async function displayCartItems() {
     });
 
     // Check if shipping is free
-    if (totalAmount >= 100) {
+    if (totalAmount >= 100 || totalAmount == 0) {
         shippingCost = 0;
         if (shippingAmountElement) {
             shippingAmountElement.textContent = '€0.00';
