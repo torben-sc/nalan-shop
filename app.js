@@ -399,15 +399,18 @@ async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
     const totalAmountElement = document.getElementById('total-amount');
+    const shippingAmountElement = document.getElementById('shipping-amount');
     const paypalButtonContainer = document.getElementById('paypal-button-container');
     const emptyCartMessage = document.getElementById('empty-cart-message');
 
     // Clear existing content
     cartItemsContainer.innerHTML = '';
-    paypalButtonContainer.innerHTML = ''; // Wichtig: Verhindert doppelte Buttons
+    paypalButtonContainer.innerHTML = ''; // Verhindert doppelte Buttons
     if (emptyCartMessage) emptyCartMessage.style.display = 'none';
 
     let totalAmount = 0;
+    let shippingCost = 10; // Standardversandkosten
+
     cart.forEach(item => {
         const price = parseFloat(item.price) || 0;
         totalAmount += price * item.quantity;
@@ -434,7 +437,21 @@ async function displayCartItems() {
         cartItemsContainer.appendChild(cartItem);
     });
 
-    // Update total amount
+    // Check if shipping is free
+    if (totalAmount >= 100) {
+        shippingCost = 0;
+        if (shippingAmountElement) {
+            shippingAmountElement.textContent = '€0.00';
+        }
+    } else {
+        if (shippingAmountElement) {
+            shippingAmountElement.textContent = `€${shippingCost.toFixed(2)}`;
+        }
+    }
+
+    totalAmount += shippingCost; // Add shipping cost to total amount
+
+    // Update total amount display
     if (totalAmountElement) {
         totalAmountElement.textContent = `€${totalAmount.toFixed(2)}`;
     }
@@ -445,7 +462,6 @@ async function displayCartItems() {
     } else {
         // Load PayPal buttons only when SDK is loaded
         loadPayPalSdk(() => {
-            // PayPal buttons will only render once
             paypalButtonContainer.innerHTML = ''; // Remove existing buttons
             paypal.Buttons({
                 style: {
