@@ -480,21 +480,28 @@ async function displayCartItems() {
             return orderID; // Bestell-ID an PayPal zurückgeben
         },
         onApprove: async (data, actions) => {
-            try {
-                // Bestellung erfassen
-                const captureResult = await capturePayPalOrder(data.orderID);
-                alert(`Transaction completed! Thank you for your purchase.`);
-                localStorage.removeItem('cart'); // Warenkorb leeren
-                displayCartItems(); // Warenkorb aktualisieren
-            } catch (error) {
-                console.error('Error capturing PayPal order:', error);
-                alert('An error occurred while finalizing your payment.');
-            }
-        },
-        onError: (err) => {
-            console.error('PayPal Checkout Error:', err);
-            alert('An error occurred during the checkout process.');
+        try {
+            // Bestellung erfassen
+            const captureResult = await capturePayPalOrder(data.orderID);
+
+            // Optionale Nachricht für den Benutzer
+            alert('Transaction completed! Thank you for your purchase.');
+
+            // Lokalen Warenkorb leeren
+            localStorage.removeItem('cart');
+
+            // Weiterleitung zur Thank-You-Seite
+            window.location.href = '/thank-you.html';
+        } catch (error) {
+            console.error('Error capturing PayPal order:', error);
+            alert('An error occurred while finalizing your payment.');
         }
+    },
+    onError: (err) => {
+        console.error('PayPal Checkout Error:', err);
+        alert('An error occurred during the checkout process.');
+    }
+
     }).render('#paypal-button-container');
 }
 
