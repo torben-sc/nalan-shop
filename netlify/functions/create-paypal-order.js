@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 const products = require('./products.json'); // Importiere die Produkte
 
 const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; // Sandbox-API von PayPal
@@ -60,7 +60,7 @@ exports.handler = async function (event) {
                 purchase_units: [
                     {
                         amount: {
-                            currency_code: 'USD',
+                            currency_code: 'EUR',
                             value: totalAmount.toFixed(2),
                             breakdown: {
                                 item_total: {
