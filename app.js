@@ -276,19 +276,6 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    // "Direct Checkout" Button hinzufügen
-    const directCheckoutButton = document.createElement('button');
-    directCheckoutButton.id = 'direct-checkout-button';
-    directCheckoutButton.className = 'checkout-button';
-    directCheckoutButton.textContent = 'Direct Checkout';
-    buttonContainer.appendChild(directCheckoutButton);
-
-    // "OR" Text hinzufügen
-    const orElement = document.createElement('p');
-    orElement.className = 'or-text';
-    orElement.textContent = 'OR';
-    buttonContainer.appendChild(orElement);
-
     // Add to Cart Button hinzufügen
     const addToCartButton = document.createElement('button');
     addToCartButton.className = 'add-to-cart-button';
@@ -438,7 +425,7 @@ async function displayCartItems() {
     });
 
     // Check if shipping is free
-    if (totalAmount >= 100) {
+    if (totalAmount >= 100 ||totalAmount == 0) {
         shippingCost = 0;
         if (shippingAmountElement) {
             shippingAmountElement.textContent = '€0.00';
