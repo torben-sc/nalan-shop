@@ -331,7 +331,7 @@ main {
     .product-title-details {
         font-size: 1.5em;
         margin-top: 20px;
-        color: #000; /* Weiß für Kontrast auf blauem Hintergrund */
+        color: #24388e; /* Weiß für Kontrast auf blauem Hintergrund */
         text-transform: uppercase;
         font-weight: 500;
         text-align: left; /* Linksbündige Überschrift */
@@ -525,7 +525,7 @@ main {
     .product-title-details {
         font-size: 1.5em;
         margin-top: 20px;
-        color: #000; /* Weiß für Kontrast auf blauem Hintergrund */
+        color: #24388e; /* Weiß für Kontrast auf blauem Hintergrund */
         text-transform: uppercase;
         font-weight: 500;
         text-align: left; /* Linksbündige Überschrift */
