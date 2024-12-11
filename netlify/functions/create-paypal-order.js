@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
 const products = require('./products.json'); // Importiere die Produkte
 
 const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; // Sandbox-API von PayPal
