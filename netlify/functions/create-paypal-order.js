@@ -23,77 +23,114 @@ async function getAccessToken() {
     return data.access_token;
 }
 
+async function captureOrder(orderID) {
+    const accessToken = await getAccessToken();
+    const captureResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderID}/capture`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!captureResponse.ok) {
+        const errorText = await captureResponse.text();
+        console.error('Capture Order Response:', errorText);
+        throw new Error('Failed to capture PayPal order');
+    }
+
+    const captureData = await captureResponse.json();
+    return captureData;
+}
+
 exports.handler = async function (event) {
     try {
-        console.log('Request Body:', event.body);
-        const { cartItems } = JSON.parse(event.body); // Erwartet { cartItems: [{ id: "1", quantity: 2 }, ...] }
-        if (!Array.isArray(cartItems)) {
-            throw new Error('Invalid cart data format. Expected an array under cartItems.');
-        }
-        // Erwartet [{ id: "1", quantity: 2 }, ...]
-        let totalAmount = 0;
+        const { httpMethod, body } = event;
+        const parsedBody = JSON.parse(body || '{}');
 
-        const items = cartItems.map((item) => {
-            const product = products.find((p) => p.id === item.id);
-            if (!product) {
-                throw new Error(`Product with ID ${item.id} not found`);
+        if (httpMethod === 'POST' && parsedBody.action === 'capture') {
+            const { orderID } = parsedBody;
+            if (!orderID) {
+                throw new Error('Order ID is required for capturing');
             }
-
-            totalAmount += product.price * item.quantity;
-
+            const captureResult = await captureOrder(orderID);
             return {
-                name: product.name,
-                sku: product.id,
-                unit_amount: {
-                    currency_code: 'EUR',
-                    value: product.price.toFixed(2),
-                },
-                quantity: item.quantity.toString(),
+                statusCode: 200,
+                body: JSON.stringify(captureResult),
             };
-        });
+        }
 
-        const accessToken = await getAccessToken();
+        if (httpMethod === 'POST' && parsedBody.action === 'create') {
+            const { cartItems } = parsedBody;
+            if (!Array.isArray(cartItems)) {
+                throw new Error('Invalid cart data format. Expected an array under cartItems.');
+            }
+            let totalAmount = 0;
 
-        const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                intent: 'CAPTURE',
-                purchase_units: [
-                    {
-                        amount: {
-                            currency_code: 'EUR',
-                            value: totalAmount.toFixed(2),
-                            breakdown: {
-                                item_total: {
-                                    currency_code: 'EUR',
-                                    value: totalAmount.toFixed(2),
+            const items = cartItems.map((item) => {
+                const product = products.find((p) => p.id === item.id);
+                if (!product) {
+                    throw new Error(`Product with ID ${item.id} not found`);
+                }
+
+                totalAmount += product.price * item.quantity;
+
+                return {
+                    name: product.name,
+                    sku: product.id,
+                    unit_amount: {
+                        currency_code: 'EUR',
+                        value: product.price.toFixed(2),
+                    },
+                    quantity: item.quantity.toString(),
+                };
+            });
+
+            const accessToken = await getAccessToken();
+
+            const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    intent: 'CAPTURE',
+                    purchase_units: [
+                        {
+                            amount: {
+                                currency_code: 'EUR',
+                                value: totalAmount.toFixed(2),
+                                breakdown: {
+                                    item_total: {
+                                        currency_code: 'EUR',
+                                        value: totalAmount.toFixed(2),
+                                    },
                                 },
                             },
+                            items,
                         },
-                        items,
-                    },
-                ],
-            }),
-        });
+                    ],
+                }),
+            });
 
-        if (!orderResponse.ok) {
-            throw new Error('Failed to create PayPal order');
+            if (!orderResponse.ok) {
+                throw new Error('Failed to create PayPal order');
+            }
+
+            const orderData = await orderResponse.json();
+            return {
+                statusCode: 200,
+                body: JSON.stringify({ orderID: orderData.id }),
+            };
         }
 
-        const orderData = await orderResponse.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ orderID: orderData.id }),
-        };
+        throw new Error('Unsupported action or method');
     } catch (error) {
-        console.error('Error creating PayPal order:', error);
+        console.error('Error handling request:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' }),
+            body: JSON.stringify({ error: error.message }),
         };
     }
 };

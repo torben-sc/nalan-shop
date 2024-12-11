@@ -475,16 +475,21 @@ async function displayCartItems() {
             label: 'checkout',
         },
         createOrder: async () => {
-            // Separate Funktion `createPayPalOrder` aufrufen
-            return createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+            // Bestellung erstellen
+            const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+            return orderID; // Bestell-ID an PayPal zurückgeben
         },
-        onApprove: (data, actions) => {
-            // Zahlung erfolgreich
-            return actions.order.capture().then(details => {
-                alert(`Transaction completed by ${details.payer.name.given_name}`);
+        onApprove: async (data, actions) => {
+            try {
+                // Bestellung erfassen
+                const captureResult = await capturePayPalOrder(data.orderID);
+                alert(`Transaction completed! Thank you for your purchase.`);
                 localStorage.removeItem('cart'); // Warenkorb leeren
                 displayCartItems(); // Warenkorb aktualisieren
-            });
+            } catch (error) {
+                console.error('Error capturing PayPal order:', error);
+                alert('An error occurred while finalizing your payment.');
+            }
         },
         onError: (err) => {
             console.error('PayPal Checkout Error:', err);
@@ -493,12 +498,13 @@ async function displayCartItems() {
     }).render('#paypal-button-container');
 }
 
+// Bestellung erstellen
 async function createPayPalOrder(cartItems) {
     try {
         const response = await fetch('/.netlify/functions/create-paypal-order', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cartItems }),
+            body: JSON.stringify({ action: 'create', cartItems }),
         });
 
         if (!response.ok) {
@@ -514,6 +520,27 @@ async function createPayPalOrder(cartItems) {
     }
 }
 
+// Bestellung erfassen
+async function capturePayPalOrder(orderID) {
+    try {
+        const response = await fetch('/.netlify/functions/create-paypal-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'capture', orderID }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to capture PayPal order');
+        }
+
+        const data = await response.json();
+        return data; // Rückgabe der Bestätigungsdaten
+    } catch (error) {
+        console.error('Error capturing PayPal order:', error);
+        alert('An error occurred while capturing the order. Please try again.');
+        throw error;
+    }
+}
 
 // Funktion zum Entfernen eines Produkts aus dem Warenkorb
 function removeFromCart(productId) {
