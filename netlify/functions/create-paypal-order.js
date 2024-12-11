@@ -1,10 +1,8 @@
 const fetch = require('node-fetch');
 const products = require('./products.json'); // Importiere die Produkte
 
-const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; 
+const PAYPAL_API = 'https://api-m.paypal.com'; 
 const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; 
-
-const EU_COUNTRIES = ['FR', 'AT', 'IT', 'ES', 'NL', 'BE', 'LU', 'PT', 'IE'];
 
 async function getAccessToken() {
     const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`).toString('base64');
@@ -23,21 +21,6 @@ async function getAccessToken() {
 
     const data = await response.json();
     return data.access_token;
-}
-
-async function getOrderDetails(orderID) {
-    const accessToken = await getAccessToken();
-    const response = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderID}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to fetch PayPal order details');
-    }
-
-    const orderData = await response.json();
-    console.log('Order Details:', JSON.stringify(orderData, null, 2));
-    return orderData;
 }
 
 async function captureOrder(orderID) {
@@ -61,18 +44,6 @@ async function captureOrder(orderID) {
     return captureData;
 }
 
-function calculateShippingCost(totalAmount, country) {
-    let shippingCost = 7; // Standardpauschale
-
-    if (EU_COUNTRIES.includes(country)) {
-        shippingCost = 15; // Innerhalb der EU
-    } else {
-        shippingCost = 25; // Außerhalb der EU
-    }
-
-    return shippingCost;
-}
-
 exports.handler = async function (event) {
     try {
         const { httpMethod, body } = event;
@@ -83,17 +54,6 @@ exports.handler = async function (event) {
             if (!orderID) {
                 throw new Error('Order ID is required for capturing');
             }
-
-            const orderDetails = await getOrderDetails(orderID);
-            const country = orderDetails.purchase_units[0].shipping.address.country_code || 'Unknown';
-            console.log('Country:', country);
-            const totalAmount = parseFloat(orderDetails.purchase_units[0].amount.value);
-            const shippingCost = calculateShippingCost(totalAmount, country);
-
-            if (shippingCost > parseFloat(orderDetails.purchase_units[0].amount.breakdown.shipping.value)) {
-                throw new Error('Shipping cost mismatch. Order cannot be captured.');
-            }
-
             const captureResult = await captureOrder(orderID);
             return {
                 statusCode: 200,
@@ -102,7 +62,7 @@ exports.handler = async function (event) {
         }
 
         if (httpMethod === 'POST' && parsedBody.action === 'create') {
-            const { cartItems, country } = parsedBody;
+            const { cartItems } = parsedBody;
             if (!Array.isArray(cartItems)) {
                 throw new Error('Invalid cart data format. Expected an array under cartItems.');
             }
@@ -127,7 +87,11 @@ exports.handler = async function (event) {
                 };
             });
 
-            const shippingCost = calculateShippingCost(totalAmount, country);
+            let shippingCost = 10;
+            if (totalAmount >= 100) {
+                shippingCost = 0;
+            }
+
             totalAmount += shippingCost;
 
             const accessToken = await getAccessToken();
@@ -167,7 +131,6 @@ exports.handler = async function (event) {
             }
 
             const orderData = await orderResponse.json();
-            console.log('Create Order Response:', JSON.stringify(orderData, null, 2));
             return {
                 statusCode: 200,
                 body: JSON.stringify({ orderID: orderData.id }),
