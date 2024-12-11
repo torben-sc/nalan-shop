@@ -480,23 +480,20 @@ async function displayCartItems() {
             return orderID; // Bestell-ID an PayPal zurückgeben
         },
         onApprove: async (data, actions) => {
-        try {
-            // Bestellung erfassen
-            const captureResult = await capturePayPalOrder(data.orderID);
-
-            // Optionale Nachricht für den Benutzer
-            alert('Transaction completed! Thank you for your purchase.');
-
-            // Lokalen Warenkorb leeren
-            localStorage.removeItem('cart');
-
-            // Weiterleitung zur Thank-You-Seite
-            window.location.href = '/thank-you-paypal-checkout.html';
-        } catch (error) {
-            console.error('Error capturing PayPal order:', error);
-            alert('An error occurred while finalizing your payment.');
-        }
-    },
+            try {
+                // Bestellung erfassen
+                const captureResult = await capturePayPalOrder(data.orderID);
+                const orderID = captureResult.id;
+                const purchasedProducts = captureResult.purchase_units[0].items;
+        
+                // Leite den Benutzer zur Thank-You-Seite weiter und übergebe die Daten
+                const productsParam = encodeURIComponent(JSON.stringify(purchasedProducts));
+                window.location.href = `/thank-you.html?orderID=${orderID}&products=${productsParam}`;
+            } catch (error) {
+                console.error('Error capturing PayPal order:', error);
+                alert('An error occurred while finalizing your payment.');
+            }
+        },
     onError: (err) => {
         console.error('PayPal Checkout Error:', err);
         alert('An error occurred during the checkout process.');
