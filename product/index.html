@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
     <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
 </head>
-
 <body>
     <!-- Header -->
     <header class="shop-header product-header">
@@ -66,12 +64,33 @@
             <div id="paypal-button-container"></div> <!-- PayPal Button wird hier gerendert -->
         </div>
     </div>
-    
-    <!-- PayPal JS SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AUGpqWymYrCygzY-9gpEhBlZzrNKKUT_zzOhi4g_jAAxayVO_dW8QutenFBo1AmIiOiR0YYpoVHxZuNU&currency=EUR"></script>
-    
+
+    <script>
+        async function loadPayPalSdk() {
+            try {
+                const response = await fetch('/.netlify/functions/get-paypal-client-id');
+                const { clientId } = await response.json();
+
+                if (!clientId) {
+                    throw new Error('Client ID not found');
+                }
+
+                const script = document.createElement('script');
+                script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`;
+                document.head.appendChild(script);
+
+                console.log('PayPal SDK loaded successfully');
+            } catch (error) {
+                console.error('Failed to load PayPal SDK:', error);
+                alert('Error loading PayPal. Please try again.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPayPalSdk();
+        });
+    </script>
 
     <script src="/app.js"></script>
 </body>
-
 </html>
