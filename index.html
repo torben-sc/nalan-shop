@@ -20,14 +20,14 @@
             height: 400px;
             width: 400px;
             border-radius: 50%;
-            filter: url(#white-glow);
+            filter: url(#color-glow);
             transition: transform 0.3s, filter 0.3s;
             overflow: visible !important; /* Verhindert das Abschneiden des Glows */
             animation: float 5s ease-in-out infinite;
         }
         #landing-logo:hover {
             transform: scale(1.1);
-            filter: url(#white-glow-hover);
+            filter: url(#color-glow-hover);
             overflow: visible !important;
         }
         @keyframes float {
@@ -43,7 +43,7 @@
                 width: 300px; /* Kleinere Größe auf mobilen Geräten */
                 height: 300px;
                 border-radius: 50%;
-                filter: url(#white-glow);
+                filter: url(#color-glow);
                 transition: transform 0.3s, filter 0.3s;
                 overflow: visible !important; /* Verhindert das Abschneiden des Glows */
                 animation: float 5s ease-in-out infinite;
@@ -55,27 +55,28 @@
     <svg width="0" height="0">
         <defs>
             <!-- Normaler Glow Filter -->
-            <filter id="white-glow" x="-100%" y="-100%" width="400%" height="400%">
-                <feFlood result="flood" flood-color="white" flood-opacity="1"></feFlood>
-                <feComposite in="flood" in2="SourceAlpha" operator="in" result="mask"></feComposite>
-                <feGaussianBlur in="mask" stdDeviation="10" result="blurred"></feGaussianBlur>
+            <filter id="color-glow" x="-150%" y="-150%" width="400%" height="400%">
+                <feFlood flood-color="#E55013" result="flood"></feFlood>
+                <feComposite in="flood" in2="SourceAlpha" operator="in" result="color"></feComposite>
+                <feGaussianBlur in="color" stdDeviation="10" result="blurred"></feGaussianBlur>
                 <feMerge>
                     <feMergeNode in="blurred"></feMergeNode>
                     <feMergeNode in="SourceGraphic"></feMergeNode>
                 </feMerge>
             </filter>
             <!-- Stärkerer Glow Filter für Hover -->
-            <filter id="white-glow-hover" x="-100%" y="-100%" width="400%" height="400%">
-                <feFlood result="flood" flood-color="white" flood-opacity="1"></feFlood>
-                <feComposite in="flood" in2="SourceAlpha" operator="in" result="mask"></feComposite>
-                <feGaussianBlur in="mask" stdDeviation="12" result="blurred"></feGaussianBlur>
+            <filter id="color-glow-hover" x="-100%" y="-100%" width="400%" height="400%">
+                <feFlood flood-color="#E55013" result="flood"></feFlood>
+                <feComposite in="flood" in2="SourceAlpha" operator="in" result="color"></feComposite>
+                <feGaussianBlur in="color" stdDeviation="12" result="blurred"></feGaussianBlur>
                 <feMerge>
                     <feMergeNode in="blurred"></feMergeNode>
                     <feMergeNode in="SourceGraphic"></feMergeNode>
                 </feMerge>
             </filter>
         </defs>
-    </svg> 
+    </svg>
+    
     <div id="landing-container">
         <a href="shop/index.html">
             <img src="images/logo-ohne-schrift-landing.png" alt="Shop Logo" id="landing-logo">
