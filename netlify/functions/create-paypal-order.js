@@ -40,6 +40,7 @@ async function captureOrder(orderID) {
     }
 
     const captureData = await captureResponse.json();
+    console.log('Capture Result:', JSON.stringify(captureData, null, 2));
     return captureData;
 }
 
@@ -86,6 +87,13 @@ exports.handler = async function (event) {
                 };
             });
 
+            let shippingCost = 10;
+            if (totalAmount >= 100) {
+                shippingCost = 0;
+            }
+
+            totalAmount += shippingCost;
+
             const accessToken = await getAccessToken();
 
             const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
@@ -104,7 +112,11 @@ exports.handler = async function (event) {
                                 breakdown: {
                                     item_total: {
                                         currency_code: 'EUR',
-                                        value: totalAmount.toFixed(2),
+                                        value: (totalAmount - shippingCost).toFixed(2),
+                                    },
+                                    shipping: {
+                                        currency_code: 'EUR',
+                                        value: shippingCost.toFixed(2),
                                     },
                                 },
                             },

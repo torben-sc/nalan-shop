@@ -746,6 +746,29 @@ main {
     padding: 0 10px;
 }
 
+.shipping {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+    max-width: 90%;
+    margin: 0 auto 10px auto; /* Zentriert den Bereich und fügt Abstand zum nächsten Element hinzu */
+    text-align: left; /* Links ausrichten */
+    margin-top: -25px;
+}
+
+.shipping-text {
+    margin: 0;
+    font-size: 1rem;
+    margin-bottom: 7px;
+}
+
+.shipping-value {
+    font-size: 1rem;
+    text-align: right;
+    margin-bottom: 7px;
+}
+
 /* Gesamtbetrag */
 .cart-total {
     display: flex;
@@ -754,7 +777,7 @@ main {
     max-width: 90%;
     margin: 0 auto 10px auto; /* Zentriert den Bereich und fügt Abstand zum nächsten Element hinzu */
     text-align: left; /* Links ausrichten */
-    margin-top: -30px;
+    margin-top: -3px;
 }
 
 
@@ -980,3 +1003,4 @@ main {
     text-transform: uppercase;
     margin-top: 20px;
 }
+
