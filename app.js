@@ -471,10 +471,14 @@ async function displayCartItems() {
                 },
                 onApprove: async (data, actions) => {
                     try {
+                        // Bestellung erfassen
                         const captureResult = await capturePayPalOrder(data.orderID);
-                        alert(`Transaction completed! Thank you for your purchase.`);
-                        localStorage.removeItem('cart'); // Clear cart
-                        displayCartItems(); // Refresh cart display
+                        const orderID = captureResult.id;
+                        const purchasedProducts = captureResult.purchase_units[0].items;
+    
+                        // Benutzer zur Thank-You-Seite weiterleiten
+                        const productsParam = encodeURIComponent(JSON.stringify(purchasedProducts));
+                        window.location.href = `/thank-you.html?orderID=${orderID}&products=${productsParam}`;
                     } catch (error) {
                         console.error('Error capturing PayPal order:', error);
                         alert('An error occurred while finalizing your payment.');
