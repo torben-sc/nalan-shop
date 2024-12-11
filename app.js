@@ -491,7 +491,7 @@ async function displayCartItems() {
             localStorage.removeItem('cart');
 
             // Weiterleitung zur Thank-You-Seite
-            window.location.href = '/thank-you.html';
+            window.location.href = '/thank-you-paypal-checkout.html';
         } catch (error) {
             console.error('Error capturing PayPal order:', error);
             alert('An error occurred while finalizing your payment.');
