@@ -25,10 +25,15 @@ async function getAccessToken() {
 
 exports.handler = async function (event) {
     try {
-        const cartData = JSON.parse(event.body); // Erwartet [{ id: "1", quantity: 2 }, ...]
+        console.log('Request Body:', event.body);
+        const { cartItems } = JSON.parse(event.body); // Erwartet { cartItems: [{ id: "1", quantity: 2 }, ...] }
+        if (!Array.isArray(cartItems)) {
+            throw new Error('Invalid cart data format. Expected an array under cartItems.');
+        }
+        // Erwartet [{ id: "1", quantity: 2 }, ...]
         let totalAmount = 0;
 
-        const items = cartData.map((item) => {
+        const items = cartItems.map((item) => {
             const product = products.find((p) => p.id === item.id);
             if (!product) {
                 throw new Error(`Product with ID ${item.id} not found`);
@@ -40,7 +45,7 @@ exports.handler = async function (event) {
                 name: product.name,
                 sku: product.id,
                 unit_amount: {
-                    currency_code: 'USD',
+                    currency_code: 'EUR',
                     value: product.price.toFixed(2),
                 },
                 quantity: item.quantity.toString(),
@@ -64,7 +69,7 @@ exports.handler = async function (event) {
                             value: totalAmount.toFixed(2),
                             breakdown: {
                                 item_total: {
-                                    currency_code: 'USD',
+                                    currency_code: 'EUR',
                                     value: totalAmount.toFixed(2),
                                 },
                             },
