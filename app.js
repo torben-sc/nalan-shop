@@ -453,8 +453,10 @@ function displayCartItems() {
         cartContactInfo.innerHTML = `
             <p>For orders of multiple items, contact me on 
                 <a href="https://www.instagram.com/nalancreations" target="_blank">Instagram</a>
+                OR <a href="mailto:nalancreations@gmx.de" style="color: E55013; text-decoration: none;">E-MAIL</a>
             </p>
             <p class="checkout-note">OTHERWISE USE DIRECT CHECKOUT</p>
+
         `;
     }
 }
