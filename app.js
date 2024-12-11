@@ -82,45 +82,42 @@ document.addEventListener('DOMContentLoaded', () => {
         createFooter();
     }
 
-    // Größenfilter-Event-Listener hinzufügen
-    const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-    sizeFilterLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const size = e.target.getAttribute('data-size');
-            applySizeFilter(size);
-        });
-    });
-
-    // Größenfilter anwenden basierend auf der URL
+    // Größenfilter-Event-Listener hinzufügen (nur für Bags-Seite)
     if (currentPath.includes('/bags')) {
-        const pathParts = currentPath.split('/');
-        let size = 'all';
-        if (pathParts.length > 2) {
-            size = pathParts[2]; // Extrahiere die Größe aus der URL
-        }
+        const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
+        sizeFilterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const size = e.target.getAttribute('data-size');
+                applySizeFilter(size);
+            });
+        });
+
+        // Größe aus der URL extrahieren und Produktliste aktualisieren
+        const urlParams = new URLSearchParams(window.location.search);
+        const size = urlParams.get('size') || 'all';
         displayProductList('bags', size);
     }
 
-    // Größenfilter-Event-Listener hinzufügen
-    const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-    accessoriesLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const accs = e.target.getAttribute('data-accs');
-            applyAccessoriesFilter(accs);
-        });
-    });
-
-    // Größenfilter anwenden basierend auf der URL
+    // Accessoires-Filter-Event-Listener hinzufügen (nur für Accessories-Seite)
     if (currentPath.includes('/accessories')) {
-        const pathParts = currentPath.split('/');
-        let accs = 'all';
-        if (pathParts.length > 2) {
-            accs = pathParts[2]; // Extrahiere die Größe aus der URL
+        const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
+        accessoriesLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const accs = e.target.getAttribute('data-accs');
+                applyAccessoriesFilter(accs);
+            });
+        });
+
+        // Accessoires-Filter aus der URL extrahieren und Produktliste aktualisieren
+        const urlParams = new URLSearchParams(window.location.search);
+        const accs = urlParams.get('accessorie_type') || 'all';
+        if (window.location.pathname.includes('/accessories')) {
+            displayProductList('accessories', null, accessoryType);
         }
-        displayProductList('accessories', accs);
     }
+
 });
 
 // Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
