@@ -4,7 +4,7 @@ const products = require('./products.json'); // Importiere die Produkte
 const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; 
 const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; 
 
-const EU_COUNTRIES = ['DE', 'FR', 'AT', 'IT', 'ES', 'NL', 'BE', 'LU', 'PT', 'IE'];
+const EU_COUNTRIES = ['FR', 'AT', 'IT', 'ES', 'NL', 'BE', 'LU', 'PT', 'IE'];
 
 async function getAccessToken() {
     const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`).toString('base64');
@@ -35,7 +35,9 @@ async function getOrderDetails(orderID) {
         throw new Error('Failed to fetch PayPal order details');
     }
 
-    return await response.json();
+    const orderData = await response.json();
+    console.log('Order Details:', JSON.stringify(orderData, null, 2));
+    return orderData;
 }
 
 async function captureOrder(orderID) {
@@ -55,6 +57,7 @@ async function captureOrder(orderID) {
     }
 
     const captureData = await captureResponse.json();
+    console.log('Capture Result:', JSON.stringify(captureData, null, 2));
     return captureData;
 }
 
@@ -82,7 +85,8 @@ exports.handler = async function (event) {
             }
 
             const orderDetails = await getOrderDetails(orderID);
-            const country = orderDetails.purchase_units[0].shipping.address.country_code;
+            const country = orderDetails.purchase_units[0].shipping.address.country_code || 'Unknown';
+            console.log('Country:', country);
             const totalAmount = parseFloat(orderDetails.purchase_units[0].amount.value);
             const shippingCost = calculateShippingCost(totalAmount, country);
 
@@ -163,6 +167,7 @@ exports.handler = async function (event) {
             }
 
             const orderData = await orderResponse.json();
+            console.log('Create Order Response:', JSON.stringify(orderData, null, 2));
             return {
                 statusCode: 200,
                 body: JSON.stringify({ orderID: orderData.id }),
