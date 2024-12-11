@@ -489,13 +489,16 @@ async function loadPayPalSdk(callback) {
             throw new Error('Client ID not found');
         }
 
-        if (!document.querySelector('script[src*="paypal.com/sdk/js"]')) {
+        const existingScript = document.querySelector('script[src*="paypal.com/sdk/js"]');
+        if (!existingScript) {
             const script = document.createElement('script');
             script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`;
-            script.onload = callback; // Warten, bis die SDK geladen ist
+            script.onload = () => {
+                if (typeof callback === 'function') callback();
+            };
             document.head.appendChild(script);
-        } else if (callback) {
-            callback(); // Falls SDK bereits geladen, direkt rendern
+        } else if (typeof callback === 'function') {
+            callback();
         }
     } catch (error) {
         console.error('Failed to load PayPal SDK:', error);
