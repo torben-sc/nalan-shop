@@ -95,6 +95,8 @@ body {
     white-space: nowrap;
     padding: 0px 12px;
     margin-bottom: 5px;
+    -ms-overflow-style: none;    
+    scrollbar-width: none;   
 }
 
 
