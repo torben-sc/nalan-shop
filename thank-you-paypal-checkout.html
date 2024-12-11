@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
+    <style>
+        .thank-you-page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .thank-you-container {
+            margin-bottom: 30px;
+        }
+        .order-id {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .product-table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        .product-table th, .product-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .product-table th {
+            background-color: #f4f4f4;
+        }
+        .product-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <header class="shop-header">
+        <a href="shop.html">
+            <img src="images/logo.jpg" alt="Shop Logo" class="logo">
+        </a>
+    </header>
+
+    <!-- Container, der den gesamten Inhalt mittig auf dem Bildschirm anzeigt -->
+    <div class="thank-you-page-container">
+        <div class="thank-you-container">
+            <p class="thank-you-message-1">THANK YOU FOR SHOPPING WITH NALAN!</p>
+            <p class="thank-you-message-2">WE WILL TAKE CARE OF YOUR ORDER ASAP</p>
+        </div>
+
+        <!-- Order ID -->
+        <p class="order-id">ORDER ID: <span id="order-id">Loading...</span></p>
+
+        <!-- Table for purchased products -->
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="product-list">
+                <!-- Dynamisch eingefügte Produkte -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Beispiel-Daten (ersetzt durch die realen Daten aus JavaScript)
+        const exampleOrderId = '12345';
+        const exampleProducts = [
+            { name: 'Balaclava', quantity: 2, price: 60.00, image: '/images/product1.jpg' },
+            { name: 'Bagzilla', quantity: 1, price: 100.00, image: '/images/product2.jpg' }
+        ];
+
+        // Dynamisches Einfügen der Daten in die Seite
+        document.addEventListener('DOMContentLoaded', () => {
+            // Order-ID anzeigen
+            document.getElementById('order-id').textContent = exampleOrderId;
+
+            // Produkte in die Tabelle einfügen
+            const productList = document.getElementById('product-list');
+            exampleProducts.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        ${product.name}
+                    </td>
+                    <td>${product.quantity}</td>
+                    <td>€${(product.price * product.quantity).toFixed(2)}</td>
+                `;
+                productList.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>
