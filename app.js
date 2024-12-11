@@ -330,18 +330,15 @@ function setupAddToCartButton(addToCartButton, product) {
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
-    // Validierung des Produktobjekts
     if (!product || !product.id || typeof product.stock !== 'number' || typeof product.price !== 'number') {
         console.error('Invalid product data:', product);
         return;
     }
 
-    // Warenkorb aus dem Local Storage laden
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingProduct = cart.find(item => item.id === product.id);
 
     if (existingProduct) {
-        // Prüfen, ob die maximale Menge erreicht wurde
         if (existingProduct.quantity < product.stock) {
             existingProduct.quantity += 1;
         } else {
@@ -349,14 +346,13 @@ function addToCart(product) {
             return;
         }
     } else {
-        // Neues Produkt hinzufügen, falls genügend Bestand verfügbar ist
         if (product.stock > 0) {
             cart.push({
                 id: product.id,
                 name: product.name,
                 images: product.images,
-                price: product.price, // Preis hinzufügen
-                stock: product.stock, // Optional: Bestand speichern
+                price: product.price,
+                stock: product.stock,
                 quantity: 1,
             });
         } else {
@@ -365,25 +361,17 @@ function addToCart(product) {
         }
     }
 
-    // Warenkorb im Local Storage aktualisieren
     localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Warenkorb-Anzeige aktualisieren
     updateCartCount();
-
-    // Warenkorb-Popup öffnen, falls vorhanden
-    const cartPopup = document.getElementById('cart-popup');
-    if (cartPopup) {
-        cartPopup.classList.add('open');
-    }
+    displayCartItems(); // Update items and PayPal button
 }
 
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialisieren der Warenkorb-Anzeige
     updateCartCount();
-    displayCartItems(); // Warenkorb-Artikel beim Start anzeigen
     loadPayPalSdk();
+    displayCartItems();
 
     // Warenkorb-Popup Elemente und Event-Handler
     const cartIcon = document.getElementById('cart-icon');
@@ -407,7 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
-// Funktion zur Anzeige der Warenkorb-Artikel im Slide-in Menü
 async function displayCartItems() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const cartItemsContainer = document.getElementById('cart-items');
@@ -417,7 +404,7 @@ async function displayCartItems() {
 
     // Clear existing content
     cartItemsContainer.innerHTML = '';
-    paypalButtonContainer.innerHTML = '';
+    paypalButtonContainer.innerHTML = ''; // Wichtig: Verhindert doppelte Buttons
     if (emptyCartMessage) emptyCartMessage.style.display = 'none';
 
     let totalAmount = 0;
@@ -456,8 +443,10 @@ async function displayCartItems() {
         // Show empty cart message
         if (emptyCartMessage) emptyCartMessage.style.display = 'block';
     } else {
-        // Render PayPal button
-        if (paypalButtonContainer) {
+        // Load PayPal buttons only when SDK is loaded
+        loadPayPalSdk(() => {
+            // PayPal buttons will only render once
+            paypalButtonContainer.innerHTML = ''; // Remove existing buttons
             paypal.Buttons({
                 style: {
                     layout: 'vertical',
@@ -471,12 +460,10 @@ async function displayCartItems() {
                 },
                 onApprove: async (data, actions) => {
                     try {
-                        // Bestellung erfassen
                         const captureResult = await capturePayPalOrder(data.orderID);
                         const orderID = captureResult.id;
                         const purchasedProducts = captureResult.purchase_units[0].items;
-    
-                        // Benutzer zur Thank-You-Seite weiterleiten
+
                         const productsParam = encodeURIComponent(JSON.stringify(purchasedProducts));
                         window.location.href = `/thank-you.html?orderID=${orderID}&products=${productsParam}`;
                     } catch (error) {
@@ -489,29 +476,29 @@ async function displayCartItems() {
                     alert('An error occurred during the checkout process.');
                 }
             }).render('#paypal-button-container');
-        }
+        });
     }
 }
 
-
-async function loadPayPalSdk() {
+async function loadPayPalSdk(callback) {
     try {
-        // Abrufen der PayPal Client-ID
         const response = await fetch('/.netlify/functions/get-paypal-client-id');
         const { clientId } = await response.json();
 
         if (!clientId) {
-            throw new Error('PayPal Client ID not found');
+            throw new Error('Client ID not found');
         }
 
-        // Erstellen und Hinzufügen des PayPal SDK-Skripts
-        const script = document.createElement('script');
-        script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`;
-        script.onload = () => console.log('PayPal SDK loaded successfully');
-        document.head.appendChild(script);
+        if (!document.querySelector('script[src*="paypal.com/sdk/js"]')) {
+            const script = document.createElement('script');
+            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=EUR`;
+            script.onload = callback; // Warten, bis die SDK geladen ist
+            document.head.appendChild(script);
+        } else if (callback) {
+            callback(); // Falls SDK bereits geladen, direkt rendern
+        }
     } catch (error) {
-        console.error('Error loading PayPal SDK:', error);
-        alert('Failed to load PayPal. Please try again later.');
+        console.error('Failed to load PayPal SDK:', error);
     }
 }
 
@@ -568,8 +555,8 @@ function removeFromCart(productId) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     cart = cart.filter(item => item.id !== productId);
     localStorage.setItem('cart', JSON.stringify(cart));
-    displayCartItems(); // Warenkorb-Artikel aktualisieren
     updateCartCount(); // Zähler im Icon aktualisieren
+    displayCartItems(); // Warenkorb-Artikel aktualisieren
 }
 
 // Funktion zum Aktualisieren des Warenkorb-Zählers
