@@ -1018,3 +1018,21 @@ main {
     margin-top: 20px;
 }
 
+.sold-out-text-2 {
+    color: #24388e;
+    font-weight: bold;
+    font-size: 2em;
+    text-transform: uppercase;
+    margin: 10px 0;
+}
+
+.sold-out-link {
+    color: #E55013;
+    text-decoration: underline;
+    text-decoration: none;
+}
+
+.sold-out-link:hover {
+    text-decoration: none;
+    font-weight: bold;
+}

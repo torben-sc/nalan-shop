@@ -189,7 +189,11 @@ async function displayProductList(category = null, size = null, accs = null) {
                 <h2>${product.name}</h2>
             </a>
             <p class="product-price-shop">
-                <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
+                ${
+                    product.stock > 0 
+                    ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                    : `<span class="sold-out-text">SOLD OUT</span>`
+                }
             </p>
         `;
 
@@ -272,22 +276,40 @@ function displayProductInfo(product) {
 function addButtonsAndEventListeners(product) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Container für die Buttons
+    // Container für die Buttons oder den Sold-Out Text
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    // Add to Cart Button hinzufügen
-    const addToCartButton = document.createElement('button');
-    addToCartButton.className = 'add-to-cart-button';
-    addToCartButton.textContent = 'Add to cart';
-    buttonContainer.appendChild(addToCartButton);
+    if (product.stock > 0) {
+        // Add to Cart Button hinzufügen
+        const addToCartButton = document.createElement('button');
+        addToCartButton.className = 'add-to-cart-button';
+        addToCartButton.textContent = 'Add to cart';
+        buttonContainer.appendChild(addToCartButton);
 
-    // Füge die Button-Gruppe zum infoContainer hinzu
+        // Event-Listener für Add-to-Cart Button
+        setupAddToCartButton(addToCartButton, product);
+    } else {
+        // Sold-Out Text mit Links erstellen
+        const soldOutText = document.createElement('p');
+        soldOutText.className = 'sold-out-text-2';
+        soldOutText.innerHTML = `
+    <div style="text-align: center; margin-bottom: 10px;">
+        <strong>SOLD OUT</strong> <br>
+        REQUESTS POSSIBLE ON 
+        <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
+        OR 
+        <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
+    </div>
+`;
+
+        buttonContainer.appendChild(soldOutText);
+    }
+
+    // Füge die Button-Gruppe oder den Sold-Out Text zum infoContainer hinzu
     infoContainer.appendChild(buttonContainer);
-
-    // Event-Listener für Add-to-Cart Button
-    setupAddToCartButton(addToCartButton, product);
 }
+
 
 // Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
 function setupAddToCartButton(addToCartButton, product) {

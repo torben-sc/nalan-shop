@@ -1,7 +1,10 @@
 const fetch = require('node-fetch');
 const products = require('./products.json'); // Importiere die Produkte
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
 
-const PAYPAL_API = 'https://api-m.paypal.com'; 
+const PAYPAL_API = 'https://api-m.sandbox.paypal.com'; 
 const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; 
 
 async function getAccessToken() {
@@ -23,7 +26,7 @@ async function getAccessToken() {
     return data.access_token;
 }
 
-async function captureOrder(orderID) {
+async function captureOrder(orderID, cartItems) {
     const accessToken = await getAccessToken();
     const captureResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderID}/capture`, {
         method: 'POST',
@@ -41,8 +44,17 @@ async function captureOrder(orderID) {
 
     const captureData = await captureResponse.json();
     console.log('Capture Result:', JSON.stringify(captureData, null, 2));
+
+    // Update products.json
+    updateProducts(cartItems);
+
+    // Push to GitHub
+    const productsPath = path.join(__dirname, 'products.json');
+    await pushToGitHub(productsPath);
+
     return captureData;
 }
+
 
 exports.handler = async function (event) {
     try {
@@ -146,3 +158,79 @@ exports.handler = async function (event) {
         };
     }
 };
+
+function updateProducts(cartItems) {
+    const productsPath = path.join(__dirname, 'products.json'); // Pfad zur Datei
+    const products = JSON.parse(fs.readFileSync(productsPath, 'utf-8'));
+
+    cartItems.forEach((item) => {
+        const productIndex = products.findIndex((p) => p.id === item.id);
+        if (productIndex !== -1) {
+            const product = products[productIndex];
+            if (product.stock >= item.quantity) {
+                product.stock -= item.quantity; // Verringere den Stock um die verkaufte Menge
+            } else {
+                console.warn(`Insufficient stock for product ID ${item.id}.`);
+            }
+        } else {
+            console.warn(`Product with ID ${item.id} not found.`);
+        }
+    });
+
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2), 'utf-8'); // Speichere die aktualisierte Datei
+    console.log('Products stock updated locally.');
+}
+
+
+async function pushToGitHub(branch = 'main') {
+    const filePath = './netlify/functions/products.json'; // Relativer Pfad zur Datei
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const fileBase64 = Buffer.from(fileContent).toString('base64');
+
+    const owner = 'torben-sc';
+    const repo = 'nalan-shop';
+    const fileName = 'netlify/functions/products.json'; // Pfad innerhalb des Repos
+    const apiToken = process.env.GITHUB_TOKEN; // GitHub Personal Access Token
+
+    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${fileName}`;
+
+    // Schritt 1: Abrufen des aktuellen SHA-Wertes der Datei
+    const currentFileResponse = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${apiToken}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!currentFileResponse.ok) {
+        throw new Error(`Failed to fetch current file: ${currentFileResponse.statusText}`);
+    }
+
+    const currentFile = await currentFileResponse.json();
+    const sha = currentFile.sha; // Aktuellen SHA-Wert der Datei abrufen
+
+    // Schritt 2: Datei aktualisieren
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${apiToken}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            message: `Updated ${fileName} after order capture`,
+            content: fileBase64,
+            branch: branch,
+            sha: sha,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Failed to push file: ${response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    console.log('File pushed to GitHub:', responseData);
+}
+
+module.exports = pushToGitHub;
