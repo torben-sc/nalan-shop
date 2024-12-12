@@ -438,7 +438,7 @@ async function displayCartItems() {
     });
 
     // Check if shipping is free
-    if (totalAmount >= 100 || totalAmount == 0) {
+    if (totalAmount >= 150 || totalAmount == 0) {
         shippingCost = 0;
         if (shippingAmountElement) {
             shippingAmountElement.textContent = '€0.00';

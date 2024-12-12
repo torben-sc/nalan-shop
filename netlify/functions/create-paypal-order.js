@@ -87,8 +87,8 @@ exports.handler = async function (event) {
                 };
             });
 
-            let shippingCost = 10;
-            if (totalAmount >= 100) {
+            let shippingCost = 4.5;
+            if (totalAmount >= 150) {
                 shippingCost = 0;
             }
 
