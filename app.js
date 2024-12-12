@@ -268,6 +268,12 @@ function displayProductInfo(product) {
         <h1 class="product-title-details">${product.name}</h1>
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
+        <div class="only-germany-noti">
+                      Currently only shipping to Germany. For international requests, contact me on
+                      <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
+                      or
+                      <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
+                  </div>
     `;
 
 }
