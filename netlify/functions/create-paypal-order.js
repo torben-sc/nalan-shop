@@ -53,19 +53,17 @@ async function captureOrder(orderID, cartItems) {
 
     return captureData;
 }
-
-
 exports.handler = async function (event) {
     try {
         const { httpMethod, body } = event;
         const parsedBody = JSON.parse(body || '{}');
 
         if (httpMethod === 'POST' && parsedBody.action === 'capture') {
-            const { orderID } = parsedBody;
+            const { orderID, cartItems } = parsedBody;
             if (!orderID) {
                 throw new Error('Order ID is required for capturing');
             }
-            const captureResult = await captureOrder(orderID);
+            const captureResult = await captureOrder(orderID, cartItems);
             return {
                 statusCode: 200,
                 body: JSON.stringify(captureResult),
