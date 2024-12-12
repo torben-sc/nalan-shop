@@ -254,9 +254,9 @@ main {
 
 /* Spezifische Größe nur für das TikTok-Logo */
 .tiktok-icon {
-    width: 24px; /* Passe die Größe nach Bedarf an */
-    height: 24px;
-    margin-top: 3px;
+    width: 35px; /* Passe die Größe nach Bedarf an */
+    height: 35px;
+    margin-top: -2px;
 }
 
 .social-icon:hover {
