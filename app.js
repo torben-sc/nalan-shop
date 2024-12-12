@@ -276,19 +276,6 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    // "Direct Checkout" Button hinzufügen
-    const directCheckoutButton = document.createElement('button');
-    directCheckoutButton.id = 'direct-checkout-button';
-    directCheckoutButton.className = 'checkout-button';
-    directCheckoutButton.textContent = 'Direct Checkout';
-    buttonContainer.appendChild(directCheckoutButton);
-
-    // "OR" Text hinzufügen
-    const orElement = document.createElement('p');
-    orElement.className = 'or-text';
-    orElement.textContent = 'OR';
-    buttonContainer.appendChild(orElement);
-
     // Add to Cart Button hinzufügen
     const addToCartButton = document.createElement('button');
     addToCartButton.className = 'add-to-cart-button';
@@ -298,19 +285,8 @@ function addButtonsAndEventListeners(product) {
     // Füge die Button-Gruppe zum infoContainer hinzu
     infoContainer.appendChild(buttonContainer);
 
-    // Event-Listener für den Direct Checkout Button hinzufügen
-    setupDirectCheckoutButton(directCheckoutButton, product);
-
     // Event-Listener für Add-to-Cart Button
     setupAddToCartButton(addToCartButton, product);
-}
-
-// Hilfsfunktion zur Einrichtung des Direct Checkout Buttons
-async function setupDirectCheckoutButton(directCheckoutButton, product) {
-    directCheckoutButton.addEventListener('click', () => {
-        // Verwende window.location.href, um die Netlify Function aufzurufen, die den Redirect durchführt
-        window.location.href = `/.netlify/functions/get-paypal-link?productId=${product.id}`;
-    });
 }
 
 // Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
