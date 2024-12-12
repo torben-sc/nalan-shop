@@ -96,11 +96,6 @@ exports.handler = async function (event) {
             if (!orderID) {
                 throw new Error('Order ID is required for capturing');
             }
-            const { country } = await getOrderDetails(orderID);
-
-            if (country !== 'DE') {
-                throw new Error('Order cannot be captured for non-DE countries.');
-            }
 
             const captureResult = await captureOrder(orderID);
             return {
