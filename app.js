@@ -394,7 +394,9 @@ async function displayCartItems() {
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
+        <a href="/product/${item.id}" class="cart-item-link">
             <img src="${item.images[0]}" alt="${item.name}" class="cart-item-image">
+            </a>
             <div class="cart-item-info">
                 <a href="/product/${item.id}" class="cart-item-link">
                     <h3>${item.name}</h3>
