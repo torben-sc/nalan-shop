@@ -439,7 +439,7 @@ main {
     
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
-        background-color: #E55013;
+        background-color: #24388e;
         color: #fff;
         padding: 15px;
         border: none;
@@ -452,7 +452,7 @@ main {
     }
     
     .add-to-cart-button:hover {
-        background-color: #ab3a0e;
+        background-color: #162258;
     }
 }
 
@@ -599,7 +599,7 @@ main {
     
     /* Button zum Hinzufügen in den Warenkorb */
     .add-to-cart-button {
-        background-color: #E55013;
+        background-color: #24388e;
         color: #fff;
         padding: 15px;
         border: none;
@@ -612,7 +612,7 @@ main {
     }
     
     .add-to-cart-button:hover {
-        background-color: #ab3a0e;
+        background-color: #162258;
     }
     
 }
