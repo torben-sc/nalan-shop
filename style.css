@@ -5,10 +5,17 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'MyFont';
+    src: url('/fonts/coolvetica/Coolvetica Rg.otf') format('truetype');
+    font-weight: bold; /* oder bold, wenn es eine fette Variante ist */
+    font-style: normal; /* oder italic, wenn es kursiv ist */
+}
+
 body {
     background-color: #fff; /* Setzt die gesamte Hintergrundfarbe der Seite auf Blau */
     color: #000; /* Weißer Text für bessere Lesbarkeit */
-    font-family: Arial, sans-serif;
+    font-family: 'MyFont', Arial, sans-serif;
 }
 
 /* Fixierter Header mit zentriertem Logo und Hintergrundfarbe */
@@ -733,6 +740,13 @@ main {
     font-weight: 900;
     text-decoration: none; /* Entfernt die Unterstreichung des Links */
 }
+
+.cart-item-link h3 {
+    font-size: 1.2rem; /* Beispielgröße, anpassbar */
+    font-weight: bolder; /* Optional: Fett */
+}
+
+
 /* Entfernen Button für Artikel */
 .remove-item-button {
     position: absolute; /* Positioniere den Button absolut innerhalb der cart-item Box */
