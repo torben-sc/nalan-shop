@@ -1,9 +1,8 @@
 const fetch = require('node-fetch');
 const products = require('./products.json'); // Importiere die Produkte
 
-const PAYPAL_API = 'https://api-m.sandbox.paypal.com';
-const PAYPAL_CLIENT_ID = "AeBPvL1gDNHBzcxVg9OPw_GG3X9wDUAwRmGI7DeKnyfT7sH9yG5KrRpNWQV5nv0F1YWTmORHbCFtPrZK";
-const PAYPAL_SECRET = "EGAOEhbachpzcKd0U-7ExYLKX_8t1qIQIu5O6OFNQ0rsublUqCIgpnXakExdTKB3if0C8d1qluLMaGdZ";
+const PAYPAL_API = 'https://api-m.paypal.com';
+const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; 
 
 const EU_COUNTRIES = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK'];
 
