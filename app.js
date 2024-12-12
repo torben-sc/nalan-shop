@@ -407,7 +407,7 @@ async function displayCartItems() {
     if (emptyCartMessage) emptyCartMessage.style.display = 'none';
 
     let totalAmount = 0;
-    let shippingCost = 10; // Standardversandkosten
+    let shippingCost = 4.50; // Standardversandkosten
 
     cart.forEach(item => {
         const price = parseFloat(item.price) || 0;
@@ -448,6 +448,7 @@ async function displayCartItems() {
             shippingAmountElement.textContent = `€${shippingCost.toFixed(2)}`;
         }
     }
+    
 
     totalAmount += shippingCost; // Add shipping cost to total amount
 
