@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const products = require('./products.json'); // Importiere die Produkte
 
 const PAYPAL_API = 'https://api-m.paypal.com';
-const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env; 
+const { PAYPAL_CLIENT_ID, PAYPAL_SECRET } = process.env;
 
 const EU_COUNTRIES = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK'];
 
@@ -44,7 +44,25 @@ async function getOrderDetails(orderID) {
     const orderData = await response.json();
     const country = orderData.purchase_units[0].shipping.address.country_code;
     console.log('Country Code:', country);
-    return { country, orderData };
+    return { country, orderID };
+}
+
+async function cancelOrder(orderID) {
+    const accessToken = await getAccessToken();
+    const response = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderID}/cancel`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Cancel Order Response:', errorText);
+        throw new Error('Failed to cancel PayPal order');
+    }
+    console.log('Order canceled:', orderID);
 }
 
 async function captureOrder(orderID) {
@@ -73,12 +91,29 @@ exports.handler = async function (event) {
         const { httpMethod, body } = event;
         const parsedBody = JSON.parse(body || '{}');
 
+        if (httpMethod === 'POST' && parsedBody.action === 'capture') {
+            const { orderID } = parsedBody;
+            if (!orderID) {
+                throw new Error('Order ID is required for capturing');
+            }
+            const { country } = await getOrderDetails(orderID);
+
+            if (country !== 'DE') {
+                throw new Error('Order cannot be captured for non-DE countries.');
+            }
+
+            const captureResult = await captureOrder(orderID);
+            return {
+                statusCode: 200,
+                body: JSON.stringify(captureResult),
+            };
+        }
+
         if (httpMethod === 'POST' && parsedBody.action === 'create') {
             const { cartItems } = parsedBody;
             if (!Array.isArray(cartItems)) {
                 throw new Error('Invalid cart data format. Expected an array under cartItems.');
             }
-
             let totalAmount = 0;
 
             const items = cartItems.map((item) => {
@@ -100,8 +135,8 @@ exports.handler = async function (event) {
                 };
             });
 
-            // Shipping cost placeholder (calculated during capture)
-            const shippingCost = 0;
+            // Standard shipping cost calculation for DE
+            const shippingCost = totalAmount >= 150 ? 0 : 4.5;
             totalAmount += shippingCost;
 
             const accessToken = await getAccessToken();
@@ -122,7 +157,7 @@ exports.handler = async function (event) {
                                 breakdown: {
                                     item_total: {
                                         currency_code: 'EUR',
-                                        value: totalAmount.toFixed(2),
+                                        value: (totalAmount - shippingCost).toFixed(2),
                                     },
                                     shipping: {
                                         currency_code: 'EUR',
@@ -141,38 +176,61 @@ exports.handler = async function (event) {
             }
 
             const orderData = await orderResponse.json();
+
+            // Verify country after order creation
+            const { country } = await getOrderDetails(orderData.id);
+
+            if (country !== 'DE') {
+                await cancelOrder(orderData.id);
+
+                // Recalculate shipping cost based on new country
+                const newShippingCost = EU_COUNTRIES.includes(country) ? 15 : 25;
+                totalAmount = totalAmount - shippingCost + newShippingCost;
+
+                const newOrderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        intent: 'CAPTURE',
+                        purchase_units: [
+                            {
+                                amount: {
+                                    currency_code: 'EUR',
+                                    value: totalAmount.toFixed(2),
+                                    breakdown: {
+                                        item_total: {
+                                            currency_code: 'EUR',
+                                            value: (totalAmount - newShippingCost).toFixed(2),
+                                        },
+                                        shipping: {
+                                            currency_code: 'EUR',
+                                            value: newShippingCost.toFixed(2),
+                                        },
+                                    },
+                                },
+                                items,
+                            },
+                        ],
+                    }),
+                });
+
+                if (!newOrderResponse.ok) {
+                    throw new Error('Failed to recreate PayPal order');
+                }
+
+                const newOrderData = await newOrderResponse.json();
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify({ orderID: newOrderData.id }),
+                };
+            }
+
             return {
                 statusCode: 200,
                 body: JSON.stringify({ orderID: orderData.id }),
-            };
-        }
-
-        if (httpMethod === 'POST' && parsedBody.action === 'capture') {
-            const { orderID } = parsedBody;
-            if (!orderID) {
-                throw new Error('Order ID is required for capturing');
-            }
-
-            const { country, orderData } = await getOrderDetails(orderID);
-
-            // Calculate shipping cost based on country
-            const totalAmount = parseFloat(orderData.purchase_units[0].amount.value);
-            let shippingCost = 0;
-
-            if (country === 'DE') {
-                shippingCost = totalAmount >= 150 ? 0 : 4.5; // Free shipping if >=150 for DE
-            } else if (EU_COUNTRIES.includes(country)) {
-                shippingCost = 15; // EU but not Germany
-            } else {
-                shippingCost = 25; // Outside EU
-            }
-
-            console.log(`Shipping Cost: ${shippingCost} for Country: ${country}`);
-
-            const captureResult = await captureOrder(orderID);
-            return {
-                statusCode: 200,
-                body: JSON.stringify(captureResult),
             };
         }
 
