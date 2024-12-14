@@ -21,19 +21,57 @@ document.addEventListener('DOMContentLoaded', () => {
             cartPopup.classList.remove('open');
         });
     }
-    
+
+    // Kategorien-Event-Listener hinzufügen
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
+    const categoryUrls = {
+        showAllFilter: '/shop',
+        bagsFilter: '/bags',
+        balaclavasFilter: '/balaclavas',
+        scarvesFilter: '/scarves',
+        accessoriesFilter: '/accessories',
+    };
+
+    categories.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newUrl = categoryUrls[id];
+                window.location.href = newUrl; // Navigation zur neuen URL ohne ".html" oder "?category"
+            });
+        }
+    });
+
+    // URL-basierten Kategorie-Filter anwenden
     const currentPath = window.location.pathname;
 
-    if (currentPath.includes('/balaclavas')) {
-        displayProductList('balaclavas');
-    } else if (currentPath.includes('/bags')) {
-        displayProductList('bags');
-    } else if (currentPath.includes('/scarves')) {
-        displayProductList('scarves');
-    } else if (currentPath.includes('/accessories')) {
-        displayProductList('accessories');
-    } else {
-        displayProductList('all');
+    let category;
+    let accs = null;
+    switch (currentPath) {
+        case '/bags':
+            category = 'bags';
+            break;
+        case '/balaclavas':
+            category = 'balaclavas';
+            break;
+        case '/scarves':
+            category = 'scarves';
+            break;
+        case '/accessories':
+            category = 'accessories';
+            accs = new URLSearchParams(window.location.search).get('accessorie_type') || 'all';
+            break;
+        default:
+            category = 'all';
+    }
+    
+
+    // Initialisieren der Produktliste basierend auf der URL-Kategorie
+    if (document.getElementById('product-container')) {
+        displayProductList(category, null, accs);
+    } else if (document.getElementById('product-detail-container')) {
+        displayProductDetails();
     }
 
     // Initialisierung des Footers
@@ -126,30 +164,22 @@ async function displayProductList(category = null, size = null, accs = null) {
 
     productContainer.innerHTML = '';
 
-    // Filter nur anwenden, wenn category, size oder accs angegeben sind
-    let filteredProducts = products;
-
-    if (category && category !== 'all') {
-        filteredProducts = filteredProducts.filter(product => 
-            product.category.toLowerCase() === category.toLowerCase());
-    }
+    let filteredProducts = (category && category !== 'all') 
+        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
+        : products;
 
     if (size && size !== 'all') {
-        filteredProducts = filteredProducts.filter(product => 
-            product.size && product.size.toLowerCase() === size.toLowerCase());
+        filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
     }
 
     if (accs && accs !== 'all') {
-        filteredProducts = filteredProducts.filter(product => 
-            product.accs && product.accs.toLowerCase() === accs.toLowerCase());
+        filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
     }
 
-    // Titel setzen
-    productTitle.innerHTML = category && category !== 'all'
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
+    productTitle.innerHTML = (category && category !== 'all') 
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
         : 'All<span class="mobile-line-break"> </span>Products';
 
-    // Karten für jedes Produkt erstellen
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
