@@ -171,39 +171,6 @@ async function displayProductList(category = null, size = null, accs = null) {
     });
 }
 
-async function displayAllProducts() {
-    const products = await fetchProducts();
-    if (!products) return;
-
-    const productContainer = document.getElementById('product-container');
-    const productTitle = document.getElementById('product-title');
-
-    // Leeren des Containers und Setzen des Titels
-    productContainer.innerHTML = '';
-    productTitle.innerHTML = 'All<span class="mobile-line-break"> </span>Products';
-
-    // Produkte rendern
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <a href="/product/${product.id}" class="product-link">
-                <img src="${product.images[0]}" alt="${product.name}">
-                <h2>${product.name}</h2>
-            </a>
-            <p class="product-price-shop">
-                ${
-                    product.stock > 0
-                    ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>`
-                    : `<span class="sold-out-text">SOLD OUT</span>`
-                }
-            </p>
-        `;
-
-        productContainer.appendChild(productCard);
-    });
-}
-
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
