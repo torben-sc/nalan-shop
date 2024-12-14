@@ -156,11 +156,17 @@ async function fetchProducts() {
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
-    const products = await fetchProducts();
-    if (!products) return;
-
     const productContainer = document.getElementById('product-container');
     const productTitle = document.getElementById('product-title');
+
+    // Titel sofort setzen basierend auf der Kategorie
+    productTitle.innerHTML = (category && category !== 'all') 
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
+        : 'All<span class="mobile-line-break"> </span>Products';
+
+    // Produkte laden und filtern
+    const products = await fetchProducts();
+    if (!products) return;
 
     productContainer.innerHTML = '';
 
@@ -175,10 +181,6 @@ async function displayProductList(category = null, size = null, accs = null) {
     if (accs && accs !== 'all') {
         filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
     }
-
-    productTitle.innerHTML = (category && category !== 'all') 
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
-        : 'All<span class="mobile-line-break"> </span>Products';
 
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
