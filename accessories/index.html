@@ -61,7 +61,11 @@
         <div id="cart-items" class="cart-items-container">
             <!-- Warenkorb Artikel werden hier dynamisch von JavaScript eingefügt -->
         </div>
-        
+        <div class="shipping">
+            <div class="shipping-text">Standard Shipping (DE Only, <br>free above 150€):</div>
+            <div class="shipping-divider"></div> <!-- Trennlinie -->
+            <div class="shipping-value" id="shipping-amount">€0.00</div>
+        </div>
         <div class="cart-total">
             <div class="cart-total-text">Total Amount:</div>
             <div class="cart-total-divider"></div> <!-- Trennlinie -->
@@ -69,7 +73,8 @@
         </div>
     
         <div class="cart-contact-info">
-            <!-- Dynamisch per JavaScript entweder PayPal Button oder Instagram-Kontakt -->
+            <div id="paypal-button-container"></div> <!-- PayPal Button wird hier gerendert -->
+            <p class="empty-cart-message" id="empty-cart-message" style="display: none;">Your Cart is Empty</p>
         </div>
     </div>
 
