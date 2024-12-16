@@ -253,16 +253,16 @@ main {
 
 /* Einheitliche Einstellungen für alle Social Icons */
 .social-icon {
-    width: 30px;
-    height: 30px;
+    width: 22px;
+    height: 22px;
     object-fit: contain;
     transition: transform 0.3s;
 }
 
 /* Spezifische Größe nur für das TikTok-Logo */
 .tiktok-icon {
-    width: 35px; /* Passe die Größe nach Bedarf an */
-    height: 35px;
+    width: 26px; /* Passe die Größe nach Bedarf an */
+    height:26px;
     margin-top: -2px;
 }
 
