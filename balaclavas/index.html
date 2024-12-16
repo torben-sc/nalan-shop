@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balaclavas</title>
-    <link rel="stylesheet" href="/style.css"> <!-- Absoluter Pfad für das CSS -->
+    <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
 </head>
@@ -23,6 +23,7 @@
             <span id="cart-count" class="cart-count">0</span>
         </div>
     </header>
+    </header>
 
     <div class="top-menu-wrapper">
         <nav class="top-menu">
@@ -36,12 +37,18 @@
 
     <main>
         <h1 class="product-title" id="product-title">Balaclavas</h1>
-        <div id="product-container" class="product-container">
-            <!-- Produkte werden hier von JavaScript mit Kategorie 'balaclavas' eingefügt -->
+        
+        <!-- Ladeindikator -->
+        <div id="loading-indicator" style="text-align: center; margin: 20px;">
+            <p>Loading products...</p>
+        </div>
+
+        <!-- Produkt-Container, initial unsichtbar -->
+        <div id="product-container" class="product-container" style="display: none;">
+            <!-- Produkte werden hier von JavaScript eingefügt -->
         </div>
     </main>
     
-    <!-- Warenkorb Slide-in Menü -->
     <div id="cart-popup" class="cart-popup">
         <div class="cart-popup-header">
             <h2>Cart</h2>
@@ -67,11 +74,22 @@
         </div>
     </div>
 
-    <script src="/app.js"></script> <!-- Absoluter Pfad für die JavaScript-Datei -->
+    <script src="/app.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Lädt nur Produkte mit Kategorie 'balaclavas'
-            displayProductList('balaclavas');
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const productContainer = document.getElementById('product-container');
+
+            try {
+                // Lade Produkte für die aktuelle Kategorie (z. B. Balaclavas)
+                await displayProductList('balaclavas');
+            } catch (error) {
+                console.error('Error loading products:', error);
+            } finally {
+                // Ladeindikator ausblenden und Produkt-Container anzeigen
+                loadingIndicator.style.display = 'none';
+                productContainer.style.display = 'grid';
+            }
         });
     </script>
 </body>
