@@ -157,6 +157,7 @@ async function fetchProducts() {
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
+    productContainer.innerHTML = ''; // Bestehende Produkte entfernen
     const productTitle = document.getElementById('product-title');
 
     // Titel sofort setzen basierend auf der Kategorie

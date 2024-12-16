@@ -47,8 +47,15 @@
 
     <main>
         <h1 class="product-title" id="product-title">Bags</h1>
-        <div id="product-container" class="product-container">
-            <!-- Produkte werden hier von JavaScript mit Kategorie 'bags' eingefügt -->
+        
+        <!-- Ladeindikator -->
+        <div id="loading-indicator" style="text-align: center; margin: 20px;">
+            <p>Loading products...</p>
+        </div>
+
+        <!-- Produkt-Container, initial unsichtbar -->
+        <div id="product-container" class="product-container" style="display: none;">
+            <!-- Produkte werden hier von JavaScript eingefügt -->
         </div>
     </main>
     
@@ -85,6 +92,21 @@
             const urlParams = new URLSearchParams(window.location.search);
             const size = urlParams.get('size') || 'all';
             displayProductList('bags', size);
+        });
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const productContainer = document.getElementById('product-container');
+
+            try {
+                // Lade Produkte für die aktuelle Kategorie (z. B. Balaclavas)
+                await displayProductList('bags');
+            } catch (error) {
+                console.error('Error loading products:', error);
+            } finally {
+                // Ladeindikator ausblenden und Produkt-Container anzeigen
+                loadingIndicator.style.display = 'none';
+                productContainer.style.display = 'grid';
+            }
         });
     </script>
 </body>
