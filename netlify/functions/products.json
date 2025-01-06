@@ -14,7 +14,7 @@
         "price": 65.00,
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
+        "stock": 0,
         "category": "balaclavas"
     },
     {
@@ -147,7 +147,7 @@
         "price": 130.00,
         "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-3.jpeg"],
         "description": "The Bagzilla in pink is a bold and stylish large bag designed to make a statement. Crafted from recycled T-shirt yarn, it combines sustainability with a unique texture and durability. Its vibrant pink color adds a pop of personality, making it the perfect bag for everyday use.  Available in other colors upon request – contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",
-        "stock": 0,
+        "stock": 1,
         "category": "bags",
         "size": "big"
     },
@@ -186,7 +186,7 @@
         "price": 40.00,
         "images": ["/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-1.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-2.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-3.jpeg"],
         "description": "Experience ultimate softness and elegance with this luxurious faux fur scarf, measuring 2 meters in length. Complete with two matching hand warmers. The scarf's realistic faux fur design adds a touch of glamour to any outfit. Available on request in brown or black. For custom colors, contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
+        "stock": 0,
         "category": "scarves"
     },
     {
