@@ -236,19 +236,28 @@ async function displayProductList(category = null, size = null, accs = null) {
 
 
 // Funktion zur Anzeige der Produktdetails
-// Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
     const productId = pathParts[pathParts.length - 1];
 
+    console.log('Extrahierte Produkt-ID:', productId); // Debug-Log
+
     const products = await fetchProducts();
-    if (!products) return;
+    if (!products) {
+        console.error('Produkte konnten nicht geladen werden.');
+        return;
+    }
+
+    console.log('Geladene Produkte:', products); // Debug-Log
 
     const product = products.find(p => p.id === productId);
     if (!product) {
+        console.error('Produkt mit der ID nicht gefunden:', productId);
         document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
         return;
     }
+
+    console.log('Gefundenes Produkt:', product); // Debug-Log
 
     createColorMenu(product);
     createProductImages(product);
@@ -256,21 +265,24 @@ async function displayProductDetails() {
     addButtonsAndEventListeners(product);
 }
 
+
 // Funktion zur Erstellung des Farbauswahl-Menüs
 function createColorMenu(product) {
     const colorMenuContainer = document.querySelector('.product-color-menu');
-    colorMenuContainer.innerHTML = ''; // Vorherige Inhalte entfernen
+    colorMenuContainer.innerHTML = '';
 
     if (product.variants && product.variants.length > 0) {
         product.variants.forEach((variant, index) => {
             const colorButton = document.createElement('button');
             colorButton.className = 'color-button';
             colorButton.style.backgroundColor = variant.color;
-            colorButton.dataset.index = index; // Variante identifizieren
+            colorButton.dataset.index = index;
             colorButton.title = `Color ${index + 1}`;
             colorButton.addEventListener('click', () => updateImagesForVariant(product, variant));
             colorMenuContainer.appendChild(colorButton);
         });
+    } else {
+        console.warn('Keine Varianten für Produkt:', product.name);
     }
 }
 
