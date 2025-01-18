@@ -6,21 +6,33 @@
         "variants": [
             {
                 "id": "101",
+                "name": "Pink Balaclava",
                 "color": "#FFC0CB",
-                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
+                "images": [
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"
+                ],
                 "stock": 10
             },
             {
                 "id": "102",
+                "name": "Blue Balaclava",
                 "color": "#0000FF",
-                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
+                "images": [
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001/image-BLC-RB-001-1.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001/image-BLC-RB-001-2.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001/image-BLC-RB-001-3.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001/image-BLC-RB-001-4.jpeg"
+                ],
                 "stock": 10
             }
         ],
-        "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg",
-        "description": "Balaclava description here",
+        "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg",
+        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "category": "balaclavas"
-    },    
+    },        
     {
         "id": "5",
         "name": "Pierced Black Balaclava",

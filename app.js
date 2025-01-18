@@ -294,20 +294,26 @@ function createColorMenu(product) {
 function updateImagesForVariant(product, variant) {
     const mainImageContainer = document.querySelector('.product-main-image-container');
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+    const productTitleElement = document.querySelector('.product-title-details');
 
     mainImageContainer.innerHTML = '';
     thumbnailsContainer.innerHTML = '';
 
+    // Aktualisiere die Überschrift mit dem Variantennamen
+    if (productTitleElement) {
+        productTitleElement.textContent = `${product.name} - ${variant.name}`;
+    }
+
     const imgElement = document.createElement('img');
     imgElement.src = variant.images[0];
-    imgElement.alt = `${product.name} - Variant`;
+    imgElement.alt = `${product.name} - ${variant.name}`;
     imgElement.className = 'product-main-image';
     mainImageContainer.appendChild(imgElement);
 
     variant.images.forEach((imageUrl, index) => {
         const thumbnail = document.createElement('img');
         thumbnail.src = imageUrl;
-        thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
+        thumbnail.alt = `${product.name} - ${variant.name} - Vorschau ${index + 1}`;
         thumbnail.className = 'product-thumbnail';
         if (index === 0) thumbnail.classList.add('active');
         thumbnail.addEventListener('click', () => {
@@ -372,20 +378,22 @@ function updateImage(imgElement, currentIndex, images) {
 // Hilfsfunktion zur Anzeige der Produktinformationen
 function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
+    const variantName = product.variants && product.variants.length > 0 ? product.variants[0].name : '';
+
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
-        <h1 class="product-title-details">${product.name}</h1>
+        <h1 class="product-title-details">${product.name}${variantName ? ' - ' + variantName : ''}</h1>
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
-                      Currently only shipping to Germany. For international requests, contact me on
-                      <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
-                      or
-                      <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
-                  </div>
+            Currently only shipping to Germany. For international requests, contact me on
+            <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
+            or
+            <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
+        </div>
     `;
-
 }
+
 
 // Hilfsfunktion zur Erstellung der Buttons und deren Event-Listener
 function addButtonsAndEventListeners(product) {
