@@ -268,8 +268,11 @@ async function displayProductDetails() {
 
 // Funktion zur Erstellung des Farbauswahl-Menüs
 function createColorMenu(product) {
-    const colorMenuContainer = document.querySelector('.product-color-menu');
-    colorMenuContainer.innerHTML = '';
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+
+    // Erstellt ein neues Element für die Farbauswahl
+    const colorMenuContainer = document.createElement('div');
+    colorMenuContainer.className = 'product-color-menu';
 
     if (product.variants && product.variants.length > 0) {
         product.variants.forEach((variant, index) => {
@@ -281,9 +284,10 @@ function createColorMenu(product) {
             colorButton.addEventListener('click', () => updateImagesForVariant(product, variant));
             colorMenuContainer.appendChild(colorButton);
         });
-    } else {
-        console.warn('Keine Varianten für Produkt:', product.name);
     }
+
+    // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
+    thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 }
 
 // Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
@@ -314,7 +318,6 @@ function updateImagesForVariant(product, variant) {
         thumbnailsContainer.appendChild(thumbnail);
     });
 }
-
 
 // Hilfsfunktion zur Erstellung der Hauptbilder und Thumbnails
 function createProductImages(product) {
