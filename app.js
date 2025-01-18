@@ -219,14 +219,15 @@ async function displayProductList(category = null, size = null, accs = null) {
 
     // Titel setzen
     productTitle.innerHTML = category && category !== 'all'
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
-        : 'All<span class="mobile-line-break"> </span>Products';
+    ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
+    : 'All Products';
+
 
     const products = await fetchProducts();
     if (!products) return;
 
-    // Filtere Produkte basierend auf der Kategorie
-    let filteredProducts = (category && category !== 'all')
+    // Filtere Produkte basierend auf der Kategorie, außer wenn "all" oder keine Kategorie ausgewählt ist
+    let filteredProducts = category && category !== 'all'
         ? products.filter(product => product.category && product.category.toLowerCase() === category.toLowerCase())
         : products;
 
@@ -242,8 +243,8 @@ async function displayProductList(category = null, size = null, accs = null) {
 
     // Rendere die Produkte
     filteredProducts.forEach(product => {
-        // Bild für das Produkt wählen (defaultImage oder erstes Bild aus Varianten)
-        const image = product.defaultImage || (product.variants && product.variants[0]?.images[0]) || '/images/default-placeholder.jpg';
+        // Bild für das Produkt wählen (defaultImage oder erstes Bild aus Varianten oder Images)
+        const image = product.defaultImage || (product.variants && product.variants[0]?.images[0]) || (product.images && product.images[0]) || '/images/default-placeholder.jpg';
 
         // Produktkarte erstellen
         const productCard = document.createElement('div');
