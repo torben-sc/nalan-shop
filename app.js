@@ -415,7 +415,7 @@ function updateAddToCartButton(product, variant) {
         addToCartButton.addEventListener('click', () => {
             addToCart({
                 id: variant.id,
-                name: `${product.name} - ${variant.name}`,
+                name: `${variant.name}`,
                 images: variant.images,
                 price: product.price,
                 stock: variant.stock
