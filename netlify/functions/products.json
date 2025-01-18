@@ -6,25 +6,66 @@
         "variants": [
             {
                 "id": "101",
-                "name": "Pink Balaclava",
+                "name": "Pink",
                 "color": "#FFC0CB",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
-                "price": 25.00,
-                "stock": 0
+                "price": 65.00,
+                "stock": 1
             },
             {
                 "id": "102",
-                "name": "Blue Balaclava",
+                "name": "Royal Blue",
                 "color": "#0000FF",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
                 "price": 65.00,
-                "stock": 10
+                "stock": 1
+            },
+            {
+                "id": "103",
+                "name": "Dark Blue",
+                "color": "#00008B",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "104",
+                "name": "Orange",
+                "color": "#FFA500",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "105",
+                "name": "Green",
+                "color": "#006400",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "106",
+                "name": "Lilac",
+                "color": "#C8A2C8",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 0
             }
         ],
         "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg",
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "category": "balaclavas"
-    },        
+    },     
+    {
+        "id": "4",
+        "name": "Black Balaclava with Pink Bows",
+        "price": 80.00,
+        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-4.jpeg"],
+        "description": "This unique Balaclava combines a soft, fuzzy knit with delicate pink bows for an elegant yet playful look. Perfect for adding a bold statement to your outfit while keeping warm and cozy. Its unisex design ensures a comfortable Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
+        "stock": 1,
+        "category": "balaclavas"
+    },   
     {
         "id": "5",
         "name": "Pierced Black Balaclava",
@@ -32,33 +73,6 @@
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-4.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-5.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-6.jpeg"],
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with edgy piercings for a bold, statement look. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush (such as an edge brush) to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
-        "category": "balaclavas"
-    },
-    {
-        "id": "6",
-        "name": "Orange Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg"],
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
-        "category": "balaclavas"
-    },
-    {
-        "id": "7",
-        "name": "Green Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
-        "category": "balaclavas"
-    },
-    {
-        "id": "8",
-        "name": "Lilac Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
-        "stock": 0,
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "category": "balaclavas"
     },
     {

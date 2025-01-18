@@ -497,19 +497,6 @@ function addButtonsAndEventListeners(product) {
     }
 }
 
-// Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
-function setupAddToCartButton(addToCartButton, product) {
-    addToCartButton.addEventListener('click', () => {
-        addToCart(product);
-
-        // Warenkorb-Fenster automatisch öffnen, nachdem das Produkt hinzugefügt wurde
-        const cartPopup = document.getElementById('cart-popup');
-        if (cartPopup) {
-            cartPopup.classList.add('open');
-        }
-        displayCartItems(); // Warenkorb aktualisieren
-    });
-}
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
