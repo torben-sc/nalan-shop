@@ -148,10 +148,13 @@ function applyCategoryFilter() {
             category = 'all';
     }
 
-    // Filter anwenden
-    displayProductList(category);
-}
+    // Filter-Variablen zurücksetzen
+    const size = null;
+    const accs = null;
 
+    // Produkte basierend auf der Kategorie anzeigen
+    displayProductList(category, size, accs);
+}
 
 // Funktion zur Verwaltung des Farbfilters
 function setupColorFilter(product) {
@@ -253,20 +256,25 @@ async function displayProductList(category = null, size = null, accs = null) {
 
     // Titel setzen
     productTitle.innerHTML = category && category !== 'all'
-    ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
-    : 'All Products';
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
+        : 'All Products';
 
     const products = await fetchProducts();
     if (!products) return;
 
-    // Filtere Produkte basierend auf der Kategorie, außer wenn "all" oder keine Kategorie ausgewählt ist
+    // Filtere Produkte basierend auf der Kategorie
     let filteredProducts = category && category !== 'all'
         ? products.filter(product => product.category && product.category.toLowerCase() === category.toLowerCase())
         : products;
 
-    // Reset vorheriger Filter, wenn die Kategorie wechselt
-    if (size) size = null;
-    if (accs) accs = null;
+    // Zusätzliche Filter anwenden (Größe und Accessoires)
+    if (size && size !== 'all') {
+        filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
+    }
+
+    if (accs && accs !== 'all') {
+        filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
+    }
 
     // Produkte rendern
     filteredProducts.forEach(product => {
