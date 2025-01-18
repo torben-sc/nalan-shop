@@ -381,17 +381,16 @@ function updateImage(imgElement, currentIndex, images) {
 function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Initialer Variantenname - leer, bis eine Variante ausgewählt ist
-    let variantName = '';
-
-    // Falls Varianten vorhanden sind, setze den Namen der ersten Variante
+    // Überprüfen, ob das Produkt Varianten hat
+    let displayName = product.name;
     if (product.variants && product.variants.length > 0) {
-        variantName = product.variants[0].name;
+        // Zeige nur den Namen der ersten Variante an
+        displayName = product.variants[0].name;
     }
 
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
-        <h1 class="product-title-details">${variantName || product.name}</h1>
+        <h1 class="product-title-details">${displayName}</h1>
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
