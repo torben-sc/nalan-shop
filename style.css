@@ -215,35 +215,30 @@ main {
 
 /* Produktname */
 .product-card h2 {
-    font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
+    font-size: 0.9em; /* Schriftgröße des Produktnamens */
     margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
     color: #000;
     margin-left: 3px;
     text-transform: uppercase;
-}
-
-/* Produktpreis */
-.product-card p {
-    font-size: 0.9em; /* Größere Schriftgröße für den Preis */
-    color: #E55013;
-    font-weight: bold;
-    margin: 0px 0 10px; /* Mehr Abstand zum unteren Rand (10px Abstand unten) */
-    margin-left: 3px;
+    display: flex; /* Flexbox für die Farbkacheln neben dem Namen */
+    align-items: center; /* Vertikale Zentrierung von Text und Kacheln */
+    justify-content: space-between; /* Abstand zwischen Name und Kacheln */
 }
 
 /* Container für die Farbkacheln */
 .variant-colors-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Kacheln umbrechen, wenn sie nicht passen */
     gap: 5px;
-    margin-top: 8px;
-    justify-content: flex-end; /* Rechtsbündige Ausrichtung unter dem Bild */
+    margin-left: auto; /* Schiebt die Kacheln nach rechts */
+    max-width: 80px; /* Begrenzte Breite für Kacheln */
+    justify-content: flex-end; /* Rechtsbündige Ausrichtung */
 }
 
 /* Farbkacheln */
 .variant-color {
-    width: 12px; /* Kleinere Kacheln */
-    height: 12px; /* Kleinere Kacheln */
+    width: 12px; /* Größe der Kacheln */
+    height: 12px;
     border: 1px solid #ccc;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
     border-radius: 2px; /* Quadratische Kacheln */
@@ -253,6 +248,15 @@ main {
 .variant-color.sold-out {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Produktpreis */
+.product-card p {
+    font-size: 0.9em; /* Größere Schriftgröße für den Preis */
+    color: #E55013;
+    font-weight: bold;
+    margin: 0px 0 10px; /* Mehr Abstand zum unteren Rand (10px Abstand unten) */
+    margin-left: 3px;
 }
 
 /* Entferne Hover-Effekte für Produkte */
@@ -324,6 +328,17 @@ main {
 /* Mobile Specific Styles */
 @media (max-width: 768px) {
 /* Produktseite Layout */
+    .product-card h2 {
+        flex-direction: column; /* Vertikale Anordnung */
+        align-items: flex-start; /* Links ausrichten */
+    }
+
+    .variant-colors-container {
+        margin-left: 0; /* Rücksetzen der rechten Ausrichtung */
+        justify-content: flex-start; /* Links ausrichten */
+        max-width: 100%; /* Breite für kleinere Geräte */
+    }
+    
     .product-page {
         max-width: 1200px;
         margin: 0 auto;
