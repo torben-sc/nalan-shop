@@ -155,7 +155,6 @@ async function fetchProducts() {
 }
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
-// Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = ''; // Bestehende Produkte entfernen
@@ -196,13 +195,20 @@ async function displayProductList(category = null, size = null, accs = null) {
                     <h2>${product.name}</h2>
                 </a>
                 <div class="variant-colors">
-                    ${product.variants.map(variant => `
-                        <span class="variant-color" style="background-color: ${variant.color};" title="Variant"></span>
-                    `).join('')}
+                    ${product.variants.map(variant => {
+                        const isSoldOut = variant.stock === 0;
+                        return `
+                            <span 
+                                class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
+                                style="background-color: ${variant.color};" 
+                                title="${isSoldOut ? 'Sold Out' : 'Available'}">
+                            </span>
+                        `;
+                    }).join('')}
                 </div>
                 <p class="product-price-shop">
                     ${
-                        product.stock > 0 
+                        product.variants.some(variant => variant.stock > 0) 
                         ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
                         : `<span class="sold-out-text">SOLD OUT</span>`
                     }
@@ -227,6 +233,7 @@ async function displayProductList(category = null, size = null, accs = null) {
         productContainer.appendChild(productCard);
     });
 }
+
 
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
