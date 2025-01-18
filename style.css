@@ -1029,7 +1029,7 @@ main {
     width: 30px;
     height: 30px;
     border: 1px solid #ccc;
-    border-radius: 4px; /* Quadrat statt Kreis */
+    border-radius: 0; /* Keine Abrundung */
     cursor: pointer;
     outline: none;
 }
@@ -1037,4 +1037,3 @@ main {
 .color-button:hover {
     border-color: #000;
 }
-
