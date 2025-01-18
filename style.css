@@ -80,8 +80,8 @@ body {
     background-color: #E55013; /* Farbe des Zählers */
     color: white; /* Textfarbe */
     border-radius: 50%;
-    width: 10px; /* Gleiche Höhe und Breite */
-    height: 10px;
+    width: 15px; /* Gleiche Höhe und Breite */
+    height: 15px;
     display: flex; /* Zentriere den Text */
     align-items: center; /* Vertikale Zentrierung */
     justify-content: center;
