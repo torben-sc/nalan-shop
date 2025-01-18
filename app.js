@@ -303,7 +303,7 @@ function updateImagesForVariant(product, variant) {
 
     // Aktualisiere die Überschrift mit dem Variantennamen
     if (productTitleElement) {
-        productTitleElement.textContent = `${product.name} - ${variant.name}`;
+        productTitleElement.textContent = `${variant.name}`;
     }
 
     const imgElement = document.createElement('img');
