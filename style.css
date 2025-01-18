@@ -180,14 +180,11 @@ main {
 .product-card {
     text-align: left;
     background-color: #fff; /* Hintergrundfarbe passend zum Seitenhintergrund */
-    color: #000; /* Schwarzer Text für Kontrast */
+    color: #000; /* Weißer Text für Kontrast */
     overflow: hidden; /* Verhindert Überlauf von Inhalten */
     height: 100%; /* Füllt den gesamten Container aus */
     border: none; /* Kein Rand um die Produktkarte */
-    position: relative; /* Positionierung für untergeordnete Elemente */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: relative; /* Positionierung für überlappende Texte */
 }
 
 /* Bild des Produkts */
@@ -199,7 +196,6 @@ main {
     display: block;
 }
 
-/* Links und Hover-Effekte */
 .product-card a {
     text-decoration: none; /* Keine Linie unter dem Link */
     border-bottom: none; /* Entfernt eine mögliche Linie unter den Links */
@@ -208,46 +204,15 @@ main {
 /* Container für die Produktinformationen */
 .product-info {
     padding: 10px; /* Abstand für den Text unterhalb des Bildes */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 /* Produktname */
 .product-card h2 {
-    font-size: 0.9em; /* Schriftgröße des Produktnamens */
+    font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
     margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
     color: #000;
     margin-left: 3px;
     text-transform: uppercase;
-    display: flex; /* Flexbox für die Farbkacheln neben dem Namen */
-    align-items: center; /* Vertikale Zentrierung von Text und Kacheln */
-    justify-content: space-between; /* Abstand zwischen Name und Kacheln */
-}
-
-/* Container für die Farbkacheln */
-.variant-colors-container {
-    display: flex;
-    flex-wrap: wrap; /* Kacheln umbrechen, wenn sie nicht passen */
-    gap: 5px;
-    margin-left: auto; /* Schiebt die Kacheln nach rechts */
-    max-width: 80px; /* Begrenzte Breite für Kacheln */
-    justify-content: flex-end; /* Rechtsbündige Ausrichtung */
-}
-
-/* Farbkacheln */
-.variant-color {
-    width: 12px; /* Größe der Kacheln */
-    height: 12px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-    border-radius: 2px; /* Quadratische Kacheln */
-    cursor: pointer;
-}
-
-.variant-color.sold-out {
-    opacity: 0.5;
-    cursor: not-allowed;
 }
 
 /* Produktpreis */
@@ -255,7 +220,7 @@ main {
     font-size: 0.9em; /* Größere Schriftgröße für den Preis */
     color: #E55013;
     font-weight: bold;
-    margin: 0px 0 10px; /* Mehr Abstand zum unteren Rand (10px Abstand unten) */
+    margin: 0px 0 20px; /* Mehr Abstand zum unteren Rand (10px oben, 20px unten) */
     margin-left: 3px;
 }
 
@@ -328,17 +293,6 @@ main {
 /* Mobile Specific Styles */
 @media (max-width: 768px) {
 /* Produktseite Layout */
-    .product-card h2 {
-        flex-direction: column; /* Vertikale Anordnung */
-        align-items: flex-start; /* Links ausrichten */
-    }
-
-    .variant-colors-container {
-        margin-left: 0; /* Rücksetzen der rechten Ausrichtung */
-        justify-content: flex-start; /* Links ausrichten */
-        max-width: 100%; /* Breite für kleinere Geräte */
-    }
-    
     .product-page {
         max-width: 1200px;
         margin: 0 auto;
@@ -1091,4 +1045,32 @@ main {
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 10px;
+}
+
+.variant-colors-container {
+    display: flex;
+    flex-wrap: wrap; /* Kacheln umbrechen, wenn sie nicht passen */
+    gap: 5px;
+    margin-top: 5px; /* Abstand zum Preis */
+    margin-left: 3px; /* Links ausgerichtet */
+}
+
+/* Farbkacheln */
+.variant-color {
+    width: 12px; /* Größe der Kacheln */
+    height: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px; /* Quadratische Kacheln */
+    cursor: pointer;
+}
+
+.variant-color.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Entferne Hover-Effekte für Produktkarten */
+.product-card:hover {
+    transform: none; /* Entfernt Skalierung bei Hover */
 }
