@@ -446,19 +446,23 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
+    // Platzhalter für die Nachricht
+    const messagePlaceholder = document.createElement('p');
+    messagePlaceholder.className = 'selection-message';
+    messagePlaceholder.textContent = 'Please select a color';
+    buttonContainer.appendChild(messagePlaceholder);
+
     infoContainer.appendChild(buttonContainer);
 
     if (product.variants && product.variants.length > 0) {
-        // Initialisiere mit der ersten verfügbaren Variante
-        const availableVariant = product.variants.find(variant => variant.stock > 0) || product.variants[0];
-        updateAddToCartButton(product, availableVariant);
-
-        // Event-Listener für Variantenauswahl
+        // Event-Listener für Variantenauswahl hinzufügen
         product.variants.forEach((variant, index) => {
             const colorButton = document.querySelector(`.color-button[data-index="${index}"]`);
             if (colorButton) {
                 colorButton.addEventListener('click', () => {
-                    updateAddToCartButton(product, variant); // Aktualisiere den Button für die ausgewählte Variante
+                    // Entferne die Nachricht und aktualisiere den Add-to-Cart-Button
+                    messagePlaceholder.style.display = 'none';
+                    updateAddToCartButton(product, variant);
                 });
             }
         });
