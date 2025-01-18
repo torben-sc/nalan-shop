@@ -22,28 +22,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Kategorien-Event-Listener hinzufügen
-    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
-    const categoryUrls = {
-        showAllFilter: '/shop',
-        bagsFilter: '/bags',
-        balaclavasFilter: '/balaclavas',
-        scarvesFilter: '/scarves',
-        accessoriesFilter: '/accessories',
-    };
+     // Filter anwenden basierend auf der aktuellen URL
+     applyCategoryFilter();
 
-    categories.forEach(id => {
-        const filterElement = document.getElementById(id);
-        if (filterElement) {
-            filterElement.addEventListener('click', (e) => {
-                e.preventDefault();
-                const newUrl = categoryUrls[id];
-                window.history.pushState({}, '', newUrl); // URL aktualisieren
-                const category = id.replace('Filter', '').toLowerCase(); // Kategorie aus ID extrahieren
-                displayProductList(category); // Produktliste aktualisieren
-            });
-        }
-    });
+     // Event-Listener für Kategorie-Klicks
+     const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
+     const categoryUrls = {
+         showAllFilter: '/shop',
+         bagsFilter: '/bags',
+         balaclavasFilter: '/balaclavas',
+         scarvesFilter: '/scarves',
+         accessoriesFilter: '/accessories',
+     };
+ 
+     categories.forEach(id => {
+         const filterElement = document.getElementById(id);
+         if (filterElement) {
+             filterElement.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 const newUrl = categoryUrls[id];
+                 window.history.pushState({}, '', newUrl); // URL aktualisieren
+                 applyCategoryFilter(); // Filter basierend auf der neuen URL anwenden
+             });
+         }
+     });
+ 
+     // Event-Listener für Popstate (Browser-Zurück-Taste)
+     window.addEventListener('popstate', () => {
+         applyCategoryFilter();
+     });
 
     // URL-basierten Kategorie-Filter anwenden
     const currentPath = window.location.pathname;
@@ -118,6 +125,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+function applyCategoryFilter() {
+    const currentPath = window.location.pathname;
+    let category = 'all';
+
+    // Kategorie basierend auf dem aktuellen Pfad setzen
+    switch (currentPath) {
+        case '/bags':
+            category = 'bags';
+            break;
+        case '/balaclavas':
+            category = 'balaclavas';
+            break;
+        case '/scarves':
+            category = 'scarves';
+            break;
+        case '/accessories':
+            category = 'accessories';
+            break;
+        default:
+            category = 'all';
+    }
+
+    // Filter anwenden
+    displayProductList(category);
+}
+
 
 // Funktion zur Verwaltung des Farbfilters
 function setupColorFilter(product) {
@@ -221,7 +255,6 @@ async function displayProductList(category = null, size = null, accs = null) {
     productTitle.innerHTML = category && category !== 'all'
     ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
     : 'All Products';
-
 
     const products = await fetchProducts();
     if (!products) return;

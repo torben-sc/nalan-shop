@@ -82,10 +82,12 @@
             const productContainer = document.getElementById('product-container');
 
             try {
-                // Lade Produkte für die aktuelle Kategorie (z. B. Balaclavas)
+                // Lade Produkte für die aktuelle Kategorie
                 await displayProductList('all');
             } catch (error) {
                 console.error('Error loading products:', error);
+                // Zeige eine Fehlermeldung anstelle des Ladeindikators
+                loadingIndicator.innerHTML = '<p>Failed to load products. Please try again later.</p>';
             } finally {
                 // Ladeindikator ausblenden und Produkt-Container anzeigen
                 loadingIndicator.style.display = 'none';
