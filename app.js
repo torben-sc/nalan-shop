@@ -446,21 +446,27 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    // Platzhalter für die Nachricht
-    const messagePlaceholder = document.createElement('p');
-    messagePlaceholder.className = 'selection-message';
-    messagePlaceholder.textContent = 'Please select a color';
-    buttonContainer.appendChild(messagePlaceholder);
-
+    // Füge den Button-Container dem Info-Container hinzu
     infoContainer.appendChild(buttonContainer);
 
     if (product.variants && product.variants.length > 0) {
+        // Platzhalter für die Nachricht "Please select a color"
+        const messagePlaceholder = document.createElement('p');
+        messagePlaceholder.className = 'selection-message';
+        messagePlaceholder.textContent = 'PLEASE SELECT A COLOR'; // All caps
+        messagePlaceholder.style.color = '#24388E'; // Dark Blue
+        messagePlaceholder.style.fontWeight = 'bold';
+        messagePlaceholder.style.textAlign = 'center';
+        messagePlaceholder.style.marginBottom = '10px';
+
+        buttonContainer.appendChild(messagePlaceholder);
+
         // Event-Listener für Variantenauswahl hinzufügen
         product.variants.forEach((variant, index) => {
             const colorButton = document.querySelector(`.color-button[data-index="${index}"]`);
             if (colorButton) {
                 colorButton.addEventListener('click', () => {
-                    // Entferne die Nachricht und aktualisiere den Add-to-Cart-Button
+                    // Verstecke die Nachricht und zeige den Add-to-Cart-Button für die ausgewählte Variante
                     messagePlaceholder.style.display = 'none';
                     updateAddToCartButton(product, variant);
                 });
