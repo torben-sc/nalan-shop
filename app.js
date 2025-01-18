@@ -1,13 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialisieren der Warenkorb-Anzeige
+    // Initialisiere Warenkorb-Anzeige und Footer
     updateCartCount();
+    if (!document.getElementById('landing-container')) {
+        createFooter();
+    }
 
-    // Warenkorb-Popup Elemente und Event-Handler
+    // Event Listener für Warenkorb-Popup
+    setupCartPopup();
+
+    // Event Listener für Kategorie-Klicks
+    setupCategoryLinks();
+
+    // URL-basierte Kategorie filtern und initialisieren
+    const { category, size, accs } = getCategoryFromPath();
+    if (document.getElementById('product-container')) {
+        displayProductList(category, size, accs);
+    } else if (document.getElementById('product-detail-container')) {
+        displayProductDetails();
+    }
+
+    // Popstate Event für Zurück-/Vorwärts-Tasten im Browser
+    window.addEventListener('popstate', () => {
+        const { category, size, accs } = getCategoryFromPath();
+        displayProductList(category, size, accs);
+    });
+});
+
+function setupCartPopup() {
     const cartIcon = document.getElementById('cart-icon');
     const cartPopup = document.getElementById('cart-popup');
     const closeCartButton = document.getElementById('close-cart');
 
-    // Event listener to open cart popup
     if (cartIcon && cartPopup) {
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
@@ -15,51 +38,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Event listener to close cart popup
     if (closeCartButton && cartPopup) {
         closeCartButton.addEventListener('click', () => {
             cartPopup.classList.remove('open');
         });
     }
+}
 
-     // Filter anwenden basierend auf der aktuellen URL
-     applyCategoryFilter();
+function setupCategoryLinks() {
+    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
+    const categoryUrls = {
+        showAllFilter: '/shop',
+        bagsFilter: '/bags',
+        balaclavasFilter: '/balaclavas',
+        scarvesFilter: '/scarves',
+        accessoriesFilter: '/accessories',
+    };
 
-     // Event-Listener für Kategorie-Klicks
-     const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
-     const categoryUrls = {
-         showAllFilter: '/shop',
-         bagsFilter: '/bags',
-         balaclavasFilter: '/balaclavas',
-         scarvesFilter: '/scarves',
-         accessoriesFilter: '/accessories',
-     };
- 
-     categories.forEach(id => {
-         const filterElement = document.getElementById(id);
-         if (filterElement) {
-             filterElement.addEventListener('click', (e) => {
-                 e.preventDefault();
-                 const newUrl = categoryUrls[id];
-                 window.history.pushState({}, '', newUrl); // URL aktualisieren
-                 applyCategoryFilter(); // Filter basierend auf der neuen URL anwenden
-             });
-         }
-     });
- 
-     // Event-Listener für Popstate (Browser-Zurück-Taste)
-     window.addEventListener('popstate', () => {
-         applyCategoryFilter();
-     });
+    categories.forEach(id => {
+        const filterElement = document.getElementById(id);
+        if (filterElement) {
+            filterElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newUrl = categoryUrls[id];
+                window.history.pushState({}, '', newUrl); // URL aktualisieren
+                const { category, size, accs } = getCategoryFromPath();
+                displayProductList(category, size, accs);
+            });
+        }
+    });
+}
 
-    // URL-basierten Kategorie-Filter anwenden
+function getCategoryFromPath() {
     const currentPath = window.location.pathname;
+    const urlParams = new URLSearchParams(window.location.search);
 
-    let category;
+    let category = 'all';
+    let size = null;
     let accs = null;
+
     switch (currentPath) {
         case '/bags':
             category = 'bags';
+            size = urlParams.get('size') || 'all';
             break;
         case '/balaclavas':
             category = 'balaclavas';
@@ -69,62 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
             break;
         case '/accessories':
             category = 'accessories';
-            accs = new URLSearchParams(window.location.search).get('accessorie_type') || 'all';
+            accs = urlParams.get('accessorie_type') || 'all';
             break;
-        default:
-            category = 'all';
-    }
-    
-
-    // Initialisieren der Produktliste basierend auf der URL-Kategorie
-    if (document.getElementById('product-container')) {
-        displayProductList(category, null, accs);
-    } else if (document.getElementById('product-detail-container')) {
-        displayProductDetails();
     }
 
-    // Initialisierung des Footers
-    if (!document.getElementById('landing-container')) {
-        createFooter();
-    }
-
-    // Größenfilter-Event-Listener hinzufügen (nur für Bags-Seite)
-    if (currentPath.includes('/bags')) {
-        const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-        sizeFilterLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const size = e.target.getAttribute('data-size');
-                applySizeFilter(size);
-            });
-        });
-
-        // Größe aus der URL extrahieren und Produktliste aktualisieren
-        const urlParams = new URLSearchParams(window.location.search);
-        const size = urlParams.get('size') || 'all';
-        displayProductList('bags', size);
-    }
-
-    // Accessoires-Filter-Event-Listener hinzufügen (nur für Accessories-Seite)
-    if (currentPath.includes('/accessories')) {
-        const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-        accessoriesLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const accs = e.target.getAttribute('data-accs');
-                applyAccessoriesFilter(accs);
-            });
-        });
-
-        // Accessoires-Filter aus der URL extrahieren und Produktliste aktualisieren
-        const urlParams = new URLSearchParams(window.location.search);
-        const accs = urlParams.get('accessorie_type') || 'all';
-        if (window.location.pathname.includes('/accessories')) {
-            displayProductList('accessories', null, accessoryType);
-        }
-    }
-
-});
+    return { category, size, accs };
+}
 
 function applyCategoryFilter() {
     const currentPath = window.location.pathname;
