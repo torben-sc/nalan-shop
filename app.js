@@ -194,6 +194,13 @@ async function displayProductList(category = null, size = null, accs = null) {
                     <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
                     <h2>${product.name}</h2>
                 </a>
+                <p class="product-price-shop">
+                    ${
+                        product.variants.some(variant => variant.stock > 0) 
+                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                        : `<span class="sold-out-text">SOLD OUT</span>`
+                    }
+                </p>
                 <div class="variant-colors-container">
                     ${product.variants.map(variant => {
                         const isSoldOut = variant.stock === 0;
@@ -206,13 +213,6 @@ async function displayProductList(category = null, size = null, accs = null) {
                         `;
                     }).join('')}
                 </div>
-                <p class="product-price-shop">
-                    ${
-                        product.variants.some(variant => variant.stock > 0) 
-                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                        : `<span class="sold-out-text">SOLD OUT</span>`
-                    }
-                </p>
             `;
         } else {
             productCard.innerHTML = `
