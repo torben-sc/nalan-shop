@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 const newUrl = categoryUrls[id];
-                window.location.href = newUrl; // Navigation zur neuen URL ohne ".html" oder "?category"
+                window.history.pushState({}, '', newUrl); // URL aktualisieren
+                const category = id.replace('Filter', '').toLowerCase(); // Kategorie aus ID extrahieren
+                displayProductList(category); // Produktliste aktualisieren
             });
         }
     });
@@ -223,22 +225,27 @@ async function displayProductList(category = null, size = null, accs = null) {
     const products = await fetchProducts();
     if (!products) return;
 
+    // Filtere Produkte basierend auf der Kategorie
     let filteredProducts = (category && category !== 'all')
-        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
+        ? products.filter(product => product.category && product.category.toLowerCase() === category.toLowerCase())
         : products;
 
+    // Falls Größenfilter verwendet werden
     if (size && size !== 'all') {
         filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
     }
 
+    // Falls Accessoires-Filter verwendet werden
     if (accs && accs !== 'all') {
         filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
     }
 
+    // Rendere die Produkte
     filteredProducts.forEach(product => {
-        // Standardbild oder erstes Bild aus der ersten Variante
+        // Bild für das Produkt wählen (defaultImage oder erstes Bild aus Varianten)
         const image = product.defaultImage || (product.variants && product.variants[0]?.images[0]) || '/images/default-placeholder.jpg';
 
+        // Produktkarte erstellen
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
@@ -249,7 +256,7 @@ async function displayProductList(category = null, size = null, accs = null) {
             <p class="product-price-shop">
                 ${
                     product.stock > 0
-                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>`
+                        ? `<span class="price-amount-shop">${product.price.toFixed(2)}</span><span class="price-currency-shop"> €</span>`
                         : `<span class="sold-out-text">SOLD OUT</span>`
                 }
             </p>
@@ -257,8 +264,12 @@ async function displayProductList(category = null, size = null, accs = null) {
 
         productContainer.appendChild(productCard);
     });
-}
 
+    // Keine Produkte gefunden
+    if (filteredProducts.length === 0) {
+        productContainer.innerHTML = `<p>No products found in this category.</p>`;
+    }
+}
 
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
