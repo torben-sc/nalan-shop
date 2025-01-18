@@ -66,36 +66,55 @@ exports.handler = async function (event) {
             if (!Array.isArray(cartItems)) {
                 throw new Error('Invalid cart data format. Expected an array under cartItems.');
             }
+        
             let totalAmount = 0;
-
+        
             const items = cartItems.map((item) => {
-                const product = products.find((p) => p.id === item.id);
-                if (!product) {
-                    throw new Error(`Product with ID ${item.id} not found`);
+                // Prüfe zuerst die Varianten
+                let product = null;
+                let variant = null;
+        
+                products.forEach((p) => {
+                    if (p.variants) {
+                        const foundVariant = p.variants.find((v) => v.id === item.id);
+                        if (foundVariant) {
+                            product = p;
+                            variant = foundVariant;
+                        }
+                    } else if (p.id === item.id) {
+                        product = p;
+                    }
+                });
+        
+                if (!variant && !product) {
+                    throw new Error(`Product or variant with ID ${item.id} not found`);
                 }
-
-                totalAmount += product.price * item.quantity;
-
+        
+                const price = variant ? variant.price : product.price;
+                const name = variant ? variant.name : product.name;
+        
+                totalAmount += price * item.quantity;
+        
                 return {
-                    name: product.name,
-                    sku: product.id,
+                    name,
+                    sku: item.id,
                     unit_amount: {
                         currency_code: 'EUR',
-                        value: product.price.toFixed(2),
+                        value: price.toFixed(2),
                     },
                     quantity: item.quantity.toString(),
                 };
             });
-
+        
             let shippingCost = 4.5;
             if (totalAmount >= 150) {
                 shippingCost = 0;
             }
-
+        
             totalAmount += shippingCost;
-
+        
             const accessToken = await getAccessToken();
-
+        
             const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
                 method: 'POST',
                 headers: {
@@ -125,17 +144,17 @@ exports.handler = async function (event) {
                     ],
                 }),
             });
-
+        
             if (!orderResponse.ok) {
                 throw new Error('Failed to create PayPal order');
             }
-
+        
             const orderData = await orderResponse.json();
             return {
                 statusCode: 200,
                 body: JSON.stringify({ orderID: orderData.id }),
             };
-        }
+        }        
 
         throw new Error('Unsupported action or method');
     } catch (error) {

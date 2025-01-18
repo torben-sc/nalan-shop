@@ -234,7 +234,6 @@ async function displayProductList(category = null, size = null, accs = null) {
     });
 }
 
-
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
@@ -645,9 +644,14 @@ async function displayCartItems() {
                     label: 'checkout',
                 },
                 createOrder: async () => {
-                    const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+                    const orderID = await createPayPalOrder(
+                        cart.map(item => ({
+                            id: item.id, // Diese ID sollte die Variant-ID sein
+                            quantity: item.quantity
+                        }))
+                    );
                     return orderID;
-                },
+                },                
                 onApprove: async (data, actions) => {
                     try {
                         const captureResult = await capturePayPalOrder(data.orderID);
