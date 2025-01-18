@@ -236,9 +236,10 @@ async function displayProductList(category = null, size = null, accs = null) {
 
 
 // Funktion zur Anzeige der Produktdetails
+// Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
-    const productId = pathParts[pathParts.length - 1]; // Extrahiere die ID vom Ende des Pfads
+    const productId = pathParts[pathParts.length - 1];
 
     const products = await fetchProducts();
     if (!products) return;
@@ -249,10 +250,57 @@ async function displayProductDetails() {
         return;
     }
 
-    // Rest des Codes zur Anzeige des Produkts
+    createColorMenu(product);
     createProductImages(product);
     displayProductInfo(product);
     addButtonsAndEventListeners(product);
+}
+
+// Funktion zur Erstellung des Farbauswahl-Menüs
+function createColorMenu(product) {
+    const colorMenuContainer = document.querySelector('.product-color-menu');
+    colorMenuContainer.innerHTML = ''; // Vorherige Inhalte entfernen
+
+    if (product.variants && product.variants.length > 0) {
+        product.variants.forEach((variant, index) => {
+            const colorButton = document.createElement('button');
+            colorButton.className = 'color-button';
+            colorButton.style.backgroundColor = variant.color;
+            colorButton.dataset.index = index; // Variante identifizieren
+            colorButton.title = `Color ${index + 1}`;
+            colorButton.addEventListener('click', () => updateImagesForVariant(product, variant));
+            colorMenuContainer.appendChild(colorButton);
+        });
+    }
+}
+
+// Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
+function updateImagesForVariant(product, variant) {
+    const mainImageContainer = document.querySelector('.product-main-image-container');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+
+    mainImageContainer.innerHTML = '';
+    thumbnailsContainer.innerHTML = '';
+
+    const imgElement = document.createElement('img');
+    imgElement.src = variant.images[0];
+    imgElement.alt = `${product.name} - Variant`;
+    imgElement.className = 'product-main-image';
+    mainImageContainer.appendChild(imgElement);
+
+    variant.images.forEach((imageUrl, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imageUrl;
+        thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
+        thumbnail.className = 'product-thumbnail';
+        if (index === 0) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            imgElement.src = imageUrl;
+            document.querySelectorAll('.product-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+            thumbnail.classList.add('active');
+        });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
 }
 
 

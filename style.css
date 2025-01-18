@@ -1018,3 +1018,22 @@ main {
     margin-top: 20px;
 }
 
+.product-color-menu {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.color-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    outline: none;
+}
+
+.color-button:hover {
+    border-color: #000;
+}
+
