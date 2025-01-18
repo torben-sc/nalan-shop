@@ -436,19 +436,17 @@ function addButtonsAndEventListeners(product) {
     buttonContainer.className = 'button-container';
 
     if (product.variants && product.variants.length > 0) {
-        // Für Produkte mit Varianten: Standardmäßig die erste Variante prüfen
-        const firstVariant = product.variants[0];
-        updateAddToCartButton(product, firstVariant);
+        // Finde die erste verfügbare Variante mit Lagerbestand
+        const availableVariant = product.variants.find(variant => variant.stock > 0);
 
-        // Event-Listener für Variantenauswahl hinzufügen
-        product.variants.forEach((variant) => {
-            if (variant.stock <= 0) {
-                const soldOutText = document.createElement('p');
-                soldOutText.className = 'sold-out-text-2';
-                soldOutText.textContent = `${variant.name} is sold out.`;
-                buttonContainer.appendChild(soldOutText);
-            }
-        });
+        if (availableVariant) {
+            updateAddToCartButton(product, availableVariant);
+        } else {
+            const soldOutText = document.createElement('p');
+            soldOutText.className = 'sold-out-text-2';
+            soldOutText.textContent = 'This product is sold out.';
+            buttonContainer.appendChild(soldOutText);
+        }
     } else if (product.stock > 0) {
         // Für Produkte ohne Varianten: Standardmäßiger Add-to-Cart-Button
         const addToCartButton = document.createElement('button');
