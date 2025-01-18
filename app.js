@@ -215,19 +215,16 @@ async function displayProductList(category = null, size = null, accs = null) {
     productContainer.innerHTML = ''; // Bestehende Produkte entfernen
     const productTitle = document.getElementById('product-title');
 
-    // Titel sofort setzen basierend auf der Kategorie
-    productTitle.innerHTML = (category && category !== 'all') 
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
+    // Titel setzen
+    productTitle.innerHTML = category && category !== 'all'
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
 
-    // Produkte laden und filtern
     const products = await fetchProducts();
     if (!products) return;
 
-    productContainer.innerHTML = '';
-
-    let filteredProducts = (category && category !== 'all') 
-        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
+    let filteredProducts = (category && category !== 'all')
+        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
         : products;
 
     if (size && size !== 'all') {
@@ -239,18 +236,21 @@ async function displayProductList(category = null, size = null, accs = null) {
     }
 
     filteredProducts.forEach(product => {
+        // Standardbild oder erstes Bild aus der ersten Variante
+        const image = product.defaultImage || (product.variants && product.variants[0]?.images[0]) || '/images/default-placeholder.jpg';
+
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
             <a href="/product/${product.id}" class="product-link">
-                <img src="${product.images[0]}" alt="${product.name}">
+                <img src="${image}" alt="${product.name}">
                 <h2>${product.name}</h2>
             </a>
             <p class="product-price-shop">
                 ${
-                    product.stock > 0 
-                    ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                    : `<span class="sold-out-text">SOLD OUT</span>`
+                    product.stock > 0
+                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>`
+                        : `<span class="sold-out-text">SOLD OUT</span>`
                 }
             </p>
         `;
@@ -258,6 +258,7 @@ async function displayProductList(category = null, size = null, accs = null) {
         productContainer.appendChild(productCard);
     });
 }
+
 
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
