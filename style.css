@@ -1037,3 +1037,12 @@ main {
 .color-button:hover {
     border-color: #000;
 }
+
+.selection-message {
+    color: #24388E;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+}
