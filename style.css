@@ -180,11 +180,14 @@ main {
 .product-card {
     text-align: left;
     background-color: #fff; /* Hintergrundfarbe passend zum Seitenhintergrund */
-    color: #000; /* Weißer Text für Kontrast */
+    color: #000; /* Schwarzer Text für Kontrast */
     overflow: hidden; /* Verhindert Überlauf von Inhalten */
     height: 100%; /* Füllt den gesamten Container aus */
     border: none; /* Kein Rand um die Produktkarte */
-    position: relative; /* Positionierung für überlappende Texte */
+    position: relative; /* Positionierung für untergeordnete Elemente */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* Bild des Produkts */
@@ -196,6 +199,7 @@ main {
     display: block;
 }
 
+/* Links und Hover-Effekte */
 .product-card a {
     text-decoration: none; /* Keine Linie unter dem Link */
     border-bottom: none; /* Entfernt eine mögliche Linie unter den Links */
@@ -204,6 +208,9 @@ main {
 /* Container für die Produktinformationen */
 .product-info {
     padding: 10px; /* Abstand für den Text unterhalb des Bildes */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* Produktname */
@@ -220,8 +227,32 @@ main {
     font-size: 0.9em; /* Größere Schriftgröße für den Preis */
     color: #E55013;
     font-weight: bold;
-    margin: 0px 0 20px; /* Mehr Abstand zum unteren Rand (10px oben, 20px unten) */
+    margin: 0px 0 10px; /* Mehr Abstand zum unteren Rand (10px Abstand unten) */
     margin-left: 3px;
+}
+
+/* Container für die Farbkacheln */
+.variant-colors-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+    justify-content: flex-end; /* Rechtsbündige Ausrichtung unter dem Bild */
+}
+
+/* Farbkacheln */
+.variant-color {
+    width: 12px; /* Kleinere Kacheln */
+    height: 12px; /* Kleinere Kacheln */
+    border: 1px solid #ccc;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px; /* Quadratische Kacheln */
+    cursor: pointer;
+}
+
+.variant-color.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* Entferne Hover-Effekte für Produkte */
@@ -1046,34 +1077,3 @@ main {
     text-align: center;
     margin-bottom: 10px;
 }
-
-.product-price-and-colors {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-}
-
-.variant-colors-inline {
-    display: flex;
-    gap: 3px;
-}
-
-.variant-color {
-    width: 10px;
-    height: 10px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-    border-radius: 2px; /* Optionale Abrundung */
-}
-
-.variant-color.sold-out {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.product-price-shop {
-    margin: 0;
-    font-size: 16px;
-}
-
