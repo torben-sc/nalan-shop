@@ -51,6 +51,90 @@
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
                 "price": 65.00,
                 "stock": 0
+            },
+            {
+                "id": "107",
+                "name": "Plain Balaclava - Powder Pink",
+                "color": "#F3C1C6",
+                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png",
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "108",
+                "name": "Plain Balaclava - Off White",
+                "color": "#F8F8F8",
+                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png",
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "109",
+                "name": "Plain Balaclava - Red",
+                "color": "#FF0000",
+                "images": [
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-1.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-3.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-4.jpeg"
+                ],
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "110",
+                "name": "Plain Balaclava - Black/Red",
+                "color": "#4B0000",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-BR-001-1.png"],
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "111",
+                "name": "Plain Balaclava - Dark Pink",
+                "color": "#D74894",
+                "images": "images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-DP-001-1.png",
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "112",
+                "name": "Plain Balaclava - Olive Green",
+                "color": "#556B2F",
+                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png",
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "113",
+                "name": "Plain Balaclava - Grey",
+                "color": "#808080",
+                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png",
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "114",
+                "name": "Plain Balaclava - Baby Blue",
+                "color": "#89CFF0",
+                "images": [
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-1.JPG",
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-2.JPG",
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-3.JPG"
+                ],
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "115",
+                "name": "Plain Balaclava - Beige",
+                "color": "#D1B9A3",
+                "images": [
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-1.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-3.jpeg",
+                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-4.jpeg"
+                ],
+                "price": 65.00,
+                "stock": 0
             }
         ],
         "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg",
