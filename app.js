@@ -264,22 +264,14 @@ async function displayProductList(category = null, size = null, accs = null) {
         ? products.filter(product => product.category && product.category.toLowerCase() === category.toLowerCase())
         : products;
 
-    // Falls Größenfilter verwendet werden
-    if (size && size !== 'all') {
-        filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
-    }
+    // Reset vorheriger Filter, wenn die Kategorie wechselt
+    if (size) size = null;
+    if (accs) accs = null;
 
-    // Falls Accessoires-Filter verwendet werden
-    if (accs && accs !== 'all') {
-        filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
-    }
-
-    // Rendere die Produkte
+    // Produkte rendern
     filteredProducts.forEach(product => {
-        // Bild für das Produkt wählen (defaultImage oder erstes Bild aus Varianten oder Images)
         const image = product.defaultImage || (product.variants && product.variants[0]?.images[0]) || (product.images && product.images[0]) || '/images/default-placeholder.jpg';
 
-        // Produktkarte erstellen
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
