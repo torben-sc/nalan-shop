@@ -1021,14 +1021,15 @@ main {
 .product-color-menu {
     display: flex;
     gap: 10px;
-    margin-bottom: 15px;
+    margin: 10px 0;
+    justify-content: center;
 }
 
 .color-button {
     width: 30px;
     height: 30px;
-    border-radius: 50%;
     border: 1px solid #ccc;
+    border-radius: 4px; /* Quadrat statt Kreis */
     cursor: pointer;
     outline: none;
 }
@@ -1036,3 +1037,4 @@ main {
 .color-button:hover {
     border-color: #000;
 }
+
