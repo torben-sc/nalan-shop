@@ -1018,3 +1018,26 @@ main {
     margin-top: 20px;
 }
 
+.color-filter-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    justify-content: center;
+}
+
+.color-filter {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border 0.3s ease;
+}
+
+.color-filter.selected {
+    border: 2px solid #E55013;
+}
+
+.color-filter:hover {
+    border: 2px solid #555;
+}

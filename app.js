@@ -117,6 +117,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// Funktion zur Verwaltung des Farbfilters
+function setupColorFilter(product) {
+    const colorContainer = document.getElementById('color-filter-container');
+    const mainImage = document.querySelector('.product-main-image');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+    const addToCartButton = document.querySelector('.add-to-cart-button');
+
+    colorContainer.innerHTML = ''; // Vorhandene Farben entfernen
+
+    product.variants.forEach(variant => {
+        const colorSquare = document.createElement('div');
+        colorSquare.className = 'color-filter';
+        colorSquare.style.backgroundColor = variant.color; // Farbe anzeigen
+        colorSquare.dataset.variantId = variant.id; // Produkt-ID speichern
+
+        colorSquare.addEventListener('click', () => {
+            // Alle Quadrate zurücksetzen
+            document.querySelectorAll('.color-filter').forEach(el => el.classList.remove('selected'));
+            colorSquare.classList.add('selected');
+
+            // Hauptbild und Thumbnails aktualisieren
+            updateImage(mainImage, 0, variant.images);
+            updateThumbnails(thumbnailsContainer, variant.images);
+
+            // Button aktivieren
+            addToCartButton.textContent = 'Add to cart';
+            addToCartButton.disabled = false;
+            addToCartButton.dataset.variantId = variant.id; // Variant-ID speichern
+        });
+
+        colorContainer.appendChild(colorSquare);
+    });
+
+    // Standardzustand: Kein Button aktiv
+    addToCartButton.textContent = 'PLEASE SELECT A COLOR';
+    addToCartButton.disabled = true;
+}
+
+// Funktion zur Aktualisierung der Thumbnails
+function updateThumbnails(container, images) {
+    container.innerHTML = ''; // Vorherige Thumbnails entfernen
+
+    images.forEach((image, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = image;
+        thumbnail.className = 'product-thumbnail';
+        if (index === 0) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            const mainImage = document.querySelector('.product-main-image');
+            updateImage(mainImage, index, images);
+        });
+        container.appendChild(thumbnail);
+    });
+}
+
 // Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
 function applySizeFilter(size) {
     displayProductList('bags', size);
@@ -207,21 +262,32 @@ async function displayProductList(category = null, size = null, accs = null) {
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
-    const productId = pathParts[pathParts.length - 1]; // Extrahiere die ID vom Ende des Pfads
+    const productId = pathParts[pathParts.length - 1];
 
-    const products = await fetchProducts();
-    if (!products) return;
+    try {
+        // Produkte laden
+        const products = await fetchProducts();
+        if (!products) {
+            console.error("Produkte konnten nicht geladen werden.");
+            return;
+        }
 
-    const product = products.find(p => p.id === productId);
-    if (!product) {
-        document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
-        return;
+        // Produkt finden
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
+            return;
+        }
+
+        // Hauptbilder und Thumbnails initialisieren
+        createProductImages(product);
+        setupColorFilter(product);
+        displayProductInfo(product);
+        addButtonsAndEventListeners(product);
+    } catch (error) {
+        console.error("Fehler beim Laden der Produktdetails:", error);
+        document.getElementById('product-detail-container').innerHTML = `<p>Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.</p>`;
     }
-
-    // Rest des Codes zur Anzeige des Produkts
-    createProductImages(product);
-    displayProductInfo(product);
-    addButtonsAndEventListeners(product);
 }
 
 
