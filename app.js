@@ -380,11 +380,18 @@ function updateImage(imgElement, currentIndex, images) {
 // Hilfsfunktion zur Anzeige der Produktinformationen
 function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
-    const variantName = product.variants && product.variants.length > 0 ? product.variants[0].name : '';
+
+    // Initialer Variantenname - leer, bis eine Variante ausgewählt ist
+    let variantName = '';
+
+    // Falls Varianten vorhanden sind, setze den Namen der ersten Variante
+    if (product.variants && product.variants.length > 0) {
+        variantName = product.variants[0].name;
+    }
 
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
-        <h1 class="product-title-details">${product.name}${variantName ? ' - ' + variantName : ''}</h1>
+        <h1 class="product-title-details">${variantName || product.name}</h1>
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">

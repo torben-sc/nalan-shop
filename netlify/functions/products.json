@@ -6,7 +6,7 @@
         "variants": [
             {
                 "id": "101",
-                "name": "Pink",
+                "name": "Plain Balaclava - Pink",
                 "color": "#FFC0CB",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
                 "price": 65.00,
@@ -14,7 +14,7 @@
             },
             {
                 "id": "102",
-                "name": "Royal Blue",
+                "name": "Plain Balaclava - Royal Blue",
                 "color": "#0000FF",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
                 "price": 65.00,
@@ -22,7 +22,7 @@
             },
             {
                 "id": "103",
-                "name": "Dark Blue",
+                "name": "Plain Balaclava - Dark Blue",
                 "color": "#00008B",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-4.jpeg"],
                 "price": 65.00,
@@ -30,7 +30,7 @@
             },
             {
                 "id": "104",
-                "name": "Orange",
+                "name": "Plain Balaclava - Orange",
                 "color": "#FF6700",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg"],
                 "price": 65.00,
@@ -38,7 +38,7 @@
             },
             {
                 "id": "105",
-                "name": "Green",
+                "name": "Plain Balaclava - Green",
                 "color": "#006400",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
                 "price": 65.00,
@@ -46,7 +46,7 @@
             },
             {
                 "id": "106",
-                "name": "Lilac",
+                "name": "Plain Balaclava - Lilac",
                 "color": "#C8A2C8",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
                 "price": 65.00,
