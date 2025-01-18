@@ -1051,7 +1051,7 @@ main {
     display: flex;
     flex-wrap: wrap; /* Kacheln umbrechen, wenn sie nicht passen */
     gap: 5px;
-    margin-top: 5px; /* Abstand zum Preis */
+    margin-top: 1px; /* Minimaler Abstand direkt unter dem Preis */
     margin-left: 3px; /* Links ausgerichtet */
 }
 
