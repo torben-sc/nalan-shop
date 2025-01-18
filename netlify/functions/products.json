@@ -1,6 +1,6 @@
 [
     {
-        "id": "101",
+        "id": "1",
         "name": "Balaclavas",
         "price": 65.00,
         "variants": [
@@ -15,7 +15,7 @@
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001/image-BLC-RB-001-1.jpeg"]
             }
         ],
-        "images": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg",
+        "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg",
         "description": "Balaclava description here",
         "stock": 10,
         "category": "balaclavas"
