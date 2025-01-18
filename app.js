@@ -280,8 +280,11 @@ function createColorMenu(product) {
             colorButton.className = 'color-button';
             colorButton.style.backgroundColor = variant.color;
             colorButton.dataset.index = index;
-            colorButton.title = `Color ${index + 1}`;
-            colorButton.addEventListener('click', () => updateImagesForVariant(product, variant));
+            colorButton.title = variant.name || `Color ${index + 1}`;
+            colorButton.addEventListener('click', () => {
+                updateImagesForVariant(product, variant);
+                updateAddToCartButton(product, variant); // Aktualisiere den Button
+            });
             colorMenuContainer.appendChild(colorButton);
         });
     }
@@ -397,7 +400,7 @@ function displayProductInfo(product) {
 // Funktion zur Aktualisierung des Add-to-Cart Buttons
 function updateAddToCartButton(product, variant) {
     const buttonContainer = document.querySelector('.button-container');
-    buttonContainer.innerHTML = ''; // Vorherige Buttons entfernen
+    buttonContainer.innerHTML = ''; // Entferne vorherige Buttons
 
     if (variant.stock > 0) {
         const addToCartButton = document.createElement('button');
@@ -406,7 +409,7 @@ function updateAddToCartButton(product, variant) {
         addToCartButton.addEventListener('click', () => {
             addToCart({
                 id: variant.id,
-                name: `${product.name} - ${variant.name}`,
+                name: `${product.name} - ${variant.name || ''}`,
                 images: variant.images,
                 price: product.price,
                 stock: variant.stock
@@ -435,18 +438,22 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    if (product.variants && product.variants.length > 0) {
-        // Finde die erste verfügbare Variante mit Lagerbestand
-        const availableVariant = product.variants.find(variant => variant.stock > 0);
+    infoContainer.appendChild(buttonContainer);
 
-        if (availableVariant) {
-            updateAddToCartButton(product, availableVariant);
-        } else {
-            const soldOutText = document.createElement('p');
-            soldOutText.className = 'sold-out-text-2';
-            soldOutText.textContent = 'This product is sold out.';
-            buttonContainer.appendChild(soldOutText);
-        }
+    if (product.variants && product.variants.length > 0) {
+        // Initialisiere mit der ersten verfügbaren Variante
+        const availableVariant = product.variants.find(variant => variant.stock > 0) || product.variants[0];
+        updateAddToCartButton(product, availableVariant);
+
+        // Event-Listener für Variantenauswahl
+        product.variants.forEach((variant, index) => {
+            const colorButton = document.querySelector(`.color-button[data-index="${index}"]`);
+            if (colorButton) {
+                colorButton.addEventListener('click', () => {
+                    updateAddToCartButton(product, variant); // Aktualisiere den Button für die ausgewählte Variante
+                });
+            }
+        });
     } else if (product.stock > 0) {
         // Für Produkte ohne Varianten: Standardmäßiger Add-to-Cart-Button
         const addToCartButton = document.createElement('button');
@@ -476,9 +483,6 @@ function addButtonsAndEventListeners(product) {
         </div>`;
         buttonContainer.appendChild(soldOutText);
     }
-
-    // Füge die Button-Gruppe oder den Sold-Out Text zum infoContainer hinzu
-    infoContainer.appendChild(buttonContainer);
 }
 
 // Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
@@ -494,7 +498,6 @@ function setupAddToCartButton(addToCartButton, product) {
         displayCartItems(); // Warenkorb aktualisieren
     });
 }
-
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
