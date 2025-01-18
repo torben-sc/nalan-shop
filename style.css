@@ -1046,3 +1046,21 @@ main {
     text-align: center;
     margin-bottom: 10px;
 }
+
+.variant-colors-container {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.variant-color {
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.variant-color.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
