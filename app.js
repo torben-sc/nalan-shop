@@ -324,15 +324,27 @@ function createProductImages(product) {
     mainImageContainer.innerHTML = ''; // Vorherige Bilder entfernen
     thumbnailsContainer.innerHTML = ''; // Vorherige Thumbnails entfernen
 
+    let images = [];
+    if (product.variants && product.variants.length > 0) {
+        // Verwende die Bilder der ersten Variante standardmäßig
+        images = product.variants[0].images;
+    } else if (product.images && product.images.length > 0) {
+        // Fallback: Verwende Bilder des Produkts (falls keine Varianten vorhanden)
+        images = product.images;
+    } else {
+        console.error('Keine Bilder verfügbar für Produkt:', product.name);
+        return;
+    }
+
     let currentIndex = 0;
 
     const imgElement = document.createElement('img');
-    imgElement.src = product.images[currentIndex];
+    imgElement.src = images[currentIndex];
     imgElement.alt = product.name;
     imgElement.className = 'product-main-image';
     mainImageContainer.appendChild(imgElement);
 
-    product.images.forEach((imageUrl, index) => {
+    images.forEach((imageUrl, index) => {
         const thumbnail = document.createElement('img');
         thumbnail.src = imageUrl;
         thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
@@ -340,7 +352,7 @@ function createProductImages(product) {
         if (index === currentIndex) thumbnail.classList.add('active');
         thumbnail.addEventListener('click', () => {
             currentIndex = index;
-            updateImage(imgElement, currentIndex, product.images);
+            updateImage(imgElement, currentIndex, images);
         });
         thumbnailsContainer.appendChild(thumbnail);
     });
