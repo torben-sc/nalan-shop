@@ -1047,20 +1047,33 @@ main {
     margin-bottom: 10px;
 }
 
-.variant-colors-container {
+.product-price-and-colors {
     display: flex;
-    gap: 5px;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 5px;
 }
 
+.variant-colors-inline {
+    display: flex;
+    gap: 3px;
+}
+
 .variant-color {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     border: 1px solid #ccc;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px; /* Optionale Abrundung */
 }
 
 .variant-color.sold-out {
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.product-price-shop {
+    margin: 0;
+    font-size: 16px;
+}
+
