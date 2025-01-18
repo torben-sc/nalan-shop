@@ -399,16 +399,17 @@ function displayProductInfo(product) {
 // Funktion zur Aktualisierung des Add-to-Cart Buttons
 function updateAddToCartButton(product, variant) {
     const buttonContainer = document.querySelector('.button-container');
-    buttonContainer.innerHTML = ''; // Entferne vorherige Buttons
+    buttonContainer.innerHTML = ''; // Vorherige Buttons entfernen
 
     if (variant.stock > 0) {
+        // Button hinzufügen, wenn die Variante auf Lager ist
         const addToCartButton = document.createElement('button');
         addToCartButton.className = 'add-to-cart-button';
         addToCartButton.textContent = 'Add to cart';
         addToCartButton.addEventListener('click', () => {
             addToCart({
                 id: variant.id,
-                name: `${product.name} - ${variant.name || ''}`,
+                name: `${product.name} - ${variant.name}`,
                 images: variant.images,
                 price: product.price,
                 stock: variant.stock
@@ -422,9 +423,17 @@ function updateAddToCartButton(product, variant) {
         });
         buttonContainer.appendChild(addToCartButton);
     } else {
+        // Sold-Out Text anzeigen, wenn die Variante ausverkauft ist
         const soldOutText = document.createElement('p');
         soldOutText.className = 'sold-out-text-2';
-        soldOutText.textContent = 'This variant is sold out.';
+        soldOutText.innerHTML = `
+        <div style="text-align: center; margin-bottom: 10px;">
+            <strong>THIS VARIANT IS SOLD OUT</strong> <br>
+            REQUESTS POSSIBLE ON 
+            <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
+            OR 
+            <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
+        </div>`;
         buttonContainer.appendChild(soldOutText);
     }
 }
