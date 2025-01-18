@@ -155,6 +155,7 @@ async function fetchProducts() {
 }
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
+// Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = ''; // Bestehende Produkte entfernen
@@ -186,19 +187,42 @@ async function displayProductList(category = null, size = null, accs = null) {
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <a href="/product/${product.id}" class="product-link">
-                <img src="${product.images[0]}" alt="${product.name}">
-                <h2>${product.name}</h2>
-            </a>
-            <p class="product-price-shop">
-                ${
-                    product.stock > 0 
-                    ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                    : `<span class="sold-out-text">SOLD OUT</span>`
-                }
-            </p>
-        `;
+
+        // Prüfen, ob Varianten vorhanden sind
+        if (product.variants && product.variants.length > 0) {
+            productCard.innerHTML = `
+                <a href="/product/${product.id}" class="product-link">
+                    <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                </a>
+                <div class="variant-colors">
+                    ${product.variants.map(variant => `
+                        <span class="variant-color" style="background-color: ${variant.color};" title="Variant"></span>
+                    `).join('')}
+                </div>
+                <p class="product-price-shop">
+                    ${
+                        product.stock > 0 
+                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                        : `<span class="sold-out-text">SOLD OUT</span>`
+                    }
+                </p>
+            `;
+        } else {
+            productCard.innerHTML = `
+                <a href="/product/${product.id}" class="product-link">
+                    <img src="${product.images[0]}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                </a>
+                <p class="product-price-shop">
+                    ${
+                        product.stock > 0 
+                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                        : `<span class="sold-out-text">SOLD OUT</span>`
+                    }
+                </p>
+            `;
+        }
 
         productContainer.appendChild(productCard);
     });
