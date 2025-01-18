@@ -394,6 +394,38 @@ function displayProductInfo(product) {
     `;
 }
 
+// Funktion zur Aktualisierung des Add-to-Cart Buttons
+function updateAddToCartButton(product, variant) {
+    const buttonContainer = document.querySelector('.button-container');
+    buttonContainer.innerHTML = ''; // Vorherige Buttons entfernen
+
+    if (variant.stock > 0) {
+        const addToCartButton = document.createElement('button');
+        addToCartButton.className = 'add-to-cart-button';
+        addToCartButton.textContent = 'Add to cart';
+        addToCartButton.addEventListener('click', () => {
+            addToCart({
+                id: variant.id,
+                name: `${product.name} - ${variant.name}`,
+                images: variant.images,
+                price: product.price,
+                stock: variant.stock
+            });
+
+            const cartPopup = document.getElementById('cart-popup');
+            if (cartPopup) {
+                cartPopup.classList.add('open');
+            }
+            displayCartItems();
+        });
+        buttonContainer.appendChild(addToCartButton);
+    } else {
+        const soldOutText = document.createElement('p');
+        soldOutText.className = 'sold-out-text-2';
+        soldOutText.textContent = 'This variant is sold out.';
+        buttonContainer.appendChild(soldOutText);
+    }
+}
 
 // Hilfsfunktion zur Erstellung der Buttons und deren Event-Listener
 function addButtonsAndEventListeners(product) {
@@ -403,36 +435,53 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    if (product.stock > 0) {
-        // Add to Cart Button hinzufügen
+    if (product.variants && product.variants.length > 0) {
+        // Für Produkte mit Varianten: Standardmäßig die erste Variante prüfen
+        const firstVariant = product.variants[0];
+        updateAddToCartButton(product, firstVariant);
+
+        // Event-Listener für Variantenauswahl hinzufügen
+        product.variants.forEach((variant) => {
+            if (variant.stock <= 0) {
+                const soldOutText = document.createElement('p');
+                soldOutText.className = 'sold-out-text-2';
+                soldOutText.textContent = `${variant.name} is sold out.`;
+                buttonContainer.appendChild(soldOutText);
+            }
+        });
+    } else if (product.stock > 0) {
+        // Für Produkte ohne Varianten: Standardmäßiger Add-to-Cart-Button
         const addToCartButton = document.createElement('button');
         addToCartButton.className = 'add-to-cart-button';
         addToCartButton.textContent = 'Add to cart';
-        buttonContainer.appendChild(addToCartButton);
+        addToCartButton.addEventListener('click', () => {
+            addToCart(product);
 
-        // Event-Listener für Add-to-Cart Button
-        setupAddToCartButton(addToCartButton, product);
+            const cartPopup = document.getElementById('cart-popup');
+            if (cartPopup) {
+                cartPopup.classList.add('open');
+            }
+            displayCartItems();
+        });
+        buttonContainer.appendChild(addToCartButton);
     } else {
-        // Sold-Out Text mit Links erstellen
+        // Sold-Out Text für Produkte ohne Varianten
         const soldOutText = document.createElement('p');
         soldOutText.className = 'sold-out-text-2';
         soldOutText.innerHTML = `
-    <div style="text-align: center; margin-bottom: 10px;">
-        <strong>SOLD OUT</strong> <br>
-        REQUESTS POSSIBLE ON 
-        <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
-        OR 
-        <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
-    </div>
-`;
-
+        <div style="text-align: center; margin-bottom: 10px;">
+            <strong>SOLD OUT</strong> <br>
+            REQUESTS POSSIBLE ON 
+            <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
+            OR 
+            <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
+        </div>`;
         buttonContainer.appendChild(soldOutText);
     }
 
     // Füge die Button-Gruppe oder den Sold-Out Text zum infoContainer hinzu
     infoContainer.appendChild(buttonContainer);
 }
-
 
 // Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
 function setupAddToCartButton(addToCartButton, product) {
