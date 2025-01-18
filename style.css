@@ -208,8 +208,8 @@ main {
 
 /* Produktname */
 .product-card h2 {
-    font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
-    margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
+    font-size: 0.9em; /* Schriftgröße des Produktnamens */
+    margin: 2px 0; /* Abstand zum Bild (nach oben und unten) */
     color: #000;
     margin-left: 3px;
     text-transform: uppercase;
@@ -217,10 +217,10 @@ main {
 
 /* Produktpreis */
 .product-card p {
-    font-size: 0.9em; /* Größere Schriftgröße für den Preis */
+    font-size: 0.9em; /* Schriftgröße des Preises */
     color: #E55013;
     font-weight: bold;
-    margin: 0px 0 20px; /* Mehr Abstand zum unteren Rand (10px oben, 20px unten) */
+    margin: 0; /* Kein zusätzlicher Abstand nach unten */
     margin-left: 3px;
 }
 
@@ -1051,7 +1051,7 @@ main {
     display: flex;
     flex-wrap: wrap; /* Kacheln umbrechen, wenn sie nicht passen */
     gap: 5px;
-    margin-top: -4px; /* Minimaler Abstand direkt unter dem Preis */
+    margin-top: 1px; /* Minimaler Abstand direkt unter dem Preis */
     margin-left: 3px; /* Links ausgerichtet */
 }
 
