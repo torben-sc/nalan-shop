@@ -56,7 +56,7 @@
                 "id": "107",
                 "name": "Plain Balaclava - Powder Pink",
                 "color": "#F3C1C6",
-                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png"],
                 "price": 65.00,
                 "stock": 0
             },
@@ -64,7 +64,7 @@
                 "id": "108",
                 "name": "Plain Balaclava - Off White",
                 "color": "#F8F8F8",
-                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png"],
                 "price": 65.00,
                 "stock": 0
             },
@@ -91,7 +91,7 @@
                 "id": "111",
                 "name": "Plain Balaclava - Dark Pink",
                 "color": "#D74894",
-                "images": "images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-DP-001-1.png",
+                "images":["images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-DP-001-1.png"],
                 "price": 65.00,
                 "stock": 0
             },
@@ -99,7 +99,7 @@
                 "id": "112",
                 "name": "Plain Balaclava - Olive Green",
                 "color": "#556B2F",
-                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png"],
                 "price": 65.00,
                 "stock": 0
             },
@@ -107,7 +107,7 @@
                 "id": "113",
                 "name": "Plain Balaclava - Grey",
                 "color": "#808080",
-                "images": "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-GY-001-1.png",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-GY-001-1.png"],
                 "price": 65.00,
                 "stock": 0
             },
