@@ -1,40 +1,182 @@
 [
     {
         "id": "1",
-        "name": "PINK BALACLAVA",
+        "name": "Plain Balaclava",
         "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
+        "variants": [
+            {
+                "id": "101",
+                "name": "Plain Balaclava - Pink",
+                "color": "#FFC0CB",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "102",
+                "name": "Plain Balaclava - Royal Blue",
+                "color": "#0000FF",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "103",
+                "name": "Plain Balaclava - Dark Blue",
+                "color": "#00008B",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "104",
+                "name": "Plain Balaclava - Orange",
+                "color": "#FF6700",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "105",
+                "name": "Plain Balaclava - Green",
+                "color": "#006400",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "106",
+                "name": "Plain Balaclava - Lilac",
+                "color": "#C8A2C8",
+                "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
+                "price": 65.00,
+                "stock": 0
+            },
+            {
+                "id": "107",
+                "name": "Plain Balaclava - Powder Pink",
+                "color": "#F3C1C6",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "108",
+                "name": "Plain Balaclava - Off White",
+                "color": "#F8F8F8",
+                "images": ["/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-1.jpeg", "/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-2.jpeg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "109",
+                "name": "Plain Balaclava - Red",
+                "color": "#FF0000",
+                "images": [
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-RD-001/Image-BLC-RD-001-1.JPG",
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-RD-001/Image-BLC-RD-001-2.JPG"
+                ],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "110",
+                "name": "Plain Balaclava - Black/Red",
+                "color": "#FF0000/#000000",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-BR-001-1.png"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "111",
+                "name": "Plain Balaclava - Dark Pink",
+                "color": "#D74894",
+                "images":["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image- BLC-DP-001-1.png"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "112",
+                "name": "Plain Balaclava - Olive Green",
+                "color": "#556B2F",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "113",
+                "name": "Plain Balaclava - Grey",
+                "color": "#808080",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-GY-001-1.png"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "114",
+                "name": "Plain Balaclava - Baby Blue",
+                "color": "#89CFF0",
+                "images": [
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-1.JPG",
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-2.JPG",
+                    "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-3.JPG"
+                ],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "115",
+                "name": "Plain Balaclava - Beige",
+                "color": "#D1B9A3",
+                "images": [
+                    "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-1.jpg",
+                    "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-2.jpeg",
+                    "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-3.jpeg"
+                ],
+                "price": 65.00,
+                "stock": 1
+            }
+        ],
+        "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg",
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
         "category": "balaclavas"
-    },
+    },     
     {
         "id": "2",
-        "name": "Royal Blue Balaclava",
+        "name": "Skimask Balaclava",
         "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
+        "variants": [
+            {
+                "id": "201",
+                "name": "Skimask Balaclava - Pink",
+                "color": "#FFC0CB",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-1.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-2.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-3.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-4.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-5.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-6.jpg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "202",
+                "name": "Skimask Balaclava - Red",
+                "color": "#4B0000",
+                "images": [
+                    "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-RD-001/Image-SKB-RD-001-1.JPG"
+                ],
+                "price": 65.00,
+                "stock": 1
+            }
+        ],
+        "defaultImage": "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-3.jpg",
+        "description": "<p>This stylish Skimask Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with versatility in mind, you can wear it in different ways: pull it over your nose for maximum coverage or leave your face out for a more casual look. Its unisex fit ensures comfort and warmth while adding a pop of color with its vibrant pink shade.</p><strong>Material:</strong><p>Made from a durable blend of 60% polyamide and 40% acrylic.</p><strong>Care Instructions:</strong><p>Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.</p><br><br>Ships within 1-2 weeks.",
         "category": "balaclavas"
-    },
-    {
-        "id": "3",
-        "name": "Dark Blue Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-4.jpeg"],
-        "stock": 0,
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "category": "balaclavas"
-    },
+    },     
     {
         "id": "4",
         "name": "Black Balaclava with Pink Bows",
-        "price": 80.00,
+        "price": 85.00,
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-4.jpeg"],
         "description": "This unique Balaclava combines a soft, fuzzy knit with delicate pink bows for an elegant yet playful look. Perfect for adding a bold statement to your outfit while keeping warm and cozy. Its unisex design ensures a comfortable Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
         "category": "balaclavas"
-    },
+    },   
     {
         "id": "5",
         "name": "Pierced Black Balaclava",
@@ -42,33 +184,6 @@
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-4.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-5.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-6.jpeg"],
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with edgy piercings for a bold, statement look. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush (such as an edge brush) to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
-        "category": "balaclavas"
-    },
-    {
-        "id": "6",
-        "name": "Orange Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg"],
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
-        "category": "balaclavas"
-    },
-    {
-        "id": "7",
-        "name": "Green Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
-        "category": "balaclavas"
-    },
-    {
-        "id": "8",
-        "name": "Lilac Balaclava",
-        "price": 65.00,
-        "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
-        "stock": 0,
-        "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "category": "balaclavas"
     },
     {
@@ -146,8 +261,8 @@
         "name": "Bagzilla – Pink",
         "price": 130.00,
         "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-1.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-BZ-PK/image-BAG-BZ-PK-001-3.jpeg"],
-        "description": "The Bagzilla in pink is a bold and stylish large bag designed to make a statement. Crafted from recycled T-shirt yarn, it combines sustainability with a unique texture and durability. Its vibrant pink color adds a pop of personality, making it the perfect bag for everyday use.  Available in other colors upon request – contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
+        "description": "The Bagzilla in pink is a bold and stylish large bag designed to make a statement. Crafted from recycled T-shirt yarn, it combines sustainability with a unique texture and durability. Its vibrant pink color adds a pop of personality, making it the perfect bag for everyday use. Available in other colors upon request – contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",
+        "stock": 0,
         "category": "bags",
         "size": "big"
     },
@@ -173,7 +288,7 @@
     },
     {
         "id": "19",
-        "name": "Handmade Scarf – Multicolored ",
+        "name": "Handmade Scarf – Multicolored",
         "price": 100.00,
         "images": ["/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-1.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-2.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-3.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-4.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-MULTI/image-SC-MULTI-001-5.jpeg"],
         "description": "Wrap yourself in 3.3 meters of cozy warmth with this handmade scarf, crafted from 100% pure sheep's wool. The multicolored design is as vibrant as it is unique, making it a perfect statement piece for chilly days. Sustainably made from natural materials. Perfect for layering and brightening up any cold-weather outfit.<br><br>Ships within 1-2 weeks.",
@@ -182,7 +297,7 @@
     },
     {
         "id": "20",
-        "name": "Faux Fur Scarf with Hand Warmers – White ",
+        "name": "Faux Fur Scarf with Hand Warmers – White",
         "price": 40.00,
         "images": ["/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-1.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-2.jpeg", "/images/Nalan-DRP-1/SCARFS/SC-FF/image-SC-FF-002-3.jpeg"],
         "description": "Experience ultimate softness and elegance with this luxurious faux fur scarf, measuring 2 meters in length. Complete with two matching hand warmers. The scarf's realistic faux fur design adds a touch of glamour to any outfit. Available on request in brown or black. For custom colors, contact us on Instagram or via email!<br><br>Ships within 1-2 weeks.",

@@ -186,19 +186,60 @@ async function displayProductList(category = null, size = null, accs = null) {
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-        productCard.innerHTML = `
-            <a href="/product/${product.id}" class="product-link">
-                <img src="${product.images[0]}" alt="${product.name}">
-                <h2>${product.name}</h2>
-            </a>
-            <p class="product-price-shop">
+
+        // Prüfen, ob Varianten vorhanden sind
+        if (product.variants && product.variants.length > 0) {
+            productCard.innerHTML = `
+                <a href="/product/${product.id}" class="product-link">
+                    <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                </a>
+                <p class="product-price-shop">
+                    ${
+                        product.variants.some(variant => variant.stock > 0) 
+                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                        : `<span class="sold-out-text">SOLD OUT</span>`
+                    }
+                </p>
+                <div class="variant-colors-container">
                 ${
-                    product.stock > 0 
-                    ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                    : `<span class="sold-out-text">SOLD OUT</span>`
+                    product.variants.slice(0, 3).map(variant => {
+                        const isSoldOut = variant.stock === 0;
+                        const colorStyle = variant.color.includes('/') 
+                            ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                            : variant.color;
+                        return `
+                            <span 
+                                class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
+                                style="background: ${colorStyle};" 
+                                title="${isSoldOut ? 'Sold Out' : 'Available'}">
+                            </span>
+                        `;
+                    }).join('')
                 }
-            </p>
-        `;
+                    ${
+                        product.variants.length > 3 
+                        ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
+                        : ''
+                    }
+                </div>
+            `;
+        }
+         else {
+            productCard.innerHTML = `
+                <a href="/product/${product.id}" class="product-link">
+                    <img src="${product.images[0]}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                </a>
+                <p class="product-price-shop">
+                    ${
+                        product.stock > 0 
+                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                        : `<span class="sold-out-text">SOLD OUT</span>`
+                    }
+                </p>
+            `;
+        }
 
         productContainer.appendChild(productCard);
     });
@@ -207,23 +248,148 @@ async function displayProductList(category = null, size = null, accs = null) {
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
-    const productId = pathParts[pathParts.length - 1]; // Extrahiere die ID vom Ende des Pfads
+    const productId = pathParts[pathParts.length - 1];
+
+    console.log('Extrahierte Produkt-ID:', productId); // Debug-Log
 
     const products = await fetchProducts();
-    if (!products) return;
+    if (!products) {
+        console.error('Produkte konnten nicht geladen werden.');
+        return;
+    }
+
+    console.log('Geladene Produkte:', products); // Debug-Log
 
     const product = products.find(p => p.id === productId);
     if (!product) {
+        console.error('Produkt mit der ID nicht gefunden:', productId);
         document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
         return;
     }
 
-    // Rest des Codes zur Anzeige des Produkts
+    console.log('Gefundenes Produkt:', product); // Debug-Log
+
+    createColorMenu(product);
     createProductImages(product);
     displayProductInfo(product);
     addButtonsAndEventListeners(product);
 }
 
+
+// Funktion zur Erstellung des Farbauswahl-Menüs
+function createColorMenu(product) {
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+
+    // Erstellt ein neues Element für die Farbauswahl
+    const colorMenuContainer = document.createElement('div');
+    colorMenuContainer.className = 'product-color-menu';
+
+    if (product.variants && product.variants.length > 0) {
+        let showingAllColors = false; // Zustand, ob alle Farben angezeigt werden
+
+        const renderColors = (showAll) => {
+            colorMenuContainer.innerHTML = ''; // Bestehende Farben entfernen
+            const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
+
+            variantsToShow.forEach((variant, index) => {
+                const colorStyle = variant.color.includes('/')
+                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                    : variant.color;
+
+                const colorButton = document.createElement('button');
+                colorButton.className = 'color-button';
+                colorButton.style.background = colorStyle;
+                colorButton.dataset.index = index;
+                colorButton.title = variant.name || `Color ${index + 1}`;
+                colorButton.addEventListener('click', () => {
+                    updateImagesForVariant(product, variant);
+                    updateAddToCartButton(product, variant); // Aktualisiere den Button
+                });
+                colorMenuContainer.appendChild(colorButton);
+            });
+
+            if (!showAll && product.variants.length > 4) {
+                // "+ Mehr" Button anzeigen
+                const moreButton = document.createElement('span');
+                moreButton.className = 'show-more-colors';
+                moreButton.textContent = `+${product.variants.length - 4}`;
+                moreButton.style.textDecoration = 'underline';
+                moreButton.style.cursor = 'pointer';
+                moreButton.addEventListener('click', () => {
+                    showingAllColors = true;
+                    renderColors(true); // Alle Farben anzeigen
+                });
+                colorMenuContainer.appendChild(moreButton);
+            }
+
+            if (showAll) {
+                // "Close" Button anzeigen
+                const closeButton = document.createElement('span');
+                closeButton.className = 'close-colors';
+                closeButton.textContent = 'Close';
+                closeButton.style.textDecoration = 'underline';
+                closeButton.style.cursor = 'pointer';
+                closeButton.addEventListener('click', () => {
+                    showingAllColors = false;
+                    renderColors(false); // Auf erste 4 Farben zurücksetzen
+                });
+                colorMenuContainer.appendChild(closeButton);
+
+                // Layout mit Zeilenumbruch aktivieren
+                colorMenuContainer.style.display = 'flex';
+                colorMenuContainer.style.flexWrap = 'wrap';
+                colorMenuContainer.style.gap = '10px';
+            } else {
+                // Standardlayout ohne Zeilenumbruch
+                colorMenuContainer.style.display = 'flex';
+                colorMenuContainer.style.flexWrap = 'nowrap';
+                colorMenuContainer.style.gap = '10px';
+            }
+        };
+
+        // Initialisierung mit den ersten 4 Farben
+        renderColors(false);
+    }
+
+    // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
+    thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
+}
+
+
+// Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
+function updateImagesForVariant(product, variant) {
+    const mainImageContainer = document.querySelector('.product-main-image-container');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+    const productTitleElement = document.querySelector('.product-title-details');
+
+    mainImageContainer.innerHTML = '';
+    thumbnailsContainer.innerHTML = '';
+
+    // Aktualisiere die Überschrift mit dem Variantennamen
+    if (productTitleElement) {
+        productTitleElement.textContent = `${variant.name}`;
+    }
+
+    const imgElement = document.createElement('img');
+    imgElement.src = variant.images[0];
+    imgElement.alt = `${product.name} - ${variant.name}`;
+    imgElement.className = 'product-main-image';
+    mainImageContainer.appendChild(imgElement);
+
+    variant.images.forEach((imageUrl, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imageUrl;
+        thumbnail.alt = `${product.name} - ${variant.name} - Vorschau ${index + 1}`;
+        thumbnail.className = 'product-thumbnail';
+        if (index === 0) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            imgElement.src = imageUrl;
+            document.querySelectorAll('.product-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+            thumbnail.classList.add('active');
+        });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
+}
 
 // Hilfsfunktion zur Erstellung der Hauptbilder und Thumbnails
 function createProductImages(product) {
@@ -233,15 +399,27 @@ function createProductImages(product) {
     mainImageContainer.innerHTML = ''; // Vorherige Bilder entfernen
     thumbnailsContainer.innerHTML = ''; // Vorherige Thumbnails entfernen
 
+    let images = [];
+    if (product.variants && product.variants.length > 0) {
+        // Verwende die Bilder der ersten Variante standardmäßig
+        images = product.variants[0].images;
+    } else if (product.images && product.images.length > 0) {
+        // Fallback: Verwende Bilder des Produkts (falls keine Varianten vorhanden)
+        images = product.images;
+    } else {
+        console.error('Keine Bilder verfügbar für Produkt:', product.name);
+        return;
+    }
+
     let currentIndex = 0;
 
     const imgElement = document.createElement('img');
-    imgElement.src = product.images[currentIndex];
+    imgElement.src = images[currentIndex];
     imgElement.alt = product.name;
     imgElement.className = 'product-main-image';
     mainImageContainer.appendChild(imgElement);
 
-    product.images.forEach((imageUrl, index) => {
+    images.forEach((imageUrl, index) => {
         const thumbnail = document.createElement('img');
         thumbnail.src = imageUrl;
         thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
@@ -249,7 +427,7 @@ function createProductImages(product) {
         if (index === currentIndex) thumbnail.classList.add('active');
         thumbnail.addEventListener('click', () => {
             currentIndex = index;
-            updateImage(imgElement, currentIndex, product.images);
+            updateImage(imgElement, currentIndex, images);
         });
         thumbnailsContainer.appendChild(thumbnail);
     });
@@ -266,19 +444,68 @@ function updateImage(imgElement, currentIndex, images) {
 // Hilfsfunktion zur Anzeige der Produktinformationen
 function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
+
+    // Überprüfen, ob das Produkt Varianten hat
+    let displayName = product.name;
+    if (product.variants && product.variants.length > 0) {
+        // Zeige nur den Namen der ersten Variante an
+        displayName = product.variants[0].name;
+    }
+
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
-        <h1 class="product-title-details">${product.name}</h1>
+        <h1 class="product-title-details">${displayName}</h1>
         <p class="product-price">€${product.price.toFixed(2)}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
-                      Currently only shipping to Germany. For international requests, contact me on
-                      <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
-                      or
-                      <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
-                  </div>
+            Currently only shipping to Germany. For international requests, contact me on
+            <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
+            or
+            <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
+        </div>
     `;
+}
 
+// Funktion zur Aktualisierung des Add-to-Cart Buttons
+function updateAddToCartButton(product, variant) {
+    const buttonContainer = document.querySelector('.button-container');
+    buttonContainer.innerHTML = ''; // Vorherige Buttons entfernen
+
+    if (variant.stock > 0) {
+        // Button hinzufügen, wenn die Variante auf Lager ist
+        const addToCartButton = document.createElement('button');
+        addToCartButton.className = 'add-to-cart-button';
+        addToCartButton.textContent = 'Add to cart';
+        addToCartButton.addEventListener('click', () => {
+            addToCart({
+                id: variant.id,
+                name: `${variant.name}`,
+                images: variant.images,
+                price: product.price,
+                stock: variant.stock
+            });
+
+            const cartPopup = document.getElementById('cart-popup');
+            if (cartPopup) {
+                cartPopup.classList.add('open');
+            }
+            displayCartItems();
+        });
+        buttonContainer.appendChild(addToCartButton);
+    } else {
+        // Sold-Out Text anzeigen, wenn die Variante ausverkauft ist
+        const soldOutText = document.createElement('p');
+        soldOutText.className = 'sold-out-text-2';
+        soldOutText.innerHTML = `
+        <div style="text-align: center; margin-bottom: 10px;">
+            <strong>THIS VARIANT IS SOLD OUT</strong> <br>
+            REQUESTS POSSIBLE ON 
+            <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
+            OR 
+            <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
+        </div>`;
+        buttonContainer.appendChild(soldOutText);
+    }
 }
 
 // Hilfsfunktion zur Erstellung der Buttons und deren Event-Listener
@@ -289,51 +516,62 @@ function addButtonsAndEventListeners(product) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    if (product.stock > 0) {
-        // Add to Cart Button hinzufügen
+    // Füge den Button-Container dem Info-Container hinzu
+    infoContainer.appendChild(buttonContainer);
+
+    if (product.variants && product.variants.length > 0) {
+        // Platzhalter für die Nachricht "Please select a color"
+        const messagePlaceholder = document.createElement('p');
+        messagePlaceholder.className = 'selection-message';
+        messagePlaceholder.textContent = 'PLEASE SELECT A COLOR'; // All caps
+        messagePlaceholder.style.color = '#24388E'; // Dark Blue
+        messagePlaceholder.style.fontWeight = 'bold';
+        messagePlaceholder.style.textAlign = 'center';
+        messagePlaceholder.style.marginBottom = '10px';
+
+        buttonContainer.appendChild(messagePlaceholder);
+
+        // Event-Listener für Variantenauswahl hinzufügen
+        product.variants.forEach((variant, index) => {
+            const colorButton = document.querySelector(`.color-button[data-index="${index}"]`);
+            if (colorButton) {
+                colorButton.addEventListener('click', () => {
+                    // Verstecke die Nachricht und zeige den Add-to-Cart-Button für die ausgewählte Variante
+                    messagePlaceholder.style.display = 'none';
+                    updateAddToCartButton(product, variant);
+                });
+            }
+        });
+    } else if (product.stock > 0) {
+        // Für Produkte ohne Varianten: Standardmäßiger Add-to-Cart-Button
         const addToCartButton = document.createElement('button');
         addToCartButton.className = 'add-to-cart-button';
         addToCartButton.textContent = 'Add to cart';
-        buttonContainer.appendChild(addToCartButton);
+        addToCartButton.addEventListener('click', () => {
+            addToCart(product);
 
-        // Event-Listener für Add-to-Cart Button
-        setupAddToCartButton(addToCartButton, product);
+            const cartPopup = document.getElementById('cart-popup');
+            if (cartPopup) {
+                cartPopup.classList.add('open');
+            }
+            displayCartItems();
+        });
+        buttonContainer.appendChild(addToCartButton);
     } else {
-        // Sold-Out Text mit Links erstellen
+        // Sold-Out Text für Produkte ohne Varianten
         const soldOutText = document.createElement('p');
         soldOutText.className = 'sold-out-text-2';
         soldOutText.innerHTML = `
-    <div style="text-align: center; margin-bottom: 10px;">
-        <strong>SOLD OUT</strong> <br>
-        REQUESTS POSSIBLE ON 
-        <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
-        OR 
-        <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
-    </div>
-`;
-
+        <div style="text-align: center; margin-bottom: 10px;">
+            <strong>SOLD OUT</strong> <br>
+            REQUESTS POSSIBLE ON 
+            <a href="https://www.instagram.com/nalancreations" target="_blank" class="sold-out-link">INSTAGRAM</a> 
+            OR 
+            <a href="mailto:nalancreations@gmx.de" class="sold-out-link">EMAIL</a>
+        </div>`;
         buttonContainer.appendChild(soldOutText);
     }
-
-    // Füge die Button-Gruppe oder den Sold-Out Text zum infoContainer hinzu
-    infoContainer.appendChild(buttonContainer);
 }
-
-
-// Hilfsfunktion zur Einrichtung des Add-to-Cart Buttons
-function setupAddToCartButton(addToCartButton, product) {
-    addToCartButton.addEventListener('click', () => {
-        addToCart(product);
-
-        // Warenkorb-Fenster automatisch öffnen, nachdem das Produkt hinzugefügt wurde
-        const cartPopup = document.getElementById('cart-popup');
-        if (cartPopup) {
-            cartPopup.classList.add('open');
-        }
-        displayCartItems(); // Warenkorb aktualisieren
-    });
-}
-
 
 // Funktion zum Hinzufügen eines Produkts zum Warenkorb
 function addToCart(product) {
@@ -481,9 +719,14 @@ async function displayCartItems() {
                     label: 'checkout',
                 },
                 createOrder: async () => {
-                    const orderID = await createPayPalOrder(cart.map(item => ({ id: item.id, quantity: item.quantity })));
+                    const orderID = await createPayPalOrder(
+                        cart.map(item => ({
+                            id: item.id, // Diese ID sollte die Variant-ID sein
+                            quantity: item.quantity
+                        }))
+                    );
                     return orderID;
-                },
+                },                
                 onApprove: async (data, actions) => {
                     try {
                         const captureResult = await capturePayPalOrder(data.orderID);
