@@ -202,18 +202,21 @@ async function displayProductList(category = null, size = null, accs = null) {
                     }
                 </p>
                 <div class="variant-colors-container">
-                    ${
-                        product.variants.slice(0, 3).map(variant => {
-                            const isSoldOut = variant.stock === 0;
-                            return `
-                                <span 
-                                    class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
-                                    style="background-color: ${variant.color};" 
-                                    title="${isSoldOut ? 'Sold Out' : 'Available'}">
-                                </span>
-                            `;
-                        }).join('')
-                    }
+                ${
+                    product.variants.slice(0, 3).map(variant => {
+                        const isSoldOut = variant.stock === 0;
+                        const colorStyle = variant.color.includes('/') 
+                            ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                            : variant.color;
+                        return `
+                            <span 
+                                class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
+                                style="background: ${colorStyle};" 
+                                title="${isSoldOut ? 'Sold Out' : 'Available'}">
+                            </span>
+                        `;
+                    }).join('')
+                }
                     ${
                         product.variants.length > 3 
                         ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
@@ -283,9 +286,13 @@ function createColorMenu(product) {
 
     if (product.variants && product.variants.length > 0) {
         product.variants.forEach((variant, index) => {
+            const colorStyle = variant.color.includes('/') 
+                ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                : variant.color;
+
             const colorButton = document.createElement('button');
             colorButton.className = 'color-button';
-            colorButton.style.backgroundColor = variant.color;
+            colorButton.style.background = colorStyle;
             colorButton.dataset.index = index;
             colorButton.title = variant.name || `Color ${index + 1}`;
             colorButton.addEventListener('click', () => {
@@ -299,6 +306,7 @@ function createColorMenu(product) {
     // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 }
+
 
 // Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
 function updateImagesForVariant(product, variant) {
