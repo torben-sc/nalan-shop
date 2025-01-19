@@ -91,7 +91,7 @@
                 "id": "111",
                 "name": "Plain Balaclava - Dark Pink",
                 "color": "#D74894",
-                "images":["images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-DP-001-1.png"],
+                "images":["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image- BLC-DP-001-1.png"],
                 "price": 65.00,
                 "stock": 0
             },
@@ -143,7 +143,7 @@
     {
         "id": "4",
         "name": "Black Balaclava with Pink Bows",
-        "price": 80.00,
+        "price": 85.00,
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-4.jpeg"],
         "description": "This unique Balaclava combines a soft, fuzzy knit with delicate pink bows for an elegant yet playful look. Perfect for adding a bold statement to your outfit while keeping warm and cozy. Its unisex design ensures a comfortable Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
