@@ -159,6 +159,7 @@ async function fetchProducts() {
 
 // Kontrollfunktion: Überprüft, ob die Produkte korrekt gefiltert wurden
 function validateFilteredProducts(products, category, size, accs) {
+    console.log('Validierung der Produkte:', { products, category, size, accs });
     return products.every(product => {
         let isValid = true;
         if (category && category !== 'all') {
@@ -176,6 +177,7 @@ function validateFilteredProducts(products, category, size, accs) {
 
 // Überarbeitete displayProductList-Funktion mit Validierung
 async function displayProductList(category = null, size = null, accs = null) {
+    console.log('displayProductList aufgerufen mit:', { category, size, accs });
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = ''; // Bestehende Produkte entfernen
     const productTitle = document.getElementById('product-title');
