@@ -177,15 +177,23 @@ async function displayProductList(category = null, size = null, accs = null) {
     productContainer.innerHTML = ''; // Bestehende Produkte entfernen
     const productTitle = document.getElementById('product-title');
 
-    // Titel sofort setzen basierend auf der Kategorie
+    // Setze den Titel der Produktliste
     productTitle.innerHTML = (category && category !== 'all') 
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
 
-    // Produkte laden und filtern
-    const products = await fetchProducts();
-    if (!products) return;
+    console.log('Filterparameter:', { category, size, accs });
 
+    // Produkte laden
+    const products = await fetchProducts();
+    if (!products) {
+        console.error('Fehler beim Laden der Produkte');
+        return;
+    }
+
+    console.log('Geladene Produkte:', products);
+
+    // Produkte filtern
     let filteredProducts = (category && category !== 'all') 
         ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
         : products;
@@ -198,9 +206,11 @@ async function displayProductList(category = null, size = null, accs = null) {
         filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
     }
 
+    console.log('Gefilterte Produkte:', filteredProducts);
+
     // Validierung der Filterergebnisse
     if (!validateFilteredProducts(filteredProducts, category, size, accs)) {
-        console.warn('Filter validation failed. Retrying filter operation...');
+        console.warn('Filtervalidierung fehlgeschlagen. Filterung wird erneut ausgeführt...');
         return displayProductList(category, size, accs); // Erneut filtern
     }
 
@@ -209,7 +219,6 @@ async function displayProductList(category = null, size = null, accs = null) {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
 
-        // Prüfen, ob Varianten vorhanden sind
         if (product.variants && product.variants.length > 0) {
             productCard.innerHTML = `
                 <a href="/product/${product.id}" class="product-link">
@@ -223,28 +232,6 @@ async function displayProductList(category = null, size = null, accs = null) {
                         : `<span class="sold-out-text">SOLD OUT</span>`
                     }
                 </p>
-                <div class="variant-colors-container">
-                ${
-                    product.variants.slice(0, 3).map(variant => {
-                        const isSoldOut = variant.stock === 0;
-                        const colorStyle = variant.color.includes('/') 
-                            ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
-                            : variant.color;
-                        return `
-                            <span 
-                                class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
-                                style="background: ${colorStyle};" 
-                                title="${isSoldOut ? 'Sold Out' : 'Available'}">
-                            </span>
-                        `;
-                    }).join('')
-                }
-                    ${
-                        product.variants.length > 3 
-                        ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
-                        : ''
-                    }
-                </div>
             `;
         } else {
             productCard.innerHTML = `
