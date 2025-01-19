@@ -202,18 +202,25 @@ async function displayProductList(category = null, size = null, accs = null) {
                     }
                 </p>
                 <div class="variant-colors-container">
-                    ${product.variants.map(variant => {
-                        const isSoldOut = variant.stock === 0;
-                        return `
-                            <span 
-                                class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
-                                style="background-color: ${variant.color};" 
-                                title="${isSoldOut ? 'Sold Out' : 'Available'}">
-                            </span>
-                        `;
-                    }).join('')}
+                    ${
+                        product.variants.slice(0, 3).map(variant => {
+                            const isSoldOut = variant.stock === 0;
+                            return `
+                                <span 
+                                    class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
+                                    style="background-color: ${variant.color};" 
+                                    title="${isSoldOut ? 'Sold Out' : 'Available'}">
+                                </span>
+                            `;
+                        }).join('')
+                    }
+                    ${
+                        product.variants.length > 3 
+                        ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
+                        : ''
+                    }
                 </div>
-            `;
+            `;        
         } else {
             productCard.innerHTML = `
                 <a href="/product/${product.id}" class="product-link">
