@@ -147,15 +147,17 @@ function updateAccessoriesFilterURL(accs) {
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
-        const response = await fetch('/.netlify/functions/get-products'); // Pfad zur Netlify Function
+        const response = await fetch('/.netlify/functions/get-products');
         if (!response.ok) {
-            throw new Error(`Error loading products: ${response.statusText}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         return await response.json();
     } catch (error) {
         console.error('Error loading products:', error);
+        return []; // Rückgabe eines leeren Arrays bei Fehler
     }
 }
+
 
 // Kontrollfunktion: Überprüft, ob die Produkte korrekt gefiltert wurden
 function validateFilteredProducts(products, category, size, accs) {
@@ -177,9 +179,8 @@ function validateFilteredProducts(products, category, size, accs) {
 
 // Überarbeitete displayProductList-Funktion mit Validierung
 async function displayProductList(category = null, size = null, accs = null) {
-    console.log('displayProductList aufgerufen mit:', { category, size, accs });
     const productContainer = document.getElementById('product-container');
-    productContainer.innerHTML = ''; // Bestehende Produkte entfernen
+    productContainer.innerHTML = ''; // Vorherige Produkte entfernen
     const productTitle = document.getElementById('product-title');
 
     // Setze den Titel der Produktliste
@@ -191,14 +192,15 @@ async function displayProductList(category = null, size = null, accs = null) {
 
     // Produkte laden
     const products = await fetchProducts();
-    if (!products) {
-        console.error('Fehler beim Laden der Produkte');
+    if (!products || products.length === 0) {
+        console.error('Keine Produkte gefunden.');
+        productContainer.innerHTML = '<p>No products available.</p>';
         return;
     }
 
     console.log('Geladene Produkte:', products);
 
-    // Produkte filtern
+    // Filterung
     let filteredProducts = (category && category !== 'all') 
         ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
         : products;
@@ -213,10 +215,9 @@ async function displayProductList(category = null, size = null, accs = null) {
 
     console.log('Gefilterte Produkte:', filteredProducts);
 
-    // Validierung der Filterergebnisse
-    if (!validateFilteredProducts(filteredProducts, category, size, accs)) {
-        console.warn('Filtervalidierung fehlgeschlagen. Filterung wird erneut ausgeführt...');
-        return displayProductList(category, size, accs); // Erneut filtern
+    if (filteredProducts.length === 0) {
+        productContainer.innerHTML = '<p>No products found for the selected filter.</p>';
+        return;
     }
 
     // Produkte rendern
