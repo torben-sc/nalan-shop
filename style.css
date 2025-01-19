@@ -1080,10 +1080,10 @@ main {
 }
 
 .variant-color-more {
-    font-size: 12px; /* Kleinere Schriftgröße */
+    font-size: 15px; /* Kleinere Schriftgröße */
     color: #000; /* Farbe der Schrift */
     font-weight: bold; /* Fett gedruckt */
     position: relative;
-    top: -5px; /* Hebt die Schrift etwas nach oben */
-    margin-left: 5px; /* Leichter Abstand zur letzten Farbkachel */
+    top: -2px; /* Hebt die Schrift etwas nach oben */
+    margin-left: 2px; /* Leichter Abstand zur letzten Farbkachel */
 }
