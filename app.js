@@ -285,22 +285,70 @@ function createColorMenu(product) {
     colorMenuContainer.className = 'product-color-menu';
 
     if (product.variants && product.variants.length > 0) {
-        product.variants.forEach((variant, index) => {
-            const colorStyle = variant.color.includes('/') 
-                ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
-                : variant.color;
+        let showingAllColors = false; // Zustand, ob alle Farben angezeigt werden
 
-            const colorButton = document.createElement('button');
-            colorButton.className = 'color-button';
-            colorButton.style.background = colorStyle;
-            colorButton.dataset.index = index;
-            colorButton.title = variant.name || `Color ${index + 1}`;
-            colorButton.addEventListener('click', () => {
-                updateImagesForVariant(product, variant);
-                updateAddToCartButton(product, variant); // Aktualisiere den Button
+        const renderColors = (showAll) => {
+            colorMenuContainer.innerHTML = ''; // Bestehende Farben entfernen
+            const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
+
+            variantsToShow.forEach((variant, index) => {
+                const colorStyle = variant.color.includes('/')
+                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                    : variant.color;
+
+                const colorButton = document.createElement('button');
+                colorButton.className = 'color-button';
+                colorButton.style.background = colorStyle;
+                colorButton.dataset.index = index;
+                colorButton.title = variant.name || `Color ${index + 1}`;
+                colorButton.addEventListener('click', () => {
+                    updateImagesForVariant(product, variant);
+                    updateAddToCartButton(product, variant); // Aktualisiere den Button
+                });
+                colorMenuContainer.appendChild(colorButton);
             });
-            colorMenuContainer.appendChild(colorButton);
-        });
+
+            if (!showAll && product.variants.length > 4) {
+                // "+ Mehr" Button anzeigen
+                const moreButton = document.createElement('span');
+                moreButton.className = 'show-more-colors';
+                moreButton.textContent = `+${product.variants.length - 4}`;
+                moreButton.style.textDecoration = 'underline';
+                moreButton.style.cursor = 'pointer';
+                moreButton.addEventListener('click', () => {
+                    showingAllColors = true;
+                    renderColors(true); // Alle Farben anzeigen
+                });
+                colorMenuContainer.appendChild(moreButton);
+            }
+
+            if (showAll) {
+                // "Close" Button anzeigen
+                const closeButton = document.createElement('span');
+                closeButton.className = 'close-colors';
+                closeButton.textContent = 'Close';
+                closeButton.style.textDecoration = 'underline';
+                closeButton.style.cursor = 'pointer';
+                closeButton.addEventListener('click', () => {
+                    showingAllColors = false;
+                    renderColors(false); // Auf erste 4 Farben zurücksetzen
+                });
+                colorMenuContainer.appendChild(closeButton);
+
+                // Layout mit Zeilenumbruch aktivieren
+                colorMenuContainer.style.display = 'flex';
+                colorMenuContainer.style.flexWrap = 'wrap';
+                colorMenuContainer.style.gap = '10px';
+            } else {
+                // Standardlayout ohne Zeilenumbruch
+                colorMenuContainer.style.display = 'flex';
+                colorMenuContainer.style.flexWrap = 'nowrap';
+                colorMenuContainer.style.gap = '10px';
+            }
+        };
+
+        // Initialisierung mit den ersten 4 Farben
+        renderColors(false);
     }
 
     // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
