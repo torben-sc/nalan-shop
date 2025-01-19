@@ -64,7 +64,7 @@
                 "id": "108",
                 "name": "Plain Balaclava - Off White",
                 "color": "#F8F8F8",
-                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png"],
+                "images": ["/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-1.jpeg", "/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-2.jpeg"],
                 "price": 65.00,
                 "stock": 0
             },
@@ -128,9 +128,9 @@
                 "name": "Plain Balaclava - Beige",
                 "color": "#D1B9A3",
                 "images": [
-                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-1.jpeg",
-                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-3.jpeg",
-                    "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001/image-BLC-LL-001-4.jpeg"
+                    "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-1.jpg",
+                    "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-2.jpeg",
+                    "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-3.jpeg"
                 ],
                 "price": 65.00,
                 "stock": 0
