@@ -1061,7 +1061,7 @@ main {
 
 /* Farbkacheln */
 .variant-color {
-    width: 15px; /* Größe der Kacheln */
+    width: 12px; /* Größe der Kacheln */
     height: 12px;
     border: 1px solid #ccc;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
