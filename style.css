@@ -1084,6 +1084,6 @@ main {
     color: #000; /* Farbe der Schrift */
     font-weight: bold; /* Fett gedruckt */
     position: relative;
-    top: -2px; /* Hebt die Schrift etwas nach oben */
+    top: -3px; /* Hebt die Schrift etwas nach oben */
     margin-left: 2px; /* Leichter Abstand zur letzten Farbkachel */
 }
