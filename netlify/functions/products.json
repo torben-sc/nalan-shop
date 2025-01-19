@@ -58,7 +58,7 @@
                 "color": "#F3C1C6",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png"],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "108",
@@ -66,7 +66,7 @@
                 "color": "#F8F8F8",
                 "images": ["/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-1.jpeg", "/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-2.jpeg"],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "109",
@@ -77,7 +77,7 @@
                     "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-RD-001/Image-BLC-RD-001-2.JPG"
                 ],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "110",
@@ -85,7 +85,7 @@
                 "color": "#4B0000/#000000",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-BR-001-1.png"],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "111",
@@ -93,7 +93,7 @@
                 "color": "#D74894",
                 "images":["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image- BLC-DP-001-1.png"],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "112",
@@ -101,7 +101,7 @@
                 "color": "#556B2F",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png"],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "113",
@@ -109,7 +109,7 @@
                 "color": "#808080",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-GY-001-1.png"],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "114",
@@ -121,7 +121,7 @@
                     "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-3.JPG"
                 ],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             },
             {
                 "id": "115",
@@ -133,11 +133,39 @@
                     "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-3.jpeg"
                 ],
                 "price": 65.00,
-                "stock": 0
+                "stock": 1
             }
         ],
         "defaultImage": "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg",
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
+        "category": "balaclavas"
+    },     
+    {
+        "id": "2",
+        "name": "Skimask Balaclava",
+        "price": 65.00,
+        "variants": [
+            {
+                "id": "201",
+                "name": "Skimask Balaclava - Pink",
+                "color": "#FFC0CB",
+                "images": ["/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-1.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-2.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-3.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-4.jpg", "images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-5.jpg", "images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-6.jpg"],
+                "price": 65.00,
+                "stock": 1
+            },
+            {
+                "id": "202",
+                "name": "Skimask Balaclava - Red",
+                "color": "#4B0000",
+                "images": [
+                    "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-RD-001/Image-SKB-RD-001-1.JPG"
+                ],
+                "price": 65.00,
+                "stock": 1
+            }
+        ],
+        "defaultImage": "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-3.jpg",
+        "description": "<p>This stylish Skimask Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with versatility in mind, you can wear it in different ways: pull it over your nose for maximum coverage or leave your face out for a more casual look. Its unisex fit ensures comfort and warmth while adding a pop of color with its vibrant pink shade.</p><strong>Material:</strong><p>Made from a durable blend of 60% polyamide and 40% acrylic.</p><strong>Care Instructions:</strong><p>Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.</p><br><br>Ships within 1-2 weeks.",
         "category": "balaclavas"
     },     
     {
