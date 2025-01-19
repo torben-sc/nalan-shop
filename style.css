@@ -1084,5 +1084,5 @@ main {
     color: #000; /* Farbe der Schrift */
     font-weight: bold; /* Fett gedruckt */
     position: relative;
-    top: -3.5px; /* Hebt die Schrift etwas nach oben */
+    top: -3.3px; /* Hebt die Schrift etwas nach oben */
 }
