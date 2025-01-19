@@ -220,8 +220,9 @@ async function displayProductList(category = null, size = null, accs = null) {
                         : ''
                     }
                 </div>
-            `;        
-        } else {
+            `;
+        }
+         else {
             productCard.innerHTML = `
                 <a href="/product/${product.id}" class="product-link">
                     <img src="${product.images[0]}" alt="${product.name}">
