@@ -154,7 +154,24 @@ async function fetchProducts() {
     }
 }
 
-// Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
+// Kontrollfunktion: Überprüft, ob die Produkte korrekt gefiltert wurden
+function validateFilteredProducts(products, category, size, accs) {
+    return products.every(product => {
+        let isValid = true;
+        if (category && category !== 'all') {
+            isValid = isValid && product.category.toLowerCase() === category.toLowerCase();
+        }
+        if (size && size !== 'all') {
+            isValid = isValid && product.size && product.size.toLowerCase() === size.toLowerCase();
+        }
+        if (accs && accs !== 'all') {
+            isValid = isValid && product.accs && product.accs.toLowerCase() === accs.toLowerCase();
+        }
+        return isValid;
+    });
+}
+
+// Überarbeitete displayProductList-Funktion mit Validierung
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = ''; // Bestehende Produkte entfernen
@@ -169,8 +186,6 @@ async function displayProductList(category = null, size = null, accs = null) {
     const products = await fetchProducts();
     if (!products) return;
 
-    productContainer.innerHTML = '';
-
     let filteredProducts = (category && category !== 'all') 
         ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
         : products;
@@ -183,6 +198,13 @@ async function displayProductList(category = null, size = null, accs = null) {
         filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
     }
 
+    // Validierung der Filterergebnisse
+    if (!validateFilteredProducts(filteredProducts, category, size, accs)) {
+        console.warn('Filter validation failed. Retrying filter operation...');
+        return displayProductList(category, size, accs); // Erneut filtern
+    }
+
+    // Produkte rendern
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
@@ -224,8 +246,7 @@ async function displayProductList(category = null, size = null, accs = null) {
                     }
                 </div>
             `;
-        }
-         else {
+        } else {
             productCard.innerHTML = `
                 <a href="/product/${product.id}" class="product-link">
                     <img src="${product.images[0]}" alt="${product.name}">
