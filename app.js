@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let category;
     let accs = null;
+
     switch (currentPath) {
         case '/bags':
             category = 'bags';
@@ -65,8 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
         default:
             category = 'all';
     }
-    
 
+    console.log('Initialer Kategorie-Filter:', { category, accs });
+    displayProductList(category, null, accs);
+    
     // Initialisieren der Produktliste basierend auf der URL-Kategorie
     if (document.getElementById('product-container')) {
         displayProductList(category, null, accs);
