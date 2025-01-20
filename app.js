@@ -230,8 +230,8 @@ async function displayProductList(category = null, size = null, accs = null) {
         // Produkte laden
         const products = await fetchProducts();
         if (!products || products.length === 0) {
-            console.warn('Keine Produkte gefunden.');
-            productContainer.innerHTML = '<p>Keine Produkte verfügbar.</p>';
+            console.warn('No Products available.');
+            productContainer.innerHTML = '<p>No Products available.</p>';
             return;
         }
 
