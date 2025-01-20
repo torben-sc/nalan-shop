@@ -8,6 +8,6 @@
 /shop/bags/oversized        /shop/?category=bags&size=big 200
 /shop/accessories           /shop/?category=accessories 200
 /shop/accessories/all       /shop/?category=accessories&accs=all 200
-/shop/accessories/lihter    /shop/?category=accessories&accs=lighter 200
+/shop/accessories/lighter    /shop/?category=accessories&accs=lighter 200
 /shop/accessories/lipgloss  /shop/?category=accessories&accs=lipgloss 200
 /shop/accessories/keychain  /shop/?category=accessories&accs=keychain 200
