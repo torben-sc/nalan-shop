@@ -21,11 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Funktion, um die URL zu aktualisieren
-    const updateURL = (category, size = null) => {
+    const updateURL = (category, size = null, accs = null) => {
         let path = `/shop/${category}`;
-        if (size) path += `/${size}`;
+        if (category === 'accessories' && accs) {
+            path += `/${accs}`; // Accessories mit Unterkategorie
+        } else if (size) {
+            path += `/${size}`; // Andere Kategorien mit Größe
+        }
         history.replaceState(null, '', path);
     };
+    
 
     // Funktion, um Filter aus der URL zu lesen (Pfad)
     const getFiltersFromPath = () => {
