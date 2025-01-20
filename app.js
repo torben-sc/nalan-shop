@@ -107,44 +107,70 @@ function initializeFiltersFromURL() {
 }
 
 // Funktion zur Aktualisierung der Produktliste basierend auf der Kategorie
-async function updateProductList(category) {
-    const loadingIndicator = document.getElementById('loading-indicator');
+async function updateProductList(category = 'all', size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
     const productTitle = document.getElementById('product-title');
 
-    // Zeige Ladeindikator und leere den Produktcontainer
-    loadingIndicator.style.display = 'block';
-    productContainer.style.display = 'none';
+    // Ladeindikator anzeigen
+    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (productContainer) productContainer.style.display = 'none';
     productContainer.innerHTML = '';
 
-    // Aktualisiere den Titel
-    productTitle.innerHTML = category !== 'all'
+    // Titel aktualisieren
+    productTitle.innerHTML = (category !== 'all')
         ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
 
     try {
-        const products = await fetchProducts(); // Produkte aus JSON laden
-        if (!products) return;
+        const products = await fetchProducts(); // Produkte laden
+        if (!products) {
+            console.warn('Keine Produkte gefunden');
+            productContainer.innerHTML = '<p>Keine Produkte verfügbar.</p>';
+            return;
+        }
 
         // Produkte filtern
         let filteredProducts = category !== 'all'
             ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
             : products;
 
+        if (size && size !== 'all') {
+            filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
+        }
+
+        if (accs && accs !== 'all') {
+            filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
+        }
+
         // Produkte anzeigen
         filteredProducts.forEach(product => {
-            const productCard = displayProductList(product);
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.innerHTML = `
+                <a href="/product/${product.id}" class="product-link">
+                    <img src="${product.defaultImage || product.images[0]}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                </a>
+                <p class="product-price-shop">
+                    ${
+                        product.stock > 0 
+                            ? `<span class="price-amount-shop">${product.price.toFixed(2)}</span><span class="price-currency-shop"> €</span>` 
+                            : `<span class="sold-out-text">SOLD OUT</span>`
+                    }
+                </p>`;
             productContainer.appendChild(productCard);
         });
-
     } catch (error) {
-        console.error('Error updating product list:', error);
+        console.error('Fehler beim Laden der Produkte:', error);
+        productContainer.innerHTML = '<p>Fehler beim Laden der Produkte.</p>';
     } finally {
-        // Ladeindikator ausblenden und Produktcontainer anzeigen
-        loadingIndicator.style.display = 'none';
-        productContainer.style.display = 'grid';
+        // Ladeindikator ausblenden
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        if (productContainer) productContainer.style.display = 'grid';
     }
 }
+
 
 // Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
 function applySizeFilter(size) {
