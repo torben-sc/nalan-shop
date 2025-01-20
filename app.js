@@ -30,23 +30,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         history.replaceState(null, '', path);
     };
-    
 
     // Funktion, um Filter aus der URL zu lesen (Pfad)
     const getFiltersFromPath = () => {
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         let category = 'all';
-        let size = null;
+        let subFilter = null;
 
         if (pathParts[0] === 'shop' && pathParts[1]) {
             category = pathParts[1];
         }
 
         if (pathParts[2]) {
-            size = pathParts[2];
+            subFilter = pathParts[2];
         }
 
-        return { category, size };
+        return { category, subFilter };
     };
 
     // Hauptkategorien-Eventlistener
@@ -89,28 +88,35 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const category = link.getAttribute('data-category');
             const size = link.getAttribute('data-size');
+            const accs = link.getAttribute('data-accs');
 
             // Aktive Klasse aktualisieren
             link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(l => l.classList.remove('active-filter'));
             link.classList.add('active-filter');
 
             // URL aktualisieren und Produkte laden
-            updateURL(category, size);
-            loadProductList(category, size);
+            if (category === 'accessories') {
+                updateURL(category, null, accs); // Accessoires nutzen `accs`
+                loadProductList(category, null, accs);
+            } else {
+                updateURL(category, size); // Andere Kategorien nutzen `size`
+                loadProductList(category, size);
+            }
         });
     });
 
     // Produkte initial laden basierend auf der URL
-    const { category, size } = getFiltersFromPath();
+    const { category, subFilter } = getFiltersFromPath();
     const currentPath = window.location.pathname;
 
     if (currentPath.startsWith('/product/')) {
         displayProductDetails();
+    } else if (category === 'accessories') {
+        loadProductList(category, null, subFilter); // Accessoires mit Unterkategorie laden
     } else {
-        loadProductList(category, size);
+        loadProductList(category, subFilter); // Andere Kategorien mit Größe laden
     }
 });
-
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
