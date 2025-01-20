@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialisieren der Produktliste basierend auf der URL-Kategorie
     if (document.getElementById('product-container')) {
-        displayProductList(category, null, accs);
+        updateProductList('all'); 
     } else if (document.getElementById('product-detail-container')) {
         displayProductDetails();
     }
@@ -58,43 +58,39 @@ document.addEventListener('DOMContentLoaded', () => {
         createFooter();
     }
 
-    // Größenfilter-Event-Listener hinzufügen (nur für Bags-Seite)
-    if (currentPath.includes('/bags')) {
-        const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-        sizeFilterLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const size = e.target.getAttribute('data-size');
-                applySizeFilter(size);
-            });
+    // Größenfilter-Event-Listener hinzufügen (für Bags-Unterkategorien)
+    const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a[data-category="bags"]');
+    sizeFilterLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const size = e.target.getAttribute('data-size');
+            updateProductList('bags', size); // Aktualisiere die Produktliste basierend auf der Größe
         });
+    });
 
-        // Größe aus der URL extrahieren und Produktliste aktualisieren
-        const urlParams = new URLSearchParams(window.location.search);
-        const size = urlParams.get('size') || 'all';
-        displayProductList('bags', size);
-    }
-
-    // Accessoires-Filter-Event-Listener hinzufügen (nur für Accessories-Seite)
-    if (currentPath.includes('/accessories')) {
-        const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a');
-        accessoriesLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const accs = e.target.getAttribute('data-accs');
-                applyAccessoriesFilter(accs);
-            });
+    // Accessoires-Filter-Event-Listener hinzufügen (für Accessories-Unterkategorien)
+    const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a[data-category="accessories"]');
+    accessoriesLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const accs = e.target.getAttribute('data-accs');
+            updateProductList('accessories', null, accs); // Aktualisiere die Produktliste basierend auf dem Accessoire-Typ
         });
-
-        // Accessoires-Filter aus der URL extrahieren und Produktliste aktualisieren
-        const urlParams = new URLSearchParams(window.location.search);
-        const accs = urlParams.get('accessorie_type') || 'all';
-        if (window.location.pathname.includes('/accessories')) {
-            displayProductList('accessories', null, accessoryType);
-        }
-    }
-
+    });
 });
+
+// Funktion zur Initialisierung basierend auf URL-Parametern
+function initializeFiltersFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const size = urlParams.get('size') || null;
+    const accs = urlParams.get('accessorie_type') || null;
+
+    if (currentPath.includes('/bags')) {
+        updateProductList('bags', size); // Filter nach Größe anwenden
+    } else if (currentPath.includes('/accessories')) {
+        updateProductList('accessories', null, accs); // Filter nach Accessoire-Typ anwenden
+    }
+}
 
 // Funktion zur Aktualisierung der Produktliste basierend auf der Kategorie
 async function updateProductList(category) {
@@ -167,9 +163,12 @@ async function fetchProducts() {
         if (!response.ok) {
             throw new Error(`Error loading products: ${response.statusText}`);
         }
-        return await response.json();
+        const products = await response.json();
+        console.log('Geladene Produkte:', products); // Debug-Ausgabe
+        return products;
     } catch (error) {
         console.error('Error loading products:', error);
+        return []; // Gib einen leeren Array zurück, um Fehler zu vermeiden
     }
 }
 
