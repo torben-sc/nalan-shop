@@ -36,143 +36,52 @@ document.addEventListener('DOMContentLoaded', () => {
         accessoriesFilter: 'accessories',
     };
 
-    // Hauptkategorien-Filter
+    // Hauptkategorien-Eventlistener
     Object.keys(categoryMap).forEach(filterId => {
         const filterElement = document.getElementById(filterId);
         if (filterElement) {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 const category = categoryMap[filterId];
-    
+
                 // Unterkategorien ausblenden
                 Object.values(categorySections).forEach(section => section.style.display = 'none');
-    
+
                 // Unterkategorie anzeigen, wenn vorhanden
                 if (categorySections[category]) {
                     categorySections[category].style.display = 'block';
                 }
-    
-                // Aktive Klasse für Hauptkategorien aktualisieren
+
+                // Aktive Klasse aktualisieren
                 document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active-filter'));
                 filterElement.classList.add('active-filter');
-    
-                // Produktliste für die gewählte Kategorie laden
-                displayProductList(category);
+
+                // Produkte laden
+                loadProductList(category);
             });
         }
     });
 
+    // Unterkategorien-Eventlistener
     document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const category = link.getAttribute('data-category');
             const size = link.getAttribute('data-size');
             const accs = link.getAttribute('data-accs');
-    
-            // Aktive Klasse für Unterkategorien aktualisieren
+
+            // Aktive Klasse aktualisieren
             link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(link => link.classList.remove('active-filter'));
             link.classList.add('active-filter');
-    
-            displayProductList(category, size, accs); // Filter anwenden
+
+            // Produkte laden
+            loadProductList(category, size, accs);
         });
-    });    
+    });
 
-    // Produkte initial laden (alle Produkte anzeigen)
-    displayProductList('all');
+    // Produkte initial laden
+    loadProductList('all');
 });
-
-// Funktion zur Aktualisierung der Produktliste basierend auf der Kategorie
-async function updateProductList(category = 'all', size = null, accs = null) {
-    const productContainer = document.getElementById('product-container');
-    const loadingIndicator = document.getElementById('loading-indicator');
-    const productTitle = document.getElementById('product-title');
-
-    // Ladeindikator anzeigen
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
-    productContainer.style.display = 'none'; // Container ausblenden
-    productContainer.innerHTML = ''; // Inhalt löschen
-
-    // Titel setzen
-    productTitle.innerHTML = (category !== 'all')
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
-        : 'All<span class="mobile-line-break"> </span>Products';
-
-    try {
-        const products = await fetchProducts();
-        if (!products || products.length === 0) {
-            productContainer.innerHTML = '<p>No products available.</p>';
-            return;
-        }
-
-        // Filter anwenden
-        let filteredProducts = (category && category !== 'all') 
-            ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
-            : products;
-
-        if (size && size !== 'all') {
-            filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
-        }
-
-        if (accs && accs !== 'all') {
-            filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
-        }
-
-        // Produkte anzeigen
-        if (filteredProducts.length > 0) {
-            filteredProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                productCard.innerHTML = `
-                    <a href="/product/${product.id}" class="product-link">
-                        <img src="${product.defaultImage || product.images[0]}" alt="${product.name}">
-                        <h2>${product.name}</h2>
-                    </a>
-                    <p class="product-price-shop">
-                        ${
-                            product.stock > 0
-                                ? `<span class="price-amount-shop">${product.price.toFixed(2)}</span><span class="price-currency-shop"> €</span>`
-                                : `<span class="sold-out-text">SOLD OUT</span>`
-                        }
-                    </p>
-                `;
-                productContainer.appendChild(productCard);
-            });
-        } else {
-            productContainer.innerHTML = '<p>No products match your filters.</p>';
-        }
-    } catch (error) {
-        console.error('Error loading products:', error);
-        productContainer.innerHTML = '<p>Error loading products. Please try again later.</p>';
-    } finally {
-        // Ladeindikator ausblenden
-        loadingIndicator.style.display = 'none';
-        productContainer.style.display = 'grid';
-    }
-}
-
-// Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
-function applySizeFilter(size) {
-    displayProductList('bags', size);
-    updateSizeFilterURL(size);
-}
-
-// Funktion zur Aktualisierung der URL ohne Seite neu zu laden
-function updateSizeFilterURL(size) {
-    const newUrl = size === 'all' ? '/bags' : `/bags/${size}`;
-    window.history.pushState({}, '', newUrl);
-}
-
-// Funktion zur Anwendung des Accessoires-Filters
-function applyAccessoriesFilter(accs) {
-    displayProductList('accessories', null, accs);
-    updateAccessoriesFilterURL(accs);
-}
-
-// URL aktualisieren, ohne die Seite neu zu laden
-function updateAccessoriesFilterURL(accs) {
-    const newUrl = accs === 'all' ? '/accessories' : `/accessories?accessorie_type=${accs}`;
-    window.history.pushState({}, '', newUrl);
-}
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
@@ -191,30 +100,30 @@ async function fetchProducts() {
 }
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
-async function displayProductList(category = null, size = null, accs = null) {
+async function loadProductList(category = 'all', size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
     const loadingIndicator = document.getElementById('loading-indicator');
     const productTitle = document.getElementById('product-title');
 
-    productContainer.innerHTML = ''; // Bestehende Produkte entfernen
-    if (loadingIndicator) loadingIndicator.style.display = 'block'; // Ladeindikator anzeigen
-    productContainer.style.display = 'none'; // Container ausblenden, bis Produkte geladen sind
+    // Ladeindikator anzeigen
+    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    productContainer.style.display = 'none'; // Container ausblenden
+    productContainer.innerHTML = ''; // Inhalt löschen
 
-    productTitle.innerHTML = (category && category !== 'all') 
+    // Titel aktualisieren
+    productTitle.innerHTML = (category !== 'all')
         ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
 
     try {
-        // Produkte laden
-        const products = await fetchProducts();
+        const products = await fetchProducts(); // Produkte laden
         if (!products || products.length === 0) {
-            console.warn('No Products available.');
-            productContainer.innerHTML = '<p>No Products available.</p>';
+            productContainer.innerHTML = '<p>No products available.</p>';
             return;
         }
 
         // Produkte filtern
-        let filteredProducts = (category && category !== 'all') 
+        let filteredProducts = (category && category !== 'all')
             ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
             : products;
 
@@ -227,74 +136,80 @@ async function displayProductList(category = null, size = null, accs = null) {
         }
 
         // Produkte anzeigen
-        filteredProducts.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-
-            // Prüfen, ob Varianten vorhanden sind
-            if (product.variants && product.variants.length > 0) {
-                productCard.innerHTML = `
-                    <a href="/product/${product.id}" class="product-link">
-                        <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
-                        <h2>${product.name}</h2>
-                    </a>
-                    <p class="product-price-shop">
+        if (filteredProducts.length > 0) {
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+        
+                // Prüfen, ob Varianten vorhanden sind
+                if (product.variants && product.variants.length > 0) {
+                    productCard.innerHTML = `
+                        <a href="/product/${product.id}" class="product-link">
+                            <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
+                            <h2>${product.name}</h2>
+                        </a>
+                        <p class="product-price-shop">
+                            ${
+                                product.variants.some(variant => variant.stock > 0) 
+                                ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                                : `<span class="sold-out-text">SOLD OUT</span>`
+                            }
+                        </p>
+                        <div class="variant-colors-container">
                         ${
-                            product.variants.some(variant => variant.stock > 0) 
-                            ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                            : `<span class="sold-out-text">SOLD OUT</span>`
+                            product.variants.slice(0, 3).map(variant => {
+                                const isSoldOut = variant.stock === 0;
+                                const colorStyle = variant.color.includes('/') 
+                                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                                    : variant.color;
+                                return `
+                                    <span 
+                                        class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
+                                        style="background: ${colorStyle};" 
+                                        title="${isSoldOut ? 'Sold Out' : 'Available'}">
+                                    </span>
+                                `;
+                            }).join('')
                         }
-                    </p>
-                    <div class="variant-colors-container">
-                    ${
-                        product.variants.slice(0, 3).map(variant => {
-                            const isSoldOut = variant.stock === 0;
-                            const colorStyle = variant.color.includes('/') 
-                                ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
-                                : variant.color;
-                            return `
-                                <span 
-                                    class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
-                                    style="background: ${colorStyle};" 
-                                    title="${isSoldOut ? 'Sold Out' : 'Available'}">
-                                </span>
-                            `;
-                        }).join('')
-                    }
-                        ${
-                            product.variants.length > 3 
-                            ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
-                            : ''
-                        }
-                    </div>
-                `;
-            } else {
-                productCard.innerHTML = `
-                    <a href="/product/${product.id}" class="product-link">
-                        <img src="${product.images[0]}" alt="${product.name}">
-                        <h2>${product.name}</h2>
-                    </a>
-                    <p class="product-price-shop">
-                        ${
-                            product.stock > 0 
-                            ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                            : `<span class="sold-out-text">SOLD OUT</span>`
-                        }
-                    </p>
-                `;
-            }
-
-            productContainer.appendChild(productCard);
-        });
-
+                            ${
+                                product.variants.length > 3 
+                                ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
+                                : ''
+                            }
+                        </div>
+                    `;
+                }
+                 else {
+                    productCard.innerHTML = `
+                        <a href="/product/${product.id}" class="product-link">
+                            <img src="${product.images[0]}" alt="${product.name}">
+                            <h2>${product.name}</h2>
+                        </a>
+                        <p class="product-price-shop">
+                            ${
+                                product.stock > 0 
+                                ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                                : `<span class="sold-out-text">SOLD OUT</span>`
+                            }
+                        </p>
+                    `;
+                }
+        
+                productContainer.appendChild(productCard);
+            });
+        } else {
+            productContainer.innerHTML = '<p>No products match your filters.</p>';
+        }
     } catch (error) {
-        console.error('Fehler beim Laden der Produktliste:', error);
-        productContainer.innerHTML = '<p>Fehler beim Laden der Produkte. Bitte versuchen Sie es später erneut.</p>';
+        console.error('Error loading products:', error);
+        productContainer.innerHTML = '<p>Error loading products. Please try again later.</p>';
     } finally {
         // Ladeindikator ausblenden
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        loadingIndicator.style.display = 'none';
+        productContainer.style.display = 'grid';
     }
 }
+
 
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
