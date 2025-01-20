@@ -77,34 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });    
 
-    // Unterkategorien-Filter (Größen und Accessoires)
-    document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const category = link.getAttribute('data-category');
-            const size = link.getAttribute('data-size');
-            const accs = link.getAttribute('data-accs');
-
-            displayProductList(category, size, accs); // Filter basierend auf Unterkategorie anwenden
-        });
-    });
-
     // Produkte initial laden (alle Produkte anzeigen)
     displayProductList('all');
 });
-
-// Funktion zur Initialisierung basierend auf URL-Parametern
-function initializeFiltersFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const size = urlParams.get('size') || null;
-    const accs = urlParams.get('accessorie_type') || null;
-
-    if (currentPath.includes('/bags')) {
-        updateProductList('bags', size); // Filter nach Größe anwenden
-    } else if (currentPath.includes('/accessories')) {
-        updateProductList('accessories', null, accs); // Filter nach Accessoire-Typ anwenden
-    }
-}
 
 // Funktion zur Aktualisierung der Produktliste basierend auf der Kategorie
 async function updateProductList(category = 'all', size = null, accs = null) {
@@ -114,24 +89,23 @@ async function updateProductList(category = 'all', size = null, accs = null) {
 
     // Ladeindikator anzeigen
     if (loadingIndicator) loadingIndicator.style.display = 'block';
-    if (productContainer) productContainer.style.display = 'none';
-    productContainer.innerHTML = '';
+    productContainer.style.display = 'none'; // Container ausblenden
+    productContainer.innerHTML = ''; // Inhalt löschen
 
-    // Titel aktualisieren
+    // Titel setzen
     productTitle.innerHTML = (category !== 'all')
         ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
 
     try {
-        const products = await fetchProducts(); // Produkte laden
-        if (!products) {
-            console.warn('Keine Produkte gefunden');
-            productContainer.innerHTML = '<p>Keine Produkte verfügbar.</p>';
+        const products = await fetchProducts();
+        if (!products || products.length === 0) {
+            productContainer.innerHTML = '<p>No products available.</p>';
             return;
         }
 
-        // Produkte filtern
-        let filteredProducts = category !== 'all'
+        // Filter anwenden
+        let filteredProducts = (category && category !== 'all') 
             ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
             : products;
 
@@ -144,33 +118,37 @@ async function updateProductList(category = 'all', size = null, accs = null) {
         }
 
         // Produkte anzeigen
-        filteredProducts.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <a href="/product/${product.id}" class="product-link">
-                    <img src="${product.defaultImage || product.images[0]}" alt="${product.name}">
-                    <h2>${product.name}</h2>
-                </a>
-                <p class="product-price-shop">
-                    ${
-                        product.stock > 0 
-                            ? `<span class="price-amount-shop">${product.price.toFixed(2)}</span><span class="price-currency-shop"> €</span>` 
-                            : `<span class="sold-out-text">SOLD OUT</span>`
-                    }
-                </p>`;
-            productContainer.appendChild(productCard);
-        });
+        if (filteredProducts.length > 0) {
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <a href="/product/${product.id}" class="product-link">
+                        <img src="${product.defaultImage || product.images[0]}" alt="${product.name}">
+                        <h2>${product.name}</h2>
+                    </a>
+                    <p class="product-price-shop">
+                        ${
+                            product.stock > 0
+                                ? `<span class="price-amount-shop">${product.price.toFixed(2)}</span><span class="price-currency-shop"> €</span>`
+                                : `<span class="sold-out-text">SOLD OUT</span>`
+                        }
+                    </p>
+                `;
+                productContainer.appendChild(productCard);
+            });
+        } else {
+            productContainer.innerHTML = '<p>No products match your filters.</p>';
+        }
     } catch (error) {
-        console.error('Fehler beim Laden der Produkte:', error);
-        productContainer.innerHTML = '<p>Fehler beim Laden der Produkte.</p>';
+        console.error('Error loading products:', error);
+        productContainer.innerHTML = '<p>Error loading products. Please try again later.</p>';
     } finally {
         // Ladeindikator ausblenden
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
-        if (productContainer) productContainer.style.display = 'grid';
+        loadingIndicator.style.display = 'none';
+        productContainer.style.display = 'grid';
     }
 }
-
 
 // Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
 function applySizeFilter(size) {
