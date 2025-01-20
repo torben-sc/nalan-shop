@@ -215,14 +215,11 @@ async function loadProductList(category = 'all', size = null, accs = null) {
     }
 }
 
-function getProductIdFromPath() {
-    const pathParts = window.location.pathname.split('/');
-    return pathParts[pathParts.length - 1]; // Letzter Teil der URL, z.B. "2"
-}
-
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
-    const productId = getProductIdFromURL();
+    const pathParts = window.location.pathname.split('/');
+    const productId = pathParts[pathParts.length - 1];
+
 
     if (!productId) {
         console.error('Product ID not found in URL');
