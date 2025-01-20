@@ -27,11 +27,31 @@
     <!-- Oberes Navigationsmenü für Hauptkategorien -->
     <div class="top-menu-wrapper">
         <nav class="top-menu">
-            <a href="/shop" id="showAllFilter">Show All</a>
-            <a href="/balaclavas" id="balaclavasFilter">Balaclavas</a>
-            <a href="/bags" id="bagsFilter">Bags</a>
-            <a href="/scarves" id="scarvesFilter">Scarves</a>
-            <a href="/accessories" id="accessoriesFilter">Accessories</a>
+            <a href="#" id="showAllFilter">All Products</a>
+            <a href="#" id="balaclavasFilter">Balaclavas</a>
+            <a href="#" id="bagsFilter">Bags</a>
+            <a href="#" id="scarvesFilter">Scarves</a>
+            <a href="#" id="accessoriesFilter">Accessories</a>
+        </nav>
+    </div>
+
+    <!-- Unterkategorien für Bags -->
+    <div id="bags-subcategories" class="top-menu-wrapper-2" style="display: none;">
+        <nav class="top-menu">
+            <a href="#" data-category="bags" data-size="all">All Sizes</a>
+            <a href="#" data-category="bags" data-size="small">Compact</a>
+            <a href="#" data-category="bags" data-size="medium">Medium</a>
+            <a href="#" data-category="bags" data-size="big">Oversized</a>
+        </nav>
+    </div>
+
+    <!-- Unterkategorien für Accessories -->
+    <div id="accessories-subcategories" class="top-menu-wrapper-2" style="display: none;">
+        <nav class="top-menu">
+            <a href="#" data-category="accessories" data-accs="all">All Accessories</a>
+            <a href="#" data-category="accessories" data-accs="lighter">Lighter Cases</a>
+            <a href="#" data-category="accessories" data-accs="lipgloss">Lip Gloss Cases</a>
+            <a href="#" data-category="accessories" data-accs="keychain">Keychains</a>
         </nav>
     </div>
     
@@ -80,10 +100,10 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const loadingIndicator = document.getElementById('loading-indicator');
             const productContainer = document.getElementById('product-container');
-
+    
             try {
-                // Lade Produkte für die aktuelle Kategorie (z. B. Balaclavas)
-                await displayProductList('all');
+                // Lade Produkte für die aktuelle Kategorie
+                await updateProductList('all');
             } catch (error) {
                 console.error('Error loading products:', error);
             } finally {
