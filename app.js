@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialisieren der Warenkorb-Anzeige
     updateCartCount();
 
-    // Warenkorb-Popup Elemente und Event-Handler
     const cartIcon = document.getElementById('cart-icon');
     const cartPopup = document.getElementById('cart-popup');
     const closeCartButton = document.getElementById('close-cart');
@@ -20,18 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Funktion, um die URL zu aktualisieren
     const updateURL = (category, size = null, accs = null) => {
         let path = `/shop/${category}`;
         if (category === 'accessories' && accs) {
-            path += `/${accs}`; // Accessories mit Unterkategorie
+            path += `/${accs}`;
         } else if (size) {
-            path += `/${size}`; // Andere Kategorien mit Größe
+            path += `/${size}`;
         }
         history.replaceState(null, '', path);
     };
 
-    // Funktion, um Filter aus der URL zu lesen (Pfad)
     const getFiltersFromPath = () => {
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         let category = 'all';
@@ -48,7 +44,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return { category, subFilter };
     };
 
-    // Hauptkategorien-Eventlistener
+    const showSubMenu = (category) => {
+        document.querySelectorAll('.top-menu-wrapper-2').forEach(wrapper => wrapper.style.display = 'none');
+        const subcategoryWrapper = document.getElementById(`${category}-subcategories`);
+        if (subcategoryWrapper) {
+            subcategoryWrapper.style.display = 'block';
+        }
+    };
+
+    const activateFilterLinks = (category, subFilter) => {
+        document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active-filter'));
+        const mainFilter = document.querySelector(`#${category}Filter`);
+        if (mainFilter) mainFilter.classList.add('active-filter');
+
+        document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => link.classList.remove('active-filter'));
+        if (subFilter) {
+            const subFilterLink = document.querySelector(`.top-menu-wrapper-2 a[data-category="${category}"][data-accs="${subFilter}"], 
+                .top-menu-wrapper-2 a[data-category="${category}"][data-size="${subFilter}"]`);
+            if (subFilterLink) subFilterLink.classList.add('active-filter');
+        }
+    };
+
     const categoryMap = {
         showAllFilter: 'all',
         bagsFilter: 'bags',
@@ -64,25 +80,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const category = categoryMap[filterId];
 
-                // Unterkategorien aktualisieren
-                document.querySelectorAll('.top-menu-wrapper-2').forEach(wrapper => wrapper.style.display = 'none');
-                const subcategoryWrapper = document.getElementById(`${category}-subcategories`);
-                if (subcategoryWrapper) {
-                    subcategoryWrapper.style.display = 'block';
-                }
+                showSubMenu(category);
 
-                // Aktive Klasse aktualisieren
                 document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active-filter'));
                 filterElement.classList.add('active-filter');
 
-                // URL aktualisieren und Produkte laden
                 updateURL(category);
                 loadProductList(category);
             });
         }
     });
 
-    // Unterkategorien-Eventlistener
     document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -90,16 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const size = link.getAttribute('data-size');
             const accs = link.getAttribute('data-accs');
 
-            // Aktive Klasse aktualisieren
             link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(l => l.classList.remove('active-filter'));
             link.classList.add('active-filter');
 
-            // URL aktualisieren und Produkte laden
             if (category === 'accessories') {
-                updateURL(category, null, accs); // Accessoires nutzen `accs`
+                updateURL(category, null, accs);
                 loadProductList(category, null, accs);
             } else {
-                updateURL(category, size); // Andere Kategorien nutzen `size`
+                updateURL(category, size);
                 loadProductList(category, size);
             }
         });
@@ -111,12 +117,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentPath.startsWith('/product/')) {
         displayProductDetails();
-    } else if (category === 'accessories') {
-        loadProductList(category, null, subFilter); // Accessoires mit Unterkategorie laden
     } else {
-        loadProductList(category, subFilter); // Andere Kategorien mit Größe laden
+        showSubMenu(category); // Untermenü für die Kategorie anzeigen
+        activateFilterLinks(category, subFilter); // Aktive Links markieren
+        if (category === 'accessories') {
+            loadProductList(category, null, subFilter);
+        } else {
+            loadProductList(category, subFilter);
+        }
     }
 });
+
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
