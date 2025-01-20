@@ -158,8 +158,8 @@ body {
 }
 
 .top-menu a.active-filter {
-    background-color: #24388E; /* Beispiel-Hintergrundfarbe */
-    color: white; /* Textfarbe */
+    background-color: #ffff; /* Beispiel-Hintergrundfarbe */
+    color: #E55013; /* Textfarbe */
     font-weight: bold; /* Optional: Fettgedruckter Text */
 }
 
