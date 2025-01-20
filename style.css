@@ -1125,5 +1125,9 @@ main {
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        /* Abstand nach oben hinzufügen */
+        margin-top: 80px; /* Verschiebt den rechten Inhalt weiter nach unten */
     }
 }
+
