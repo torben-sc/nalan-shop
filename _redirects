@@ -1,4 +1,5 @@
 /product/*                  /product/index.html  200
+/shop/all                   /shop?category=all     200
 /shop/balaclavas            /shop?category=balaclavas     200
 /shop/scarves               /shop/?category=scarves       200
 /shop/bags                  /shop?category=bags           200
