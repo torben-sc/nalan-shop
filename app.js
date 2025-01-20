@@ -461,17 +461,24 @@ function updateImage(imgElement, currentIndex, images) {
 function displayProductInfo(product) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Überprüfen, ob das Produkt Varianten hat
+    // Überprüfen, ob das Produkt Varianten hat und ob alle Varianten ausverkauft sind
     let displayName = product.name;
+    let isSoldOut = false;
+
     if (product.variants && product.variants.length > 0) {
-        // Zeige nur den Namen der ersten Variante an
-        displayName = product.variants[0].name;
+        // Wenn Varianten vorhanden sind, prüfen, ob alle ausverkauft sind
+        isSoldOut = product.variants.every(variant => variant.stock === 0);
+        displayName = product.variants[0].name; // Zeige nur den Namen der ersten Variante
+    } else {
+        // Wenn keine Varianten vorhanden sind, prüfen, ob das Produkt ausverkauft ist
+        isSoldOut = product.stock === 0;
     }
 
+    // Inhalt generieren
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
-        <p class="product-price">€${product.price.toFixed(2)}</p>
+        <p class="product-price">${isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${product.price.toFixed(2)}`}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
             Currently only shipping to Germany. For international requests, contact me on
@@ -481,6 +488,7 @@ function displayProductInfo(product) {
         </div>
     `;
 }
+
 
 // Funktion zur Aktualisierung des Add-to-Cart Buttons
 function updateAddToCartButton(product, variant) {
