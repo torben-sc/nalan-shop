@@ -258,7 +258,7 @@ async function loadProductList(category = 'all', size = null, accs = null) {
 }
 
 // Funktion zur Anzeige der Produktdetails
-async function displayProductDetails() {
+async function displayProductDetails(selectedVariantIndex = 0) {
     const pathParts = window.location.pathname.split('/');
     const productId = pathParts[pathParts.length - 1];
 
@@ -279,10 +279,16 @@ async function displayProductDetails() {
             return;
         }
 
+        // Aktuelle Variante basierend auf dem Index auswählen
+        const selectedVariant =
+            product.variants && product.variants.length > 0
+                ? product.variants[selectedVariantIndex]
+                : null;
+
         // Produktdetails anzeigen
         createColorMenu(product);
         createProductImages(product);
-        displayProductInfo(product);
+        displayProductInfo(product, selectedVariant);
         addButtonsAndEventListeners(product);
 
     } catch (error) {
@@ -290,7 +296,6 @@ async function displayProductDetails() {
         document.getElementById('product-detail-container').innerHTML = '<p>Error loading product details.</p>';
     }
 }
-
 
 // Funktion zur Erstellung des Farbauswahl-Menüs
 function createColorMenu(product) {
@@ -458,32 +463,15 @@ function updateImage(imgElement, currentIndex, images) {
 }
 
 // Hilfsfunktion zur Anzeige der Produktinformationen
-function displayProductInfo(product, selectedVariant = null) {
+function displayProductInfo(product, variant = null) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Festlegen des anzuzeigenden Namens und der Verfügbarkeit basierend auf der aktuellen Variante oder dem Produkt
-    let displayName = product.name;
-    let priceDisplay = `€${product.price.toFixed(2)}`;
-    let isSoldOut = false;
+    const displayName = variant?.name || product.name;
+    const isSoldOut = variant?.stock === 0 || product.stock === 0;
+    const priceDisplay = isSoldOut
+        ? '<span class="sold-out-text">SOLD OUT</span>'
+        : `€${(variant?.price || product.price).toFixed(2)}`;
 
-    if (selectedVariant) {
-        // Name und Preis der aktuellen Variante verwenden
-        displayName = selectedVariant.name || product.name;
-        isSoldOut = selectedVariant.stock === 0;
-        priceDisplay = isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${selectedVariant.price.toFixed(2)}`;
-    } else {
-        // Keine Variante ausgewählt: Standard-Produktinformationen verwenden
-        if (product.variants && product.variants.length > 0) {
-            displayName = product.variants[0].name; // Name der ersten Variante
-            isSoldOut = product.variants[0].stock === 0;
-            priceDisplay = isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${product.variants[0].price.toFixed(2)}`;
-        } else {
-            isSoldOut = product.stock === 0;
-            priceDisplay = isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${product.price.toFixed(2)}`;
-        }
-    }
-
-    // Inhalt generieren
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
