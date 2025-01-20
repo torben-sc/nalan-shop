@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Kategorien-Event-Listener hinzufügen
     const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
-    const categoryUrls = {
-        showAllFilter: '/shop',
-        bagsFilter: '/bags',
-        balaclavasFilter: '/balaclavas',
-        scarvesFilter: '/scarves',
-        accessoriesFilter: '/accessories',
+    const categoryMap = {
+        showAllFilter: 'all',
+        bagsFilter: 'bags',
+        balaclavasFilter: 'balaclavas',
+        scarvesFilter: 'scarves',
+        accessoriesFilter: 'accessories',
     };
 
     categories.forEach(id => {
@@ -37,39 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (filterElement) {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                const newUrl = categoryUrls[id];
-                window.location.href = newUrl; // Navigation zur neuen URL ohne ".html" oder "?category"
+                const category = categoryMap[id];
+                updateProductList(category);
             });
         }
     });
 
-    // URL-basierten Kategorie-Filter anwenden
-    const currentPath = window.location.pathname;
+    // Produkte initial laden (alle Kategorien)
+    updateProductList('all');
 
-    let category;
-    let accs = null;
-
-    switch (currentPath) {
-        case '/bags':
-            category = 'bags';
-            break;
-        case '/balaclavas':
-            category = 'balaclavas';
-            break;
-        case '/scarves':
-            category = 'scarves';
-            break;
-        case '/accessories':
-            category = 'accessories';
-            accs = new URLSearchParams(window.location.search).get('accessorie_type') || 'all';
-            break;
-        default:
-            category = 'all';
-    }
-
-    console.log('Initialer Kategorie-Filter:', { category, accs });
-    displayProductList(category, null, accs);
-    
     // Initialisieren der Produktliste basierend auf der URL-Kategorie
     if (document.getElementById('product-container')) {
         displayProductList(category, null, accs);
@@ -120,6 +96,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+// Funktion zur Aktualisierung der Produktliste basierend auf der Kategorie
+async function updateProductList(category) {
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const productContainer = document.getElementById('product-container');
+    const productTitle = document.getElementById('product-title');
+
+    // Zeige Ladeindikator und leere den Produktcontainer
+    loadingIndicator.style.display = 'block';
+    productContainer.style.display = 'none';
+    productContainer.innerHTML = '';
+
+    // Aktualisiere den Titel
+    productTitle.innerHTML = category !== 'all'
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
+        : 'All<span class="mobile-line-break"> </span>Products';
+
+    try {
+        const products = await fetchProducts(); // Produkte aus JSON laden
+        if (!products) return;
+
+        // Produkte filtern
+        let filteredProducts = category !== 'all'
+            ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
+            : products;
+
+        // Produkte anzeigen
+        filteredProducts.forEach(product => {
+            const productCard = displayProductList(product);
+            productContainer.appendChild(productCard);
+        });
+
+    } catch (error) {
+        console.error('Error updating product list:', error);
+    } finally {
+        // Ladeindikator ausblenden und Produktcontainer anzeigen
+        loadingIndicator.style.display = 'none';
+        productContainer.style.display = 'grid';
+    }
+}
+
 // Funktion zur Anwendung des Größenfilters und zum Aktualisieren der URL
 function applySizeFilter(size) {
     displayProductList('bags', size);
@@ -147,60 +163,33 @@ function updateAccessoriesFilterURL(accs) {
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
-        const response = await fetch('/.netlify/functions/get-products');
+        const response = await fetch('/.netlify/functions/get-products'); // Pfad zur Netlify Function
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Error loading products: ${response.statusText}`);
         }
         return await response.json();
     } catch (error) {
         console.error('Error loading products:', error);
-        return []; // Rückgabe eines leeren Arrays bei Fehler
     }
 }
 
-
-// Kontrollfunktion: Überprüft, ob die Produkte korrekt gefiltert wurden
-function validateFilteredProducts(products, category, size, accs) {
-    console.log('Validierung der Produkte:', { products, category, size, accs });
-    return products.every(product => {
-        let isValid = true;
-        if (category && category !== 'all') {
-            isValid = isValid && product.category.toLowerCase() === category.toLowerCase();
-        }
-        if (size && size !== 'all') {
-            isValid = isValid && product.size && product.size.toLowerCase() === size.toLowerCase();
-        }
-        if (accs && accs !== 'all') {
-            isValid = isValid && product.accs && product.accs.toLowerCase() === accs.toLowerCase();
-        }
-        return isValid;
-    });
-}
-
-// Überarbeitete displayProductList-Funktion mit Validierung
+// Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
-    productContainer.innerHTML = ''; // Vorherige Produkte entfernen
+    productContainer.innerHTML = ''; // Bestehende Produkte entfernen
     const productTitle = document.getElementById('product-title');
 
-    // Setze den Titel der Produktliste
+    // Titel sofort setzen basierend auf der Kategorie
     productTitle.innerHTML = (category && category !== 'all') 
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
         : 'All<span class="mobile-line-break"> </span>Products';
 
-    console.log('Filterparameter:', { category, size, accs });
-
-    // Produkte laden
+    // Produkte laden und filtern
     const products = await fetchProducts();
-    if (!products || products.length === 0) {
-        console.error('Keine Produkte gefunden.');
-        productContainer.innerHTML = '<p>No products available.</p>';
-        return;
-    }
+    if (!products) return;
 
-    console.log('Geladene Produkte:', products);
+    productContainer.innerHTML = '';
 
-    // Filterung
     let filteredProducts = (category && category !== 'all') 
         ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
         : products;
@@ -213,18 +202,11 @@ async function displayProductList(category = null, size = null, accs = null) {
         filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
     }
 
-    console.log('Gefilterte Produkte:', filteredProducts);
-
-    if (filteredProducts.length === 0) {
-        productContainer.innerHTML = '<p>No products found for the selected filter.</p>';
-        return;
-    }
-
-    // Produkte rendern
     filteredProducts.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
 
+        // Prüfen, ob Varianten vorhanden sind
         if (product.variants && product.variants.length > 0) {
             productCard.innerHTML = `
                 <a href="/product/${product.id}" class="product-link">
