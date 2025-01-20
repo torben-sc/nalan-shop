@@ -210,35 +210,41 @@ async function loadProductList(category = 'all', size = null, accs = null) {
     }
 }
 
+function getProductIdFromPath() {
+    const pathParts = window.location.pathname.split('/');
+    return pathParts[pathParts.length - 1]; // Letzter Teil der URL, z.B. "2"
+}
 
 // Funktion zur Anzeige der Produktdetails
 async function displayProductDetails() {
-    const pathParts = window.location.pathname.split('/');
-    const productId = pathParts[pathParts.length - 1];
+    const productId = getProductIdFromURL();
 
-    console.log('Extrahierte Produkt-ID:', productId); // Debug-Log
-
-    const products = await fetchProducts();
-    if (!products) {
-        console.error('Produkte konnten nicht geladen werden.');
+    if (!productId) {
+        console.error('Product ID not found in URL');
+        document.getElementById('product-detail-container').innerHTML = '<p>Product not found.</p>';
         return;
     }
 
-    console.log('Geladene Produkte:', products); // Debug-Log
+    try {
+        const products = await fetchProducts(); // Produkte laden
 
-    const product = products.find(p => p.id === productId);
-    if (!product) {
-        console.error('Produkt mit der ID nicht gefunden:', productId);
-        document.getElementById('product-detail-container').innerHTML = `<p>Produkt nicht gefunden.</p>`;
-        return;
+        const product = products.find(p => p.id === productId);
+        if (!product) {
+            console.error(`No product found for ID: ${productId}`);
+            document.getElementById('product-detail-container').innerHTML = '<p>Product not found.</p>';
+            return;
+        }
+
+        // Produktdetails anzeigen
+        createColorMenu(product);
+        createProductImages(product);
+        displayProductInfo(product);
+        addButtonsAndEventListeners(product);
+
+    } catch (error) {
+        console.error('Error displaying product details:', error);
+        document.getElementById('product-detail-container').innerHTML = '<p>Error loading product details.</p>';
     }
-
-    console.log('Gefundenes Produkt:', product); // Debug-Log
-
-    createColorMenu(product);
-    createProductImages(product);
-    displayProductInfo(product);
-    addButtonsAndEventListeners(product);
 }
 
 
