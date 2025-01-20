@@ -36,6 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
         accessoriesFilter: 'accessories',
     };
 
+    // Funktion, um den Filter in der URL zu speichern
+    const updateURL = (category, size = null, accs = null) => {
+        const params = new URLSearchParams();
+        if (category) params.set('category', category);
+        if (size) params.set('size', size);
+        if (accs) params.set('accs', accs);
+        history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+    };
+
+    // Funktion, um Filter aus der URL zu lesen
+    const getFiltersFromURL = () => {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            category: params.get('category') || 'all',
+            size: params.get('size'),
+            accs: params.get('accs'),
+        };
+    };
+
     // Hauptkategorien-Eventlistener
     Object.keys(categoryMap).forEach(filterId => {
         const filterElement = document.getElementById(filterId);
@@ -44,19 +63,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const category = categoryMap[filterId];
 
-                // Unterkategorien ausblenden
                 Object.values(categorySections).forEach(section => section.style.display = 'none');
-
-                // Unterkategorie anzeigen, wenn vorhanden
                 if (categorySections[category]) {
                     categorySections[category].style.display = 'block';
                 }
 
-                // Aktive Klasse aktualisieren
                 document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active-filter'));
                 filterElement.classList.add('active-filter');
 
-                // Produkte laden
+                updateURL(category); // URL aktualisieren
                 loadProductList(category);
             });
         }
@@ -70,22 +85,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const size = link.getAttribute('data-size');
             const accs = link.getAttribute('data-accs');
 
-            // Aktive Klasse aktualisieren
             link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(link => link.classList.remove('active-filter'));
             link.classList.add('active-filter');
 
-            // Produkte laden
+            updateURL(category, size, accs); // URL aktualisieren
             loadProductList(category, size, accs);
         });
     });
 
+    // Produkte initial laden basierend auf der URL
+    const { category, size, accs } = getFiltersFromURL();
     const currentPath = window.location.pathname;
 
     if (currentPath.startsWith('/product/')) {
-        displayProductDetails(); // Einzelnes Produkt anzeigen
+        displayProductDetails();
     } else {
-        loadProductList('all');
+        loadProductList(category, size, accs);
     }
+
 });
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
