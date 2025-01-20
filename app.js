@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bags: document.getElementById('bags-subcategories'),
         accessories: document.getElementById('accessories-subcategories'),
     };
-    const mainFilters = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
+
     const categoryMap = {
         showAllFilter: 'all',
         bagsFilter: 'bags',
@@ -36,12 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
         accessoriesFilter: 'accessories',
     };
 
-    mainFilters.forEach(id => {
-        const filterElement = document.getElementById(id);
+    // Hauptkategorien-Filter
+    Object.keys(categoryMap).forEach(filterId => {
+        const filterElement = document.getElementById(filterId);
         if (filterElement) {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
-                const category = categoryMap[id];
+                const category = categoryMap[filterId];
 
                 // Unterkategorien ausblenden
                 Object.values(categorySections).forEach(section => section.style.display = 'none');
@@ -51,56 +52,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     categorySections[category].style.display = 'block';
                 }
 
+                // Produktliste für die gewählte Kategorie laden
                 displayProductList(category);
             });
         }
     });
 
-    // Event-Listener für Unterkategorien
+    // Unterkategorien-Filter (Größen und Accessoires)
     document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const category = link.getAttribute('data-category');
             const size = link.getAttribute('data-size');
             const accs = link.getAttribute('data-accs');
-            displayProductList(category, size, accs);
+
+            displayProductList(category, size, accs); // Filter basierend auf Unterkategorie anwenden
         });
     });
 
-    // Produkte initial laden
+    // Produkte initial laden (alle Produkte anzeigen)
     displayProductList('all');
-
-    // Initialisieren der Produktliste basierend auf der URL-Kategorie
-    if (document.getElementById('product-container')) {
-        updateProductList('all'); 
-    } else if (document.getElementById('product-detail-container')) {
-        displayProductDetails();
-    }
-
-    // Initialisierung des Footers
-    if (!document.getElementById('landing-container')) {
-        createFooter();
-    }
-
-    // Größenfilter-Event-Listener hinzufügen (für Bags-Unterkategorien)
-    const sizeFilterLinks = document.querySelectorAll('.top-menu-wrapper-2 a[data-category="bags"]');
-    sizeFilterLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const size = e.target.getAttribute('data-size');
-            updateProductList('bags', size); // Aktualisiere die Produktliste basierend auf der Größe
-        });
-    });
-
-    // Accessoires-Filter-Event-Listener hinzufügen (für Accessories-Unterkategorien)
-    const accessoriesLinks = document.querySelectorAll('.top-menu-wrapper-2 a[data-category="accessories"]');
-    accessoriesLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const accs = e.target.getAttribute('data-accs');
-            updateProductList('accessories', null, accs); // Aktualisiere die Produktliste basierend auf dem Accessoire-Typ
-        });
-    });
 });
 
 // Funktion zur Initialisierung basierend auf URL-Parametern
