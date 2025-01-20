@@ -23,7 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Kategorien-Event-Listener hinzufügen
-    const categories = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
+    const categorySections = {
+        bags: document.getElementById('bags-subcategories'),
+        accessories: document.getElementById('accessories-subcategories'),
+    };
+    const mainFilters = ['showAllFilter', 'bagsFilter', 'balaclavasFilter', 'scarvesFilter', 'accessoriesFilter'];
     const categoryMap = {
         showAllFilter: 'all',
         bagsFilter: 'bags',
@@ -32,15 +36,35 @@ document.addEventListener('DOMContentLoaded', () => {
         accessoriesFilter: 'accessories',
     };
 
-    categories.forEach(id => {
+    mainFilters.forEach(id => {
         const filterElement = document.getElementById(id);
         if (filterElement) {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 const category = categoryMap[id];
+
+                // Unterkategorien ausblenden
+                Object.values(categorySections).forEach(section => section.style.display = 'none');
+
+                // Unterkategorie anzeigen, wenn vorhanden
+                if (categorySections[category]) {
+                    categorySections[category].style.display = 'block';
+                }
+
                 displayProductList(category);
             });
         }
+    });
+
+    // Event-Listener für Unterkategorien
+    document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.getAttribute('data-category');
+            const size = link.getAttribute('data-size');
+            const accs = link.getAttribute('data-accs');
+            displayProductList(category, size, accs);
+        });
     });
 
     // Produkte initial laden
@@ -175,14 +199,13 @@ async function fetchProducts() {
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
     const productTitle = document.getElementById('product-title');
 
-    // Bestehende Produkte entfernen und Ladeindikator anzeigen
-    productContainer.innerHTML = '';
-    const loadingIndicator = document.getElementById('loading-indicator');
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    productContainer.innerHTML = ''; // Bestehende Produkte entfernen
+    if (loadingIndicator) loadingIndicator.style.display = 'block'; // Ladeindikator anzeigen
+    productContainer.style.display = 'none'; // Container ausblenden, bis Produkte geladen sind
 
-    // Titel basierend auf Kategorie setzen
     productTitle.innerHTML = (category && category !== 'all') 
         ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
