@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateURL = (category, size = null) => {
         let path = `/shop/${category}`;
         if (size) path += `/${size}`;
-        if (accs) path += `/${accs}`;
         history.replaceState(null, '', path);
     };
 
