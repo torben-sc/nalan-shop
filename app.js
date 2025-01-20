@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartPopup = document.getElementById('cart-popup');
     const closeCartButton = document.getElementById('close-cart');
 
-    // Event listener to open cart popup
     if (cartIcon && cartPopup) {
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
@@ -15,19 +14,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Event listener to close cart popup
     if (closeCartButton && cartPopup) {
         closeCartButton.addEventListener('click', () => {
             cartPopup.classList.remove('open');
         });
     }
 
-    // Kategorien-Event-Listener hinzufügen
-    const categorySections = {
-        bags: document.getElementById('bags-subcategories'),
-        accessories: document.getElementById('accessories-subcategories'),
+    // Funktion, um die URL zu aktualisieren
+    const updateURL = (category, size = null) => {
+        let path = `/shop/${category}`;
+        if (size) path += `/${size}`;
+        history.replaceState(null, '', path);
     };
 
+    // Funktion, um Filter aus der URL zu lesen (Pfad)
+    const getFiltersFromPath = () => {
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        let category = 'all';
+        let size = null;
+
+        if (pathParts[0] === 'shop' && pathParts[1]) {
+            category = pathParts[1];
+        }
+
+        if (pathParts[2]) {
+            size = pathParts[2];
+        }
+
+        return { category, size };
+    };
+
+    // Hauptkategorien-Eventlistener
     const categoryMap = {
         showAllFilter: 'all',
         bagsFilter: 'bags',
@@ -36,26 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
         accessoriesFilter: 'accessories',
     };
 
-    // Funktion, um den Filter in der URL zu speichern
-    const updateURL = (category, size = null, accs = null) => {
-        const params = new URLSearchParams();
-        if (category) params.set('category', category);
-        if (size) params.set('size', size);
-        if (accs) params.set('accs', accs);
-        history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
-    };
-
-    // Funktion, um Filter aus der URL zu lesen
-    const getFiltersFromURL = () => {
-        const params = new URLSearchParams(window.location.search);
-        return {
-            category: params.get('category') || 'all',
-            size: params.get('size'),
-            accs: params.get('accs'),
-        };
-    };
-
-    // Hauptkategorien-Eventlistener
     Object.keys(categoryMap).forEach(filterId => {
         const filterElement = document.getElementById(filterId);
         if (filterElement) {
@@ -63,15 +60,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const category = categoryMap[filterId];
 
-                Object.values(categorySections).forEach(section => section.style.display = 'none');
-                if (categorySections[category]) {
-                    categorySections[category].style.display = 'block';
+                // Unterkategorien aktualisieren
+                document.querySelectorAll('.top-menu-wrapper-2').forEach(wrapper => wrapper.style.display = 'none');
+                const subcategoryWrapper = document.getElementById(`${category}-subcategories`);
+                if (subcategoryWrapper) {
+                    subcategoryWrapper.style.display = 'block';
                 }
 
+                // Aktive Klasse aktualisieren
                 document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active-filter'));
                 filterElement.classList.add('active-filter');
 
-                updateURL(category); // URL aktualisieren
+                // URL aktualisieren und Produkte laden
+                updateURL(category);
                 loadProductList(category);
             });
         }
@@ -83,43 +84,28 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const category = link.getAttribute('data-category');
             const size = link.getAttribute('data-size');
-            const accs = link.getAttribute('data-accs');
 
-            link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(link => link.classList.remove('active-filter'));
+            // Aktive Klasse aktualisieren
+            link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(l => l.classList.remove('active-filter'));
             link.classList.add('active-filter');
 
-            updateURL(category, size, accs); // URL aktualisieren
-            loadProductList(category, size, accs);
+            // URL aktualisieren und Produkte laden
+            updateURL(category, size);
+            loadProductList(category, size);
         });
     });
 
     // Produkte initial laden basierend auf der URL
-    const { category, size, accs } = getFiltersFromURL();
+    const { category, size } = getFiltersFromPath();
     const currentPath = window.location.pathname;
 
     if (currentPath.startsWith('/product/')) {
         displayProductDetails();
     } else {
-        loadProductList(category, size, accs);
+        loadProductList(category, size);
     }
-
 });
 
-const getFiltersFromPath = () => {
-    const pathParts = window.location.pathname.split('/').filter(Boolean); // Entfernt leere Teile
-    let category = 'all';
-    let size = null;
-
-    if (pathParts[1] === 'shop' && pathParts[2]) {
-        category = pathParts[2]; // Kategorie aus dem Pfad extrahieren
-    }
-
-    if (pathParts[3]) {
-        size = pathParts[3]; // Größe oder Subfilter aus dem Pfad extrahieren
-    }
-
-    return { category, size };
-};
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
