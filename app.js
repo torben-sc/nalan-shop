@@ -105,6 +105,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+const getFiltersFromPath = () => {
+    const pathParts = window.location.pathname.split('/').filter(Boolean); // Entfernt leere Teile
+    let category = 'all';
+    let size = null;
+
+    if (pathParts[1] === 'shop' && pathParts[2]) {
+        category = pathParts[2]; // Kategorie aus dem Pfad extrahieren
+    }
+
+    if (pathParts[3]) {
+        size = pathParts[3]; // Größe oder Subfilter aus dem Pfad extrahieren
+    }
+
+    return { category, size };
+};
+
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
