@@ -1092,3 +1092,38 @@ main {
     position: relative;
     top: -3.3px; /* Hebt die Schrift etwas nach oben */
 }
+
+/* Standard (Mobile) */
+.product-layout {
+    display: flex;
+    flex-direction: column; /* Inhalte untereinander */
+    gap: 20px; /* Abstand zwischen Bereichen */
+}
+
+.product-left,
+.product-right {
+    width: 100%; /* Beide Bereiche nehmen 100% Breite ein */
+}
+
+/* Für größere Bildschirme */
+@media (min-width: 768px) {
+    .product-layout {
+        flex-direction: row; /* Inhalte nebeneinander */
+        align-items: flex-start; /* Inhalte oben ausrichten */
+        gap: 40px; /* Abstand zwischen den Spalten */
+    }
+
+    .product-left {
+        width: 60%; /* Linker Bereich nimmt 60% der Breite ein */
+        display: flex;
+        flex-direction: column; /* Inhalte bleiben untereinander */
+        gap: 20px;
+    }
+
+    .product-right {
+        width: 40%; /* Rechter Bereich nimmt 40% der Breite ein */
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
