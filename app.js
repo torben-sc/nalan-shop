@@ -38,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 const category = categoryMap[id];
-                updateProductList(category);
+                displayProductList(category);
             });
         }
     });
 
-    // Produkte initial laden (alle Kategorien)
-    updateProductList('all');
+    // Produkte initial laden
+    displayProductList('all');
 
     // Initialisieren der Produktliste basierend auf der URL-Kategorie
     if (document.getElementById('product-container')) {
@@ -159,108 +159,124 @@ function updateAccessoriesFilterURL(accs) {
 // Funktion zum Laden der Produkte aus einer JSON-Datei
 async function fetchProducts() {
     try {
-        const response = await fetch('/.netlify/functions/get-products'); // Pfad zur Netlify Function
+        const response = await fetch('/.netlify/functions/get-products'); // API-Endpunkt
         if (!response.ok) {
             throw new Error(`Error loading products: ${response.statusText}`);
         }
         const products = await response.json();
-        console.log('Geladene Produkte:', products); // Debug-Ausgabe
+        console.log('Geladene Produkte:', products); // Debugging
         return products;
     } catch (error) {
-        console.error('Error loading products:', error);
-        return []; // Gib einen leeren Array zurück, um Fehler zu vermeiden
+        console.error('Fehler beim Laden der Produkte:', error);
+        return [];
     }
 }
 
 // Funktion zur Anzeige der Produktliste basierend auf der Kategorie und Größe
 async function displayProductList(category = null, size = null, accs = null) {
     const productContainer = document.getElementById('product-container');
-    productContainer.innerHTML = ''; // Bestehende Produkte entfernen
     const productTitle = document.getElementById('product-title');
 
-    // Titel sofort setzen basierend auf der Kategorie
+    // Bestehende Produkte entfernen und Ladeindikator anzeigen
+    productContainer.innerHTML = '';
+    const loadingIndicator = document.getElementById('loading-indicator');
+    if (loadingIndicator) loadingIndicator.style.display = 'block';
+
+    // Titel basierend auf Kategorie setzen
     productTitle.innerHTML = (category && category !== 'all') 
-        ? `${category.charAt(0).toUpperCase() + category.slice(1)}` 
+        ? `${category.charAt(0).toUpperCase() + category.slice(1)}`
         : 'All<span class="mobile-line-break"> </span>Products';
 
-    // Produkte laden und filtern
-    const products = await fetchProducts();
-    if (!products) return;
-
-    productContainer.innerHTML = '';
-
-    let filteredProducts = (category && category !== 'all') 
-        ? products.filter(product => product.category.toLowerCase() === category.toLowerCase()) 
-        : products;
-
-    if (size && size !== 'all') {
-        filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
-    }
-
-    if (accs && accs !== 'all') {
-        filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
-    }
-
-    filteredProducts.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-
-        // Prüfen, ob Varianten vorhanden sind
-        if (product.variants && product.variants.length > 0) {
-            productCard.innerHTML = `
-                <a href="/product/${product.id}" class="product-link">
-                    <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
-                    <h2>${product.name}</h2>
-                </a>
-                <p class="product-price-shop">
-                    ${
-                        product.variants.some(variant => variant.stock > 0) 
-                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                        : `<span class="sold-out-text">SOLD OUT</span>`
-                    }
-                </p>
-                <div class="variant-colors-container">
-                ${
-                    product.variants.slice(0, 3).map(variant => {
-                        const isSoldOut = variant.stock === 0;
-                        const colorStyle = variant.color.includes('/') 
-                            ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
-                            : variant.color;
-                        return `
-                            <span 
-                                class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
-                                style="background: ${colorStyle};" 
-                                title="${isSoldOut ? 'Sold Out' : 'Available'}">
-                            </span>
-                        `;
-                    }).join('')
-                }
-                    ${
-                        product.variants.length > 3 
-                        ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
-                        : ''
-                    }
-                </div>
-            `;
-        }
-         else {
-            productCard.innerHTML = `
-                <a href="/product/${product.id}" class="product-link">
-                    <img src="${product.images[0]}" alt="${product.name}">
-                    <h2>${product.name}</h2>
-                </a>
-                <p class="product-price-shop">
-                    ${
-                        product.stock > 0 
-                        ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
-                        : `<span class="sold-out-text">SOLD OUT</span>`
-                    }
-                </p>
-            `;
+    try {
+        // Produkte laden
+        const products = await fetchProducts();
+        if (!products || products.length === 0) {
+            console.warn('Keine Produkte gefunden.');
+            productContainer.innerHTML = '<p>Keine Produkte verfügbar.</p>';
+            return;
         }
 
-        productContainer.appendChild(productCard);
-    });
+        // Produkte filtern
+        let filteredProducts = (category && category !== 'all') 
+            ? products.filter(product => product.category.toLowerCase() === category.toLowerCase())
+            : products;
+
+        if (size && size !== 'all') {
+            filteredProducts = filteredProducts.filter(product => product.size && product.size.toLowerCase() === size.toLowerCase());
+        }
+
+        if (accs && accs !== 'all') {
+            filteredProducts = filteredProducts.filter(product => product.accs && product.accs.toLowerCase() === accs.toLowerCase());
+        }
+
+        // Produkte anzeigen
+        filteredProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+
+            // Prüfen, ob Varianten vorhanden sind
+            if (product.variants && product.variants.length > 0) {
+                productCard.innerHTML = `
+                    <a href="/product/${product.id}" class="product-link">
+                        <img src="${product.defaultImage || product.variants[0].images[0]}" alt="${product.name}">
+                        <h2>${product.name}</h2>
+                    </a>
+                    <p class="product-price-shop">
+                        ${
+                            product.variants.some(variant => variant.stock > 0) 
+                            ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                            : `<span class="sold-out-text">SOLD OUT</span>`
+                        }
+                    </p>
+                    <div class="variant-colors-container">
+                    ${
+                        product.variants.slice(0, 3).map(variant => {
+                            const isSoldOut = variant.stock === 0;
+                            const colorStyle = variant.color.includes('/') 
+                                ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                                : variant.color;
+                            return `
+                                <span 
+                                    class="variant-color ${isSoldOut ? 'sold-out' : ''}" 
+                                    style="background: ${colorStyle};" 
+                                    title="${isSoldOut ? 'Sold Out' : 'Available'}">
+                                </span>
+                            `;
+                        }).join('')
+                    }
+                        ${
+                            product.variants.length > 3 
+                            ? `<span class="variant-color-more">+${product.variants.length - 3}</span>` 
+                            : ''
+                        }
+                    </div>
+                `;
+            } else {
+                productCard.innerHTML = `
+                    <a href="/product/${product.id}" class="product-link">
+                        <img src="${product.images[0]}" alt="${product.name}">
+                        <h2>${product.name}</h2>
+                    </a>
+                    <p class="product-price-shop">
+                        ${
+                            product.stock > 0 
+                            ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
+                            : `<span class="sold-out-text">SOLD OUT</span>`
+                        }
+                    </p>
+                `;
+            }
+
+            productContainer.appendChild(productCard);
+        });
+
+    } catch (error) {
+        console.error('Fehler beim Laden der Produktliste:', error);
+        productContainer.innerHTML = '<p>Fehler beim Laden der Produkte. Bitte versuchen Sie es später erneut.</p>';
+    } finally {
+        // Ladeindikator ausblenden
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+    }
 }
 
 // Funktion zur Anzeige der Produktdetails
