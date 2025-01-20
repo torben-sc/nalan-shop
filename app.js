@@ -458,27 +458,36 @@ function updateImage(imgElement, currentIndex, images) {
 }
 
 // Hilfsfunktion zur Anzeige der Produktinformationen
-function displayProductInfo(product) {
+function displayProductInfo(product, selectedVariant = null) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Überprüfen, ob das Produkt Varianten hat und ob alle Varianten ausverkauft sind
+    // Festlegen des anzuzeigenden Namens und der Verfügbarkeit basierend auf der aktuellen Variante oder dem Produkt
     let displayName = product.name;
+    let priceDisplay = `€${product.price.toFixed(2)}`;
     let isSoldOut = false;
 
-    if (product.variants && product.variants.length > 0) {
-        // Wenn Varianten vorhanden sind, prüfen, ob alle ausverkauft sind
-        isSoldOut = product.variants.every(variant => variant.stock === 0);
-        displayName = product.variants[0].name; // Zeige nur den Namen der ersten Variante
+    if (selectedVariant) {
+        // Name und Preis der aktuellen Variante verwenden
+        displayName = selectedVariant.name || product.name;
+        isSoldOut = selectedVariant.stock === 0;
+        priceDisplay = isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${selectedVariant.price.toFixed(2)}`;
     } else {
-        // Wenn keine Varianten vorhanden sind, prüfen, ob das Produkt ausverkauft ist
-        isSoldOut = product.stock === 0;
+        // Keine Variante ausgewählt: Standard-Produktinformationen verwenden
+        if (product.variants && product.variants.length > 0) {
+            displayName = product.variants[0].name; // Name der ersten Variante
+            isSoldOut = product.variants[0].stock === 0;
+            priceDisplay = isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${product.variants[0].price.toFixed(2)}`;
+        } else {
+            isSoldOut = product.stock === 0;
+            priceDisplay = isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${product.price.toFixed(2)}`;
+        }
     }
 
     // Inhalt generieren
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
-        <p class="product-price">${isSoldOut ? '<span class="sold-out-text">SOLD OUT</span>' : `€${product.price.toFixed(2)}`}</p>
+        <p class="product-price">${priceDisplay}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
             Currently only shipping to Germany. For international requests, contact me on
@@ -488,7 +497,6 @@ function displayProductInfo(product) {
         </div>
     `;
 }
-
 
 // Funktion zur Aktualisierung des Add-to-Cart Buttons
 function updateAddToCartButton(product, variant) {
