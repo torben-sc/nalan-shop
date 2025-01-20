@@ -79,14 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Produkte initial laden
-    loadProductList('all');
-
     const currentPath = window.location.pathname;
 
     if (currentPath.startsWith('/product/')) {
         displayProductDetails(); // Einzelnes Produkt anzeigen
-    } 
+    } else {
+        loadProductList('all');
+    }
 });
 
 // Funktion zum Laden der Produkte aus einer JSON-Datei
