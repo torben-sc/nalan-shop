@@ -157,6 +157,12 @@ body {
     color: #E55013;
 }
 
+.top-menu a.active-filter {
+    background-color: #24388E; /* Beispiel-Hintergrundfarbe */
+    color: white; /* Textfarbe */
+    font-weight: bold; /* Optional: Fettgedruckter Text */
+}
+
 /* Überschrift (Produkt-Titel) */
 .product-title {
     font-size: 3em;

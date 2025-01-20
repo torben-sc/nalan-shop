@@ -43,20 +43,39 @@ document.addEventListener('DOMContentLoaded', () => {
             filterElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 const category = categoryMap[filterId];
-
+    
                 // Unterkategorien ausblenden
                 Object.values(categorySections).forEach(section => section.style.display = 'none');
-
+    
                 // Unterkategorie anzeigen, wenn vorhanden
                 if (categorySections[category]) {
                     categorySections[category].style.display = 'block';
                 }
-
+    
+                // Aktive Klasse für Hauptkategorien aktualisieren
+                document.querySelectorAll('.top-menu a').forEach(link => link.classList.remove('active-filter'));
+                filterElement.classList.add('active-filter');
+    
                 // Produktliste für die gewählte Kategorie laden
                 displayProductList(category);
             });
         }
     });
+
+    document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.getAttribute('data-category');
+            const size = link.getAttribute('data-size');
+            const accs = link.getAttribute('data-accs');
+    
+            // Aktive Klasse für Unterkategorien aktualisieren
+            link.closest('.top-menu-wrapper-2').querySelectorAll('a').forEach(link => link.classList.remove('active-filter'));
+            link.classList.add('active-filter');
+    
+            displayProductList(category, size, accs); // Filter anwenden
+        });
+    });    
 
     // Unterkategorien-Filter (Größen und Accessoires)
     document.querySelectorAll('.top-menu-wrapper-2 a').forEach(link => {
