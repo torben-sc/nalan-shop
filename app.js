@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadProductList(category, subFilter);
         }
     }
+    createFooter()
 });
 
 
