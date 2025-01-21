@@ -282,7 +282,7 @@ async function displayProductDetails() {
         // Produktdetails anzeigen
         createColorMenu(product);
         createProductImages(product);
-        displayProductInfo(product, variant);
+        selectedVariant = nulldisplayProductInfo(product, variant);
         addButtonsAndEventListeners(product);
 
     } catch (error) {
