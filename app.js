@@ -485,32 +485,22 @@ function updateImage(imgElement, currentIndex, images) {
 }
 
 // Hilfsfunktion zur Anzeige der Produktinformationen
+// Hilfsfunktion zur Anzeige der Produktinformationen
 function displayProductInfo(product, selectedVariant = null) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Standardwerte für Name und Preis
+    // Standardanzeige, falls keine Variante ausgewählt wurde
     let displayName = product.name;
-    let displayPrice = product.price.toFixed(2);
+    let displayPrice = product.stock > 0 ? `€${product.price.toFixed(2)}` : 'SOLD OUT';
 
-    // Prüfen, ob eine Variante ausgewählt ist
+    // Wenn eine Variante ausgewählt ist, passe die Anzeige an
     if (selectedVariant) {
         displayName = selectedVariant.name;
-        if (selectedVariant.stock === 0){
-            displayPrice = 'SOLD OUT';
-        }
-    } else if (product.variants && product.variants.length > 0) {
-        // Standardmäßig die erste Variante verwenden
-        const firstVariant = product.variants[0];
-        displayName = firstVariant.name;
-        if (firstVariant.stock === 0){
-            displayPrice = 'SOLD OUT';
-        }
-    } else if (product.stock === 0) {
-        // Wenn das Produkt ausverkauft ist
-        displayPrice = 'SOLD OUT';
+        displayPrice = selectedVariant.stock > 0 
+            ? `€${selectedVariant.price.toFixed(2)}` 
+            : 'SOLD OUT';
     }
 
-    // HTML-Inhalt einfügen
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
