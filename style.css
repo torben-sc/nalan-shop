@@ -1035,13 +1035,34 @@ main {
     justify-content: center;
 }
 
+/* Standard-Button */
 .color-button {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ccc;
-    border-radius: 0; /* Keine Abrundung */
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
     outline: none;
+}
+
+/* Out of Stock - Styling */
+.color-button.out-of-stock {
+    position: relative;
+    opacity: 0.5; /* Verblasst */
+    cursor: pointer; /* Zeigt weiterhin an, dass es klickbar ist */
+}
+
+/* Durchgestrichenes Overlay für Out of Stock */
+.color-button.out-of-stock::after {
+    content: '×'; /* Optionales Symbol */
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Verhindert, dass das Overlay den Klick blockiert */
 }
 
 .color-button:hover {
@@ -1130,4 +1151,3 @@ main {
         margin-top: 120px; /* Verschiebt den rechten Inhalt weiter nach unten */
     }
 }
-

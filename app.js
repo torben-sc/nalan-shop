@@ -291,7 +291,6 @@ async function displayProductDetails() {
     }
 }
 
-
 // Funktion zur Erstellung des Farbauswahl-Menüs
 function createColorMenu(product) {
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
@@ -317,10 +316,18 @@ function createColorMenu(product) {
                 colorButton.style.background = colorStyle;
                 colorButton.dataset.index = index;
                 colorButton.title = variant.name || `Color ${index + 1}`;
+
+                // Wenn die Variante keinen Lagerbestand hat
+                if (variant.stock === 0) {
+                    colorButton.classList.add('out-of-stock');
+                }
+
+                // Event-Listener zum Wechseln der Variante hinzufügen
                 colorButton.addEventListener('click', () => {
                     updateImagesForVariant(product, variant);
                     updateAddToCartButton(product, variant); // Aktualisiere den Button
                 });
+
                 colorMenuContainer.appendChild(colorButton);
             });
 
@@ -370,7 +377,6 @@ function createColorMenu(product) {
     // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 }
-
 
 // Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
 function updateImagesForVariant(product, variant) {
