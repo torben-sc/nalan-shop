@@ -320,7 +320,8 @@ function createColorMenu(product) {
                 // Wenn die Variante keinen Lagerbestand hat
                 if (variant.stock === 0) {
                     colorButton.classList.add('out-of-stock');
-                    colorButton.style.opacity = '0.5'; // Verblasst
+                    colorButton.style.filter = 'grayscale(100%)'; // Hintergrund verblassen lassen
+                    colorButton.style.opacity = '0.5'; // Leicht verblasst
                     colorButton.style.position = 'relative'; // Für den Strich
 
                     // Diagonaler schwarzer Strich
@@ -330,7 +331,7 @@ function createColorMenu(product) {
                     strikethrough.style.left = '0';
                     strikethrough.style.width = '100%';
                     strikethrough.style.height = '2px';
-                    strikethrough.style.backgroundColor = 'black'; // Strich ist jetzt schwarz
+                    strikethrough.style.backgroundColor = 'black'; // Schwarzer Strich
                     strikethrough.style.transform = 'rotate(-45deg)';
                     strikethrough.style.pointerEvents = 'none'; // Strich bleibt klickbar
                     colorButton.appendChild(strikethrough);
