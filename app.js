@@ -321,7 +321,7 @@ function createColorMenu(product) {
                 if (variant.stock === 0) {
                     colorButton.classList.add('out-of-stock');
                     colorButton.style.filter = 'grayscale(100%)'; // Hintergrund verblassen lassen
-                    colorButton.style.opacity = '0.5'; // Leicht verblasst
+                    colorButton.style.opacity = '0.6'; // Leicht verblasst
                     colorButton.style.position = 'relative'; // Für den Strich
 
                     // Diagonaler schwarzer Strich
