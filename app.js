@@ -291,7 +291,6 @@ async function displayProductDetails() {
     }
 }
 
-// Funktion zur Erstellung des Farbauswahl-Menüs
 function createColorMenu(product) {
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
 
@@ -311,13 +310,21 @@ function createColorMenu(product) {
                     ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
                     : variant.color;
 
+                // Container für den Button erstellen
+                const buttonWrapper = document.createElement('div');
+                buttonWrapper.className = 'color-button-wrapper';
+                buttonWrapper.style.position = 'relative';
+                buttonWrapper.style.width = '20px';
+                buttonWrapper.style.height = '20px';
+
+                // Button mit Hintergrundfarbe
                 const colorButton = document.createElement('button');
                 colorButton.className = 'color-button';
                 colorButton.style.background = colorStyle;
                 colorButton.dataset.index = index;
                 colorButton.title = variant.name || `Color ${index + 1}`;
 
-                // Wenn die Variante keinen Lagerbestand hat
+                // Diagonaler schwarzer Strich
                 if (variant.stock === 0) {
                     const strikethrough = document.createElement('div');
                     strikethrough.style.position = 'absolute';
@@ -342,7 +349,8 @@ function createColorMenu(product) {
                     updateAddToCartButton(product, variant); // Aktualisiere den Button
                 });
 
-                colorMenuContainer.appendChild(colorButton);
+                buttonWrapper.appendChild(colorButton);
+                colorMenuContainer.appendChild(buttonWrapper);
             });
 
             if (!showAll && product.variants.length > 4) {
