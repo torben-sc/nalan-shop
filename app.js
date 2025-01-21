@@ -308,26 +308,18 @@ function createColorMenu(product) {
 
             variantsToShow.forEach((variant, index) => {
                 const colorStyle = variant.color.includes('/')
-                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                    ? linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)
                     : variant.color;
 
                 const colorButton = document.createElement('button');
                 colorButton.className = 'color-button';
                 colorButton.style.background = colorStyle;
                 colorButton.dataset.index = index;
-                colorButton.title = variant.name || `Color ${index + 1}`;
-
-                // Wenn die Variante keinen Lagerbestand hat
-                if (variant.stock === 0) {
-                    colorButton.classList.add('out-of-stock');
-                }
-
-                // Event-Listener zum Wechseln der Variante hinzufügen
+                colorButton.title = variant.name || Color ${index + 1};
                 colorButton.addEventListener('click', () => {
                     updateImagesForVariant(product, variant);
                     updateAddToCartButton(product, variant); // Aktualisiere den Button
                 });
-
                 colorMenuContainer.appendChild(colorButton);
             });
 
@@ -335,7 +327,7 @@ function createColorMenu(product) {
                 // "+ Mehr" Button anzeigen
                 const moreButton = document.createElement('span');
                 moreButton.className = 'show-more-colors';
-                moreButton.textContent = `+${product.variants.length - 4}`;
+                moreButton.textContent = +${product.variants.length - 4};
                 moreButton.style.textDecoration = 'underline';
                 moreButton.style.cursor = 'pointer';
                 moreButton.addEventListener('click', () => {
@@ -376,31 +368,6 @@ function createColorMenu(product) {
 
     // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
-}
-
-// Hilfsfunktion zur Anzeige der Produktinformationen
-function displayProductInfo(product) {
-    const infoContainer = document.querySelector('.product-info');
-
-    // Überprüfen, ob das Produkt Varianten hat
-    let displayName = product.name;
-    if (product.variants && product.variants.length > 0) {
-        // Zeige nur den Namen der ersten Variante an
-        displayName = product.variants[0].name;
-    }
-
-    infoContainer.innerHTML = `
-        <a href="/shop" class="back-link">Back to Collection</a>
-        <h1 class="product-title-details">${displayName}</h1>
-        <p class="product-price">€${product.price.toFixed(2)}</p>
-        <p class="product-description">${product.description}</p>
-        <div class="only-germany-noti">
-            Currently only shipping to Germany. For international requests, contact me on
-            <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
-            or
-            <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
-        </div>
-    `;
 }
 
 // Funktion zur Aktualisierung des Add-to-Cart Buttons
