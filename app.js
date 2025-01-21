@@ -490,15 +490,17 @@ function displayProductInfo(product) {
 
     // Überprüfen, ob das Produkt Varianten hat
     let displayName = product.name;
+    let displayPrice = product.price.toFixed(2);
     if (product.variants && product.variants.length > 0) {
         // Zeige nur den Namen der ersten Variante an
         displayName = product.variants[0].name;
+        displayPrice = product.variants[0].price.toFixed(2);
     }
 
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
-        <p class="product-price">€${product.price.toFixed(2)}</p>
+        <p class="product-price">€${displayPrice}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
             Currently only shipping to Germany. For international requests, contact me on
