@@ -495,12 +495,16 @@ function displayProductInfo(product, selectedVariant = null) {
     // Prüfen, ob eine Variante ausgewählt ist
     if (selectedVariant) {
         displayName = selectedVariant.name;
-        displayPrice = selectedVariant.stock > 0 ? `€${selectedVariant.price.toFixed(2)}` : 'SOLD OUT';
+        if (selectedVariant.stock === 0){
+            displayPrice = 'SOLD OUT';
+        }
     } else if (product.variants && product.variants.length > 0) {
         // Standardmäßig die erste Variante verwenden
         const firstVariant = product.variants[0];
         displayName = firstVariant.name;
-        displayPrice = firstVariant.stock > 0 ? `€${firstVariant.price.toFixed(2)}` : 'SOLD OUT';
+        if (firstVariant.stock === 0){
+            displayPrice = 'SOLD OUT';
+        }
     } else if (product.stock === 0) {
         // Wenn das Produkt ausverkauft ist
         displayPrice = 'SOLD OUT';
