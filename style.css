@@ -80,7 +80,11 @@ body {
     background-color: #E55013; /* Farbe des Zählers */
     color: white; /* Textfarbe */
     border-radius: 50%;
-    padding: 2px 6px;
+    width: 15px; /* Gleiche Höhe und Breite */
+    height: 15px;
+    display: flex; /* Zentriere den Text */
+    align-items: center; /* Vertikale Zentrierung */
+    justify-content: center;
     font-size: 12px;
     font-weight: bold;
     line-height: 1;
@@ -153,6 +157,12 @@ body {
     color: #E55013;
 }
 
+.top-menu a.active-filter {
+    background-color: #ffff; /* Beispiel-Hintergrundfarbe */
+    color: #E55013; /* Textfarbe */
+    font-weight: bold; /* Optional: Fettgedruckter Text */
+}
+
 /* Überschrift (Produkt-Titel) */
 .product-title {
     font-size: 3em;
@@ -208,8 +218,8 @@ main {
 
 /* Produktname */
 .product-card h2 {
-    font-size: 0.9em; /* Größere Schriftgröße für den Produktnamen */
-    margin: 2px 0; /* Mehr Abstand zum Bild (nach oben und unten) */
+    font-size: 0.9em; /* Schriftgröße des Produktnamens */
+    margin: 2px 0; /* Abstand zum Bild (nach oben und unten) */
     color: #000;
     margin-left: 3px;
     text-transform: uppercase;
@@ -217,10 +227,10 @@ main {
 
 /* Produktpreis */
 .product-card p {
-    font-size: 0.9em; /* Größere Schriftgröße für den Preis */
+    font-size: 0.9em; /* Schriftgröße des Preises */
     color: #E55013;
     font-weight: bold;
-    margin: 0px 0 20px; /* Mehr Abstand zum unteren Rand (10px oben, 20px unten) */
+    margin: 0; /* Kein zusätzlicher Abstand nach unten */
     margin-left: 3px;
 }
 
@@ -488,9 +498,9 @@ main {
 
     .product-main-image {
         margin-top: 45px;
-        width: 100%;
+        width: 70%;
         max-width: 600px;
-        height: auto;
+        height: 70%;
     }
 
     .product-thumbnail-container {
@@ -1017,3 +1027,107 @@ main {
     text-transform: uppercase;
     margin-top: 20px;
 }
+
+.product-color-menu {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    justify-content: center;
+}
+
+.color-button {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 0; /* Keine Abrundung */
+    cursor: pointer;
+    outline: none;
+}
+
+.color-button:hover {
+    border-color: #000;
+}
+
+.selection-message {
+    color: #24388E;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.variant-colors-container {
+    display: flex;
+    flex-wrap: wrap; /* Kacheln umbrechen, wenn sie nicht passen */
+    gap: 5px;
+    margin-top: 1px; /* Minimaler Abstand direkt unter dem Preis */
+    margin-left: 3px; /* Links ausgerichtet */
+}
+
+/* Farbkacheln */
+.variant-color {
+    width: 12px; /* Größe der Kacheln */
+    height: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px; /* Quadratische Kacheln */
+    cursor: pointer;
+}
+
+.variant-color.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Entferne Hover-Effekte für Produktkarten */
+.product-card:hover {
+    transform: none; /* Entfernt Skalierung bei Hover */
+}
+
+.variant-color-more {
+    font-size: 13px; /* Kleinere Schriftgröße */
+    color: #000; /* Farbe der Schrift */
+    font-weight: bold; /* Fett gedruckt */
+    position: relative;
+    top: -3.3px; /* Hebt die Schrift etwas nach oben */
+}
+
+/* Standard (Mobile) */
+.product-layout {
+    display: flex;
+    flex-direction: column; /* Inhalte untereinander */
+    gap: 20px; /* Abstand zwischen Bereichen */
+}
+
+.product-left,
+.product-right {
+    width: 100%; /* Beide Bereiche nehmen 100% Breite ein */
+}
+
+/* Für größere Bildschirme */
+@media (min-width: 768px) {
+    .product-layout {
+        flex-direction: row; /* Inhalte nebeneinander */
+        align-items: flex-start; /* Inhalte oben ausrichten */
+        gap: 40px; /* Abstand zwischen den Spalten */
+    }
+
+    .product-left {
+        width: 60%; /* Linker Bereich nimmt 60% der Breite ein */
+        display: flex;
+        flex-direction: column; /* Inhalte bleiben untereinander */
+        gap: 20px;
+    }
+
+    .product-right {
+        width: 40%; /* Rechter Bereich nimmt 40% der Breite ein */
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        /* Abstand nach oben hinzufügen */
+        margin-top: 120px; /* Verschiebt den rechten Inhalt weiter nach unten */
+    }
+}
+
