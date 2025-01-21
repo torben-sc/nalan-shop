@@ -337,8 +337,7 @@ function createColorMenu(product) {
                     strikethrough.style.zIndex = '1';
 
                     // Den Button grau machen
-                    colorButton.style.filter = 'grayscale(100%)';
-                    colorButton.style.opacity = '0.7';
+                    colorButton.style.opacity = '0.5';
 
                     buttonWrapper.appendChild(strikethrough);
                 }
