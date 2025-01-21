@@ -485,22 +485,32 @@ function updateImage(imgElement, currentIndex, images) {
 }
 
 // Hilfsfunktion zur Anzeige der Produktinformationen
-function displayProductInfo(product) {
+function displayProductInfo(product, selectedVariant = null) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Überprüfen, ob das Produkt Varianten hat
+    // Standardwerte für Name und Preis
     let displayName = product.name;
     let displayPrice = product.price.toFixed(2);
-    if (product.variants && product.variants.length > 0) {
-        // Zeige nur den Namen der ersten Variante an
-        displayName = product.variants[0].name;
-        displayPrice = product.variants[0].price.toFixed(2);
+
+    // Prüfen, ob eine Variante ausgewählt ist
+    if (selectedVariant) {
+        displayName = selectedVariant.name;
+        displayPrice = selectedVariant.stock > 0 ? `€${selectedVariant.price.toFixed(2)}` : 'SOLD OUT';
+    } else if (product.variants && product.variants.length > 0) {
+        // Standardmäßig die erste Variante verwenden
+        const firstVariant = product.variants[0];
+        displayName = firstVariant.name;
+        displayPrice = firstVariant.stock > 0 ? `€${firstVariant.price.toFixed(2)}` : 'SOLD OUT';
+    } else if (product.stock === 0) {
+        // Wenn das Produkt ausverkauft ist
+        displayPrice = 'SOLD OUT';
     }
 
+    // HTML-Inhalt einfügen
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
-        <p class="product-price">€${displayPrice}</p>
+        <p class="product-price">${displayPrice}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
             Currently only shipping to Germany. For international requests, contact me on
