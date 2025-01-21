@@ -308,18 +308,26 @@ function createColorMenu(product) {
 
             variantsToShow.forEach((variant, index) => {
                 const colorStyle = variant.color.includes('/')
-                    ? linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)
+                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
                     : variant.color;
 
                 const colorButton = document.createElement('button');
                 colorButton.className = 'color-button';
                 colorButton.style.background = colorStyle;
                 colorButton.dataset.index = index;
-                colorButton.title = variant.name || Color ${index + 1};
+                colorButton.title = variant.name || `Color ${index + 1}`;
+
+                // Wenn die Variante keinen Lagerbestand hat
+                if (variant.stock === 0) {
+                    colorButton.classList.add('out-of-stock');
+                }
+
+                // Event-Listener zum Wechseln der Variante hinzufügen
                 colorButton.addEventListener('click', () => {
                     updateImagesForVariant(product, variant);
                     updateAddToCartButton(product, variant); // Aktualisiere den Button
                 });
+
                 colorMenuContainer.appendChild(colorButton);
             });
 
@@ -327,7 +335,7 @@ function createColorMenu(product) {
                 // "+ Mehr" Button anzeigen
                 const moreButton = document.createElement('span');
                 moreButton.className = 'show-more-colors';
-                moreButton.textContent = +${product.variants.length - 4};
+                moreButton.textContent = `+${product.variants.length - 4}`;
                 moreButton.style.textDecoration = 'underline';
                 moreButton.style.cursor = 'pointer';
                 moreButton.addEventListener('click', () => {
@@ -368,6 +376,116 @@ function createColorMenu(product) {
 
     // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
+}
+
+// Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
+function updateImagesForVariant(product, variant) {
+    const mainImageContainer = document.querySelector('.product-main-image-container');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+    const productTitleElement = document.querySelector('.product-title-details');
+
+    mainImageContainer.innerHTML = '';
+    thumbnailsContainer.innerHTML = '';
+
+    // Aktualisiere die Überschrift mit dem Variantennamen
+    if (productTitleElement) {
+        productTitleElement.textContent = `${variant.name}`;
+    }
+
+    const imgElement = document.createElement('img');
+    imgElement.src = variant.images[0];
+    imgElement.alt = `${product.name} - ${variant.name}`;
+    imgElement.className = 'product-main-image';
+    mainImageContainer.appendChild(imgElement);
+
+    variant.images.forEach((imageUrl, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imageUrl;
+        thumbnail.alt = `${product.name} - ${variant.name} - Vorschau ${index + 1}`;
+        thumbnail.className = 'product-thumbnail';
+        if (index === 0) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            imgElement.src = imageUrl;
+            document.querySelectorAll('.product-thumbnail').forEach(thumb => thumb.classList.remove('active'));
+            thumbnail.classList.add('active');
+        });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
+}
+
+// Hilfsfunktion zur Erstellung der Hauptbilder und Thumbnails
+function createProductImages(product) {
+    const mainImageContainer = document.querySelector('.product-main-image-container');
+    const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
+
+    mainImageContainer.innerHTML = ''; // Vorherige Bilder entfernen
+    thumbnailsContainer.innerHTML = ''; // Vorherige Thumbnails entfernen
+
+    let images = [];
+    if (product.variants && product.variants.length > 0) {
+        // Verwende die Bilder der ersten Variante standardmäßig
+        images = product.variants[0].images;
+    } else if (product.images && product.images.length > 0) {
+        // Fallback: Verwende Bilder des Produkts (falls keine Varianten vorhanden)
+        images = product.images;
+    } else {
+        console.error('Keine Bilder verfügbar für Produkt:', product.name);
+        return;
+    }
+
+    let currentIndex = 0;
+
+    const imgElement = document.createElement('img');
+    imgElement.src = images[currentIndex];
+    imgElement.alt = product.name;
+    imgElement.className = 'product-main-image';
+    mainImageContainer.appendChild(imgElement);
+
+    images.forEach((imageUrl, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = imageUrl;
+        thumbnail.alt = `${product.name} - Vorschau ${index + 1}`;
+        thumbnail.className = 'product-thumbnail';
+        if (index === currentIndex) thumbnail.classList.add('active');
+        thumbnail.addEventListener('click', () => {
+            currentIndex = index;
+            updateImage(imgElement, currentIndex, images);
+        });
+        thumbnailsContainer.appendChild(thumbnail);
+    });
+}
+
+// Hilfsfunktion zur Aktualisierung des Hauptbilds
+function updateImage(imgElement, currentIndex, images) {
+    imgElement.src = images[currentIndex];
+    document.querySelectorAll('.product-thumbnail').forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentIndex);
+    });
+}
+
+// Hilfsfunktion zur Anzeige der Produktinformationen
+function displayProductInfo(product) {
+    const infoContainer = document.querySelector('.product-info');
+
+    // Überprüfen, ob das Produkt Varianten hat
+    let displayName = product.name;
+    if (product.variants && product.variants.length > 0) {
+        // Zeige nur den Namen der ersten Variante an
+        displayName = product.variants[0].name;
+    }
+
+    infoContainer.innerHTML = `
+        <a href="/shop" class="back-link">Back to Collection</a>
+        <h1 class="product-title-details">${displayName}</h1>
+        <p class="product-price">€${product.price.toFixed(2)}</p>
+        <p class="product-description">${product.description}</p>
+        <div class="only-germany-noti">
+            Currently only shipping to Germany. For international requests, contact me on
+            <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a>
+            or
+            <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>.
+        </div>
+    `;
 }
 
 // Funktion zur Aktualisierung des Add-to-Cart Buttons
