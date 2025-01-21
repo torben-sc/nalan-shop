@@ -492,8 +492,14 @@ function displayProductInfo(product, selectedVariant = null) {
     // Wenn eine Variante ausgewählt ist, passe die Anzeige an
     if (selectedVariant) {
         displayName = selectedVariant.name;
-        displayPrice = selectedVariant.stock > 0 
-            ? `€${selectedVariant.price.toFixed(2)}` 
+        displayPrice = selectedVariant.stock > 0
+            ? `€${selectedVariant.price.toFixed(2)}`
+            : 'SOLD OUT';
+    } else if (product.variants && product.variants.length > 0) {
+        const firstVariant = product.variants[0];
+        displayName = firstVariant.name;
+        displayPrice = firstVariant.stock > 0
+            ? `€${firstVariant.price.toFixed(2)}`
             : 'SOLD OUT';
     }
 
