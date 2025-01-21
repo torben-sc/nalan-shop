@@ -334,6 +334,7 @@ function createColorMenu(product) {
                     strikethrough.style.transform = 'rotate(-45deg)';
                     strikethrough.style.pointerEvents = 'none'; // Strich bleibt klickbar
                     colorButton.appendChild(strikethrough);
+                }
 
                 // Event-Listener zum Wechseln der Variante hinzufügen
                 colorButton.addEventListener('click', () => {
