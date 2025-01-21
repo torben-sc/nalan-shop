@@ -320,7 +320,20 @@ function createColorMenu(product) {
                 // Wenn die Variante keinen Lagerbestand hat
                 if (variant.stock === 0) {
                     colorButton.classList.add('out-of-stock');
-                }
+                    colorButton.style.opacity = '0.5'; // Verblasst
+                    colorButton.style.position = 'relative'; // Für den Strich
+
+                    // Diagonaler schwarzer Strich
+                    const strikethrough = document.createElement('div');
+                    strikethrough.style.position = 'absolute';
+                    strikethrough.style.top = '50%';
+                    strikethrough.style.left = '0';
+                    strikethrough.style.width = '100%';
+                    strikethrough.style.height = '2px';
+                    strikethrough.style.backgroundColor = 'black'; // Strich ist jetzt schwarz
+                    strikethrough.style.transform = 'rotate(-45deg)';
+                    strikethrough.style.pointerEvents = 'none'; // Strich bleibt klickbar
+                    colorButton.appendChild(strikethrough);
 
                 // Event-Listener zum Wechseln der Variante hinzufügen
                 colorButton.addEventListener('click', () => {
