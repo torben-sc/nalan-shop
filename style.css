@@ -1148,7 +1148,7 @@ main {
         gap: 20px;
 
         /* Abstand nach oben hinzufügen */
-        margin-top: 0px; /* Verschiebt den rechten Inhalt weiter nach unten */
+        margin-top: 120px; /* Verschiebt den rechten Inhalt weiter nach unten */
     }
 }
 
