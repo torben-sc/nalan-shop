@@ -262,7 +262,6 @@ async function displayProductDetails() {
     const pathParts = window.location.pathname.split('/');
     const productId = pathParts[pathParts.length - 1];
 
-
     if (!productId) {
         console.error('Product ID not found in URL');
         document.getElementById('product-detail-container').innerHTML = '<p>Product not found.</p>';
@@ -270,20 +269,19 @@ async function displayProductDetails() {
     }
 
     try {
-        const products = await fetchProducts(); // Produkte laden
-
+        const products = await fetchProducts();
         const product = products.find(p => p.id === productId);
+
         if (!product) {
             console.error(`No product found for ID: ${productId}`);
             document.getElementById('product-detail-container').innerHTML = '<p>Product not found.</p>';
             return;
         }
 
-        // Produktdetails anzeigen
-        createColorMenu(product);
-        createProductImages(product);
-        displayProductInfo(product);
-        addButtonsAndEventListeners(product);
+        const selectedVariant = createColorMenu(product); // Farbmenü erstellen und erste Variante zurückgeben
+        createProductImages(product); // Produktbilder erstellen
+        displayProductInfo(product, selectedVariant); // Produktinformationen mit der Variante anzeigen
+        addButtonsAndEventListeners(product); // Event-Listener hinzufügen
 
     } catch (error) {
         console.error('Error displaying product details:', error);
@@ -291,18 +289,20 @@ async function displayProductDetails() {
     }
 }
 
+
 function createColorMenu(product) {
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
 
-    // Erstellt ein neues Element für die Farbauswahl
     const colorMenuContainer = document.createElement('div');
     colorMenuContainer.className = 'product-color-menu';
 
+    let selectedVariant = null; // Die ausgewählte Variante
+
     if (product.variants && product.variants.length > 0) {
-        let showingAllColors = false; // Zustand, ob alle Farben angezeigt werden
+        let showingAllColors = false;
 
         const renderColors = (showAll) => {
-            colorMenuContainer.innerHTML = ''; // Bestehende Farben entfernen
+            colorMenuContainer.innerHTML = '';
             const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
 
             variantsToShow.forEach((variant, index) => {
@@ -310,21 +310,18 @@ function createColorMenu(product) {
                     ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
                     : variant.color;
 
-                // Container für den Button erstellen
                 const buttonWrapper = document.createElement('div');
                 buttonWrapper.className = 'color-button-wrapper';
                 buttonWrapper.style.position = 'relative';
                 buttonWrapper.style.width = '20px';
                 buttonWrapper.style.height = '20px';
 
-                // Button mit Hintergrundfarbe
                 const colorButton = document.createElement('button');
                 colorButton.className = 'color-button';
                 colorButton.style.background = colorStyle;
                 colorButton.dataset.index = index;
                 colorButton.title = variant.name || `Color ${index + 1}`;
 
-                // Diagonaler schwarzer Strich
                 if (variant.stock === 0) {
                     const strikethrough = document.createElement('div');
                     strikethrough.style.position = 'absolute';
@@ -336,16 +333,20 @@ function createColorMenu(product) {
                     strikethrough.style.backgroundImage = `linear-gradient(135deg, transparent 45%, black 45%, black 55%, transparent 55%)`;
                     strikethrough.style.zIndex = '1';
 
-                    // Den Button grau machen
                     colorButton.style.opacity = '0.5';
-
                     buttonWrapper.appendChild(strikethrough);
                 }
 
-                // Event-Listener zum Wechseln der Variante hinzufügen
+                // Standardmäßig die erste Variante als ausgewählt setzen
+                if (index === 0 && !selectedVariant) {
+                    selectedVariant = variant;
+                }
+
                 colorButton.addEventListener('click', () => {
+                    selectedVariant = variant; // Aktualisiert die ausgewählte Variante
                     updateImagesForVariant(product, variant);
-                    updateAddToCartButton(product, variant); // Aktualisiere den Button
+                    updateAddToCartButton(product, variant);
+                    displayProductInfo(product, selectedVariant); // Produktinfo aktualisieren
                 });
 
                 buttonWrapper.appendChild(colorButton);
@@ -353,7 +354,6 @@ function createColorMenu(product) {
             });
 
             if (!showAll && product.variants.length > 4) {
-                // "+ Mehr" Button anzeigen
                 const moreButton = document.createElement('span');
                 moreButton.className = 'show-more-colors';
                 moreButton.textContent = `+${product.variants.length - 4}`;
@@ -361,13 +361,12 @@ function createColorMenu(product) {
                 moreButton.style.cursor = 'pointer';
                 moreButton.addEventListener('click', () => {
                     showingAllColors = true;
-                    renderColors(true); // Alle Farben anzeigen
+                    renderColors(true);
                 });
                 colorMenuContainer.appendChild(moreButton);
             }
 
             if (showAll) {
-                // "Close" Button anzeigen
                 const closeButton = document.createElement('span');
                 closeButton.className = 'close-colors';
                 closeButton.textContent = 'Close';
@@ -375,28 +374,26 @@ function createColorMenu(product) {
                 closeButton.style.cursor = 'pointer';
                 closeButton.addEventListener('click', () => {
                     showingAllColors = false;
-                    renderColors(false); // Auf erste 4 Farben zurücksetzen
+                    renderColors(false);
                 });
                 colorMenuContainer.appendChild(closeButton);
 
-                // Layout mit Zeilenumbruch aktivieren
                 colorMenuContainer.style.display = 'flex';
                 colorMenuContainer.style.flexWrap = 'wrap';
                 colorMenuContainer.style.gap = '10px';
             } else {
-                // Standardlayout ohne Zeilenumbruch
                 colorMenuContainer.style.display = 'flex';
                 colorMenuContainer.style.flexWrap = 'nowrap';
                 colorMenuContainer.style.gap = '10px';
             }
         };
 
-        // Initialisierung mit den ersten 4 Farben
         renderColors(false);
     }
 
-    // Fügt die Farbauswahl unterhalb des Hauptbildes hinzu
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
+
+    return selectedVariant; // Die ausgewählte Variante zurückgeben
 }
 
 // Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
@@ -485,20 +482,25 @@ function updateImage(imgElement, currentIndex, images) {
 }
 
 // Hilfsfunktion zur Anzeige der Produktinformationen
-function displayProductInfo(product) {
+function displayProductInfo(product, selectedVariant = null) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Überprüfen, ob das Produkt Varianten hat
+    // Standardanzeige, falls keine Variante ausgewählt wurde
     let displayName = product.name;
-    if (product.variants && product.variants.length > 0) {
-        // Zeige nur den Namen der ersten Variante an
-        displayName = product.variants[0].name;
+    let displayPrice = product.stock > 0 ? `€${product.price.toFixed(2)}` : 'SOLD OUT';
+
+    // Wenn eine Variante ausgewählt ist, passe die Anzeige an
+    if (selectedVariant) {
+        displayName = selectedVariant.name;
+        displayPrice = selectedVariant.stock > 0 
+            ? `€${selectedVariant.price.toFixed(2)}` 
+            : 'SOLD OUT';
     }
 
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
-        <p class="product-price">€${product.price.toFixed(2)}</p>
+        <p class="product-price">${displayPrice}</p>
         <p class="product-description">${product.description}</p>
         <div class="only-germany-noti">
             Currently only shipping to Germany. For international requests, contact me on
