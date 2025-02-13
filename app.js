@@ -339,9 +339,9 @@ function createColorMenu(product) {
             }
 
             colorButton.addEventListener('click', () => {
-                selectedVariant = variant; // Aktualisiert die ausgewählte Variante
-                updateImagesForVariant(product, variant);
-                updateAddToCartButton(product, variant);
+                selectedVariant = variant; // Setze die gewählte Variante
+                updateImagesForVariant(product, selectedVariant);
+                updateAddToCartButton(product, selectedVariant);
                 displayProductInfo(product, selectedVariant); // Produktinfo aktualisieren
             });
 
@@ -382,11 +382,11 @@ function createColorMenu(product) {
         }
     };
 
-    renderColors(false); // Initialisieren mit den ersten 4 Farben
+    renderColors(false); // Initialisiere mit den ersten 4 Farben
 
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 
-    // Beim ersten Laden sicherstellen, dass die richtige Variante ausgewählt wird
+    // Nach dem Erstellen der Farbmenüs sicherstellen, dass die richtige Variante angezeigt wird
     updateImagesForVariant(product, selectedVariant);
     updateAddToCartButton(product, selectedVariant);
     displayProductInfo(product, selectedVariant);
@@ -483,18 +483,24 @@ function updateImage(imgElement, currentIndex, images) {
 function displayProductInfo(product, selectedVariant = null) {
     const infoContainer = document.querySelector('.product-info');
 
-    // Standardanzeige, falls keine Variante ausgewählt wurde
     let displayName = product.name;
-    let displayPrice = product.stock > 0 ? `€${product.price.toFixed(2)}` : 'SOLD OUT';
+    let displayPrice = product.price.toFixed(2);
 
-    // Wenn eine Variante ausgewählt ist, passe die Anzeige an
+    // Falls eine Variante gewählt wurde, verwende deren Werte
     if (selectedVariant) {
         displayName = selectedVariant.name;
-        displayPrice = selectedVariant.stock > 0 
-            ? `€${selectedVariant.price.toFixed(2)}` 
-            : 'SOLD OUT';
+        displayPrice = selectedVariant.stock === 0 ? 'SOLD OUT' : `€${selectedVariant.price.toFixed(2)}`;
+    } else if (product.variants && product.variants.length > 0) {
+        // Falls keine Variante explizit gewählt wurde, nehme die erste Variante
+        const firstVariant = product.variants[0];
+        displayName = firstVariant.name;
+        displayPrice = firstVariant.stock === 0 ? 'SOLD OUT' : `€${firstVariant.price.toFixed(2)}`;
+    } else if (product.stock === 0) {
+        // Falls das Produkt ausverkauft ist
+        displayPrice = 'SOLD OUT';
     }
 
+    // HTML-Inhalt einfügen
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
