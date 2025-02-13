@@ -289,112 +289,111 @@ async function displayProductDetails() {
     }
 }
 
+
 function createColorMenu(product) {
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
 
     const colorMenuContainer = document.createElement('div');
     colorMenuContainer.className = 'product-color-menu';
 
-    let selectedVariant = product.variants[0] || null; // Standardmäßig die erste Variante setzen
+    let selectedVariant = null; // Die ausgewählte Variante
 
-    const renderColors = (showAll) => {
-        colorMenuContainer.innerHTML = '';
+    if (product.variants && product.variants.length > 0) {
+        let showingAllColors = false;
 
-        const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
+        const renderColors = (showAll) => {
+            colorMenuContainer.innerHTML = '';
+            const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
 
-        variantsToShow.forEach((variant, index) => {
-            const colorStyle = variant.color.includes('/')
-                ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
-                : variant.color;
+            variantsToShow.forEach((variant, index) => {
+                const colorStyle = variant.color.includes('/')
+                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                    : variant.color;
 
-            const buttonWrapper = document.createElement('div');
-            buttonWrapper.className = 'color-button-wrapper';
-            buttonWrapper.style.position = 'relative';
-            buttonWrapper.style.width = '20px';
-            buttonWrapper.style.height = '20px';
+                const buttonWrapper = document.createElement('div');
+                buttonWrapper.className = 'color-button-wrapper';
+                buttonWrapper.style.position = 'relative';
+                buttonWrapper.style.width = '20px';
+                buttonWrapper.style.height = '20px';
 
-            const colorButton = document.createElement('button');
-            colorButton.className = 'color-button';
-            colorButton.style.background = colorStyle;
-            colorButton.dataset.index = index;
-            colorButton.title = variant.name || `Color ${index + 1}`;
+                const colorButton = document.createElement('button');
+                colorButton.className = 'color-button';
+                colorButton.style.background = colorStyle;
+                colorButton.dataset.index = index;
+                colorButton.title = variant.name || `Color ${index + 1}`;
 
-            if (variant.stock === 0) {
-                const strikethrough = document.createElement('div');
-                strikethrough.style.position = 'absolute';
-                strikethrough.style.top = '0';
-                strikethrough.style.left = '0';
-                strikethrough.style.width = '100%';
-                strikethrough.style.height = '100%';
-                strikethrough.style.pointerEvents = 'none';
-                strikethrough.style.backgroundImage = `linear-gradient(135deg, transparent 45%, black 45%, black 55%, transparent 55%)`;
-                strikethrough.style.zIndex = '1';
+                if (variant.stock === 0) {
+                    const strikethrough = document.createElement('div');
+                    strikethrough.style.position = 'absolute';
+                    strikethrough.style.top = '0';
+                    strikethrough.style.left = '0';
+                    strikethrough.style.width = '100%';
+                    strikethrough.style.height = '100%';
+                    strikethrough.style.pointerEvents = 'none';
+                    strikethrough.style.backgroundImage = `linear-gradient(135deg, transparent 45%, black 45%, black 55%, transparent 55%)`;
+                    strikethrough.style.zIndex = '1';
 
-                colorButton.style.opacity = '0.5';
-                buttonWrapper.appendChild(strikethrough);
+                    colorButton.style.opacity = '0.5';
+                    buttonWrapper.appendChild(strikethrough);
+                }
+
+                // Standardmäßig die erste Variante als ausgewählt setzen
+                if (index === 0 && !selectedVariant) {
+                    selectedVariant = variant;
+                }
+
+                colorButton.addEventListener('click', () => {
+                    selectedVariant = variant; // Aktualisiert die ausgewählte Variante
+                    updateImagesForVariant(product, variant);
+                    updateAddToCartButton(product, variant);
+                    displayProductInfo(product, selectedVariant); // Produktinfo aktualisieren
+                });
+
+                buttonWrapper.appendChild(colorButton);
+                colorMenuContainer.appendChild(buttonWrapper);
+            });
+
+            if (!showAll && product.variants.length > 4) {
+                const moreButton = document.createElement('span');
+                moreButton.className = 'show-more-colors';
+                moreButton.textContent = `+${product.variants.length - 4}`;
+                moreButton.style.textDecoration = 'underline';
+                moreButton.style.cursor = 'pointer';
+                moreButton.addEventListener('click', () => {
+                    showingAllColors = true;
+                    renderColors(true);
+                });
+                colorMenuContainer.appendChild(moreButton);
             }
 
-            // Falls `selectedVariant` noch nicht gesetzt wurde oder nicht zur aktuellen Liste gehört, wähle die erste Variante
-            if (!selectedVariant || !variantsToShow.some(v => v.id === selectedVariant.id)) {
-                selectedVariant = variantsToShow[0];
+            if (showAll) {
+                const closeButton = document.createElement('span');
+                closeButton.className = 'close-colors';
+                closeButton.textContent = 'Close';
+                closeButton.style.textDecoration = 'underline';
+                closeButton.style.cursor = 'pointer';
+                closeButton.addEventListener('click', () => {
+                    showingAllColors = false;
+                    renderColors(false);
+                });
+                colorMenuContainer.appendChild(closeButton);
+
+                colorMenuContainer.style.display = 'flex';
+                colorMenuContainer.style.flexWrap = 'wrap';
+                colorMenuContainer.style.gap = '10px';
+            } else {
+                colorMenuContainer.style.display = 'flex';
+                colorMenuContainer.style.flexWrap = 'nowrap';
+                colorMenuContainer.style.gap = '10px';
             }
+        };
 
-            // Variante auswählen und UI aktualisieren
-            colorButton.addEventListener('click', () => {
-                selectedVariant = variant;
-                updateImagesForVariant(product, selectedVariant);
-                updateAddToCartButton(product, selectedVariant);
-                displayProductInfo(product, selectedVariant);
-            });
-
-            buttonWrapper.appendChild(colorButton);
-            colorMenuContainer.appendChild(buttonWrapper);
-        });
-
-        // "+ Mehr" Button nur anzeigen, wenn nicht bereits alle Farben sichtbar sind
-        if (!showAll && product.variants.length > 4) {
-            const moreButton = document.createElement('span');
-            moreButton.className = 'show-more-colors';
-            moreButton.textContent = `+${product.variants.length - 4}`;
-            moreButton.style.textDecoration = 'underline';
-            moreButton.style.cursor = 'pointer';
-            moreButton.addEventListener('click', () => {
-                renderColors(true);
-            });
-            colorMenuContainer.appendChild(moreButton);
-        }
-
-        if (showAll) {
-            const closeButton = document.createElement('span');
-            closeButton.className = 'close-colors';
-            closeButton.textContent = 'Close';
-            closeButton.style.textDecoration = 'underline';
-            closeButton.style.cursor = 'pointer';
-            closeButton.addEventListener('click', () => {
-                renderColors(false);
-            });
-            colorMenuContainer.appendChild(closeButton);
-
-            colorMenuContainer.style.display = 'flex';
-            colorMenuContainer.style.flexWrap = 'wrap';
-            colorMenuContainer.style.gap = '10px';
-        } else {
-            colorMenuContainer.style.display = 'flex';
-            colorMenuContainer.style.flexWrap = 'nowrap';
-            colorMenuContainer.style.gap = '10px';
-        }
-    };
-
-    renderColors(false); // Initial mit den ersten 4 Farben rendern
+        renderColors(false);
+    }
 
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 
-    // Nach Erstellung sicherstellen, dass eine Variante korrekt geladen wird
-    updateImagesForVariant(product, selectedVariant);
-    updateAddToCartButton(product, selectedVariant);
-    displayProductInfo(product, selectedVariant);
-
-    return selectedVariant;
+    return selectedVariant; // Die ausgewählte Variante zurückgeben
 }
 
 // Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
@@ -486,24 +485,18 @@ function updateImage(imgElement, currentIndex, images) {
 function displayProductInfo(product, selectedVariant = null) {
     const infoContainer = document.querySelector('.product-info');
 
+    // Standardanzeige, falls keine Variante ausgewählt wurde
     let displayName = product.name;
-    let displayPrice = product.price.toFixed(2);
+    let displayPrice = product.stock > 0 ? `€${product.price.toFixed(2)}` : 'SOLD OUT';
 
-    // Falls eine Variante gewählt wurde, verwende deren Werte
+    // Wenn eine Variante ausgewählt ist, passe die Anzeige an
     if (selectedVariant) {
         displayName = selectedVariant.name;
-        displayPrice = selectedVariant.stock === 0 ? 'SOLD OUT' : `€${selectedVariant.price.toFixed(2)}`;
-    } else if (product.variants && product.variants.length > 0) {
-        // Falls keine Variante explizit gewählt wurde, nehme die erste Variante
-        const firstVariant = product.variants[0];
-        displayName = firstVariant.name;
-        displayPrice = firstVariant.stock === 0 ? 'SOLD OUT' : `€${firstVariant.price.toFixed(2)}`;
-    } else if (product.stock === 0) {
-        // Falls das Produkt ausverkauft ist
-        displayPrice = 'SOLD OUT';
+        displayPrice = selectedVariant.stock > 0 
+            ? `€${selectedVariant.price.toFixed(2)}` 
+            : 'SOLD OUT';
     }
 
-    // HTML-Inhalt einfügen
     infoContainer.innerHTML = `
         <a href="/shop" class="back-link">Back to Collection</a>
         <h1 class="product-title-details">${displayName}</h1>
