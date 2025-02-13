@@ -299,6 +299,7 @@ function createColorMenu(product) {
 
     const renderColors = (showAll) => {
         colorMenuContainer.innerHTML = '';
+
         const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
 
         variantsToShow.forEach((variant, index) => {
@@ -333,22 +334,24 @@ function createColorMenu(product) {
                 buttonWrapper.appendChild(strikethrough);
             }
 
-            // Standardmäßig die erste Variante als ausgewählt setzen, wenn noch keine gesetzt wurde
-            if (!selectedVariant || selectedVariant.id === variant.id) {
-                selectedVariant = variant;
+            // Falls `selectedVariant` noch nicht gesetzt wurde oder nicht zur aktuellen Liste gehört, wähle die erste Variante
+            if (!selectedVariant || !variantsToShow.some(v => v.id === selectedVariant.id)) {
+                selectedVariant = variantsToShow[0];
             }
 
+            // Variante auswählen und UI aktualisieren
             colorButton.addEventListener('click', () => {
-                selectedVariant = variant; // Setze die gewählte Variante
+                selectedVariant = variant;
                 updateImagesForVariant(product, selectedVariant);
                 updateAddToCartButton(product, selectedVariant);
-                displayProductInfo(product, selectedVariant); // Produktinfo aktualisieren
+                displayProductInfo(product, selectedVariant);
             });
 
             buttonWrapper.appendChild(colorButton);
             colorMenuContainer.appendChild(buttonWrapper);
         });
 
+        // "+ Mehr" Button nur anzeigen, wenn nicht bereits alle Farben sichtbar sind
         if (!showAll && product.variants.length > 4) {
             const moreButton = document.createElement('span');
             moreButton.className = 'show-more-colors';
@@ -382,11 +385,11 @@ function createColorMenu(product) {
         }
     };
 
-    renderColors(false); // Initialisiere mit den ersten 4 Farben
+    renderColors(false); // Initial mit den ersten 4 Farben rendern
 
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 
-    // Nach dem Erstellen der Farbmenüs sicherstellen, dass die richtige Variante angezeigt wird
+    // Nach Erstellung sicherstellen, dass eine Variante korrekt geladen wird
     updateImagesForVariant(product, selectedVariant);
     updateAddToCartButton(product, selectedVariant);
     displayProductInfo(product, selectedVariant);
