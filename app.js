@@ -289,111 +289,109 @@ async function displayProductDetails() {
     }
 }
 
-
 function createColorMenu(product) {
     const thumbnailsContainer = document.querySelector('.product-thumbnail-container');
 
     const colorMenuContainer = document.createElement('div');
     colorMenuContainer.className = 'product-color-menu';
 
-    let selectedVariant = null; // Die ausgewählte Variante
+    let selectedVariant = product.variants[0] || null; // Standardmäßig die erste Variante setzen
 
-    if (product.variants && product.variants.length > 0) {
-        let showingAllColors = false;
+    const renderColors = (showAll) => {
+        colorMenuContainer.innerHTML = '';
+        const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
 
-        const renderColors = (showAll) => {
-            colorMenuContainer.innerHTML = '';
-            const variantsToShow = showAll ? product.variants : product.variants.slice(0, 4);
+        variantsToShow.forEach((variant, index) => {
+            const colorStyle = variant.color.includes('/')
+                ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
+                : variant.color;
 
-            variantsToShow.forEach((variant, index) => {
-                const colorStyle = variant.color.includes('/')
-                    ? `linear-gradient(45deg, ${variant.color.split('/')[0]} 50%, ${variant.color.split('/')[1]} 50%)`
-                    : variant.color;
+            const buttonWrapper = document.createElement('div');
+            buttonWrapper.className = 'color-button-wrapper';
+            buttonWrapper.style.position = 'relative';
+            buttonWrapper.style.width = '20px';
+            buttonWrapper.style.height = '20px';
 
-                const buttonWrapper = document.createElement('div');
-                buttonWrapper.className = 'color-button-wrapper';
-                buttonWrapper.style.position = 'relative';
-                buttonWrapper.style.width = '20px';
-                buttonWrapper.style.height = '20px';
+            const colorButton = document.createElement('button');
+            colorButton.className = 'color-button';
+            colorButton.style.background = colorStyle;
+            colorButton.dataset.index = index;
+            colorButton.title = variant.name || `Color ${index + 1}`;
 
-                const colorButton = document.createElement('button');
-                colorButton.className = 'color-button';
-                colorButton.style.background = colorStyle;
-                colorButton.dataset.index = index;
-                colorButton.title = variant.name || `Color ${index + 1}`;
+            if (variant.stock === 0) {
+                const strikethrough = document.createElement('div');
+                strikethrough.style.position = 'absolute';
+                strikethrough.style.top = '0';
+                strikethrough.style.left = '0';
+                strikethrough.style.width = '100%';
+                strikethrough.style.height = '100%';
+                strikethrough.style.pointerEvents = 'none';
+                strikethrough.style.backgroundImage = `linear-gradient(135deg, transparent 45%, black 45%, black 55%, transparent 55%)`;
+                strikethrough.style.zIndex = '1';
 
-                if (variant.stock === 0) {
-                    const strikethrough = document.createElement('div');
-                    strikethrough.style.position = 'absolute';
-                    strikethrough.style.top = '0';
-                    strikethrough.style.left = '0';
-                    strikethrough.style.width = '100%';
-                    strikethrough.style.height = '100%';
-                    strikethrough.style.pointerEvents = 'none';
-                    strikethrough.style.backgroundImage = `linear-gradient(135deg, transparent 45%, black 45%, black 55%, transparent 55%)`;
-                    strikethrough.style.zIndex = '1';
+                colorButton.style.opacity = '0.5';
+                buttonWrapper.appendChild(strikethrough);
+            }
 
-                    colorButton.style.opacity = '0.5';
-                    buttonWrapper.appendChild(strikethrough);
-                }
+            // Standardmäßig die erste Variante als ausgewählt setzen, wenn noch keine gesetzt wurde
+            if (!selectedVariant || selectedVariant.id === variant.id) {
+                selectedVariant = variant;
+            }
 
-                // Standardmäßig die erste Variante als ausgewählt setzen
-                if (index === 0 && !selectedVariant) {
-                    selectedVariant = variant;
-                }
-
-                colorButton.addEventListener('click', () => {
-                    selectedVariant = variant; // Aktualisiert die ausgewählte Variante
-                    updateImagesForVariant(product, variant);
-                    updateAddToCartButton(product, variant);
-                    displayProductInfo(product, selectedVariant); // Produktinfo aktualisieren
-                });
-
-                buttonWrapper.appendChild(colorButton);
-                colorMenuContainer.appendChild(buttonWrapper);
+            colorButton.addEventListener('click', () => {
+                selectedVariant = variant; // Aktualisiert die ausgewählte Variante
+                updateImagesForVariant(product, variant);
+                updateAddToCartButton(product, variant);
+                displayProductInfo(product, selectedVariant); // Produktinfo aktualisieren
             });
 
-            if (!showAll && product.variants.length > 4) {
-                const moreButton = document.createElement('span');
-                moreButton.className = 'show-more-colors';
-                moreButton.textContent = `+${product.variants.length - 4}`;
-                moreButton.style.textDecoration = 'underline';
-                moreButton.style.cursor = 'pointer';
-                moreButton.addEventListener('click', () => {
-                    showingAllColors = true;
-                    renderColors(true);
-                });
-                colorMenuContainer.appendChild(moreButton);
-            }
+            buttonWrapper.appendChild(colorButton);
+            colorMenuContainer.appendChild(buttonWrapper);
+        });
 
-            if (showAll) {
-                const closeButton = document.createElement('span');
-                closeButton.className = 'close-colors';
-                closeButton.textContent = 'Close';
-                closeButton.style.textDecoration = 'underline';
-                closeButton.style.cursor = 'pointer';
-                closeButton.addEventListener('click', () => {
-                    showingAllColors = false;
-                    renderColors(false);
-                });
-                colorMenuContainer.appendChild(closeButton);
+        if (!showAll && product.variants.length > 4) {
+            const moreButton = document.createElement('span');
+            moreButton.className = 'show-more-colors';
+            moreButton.textContent = `+${product.variants.length - 4}`;
+            moreButton.style.textDecoration = 'underline';
+            moreButton.style.cursor = 'pointer';
+            moreButton.addEventListener('click', () => {
+                renderColors(true);
+            });
+            colorMenuContainer.appendChild(moreButton);
+        }
 
-                colorMenuContainer.style.display = 'flex';
-                colorMenuContainer.style.flexWrap = 'wrap';
-                colorMenuContainer.style.gap = '10px';
-            } else {
-                colorMenuContainer.style.display = 'flex';
-                colorMenuContainer.style.flexWrap = 'nowrap';
-                colorMenuContainer.style.gap = '10px';
-            }
-        };
+        if (showAll) {
+            const closeButton = document.createElement('span');
+            closeButton.className = 'close-colors';
+            closeButton.textContent = 'Close';
+            closeButton.style.textDecoration = 'underline';
+            closeButton.style.cursor = 'pointer';
+            closeButton.addEventListener('click', () => {
+                renderColors(false);
+            });
+            colorMenuContainer.appendChild(closeButton);
 
-        renderColors(false);
-    }
+            colorMenuContainer.style.display = 'flex';
+            colorMenuContainer.style.flexWrap = 'wrap';
+            colorMenuContainer.style.gap = '10px';
+        } else {
+            colorMenuContainer.style.display = 'flex';
+            colorMenuContainer.style.flexWrap = 'nowrap';
+            colorMenuContainer.style.gap = '10px';
+        }
+    };
+
+    renderColors(false); // Initialisieren mit den ersten 4 Farben
 
     thumbnailsContainer.parentElement.insertBefore(colorMenuContainer, thumbnailsContainer);
 
-    return selectedVariant; // Die ausgewählte Variante zurückgeben
+    // Beim ersten Laden sicherstellen, dass die richtige Variante ausgewählt wird
+    updateImagesForVariant(product, selectedVariant);
+    updateAddToCartButton(product, selectedVariant);
+    displayProductInfo(product, selectedVariant);
+
+    return selectedVariant;
 }
 
 // Funktion zur Aktualisierung der Bilder basierend auf der ausgewählten Variante
