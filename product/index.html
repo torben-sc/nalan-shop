@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" type="image/png" href="/images/logo-ohne-schrift.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-ohne-schrift.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="shop-header product-header">
+        <div class="header-left"></div>
+        <div class="logo-container">
+            <a href="/shop">
+                <img src="/images/logo.jpg" alt="Shop Logo" class="logo">
+            </a>
+        </div>
+        <div id="cart-icon" class="cart-icon-container-prod">
+            <img src="/images/shopping-bag.png" alt="Warenkorb" class="cart-icon">
+            <span id="cart-count" class="cart-count">0</span>
+        </div>
+    </header>
+
+    <!-- Produktdetails -->
+    <main class="product-page">
+        <div id="product-detail-container" class="product-detail-container">
+            <div class="product-layout">
+                <!-- Linker Bereich -->
+                <div class="product-left">
+                    <div class="product-main-image-container">
+                        <!-- Hauptbild wird dynamisch eingefügt -->
+                    </div>
+                    <div class="product-thumbnail-container">
+                        <!-- Thumbnails werden dynamisch eingefügt -->
+                    </div>
+                    <div class="product-color-menu">
+                        <!-- Farbauswahl wird hier dynamisch eingefügt -->
+                    </div>
+                </div>
+    
+                <!-- Rechter Bereich -->
+                <div class="product-right">
+                    <section class="product-info">
+                        <!-- Produktinformationen wie Name, Preis, Beschreibung etc. werden dynamisch eingefügt -->
+                    </section>
+                    <div class="button-container">
+                        <!-- Add-to-Cart-Button wird hier dynamisch eingefügt -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Warenkorb Slide-in Menü -->
+    <div id="cart-popup" class="cart-popup">
+        <div class="cart-popup-header">
+            <h2>Cart</h2>
+            <button id="close-cart" class="close-cart-button">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items-container">
+            <!-- Warenkorb Artikel werden hier dynamisch von JavaScript eingefügt -->
+        </div>
+        <div class="shipping">
+            <div class="shipping-text">Standard Shipping (DE Only, <br>free above 150€):</div>
+            <div class="shipping-divider"></div> <!-- Trennlinie -->
+            <div class="shipping-value" id="shipping-amount">€0.00</div>
+        </div>
+        <div class="cart-total">
+            <div class="cart-total-text">Total Amount:</div>
+            <div class="cart-total-divider"></div> <!-- Trennlinie -->
+            <div class="cart-total-value" id="total-amount">€0.00</div>
+        </div>
+    
+        <div class="cart-contact-info">
+            <div id="paypal-button-container"></div> <!-- PayPal Button wird hier gerendert -->
+            <p class="empty-cart-message" id="empty-cart-message" style="display: none;">Your Cart is Empty</p>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

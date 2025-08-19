@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Content Manager</title>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://unpkg.com/netlify-cms@latest"></script>
+</head>
+<body>
+  <!-- Container für die CMS-App -->
+  <div id="nc-root"></div> <!-- Wichtig für die CMS-Oberfläche -->
+  <script>
+    window.CMS_MANUAL_INIT = true;
+    window.addEventListener("DOMContentLoaded", function() {
+      NetlifyCms.init({
+        config: 'config.yml'
+      });
+    });
+  </script>
+</body>
+</html>
