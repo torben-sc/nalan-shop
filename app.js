@@ -498,7 +498,7 @@ function displayProductInfo(product, selectedVariant = null) {
         } else if (selectedVariant.stock === -1) {
             // Custom Order Available
             displayPrice = `
-                <div style="text-align: center;">
+                <div style="text-align: left;">
                     <div style="font-size: 24px; font-weight: bold; margin-bottom: 15px;">
                         €${product.price.toFixed(2)}
                     </div>
