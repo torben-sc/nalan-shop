@@ -197,7 +197,7 @@ async function loadProductList(category = 'all', size = null, accs = null) {
                         </a>
                         <p class="product-price-shop">
                             ${
-                                product.variants.some(variant => variant.stock > 0) 
+                                product.variants.some(variant => variant.stock > 0 || variant.stock === -1) 
                                 ? `<span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>` 
                                 : `<span class="sold-out-text">SOLD OUT</span>`
                             }
