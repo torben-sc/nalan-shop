@@ -537,6 +537,22 @@ function updateAddToCartButton(product, variant) {
             displayCartItems();
         });
         buttonContainer.appendChild(addToCartButton);
+    } else if (variant.stock === -1) {
+        // Custom Order Available - wenn Variante als Custom Order verfügbar ist
+        const customOrderText = document.createElement('p');
+        customOrderText.className = 'custom-order-text';
+        customOrderText.innerHTML = `
+        <div style="text-align: center; margin-bottom: 10px;">
+            <strong>Custom Order Available</strong> <br><br>
+            This original color combination is no longer available.<br>
+            You can request a custom version in similar or new colors.<br>
+            Contact me via <a href="https://www.instagram.com/nalancreations" target="_blank" class="custom-order-link">Instagram</a> 
+            or 
+            <a href="mailto:nalancreations@gmx.de" class="custom-order-link">Email</a>
+            <br><br>
+            <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
+        </div>`;
+        buttonContainer.appendChild(customOrderText);
     } else {
         // Sold-Out Text anzeigen, wenn die Variante ausverkauft ist
         const soldOutText = document.createElement('p');
