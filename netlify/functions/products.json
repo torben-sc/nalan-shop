@@ -252,7 +252,7 @@
         "price": 130.00,
         "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-3.jpeg"],
         "description": "A large shoulder bag with a simple striped design, ideal for carrying everything you need.<br>Measurements:<br>•  Width: 46 cm<br>• Height: 27 cm<br>• Total length (strap to bottom): 52 cm<br>For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
+        "stock": 0,
         "category": "bags",
         "size": "big"
     },
@@ -420,7 +420,7 @@
         "price": 30.00,
         "images": ["/images/Nalan-DRP-1/KEYCHAINS/KC-PNK/DSC05234.jpeg", "/images/Nalan-DRP-1/KEYCHAINS/KC-PNK/image-KC-PNK-001-1.jpeg"],
         "description": "This stylish keychain features a large chrome carabiner, with a pink lighter case, a lipgloss case (diameter 2.5 cm), and a keychain with a bow, all attached. The carabiner hook may vary. A practical and fashionable way to carry your essentials. More colors are available – if you'd like a different color or design, contact us on Instagram or email!<br><br>Ships within 1-2 weeks.",
-        "stock": 1,
+        "stock": 0,
         "category": "accessories",
         "accs" : "keychain"
     },
