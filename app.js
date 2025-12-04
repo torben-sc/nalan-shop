@@ -556,7 +556,9 @@ function updateAddToCartButton(product, variant) {
             displayCartItems();
         });
         buttonContainer.appendChild(addToCartButton);
-    } else {
+    } else if (variant.stock === -1) {
+    }
+    else {
         // Sold-Out Text anzeigen, wenn die Variante ausverkauft ist
         const soldOutText = document.createElement('p');
         soldOutText.className = 'sold-out-text-2';
