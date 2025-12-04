@@ -492,9 +492,28 @@ function displayProductInfo(product, selectedVariant = null) {
     // Wenn eine Variante ausgewählt ist, passe die Anzeige an
     if (selectedVariant) {
         displayName = selectedVariant.name;
-        displayPrice = selectedVariant.stock > 0 
-            ? `€${selectedVariant.price.toFixed(2)}` 
-            : 'SOLD OUT';
+        
+        if (selectedVariant.stock > 0) {
+            displayPrice = `€${selectedVariant.price.toFixed(2)}`;
+        } else if (selectedVariant.stock === -1) {
+            // Custom Order Available
+            displayPrice = `
+                <div style="text-align: center;">
+                    <div style="font-size: 24px; font-weight: bold; margin-bottom: 15px;">
+                        €${product.price.toFixed(2)}
+                    </div>
+                    <strong>Custom Order Available</strong> <br><br>
+                    This original color combination is no longer available.<br>
+                    You can request a custom version in similar or new colors.<br>
+                    Contact me via 
+                    <a href="https://www.instagram.com/nalancreations" target="_blank" style="color: #E55013; text-decoration: none;">Instagram</a> 
+                    or 
+                    <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>
+                </div>
+            `;
+        } else {
+            displayPrice = 'SOLD OUT';
+        }
     }
 
     infoContainer.innerHTML = `
@@ -537,22 +556,6 @@ function updateAddToCartButton(product, variant) {
             displayCartItems();
         });
         buttonContainer.appendChild(addToCartButton);
-    } else if (variant.stock === -1) {
-        // Custom Order Available - wenn Variante als Custom Order verfügbar ist
-        const customOrderText = document.createElement('p');
-        customOrderText.className = 'custom-order-text';
-        customOrderText.innerHTML = `
-        <div style="text-align: center; margin-bottom: 10px;">
-            <strong>Custom Order Available</strong> <br><br>
-            This original color combination is no longer available.<br>
-            You can request a custom version in similar or new colors.<br>
-            Contact me via <a href="https://www.instagram.com/nalancreations" target="_blank" class="custom-order-link">Instagram</a> 
-            or 
-            <a href="mailto:nalancreations@gmx.de" class="custom-order-link">Email</a>
-            <br><br>
-            <span class="price-amount-shop">${product.price}</span><span class="price-currency-shop"> €</span>
-        </div>`;
-        buttonContainer.appendChild(customOrderText);
     } else {
         // Sold-Out Text anzeigen, wenn die Variante ausverkauft ist
         const soldOutText = document.createElement('p');
