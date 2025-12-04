@@ -510,6 +510,8 @@ function displayProductInfo(product, selectedVariant = null) {
                     or 
                     <a href="mailto:nalancreations@gmx.de" style="color: #E55013; text-decoration: none;">Email</a>
                 </div>
+                <p></p>
+                <p></p>
             `;
         } else {
             displayPrice = 'SOLD OUT';
