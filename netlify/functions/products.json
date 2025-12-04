@@ -2,14 +2,14 @@
     {
         "id": "1",
         "name": "Plain Balaclava",
-        "price": 65.00,
+        "price": 85.00,
         "variants": [
             {
                 "id": "101",
                 "name": "Plain Balaclava - Pink",
                 "color": "#FFC0CB",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-1.jpeg..jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PK-001/image-BLC-PK-001-4.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 0
             },
             {
@@ -17,7 +17,7 @@
                 "name": "Plain Balaclava - Royal Blue",
                 "color": "#0000FF",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-RB-001 /image-BLC-RB-001-4.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -25,7 +25,7 @@
                 "name": "Plain Balaclava - Dark Blue",
                 "color": "#00008B",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-DB-001 /image-BLC-DB-001-4.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 0
             },
             {
@@ -33,7 +33,7 @@
                 "name": "Plain Balaclava - Orange",
                 "color": "#FF6700",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-OR-001/image-BLC-OR-001-4jpeg.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -41,7 +41,7 @@
                 "name": "Plain Balaclava - Green",
                 "color": "#006400",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-GR-001/image-BLC-GR-001-4.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -49,7 +49,7 @@
                 "name": "Plain Balaclava - Lilac",
                 "color": "#C8A2C8",
                 "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-LL-001 /image-BLC-LL-001-4.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 0
             },
             {
@@ -57,7 +57,7 @@
                 "name": "Plain Balaclava - Powder Pink",
                 "color": "#F3C1C6",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-PP-001-1.png"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -65,7 +65,7 @@
                 "name": "Plain Balaclava - Off White",
                 "color": "#F8F8F8",
                 "images": ["/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-1.jpeg", "/images/Archiv/Off-White Balaclava/Image-BLC-OW-001-2.jpeg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -76,7 +76,7 @@
                     "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-RD-001/Image-BLC-RD-001-1.JPG",
                     "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-RD-001/Image-BLC-RD-001-2.JPG"
                 ],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -84,7 +84,7 @@
                 "name": "Plain Balaclava - Black/Red",
                 "color": "#FF0000/#000000",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-BR-001-1.png"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -92,7 +92,7 @@
                 "name": "Plain Balaclava - Dark Pink",
                 "color": "#D74894",
                 "images":["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image- BLC-DP-001-1.png"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -100,7 +100,7 @@
                 "name": "Plain Balaclava - Olive Green",
                 "color": "#556B2F",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/Image-BLC-OG-001-1.png"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -108,7 +108,7 @@
                 "name": "Plain Balaclava - Grey",
                 "color": "#808080",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-GY-001-1.png"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -120,7 +120,7 @@
                     "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-2.JPG",
                     "/images/Nalan_Drop_01_Additional_Pieces/Balaclavas/BLC-BB-001/Image-BLC-BB-001-3.JPG"
                 ],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             },
             {
@@ -132,7 +132,7 @@
                     "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-2.jpeg",
                     "/images/Archiv/Beige Balaclava/Image-BLC-BG-001-3.jpeg"
                 ],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             }
         ],
@@ -143,14 +143,14 @@
     {
         "id": "2",
         "name": "Skimask Balaclava",
-        "price": 65.00,
+        "price": 85.00,
         "variants": [
             {
                 "id": "201",
                 "name": "Skimask Balaclava - Pink",
                 "color": "#FFC0CB",
                 "images": ["/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-1.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-2.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-3.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-4.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-5.jpg", "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-PK-002/Image-SKB-PK-002-6.jpg"],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 0
             },
             {
@@ -160,7 +160,7 @@
                 "images": [
                     "/images/Nalan_Drop_01_Additional_Pieces/Skimask Balaclava/SKB-RD-001/Image-SKB-RD-001-1.JPG"
                 ],
-                "price": 65.00,
+                "price": 85.00,
                 "stock": 1
             }
         ],
@@ -171,7 +171,7 @@
     {
         "id": "4",
         "name": "Black Balaclava with Pink Bows",
-        "price": 85.00,
+        "price": 100.00,
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-BPB-001/image-BLC-BPB-001-4.jpeg"],
         "description": "This unique Balaclava combines a soft, fuzzy knit with delicate pink bows for an elegant yet playful look. Perfect for adding a bold statement to your outfit while keeping warm and cozy. Its unisex design ensures a comfortable Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
@@ -180,7 +180,7 @@
     {
         "id": "5",
         "name": "Pierced Black Balaclava",
-        "price": 85.00,
+        "price": 100.00,
         "images": ["/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-1.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-2.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-3.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-4.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-5.jpeg", "/images/Nalan-DRP-1/BALACLAVAS/BLC-PB-001/image-BLC-PB-001-6.jpeg"],
         "description": "This stylish Balaclava is crafted from a soft fuzzy knit for a cozy feel. Designed with edgy piercings for a bold, statement look. Designed with a unisex fit, it provides both warmth and a sleek, cool look.<br> Made from a durable blend of 60% polyamide and 40% acrylic.<br> Made in Germany. Hand wash only. If it starts to look fuzzy, use a soft bristle brush (such as an edge brush) to gently smooth the surface, and it will look like new again.<br><br>Ships within 1-2 weeks.",
         "stock": 1,
@@ -249,10 +249,31 @@
     {
         "id": "15",
         "name": "The Shoulder Bag – Striped",
-        "price": 130.00,
-        "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-3.jpeg"],
+        "price": 200.00,
+        "variants": [
+            {
+                "id": "151",
+                "name": "The Shoulder Bag – Striped - Light Colors",
+                "color": "#8D021F",
+                "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-3.jpeg"],
+                "price": 200.00,
+                "stock": 0
+            },
+            {
+                "id": "152",
+                "name": "The Shoulder Bag – Striped - Dark Colors",
+                "color": "#C2C86A",
+                "images": [
+                    "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/Bilder nalan/IMG_0460.jpeg",
+                    "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/Bilder nalan/IMG_0462.jpeg",
+                    "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/Bilder nalan/IMG_0499.jpeg"
+                ],
+                "price": 200.00,
+                "stock": 0
+            }
+        ],
+        "defaultImage": "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg",
         "description": "A large shoulder bag with a simple striped design, ideal for carrying everything you need.<br>Measurements:<br>•  Width: 46 cm<br>• Height: 27 cm<br>• Total length (strap to bottom): 52 cm<br>For custom colors, please contact us via Instagram or email!<br><br>Ships within 1-2 weeks.",
-        "stock": 0,
         "category": "bags",
         "size": "big"
     },
