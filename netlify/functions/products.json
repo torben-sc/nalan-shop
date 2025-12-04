@@ -257,7 +257,7 @@
                 "color": "#C2C86A",
                 "images": ["/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-2.jpeg", "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/image-BAG-SH-ST-003-3.jpeg"],
                 "price": 200.00,
-                "stock": 0
+                "stock": -1
             },
             {
                 "id": "152",
@@ -269,7 +269,7 @@
                     "/images/Nalan-DRP-1/BAGS/BAGS MEDIUM/Bilder nalan/IMG_0499.jpeg"
                 ],
                 "price": 200.00,
-                "stock": 0
+                "stock": -1
             }
         ],
         "defaultImage": "/images/Nalan-DRP-1/BAGS/BAGS LARGE/BAG-SH-ST/DSC05333.jpeg",
